@@ -1,0 +1,104 @@
+/* ===== หน้าเสี่ยงเซียมซี ===== */
+:root { --lacquer: #b3261e; --lacquer-2: #6e120d; }
+
+.wish { display: flex; flex-direction: column; gap: 8px; max-width: 480px; margin: 0 auto 18px; text-align: left; color: var(--muted); font-size: .95rem; }
+.wish small { opacity: .7; }
+.wish input {
+  font: inherit; color: var(--text); padding: 13px 18px; border-radius: 14px;
+  background: rgba(10, 4, 30, .6); border: 1px solid rgba(245, 201, 107, .25); outline: none;
+  transition: border-color .25s, box-shadow .25s;
+}
+.wish input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245, 201, 107, .18); }
+
+/* ---------- กระบอก ---------- */
+.tube-wrap {
+  position: relative; display: block; margin: 70px auto 0;
+  width: 150px; height: 230px; transform-origin: 50% 100%;
+}
+.tube-wrap:focus-visible { outline: 2px solid var(--gold); outline-offset: 8px; border-radius: 20px; }
+.tube {
+  position: absolute; inset: 0; z-index: 2; border-radius: 14px 14px 22px 22px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .35), transparent 22%, rgba(255, 255, 255, .22) 38%, transparent 55%, rgba(0, 0, 0, .4)),
+    linear-gradient(180deg, var(--lacquer), var(--lacquer-2));
+  box-shadow: 0 0 0 2px var(--gold-3), 0 20px 50px rgba(0, 0, 0, .6), 0 0 40px rgba(179, 38, 30, .45);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.band { position: absolute; left: 0; right: 0; height: 14px; background: linear-gradient(180deg, var(--gold-2), var(--gold) 50%, var(--gold-3)); }
+.band.top { top: 12px; }
+.band.bottom { bottom: 18px; }
+.emblem {
+  font-family: "Charm", serif; font-size: 1.45rem; line-height: 1.5; color: var(--gold-2);
+  text-shadow: 0 0 10px rgba(245, 201, 107, .7);
+  padding: 4px 12px; border: 1px solid var(--gold); border-radius: 8px;
+}
+.tube-shadow { position: absolute; left: 10%; right: 10%; bottom: -18px; height: 18px; border-radius: 50%; background: radial-gradient(ellipse, rgba(0, 0, 0, .55), transparent 70%); }
+
+.sticks { position: absolute; left: 14px; right: 14px; bottom: 60%; height: 120px; z-index: 1; }
+.stick {
+  position: absolute; bottom: 0; width: 8px; height: var(--h);
+  left: var(--x); transform: rotate(var(--r)); transform-origin: 50% 100%;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, var(--lacquer) 0 14px, #e9d2a0 14px, #c9a86a);
+  box-shadow: 0 0 0 1px rgba(80, 40, 10, .4);
+}
+.tube-wrap.shaking { animation: shake .18s ease-in-out infinite alternate; }
+.tube-wrap.shaking .stick { animation: jiggle .12s ease-in-out infinite alternate; animation-delay: var(--d); }
+@keyframes shake { from { transform: rotate(-14deg) translateY(-4px); } to { transform: rotate(14deg) translateY(2px); } }
+@keyframes jiggle { to { transform: rotate(var(--r)) translateY(-10px); } }
+
+/* ---------- ไม้ที่หล่น ---------- */
+.drop-zone { position: relative; height: 70px; margin-bottom: 18px; }
+.fallen {
+  position: absolute; left: 50%; top: 20px; width: 170px; height: 18px; margin-left: -85px;
+  border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
+  background: linear-gradient(90deg, #c9a86a, #e9d2a0 80%, var(--lacquer) 80%);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .5), 0 0 24px rgba(245, 201, 107, .5);
+  opacity: 0;
+}
+.fallen b { position: absolute; left: 50%; transform: translateX(-50%); color: var(--lacquer-2); font-weight: 600; font-size: .95rem; }
+.fallen.out { animation: fallOut 1s cubic-bezier(.25, 1.4, .5, 1) forwards; }
+@keyframes fallOut {
+  0% { opacity: 1; transform: translateY(-230px) rotate(-80deg) scale(.6); }
+  60% { opacity: 1; transform: translateY(6px) rotate(8deg) scale(1.05); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* ---------- ใบเซียมซี ---------- */
+.result { animation: rise .7s ease both; }
+.result[hidden] { display: none; }
+.slip {
+  position: relative; max-width: 620px; margin: 0 auto; padding: 30px 30px 26px; border-radius: 6px;
+  text-align: left; color: #3a1d08;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255, 255, 255, .5), transparent 40%),
+    linear-gradient(180deg, #fbefd2, #f1dcae);
+  box-shadow: 0 0 0 6px var(--lacquer), 0 0 0 8px var(--gold), 0 30px 80px rgba(0, 0, 0, .6), 0 0 60px rgba(245, 201, 107, .3);
+  animation: unroll .9s cubic-bezier(.2, .9, .3, 1.1) both;
+}
+@keyframes unroll { from { clip-path: inset(0 0 100% 0); transform: translateY(-20px); } to { clip-path: inset(0 0 0 0); transform: none; } }
+.slip-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(179, 38, 30, .3); padding-bottom: 12px; margin-bottom: 14px; }
+.slip-no { font-size: 1.05rem; color: var(--lacquer-2); }
+.slip-no b { font-family: "Charm", serif; font-size: 2.2rem; color: var(--lacquer); margin-left: 4px; }
+.lv { padding: 4px 16px; border-radius: 999px; font-weight: 600; font-size: .95rem; color: #fff; }
+.lv[data-lv="ดีมาก"] { background: linear-gradient(135deg, #d4a017, #b8862f); box-shadow: 0 0 14px rgba(212, 160, 23, .6); }
+.lv[data-lv="ดี"] { background: #2e8b57; }
+.lv[data-lv="กลาง"] { background: #6b5ca5; }
+.lv[data-lv="ระวัง"] { background: #c0392b; }
+.your-wish { font-size: .92rem; color: #7a5a3a; font-style: italic; margin-bottom: 8px; }
+.verse { font-family: "Charm", serif; font-size: clamp(1.6rem, 5vw, 2.1rem); line-height: 1.4; color: var(--lacquer-2); text-align: center; margin: 6px 0 12px; }
+.meaning { font-size: 1.02rem; line-height: 1.75; text-align: center; margin-bottom: 18px; }
+.areas { list-style: none; display: grid; gap: 10px; }
+.areas li { display: grid; grid-template-columns: 110px 1fr; gap: 10px; align-items: start; padding: 10px 14px; border-radius: 10px; background: rgba(179, 38, 30, .07); }
+.areas span { font-weight: 500; color: var(--lacquer); }
+.areas p { line-height: 1.6; font-weight: 300; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 28px; }
+.disclaimer { margin-top: 22px; color: var(--muted); font-size: .78rem; opacity: .7; }
+
+@media (max-width: 560px) {
+  .slip { padding: 24px 18px 20px; }
+  .areas li { grid-template-columns: 1fr; gap: 2px; }
+  .actions { flex-direction: column; }
+  .actions > * { width: 100%; }
+}

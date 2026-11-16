@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0620">
+  <title>หมอดู.com — รวมศาสตร์ทำนายจากทั่วโลก</title>
+  <meta name="description" content="หมอดู.com รวมศาสตร์การทำนายดวงจากทั่วโลก ไพ่ทาโรต์ โหราศาสตร์ไทย ดวงจีน เลขศาสตร์ ตั้งชื่อ ดูเบอร์ และเสี่ยงเซียมซีฟรี">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Kanit:wght@300;400;500;600&family=Charm:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="intro.css">
+</head>
+<body class="home">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="nebula" aria-hidden="true"></div>
+
+  <!-- ===== ฉากเวที (เห็นบนจอใหญ่ รอบ ๆ โทรศัพท์) ===== -->
+  <div class="stage" aria-hidden="true">
+    <div class="valance"></div>
+    <div class="curtain left"><span class="tie"></span></div>
+    <div class="curtain right"><span class="tie"></span></div>
+
+    <div class="floor-glow"></div>
+
+    <div class="candle c1"><span class="flame"></span><span class="halo"></span><span class="wax"></span><span class="holder"></span></div>
+    <div class="candle c2"><span class="flame"></span><span class="halo"></span><span class="wax"></span><span class="holder"></span></div>
+
+    <div class="stage-orb">
+      <div class="orb-glass"><span class="orb-swirl"></span><span class="orb-shine"></span></div>
+      <svg class="orb-stand" viewBox="0 0 120 80">
+        <defs><linearGradient id="standG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#4a3a5e"/><stop offset="1" stop-color="#16101f"/></linearGradient></defs>
+        <path d="M20 8 Q60 26 100 8 L92 60 Q60 72 28 60 Z" fill="url(#standG)" stroke="#8a6fb0" stroke-width="1.5"/>
+        <circle cx="60" cy="38" r="14" fill="none" stroke="#e9d3ff" stroke-width="1.6"/>
+        <polygon points="60,25 67.6,48.5 47.6,34 72.4,34 52.4,48.5" fill="none" stroke="#e9d3ff" stroke-width="1.4"/>
+        <ellipse cx="60" cy="68" rx="46" ry="9" fill="#120b1b" stroke="#6b5490"/>
+      </svg>
+    </div>
+
+    <div class="die d1"><span>20</span></div>
+    <div class="die d2"><span>7</span></div>
+    <div class="crystal-shard"></div>
+  </div>
+
+  <!-- ===== อินโทร: ประตูแห่งโชคชะตา ===== -->
+  <div class="intro gate-intro" id="intro" role="dialog" aria-modal="true" aria-label="ประตูแห่งโชคชะตา">
+    <canvas class="vortex" id="vortex" aria-hidden="true"></canvas>
+    <div class="rays" aria-hidden="true"></div>
+    <button class="skip" id="skipIntro">ข้าม ›</button>
+
+    <div class="gate-stage" id="gateStage">
+      <div class="gate-head">
+        <p class="gate-eyebrow">✦ ยินดีต้อนรับผู้แสวงหาคำตอบ ✦</p>
+        <h1 class="gate-title"><span>หมอดู</span><small>.COM</small></h1>
+      </div>
+
+      <div class="gate" id="gate" aria-hidden="true">
+        <div class="sigil big" id="sigilBig"></div>
+        <div class="sigil mid" id="sigilMid"></div>
+        <svg class="zodiac-ring" viewBox="0 0 400 400">
+          <defs><path id="zr" d="M200,200 m-182,0 a182,182 0 1,1 364,0 a182,182 0 1,1 -364,0"/></defs>
+          <text><textPath href="#zr">♈&#xFE0E; ✦ ♉&#xFE0E; ✦ ♊&#xFE0E; ✦ ♋&#xFE0E; ✦ ♌&#xFE0E; ✦ ♍&#xFE0E; ✦ ♎&#xFE0E; ✦ ♏&#xFE0E; ✦ ♐&#xFE0E; ✦ ♑&#xFE0E; ✦ ♒&#xFE0E; ✦ ♓&#xFE0E; ✦</textPath></text>
+        </svg>
+        <div class="card-orbit" id="cardOrbit"></div>
+
+        <div class="door">
+          <div class="door-arch">
+            <span class="arch-rune">☾ ✦ ☉ ✦ ☽</span>
+          </div>
+          <div class="doorway">
+            <div class="door-light"></div>
+            <div class="leaf left">
+              <svg viewBox="0 0 100 300" preserveAspectRatio="none" class="leaf-art">
+                <rect x="8" y="8" width="84" height="284" rx="6" class="la-frame"/>
+                <rect x="16" y="16" width="68" height="268" rx="4" class="la-inner"/>
+                <path d="M56 66 a26 26 0 1 0 0 52 a20 20 0 1 1 0 -52 Z" class="la-moon"/>
+                <path d="M30 150 H70 M30 158 H70 M50 140 V250" class="la-line"/>
+                <polygon points="50,180 58,205 50,230 42,205" class="la-gem"/>
+              </svg>
+              <span class="handle"></span>
+            </div>
+            <div class="leaf right">
+              <svg viewBox="0 0 100 300" preserveAspectRatio="none" class="leaf-art">
+                <rect x="8" y="8" width="84" height="284" rx="6" class="la-frame"/>
+                <rect x="16" y="16" width="68" height="268" rx="4" class="la-inner"/>
+                <circle cx="50" cy="92" r="14" class="la-moon"/>
+                <path d="M50 64 V72 M50 112 V120 M22 92 H30 M70 92 H78 M30 72 l6 6 M64 106 l6 6 M70 72 l-6 6 M36 106 l-6 6" class="la-line"/>
+                <path d="M30 150 H70 M30 158 H70 M50 140 V250" class="la-line"/>
+                <polygon points="50,180 58,205 50,230 42,205" class="la-gem"/>
+              </svg>
+              <span class="handle"></span>
+            </div>
+            <span class="seam"></span>
+          </div>
+          <div class="door-eye">
+            <svg viewBox="0 0 60 30"><path d="M2 15 Q30 -8 58 15 Q30 38 2 15 Z" class="eye-lid"/><circle cx="30" cy="15" r="8" class="eye-iris"/><circle cx="30" cy="15" r="3.5" class="eye-pupil"/></svg>
+          </div>
+          <div class="steps"><span></span><span></span></div>
+        </div>
+        <div class="touch" aria-hidden="true"><i></i><i></i><i></i></div>
+        <svg class="hand" viewBox="0 0 64 84" aria-hidden="true">
+          <defs><linearGradient id="handG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f1dcff"/></linearGradient></defs>
+          <rect x="22" y="0" width="12" height="42" rx="6"/>
+          <rect x="33" y="24" width="11" height="22" rx="5.5"/>
+          <rect x="43" y="28" width="10" height="20" rx="5"/>
+          <ellipse cx="15" cy="48" rx="6.5" ry="12" transform="rotate(-38 15 48)"/>
+          <rect x="16" y="32" width="38" height="34" rx="12"/>
+          <rect x="19" y="62" width="32" height="18" rx="4" class="cuff"/>
+          <path d="M19 66 H51" class="cuff-line"/>
+        </svg>
+      </div>
+
+    </div>
+    <div class="gate-flash" aria-hidden="true"></div>
+  </div>
+
+  <main class="device-wrap">
+    <!-- ===== โทรศัพท์ ===== -->
+    <div class="phone-slot" id="phoneSlot">
+      <div class="phone" id="phone">
+        <span class="btn-side power"></span><span class="btn-side vol1"></span><span class="btn-side vol2"></span>
+        <div class="screen" id="screen">
+          <div class="statusbar"><span class="island"></span></div>
+
+          <div class="app" id="app">
+            <header class="app-bar">
+              <a href="index.html" class="app-logo"><span class="logo-eye">☾</span> หมอดู<span>.com</span></a>
+              <button class="avatar" id="avatarBtn" aria-label="บัญชีของฉัน" aria-haspopup="true" aria-expanded="false">👤</button>
+              <div class="account-pop" id="accountPop" hidden>
+                <p class="ap-name" id="apName"></p>
+                <button class="ap-item" id="logoutBtn">ออกจากระบบ</button>
+              </div>
+            </header>
+
+            <!-- ฉากหมอดู -->
+            <section class="seer-scene">
+              <h2 class="app-title"><span>หมอดู</span><small>MOHDOO · TALE</small></h2>
+              <svg class="bolts" viewBox="0 0 300 90" aria-hidden="true">
+                <path d="M30 10 L52 34 L42 36 L70 70"/>
+                <path d="M270 6 L246 30 L258 33 L226 64"/>
+                <path d="M150 0 L140 18 L156 20 L146 40"/>
+              </svg>
+
+              <div class="seer">
+                <div class="halo-ring" id="ring"></div>
+                <svg class="seer-svg" viewBox="0 0 300 330" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="hoodG" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0" stop-color="#3b1d6e"/><stop offset=".55" stop-color="#1c0f3d"/><stop offset="1" stop-color="#0d0624"/>
+                    </linearGradient>
+                    <linearGradient id="rimG" x1="0" x2="1">
+                      <stop offset="0" stop-color="#ff7ad9" stop-opacity=".9"/><stop offset=".5" stop-color="#ff7ad9" stop-opacity="0"/><stop offset="1" stop-color="#7ad8ff" stop-opacity=".7"/>
+                    </linearGradient>
+                    <linearGradient id="faceG" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0" stop-color="#05020d"/><stop offset=".45" stop-color="#2a1640"/><stop offset=".75" stop-color="#d9b8d8"/><stop offset="1" stop-color="#f3d7e6"/>
+                    </linearGradient>
+                    <radialGradient id="gemG"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#bfefff"/><stop offset="1" stop-color="#7ad8ff" stop-opacity="0"/></radialGradient>
+                  </defs>
+                  <!-- เสื้อคลุม -->
+                  <path d="M10 330 Q30 230 95 214 L205 214 Q270 230 290 330 Z" fill="url(#hoodG)"/>
+                  <!-- ฮู้ด -->
+                  <path d="M66 236 Q52 120 104 64 Q150 16 196 64 Q248 120 234 236 Q200 214 150 214 Q100 214 66 236 Z" fill="url(#hoodG)"/>
+                  <path d="M66 236 Q52 120 104 64 Q150 16 196 64 Q248 120 234 236" fill="none" stroke="url(#rimG)" stroke-width="3"/>
+                  <!-- ช่องใบหน้า -->
+                  <path d="M104 214 Q96 132 150 92 Q204 132 196 214 Q174 232 150 234 Q126 232 104 214 Z" fill="#05020d"/>
+                  <!-- คาง ปาก -->
+                  <path d="M118 172 Q150 160 182 172 Q180 212 150 226 Q120 212 118 172 Z" fill="url(#faceG)"/>
+                  <path d="M140 204 Q150 209 160 204 Q150 213 140 204 Z" fill="#9b3a6b"/>
+                  <!-- เงาฮู้ดทับตา -->
+                  <path d="M108 170 Q150 150 192 170 Q190 140 150 116 Q110 140 108 170 Z" fill="#05020d"/>
+                  <!-- ปกเสื้อ -->
+                  <path d="M118 226 L150 300 L182 226" fill="none" stroke="#5b3a8e" stroke-width="3"/>
+                  <!-- อัญมณี -->
+                  <circle cx="150" cy="276" r="30" fill="url(#gemG)" class="gem-glow"/>
+                  <polygon points="150,256 163,276 150,298 137,276" fill="#e8fbff" stroke="#fff" stroke-width="1"/>
+                  <polygon points="150,256 163,276 150,276" fill="#9fdcf2"/>
+                </svg>
+              </div>
+
+              <!-- โต๊ะ + ไพ่ 3 ใบ -->
+              <div class="table">
+                <div class="table-cloth"><span class="table-sigil" id="tableSigil"></span></div>
+                <div class="table-cards">
+                  <a class="tcard3" href="tarot.html" data-ch="I">
+                    <span class="card-face"><span class="mc"></span></span>
+                    <span class="card-cap"><b>The Fool</b>ไพ่ทาโรต์</span>
+                  </a>
+                  <a class="tcard3 mid" href="siamsi.html" data-ch="II">
+                    <span class="card-face"><span class="mc"></span></span>
+                    <span class="card-cap"><b>The Chariot</b>เซียมซีฟรี</span>
+                  </a>
+                  <a class="tcard3" href="services.html" data-ch="III">
+                    <span class="card-face"><span class="mc"></span></span>
+                    <span class="card-cap"><b>The World</b>ศาสตร์ทั่วโลก</span>
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            <div class="app-cta guest-only">
+              <button class="btn-gold full" data-open="register">✧ สมัครสมาชิก เริ่มดูดวง ✧</button>
+              <button class="btn-ghost full" data-open="login">มีบัญชีแล้ว? เข้าสู่ระบบ</button>
+            </div>
+
+            <p class="hello member-only" id="hello"></p>
+
+            <section class="app-section member-only">
+              <div class="sec-head"><h3>บริการแนะนำ</h3><a href="services.html">ดูทั้งหมด</a></div>
+              <div class="hscroll" id="popular"></div>
+            </section>
+
+            <section class="app-section member-only">
+              <div class="sec-head"><h3>เลือกตามศาสตร์</h3></div>
+              <div class="sci-grid" id="sciGrid"></div>
+            </section>
+
+            <p class="app-foot member-only">หมอดู.com · คำทำนายเพื่อความบันเทิงและเป็นแนวทางชีวิต</p>
+          </div>
+
+          <!-- แถบเมนูล่าง -->
+          <nav class="tabbar member-only" aria-label="เมนูหลัก">
+            <a href="index.html" aria-current="page"><span>🏠</span>หน้าแรก</a>
+            <a href="tarot.html"><span>🃏</span>ไพ่</a>
+            <a href="siamsi.html" class="tab-center"><span>🎋</span>เซียมซี</a>
+            <a href="services.html"><span>🔮</span>บริการ</a>
+            <button id="tabAccount"><span>👤</span>บัญชี</button>
+          </nav>
+          <span class="home-indicator"></span>
+
+          <!-- ===== Bottom sheet: เข้าสู่ระบบ / สมัคร ===== -->
+          <div class="sheet-backdrop" id="sheetBackdrop"></div>
+          <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true">
+            <span class="grabber"></span>
+            <button class="close" id="closeAuth" aria-label="ปิด">✕</button>
+            <div class="auth-head">
+              <div class="auth-moon">☾</div>
+              <h2 id="authTitle">ยินดีต้อนรับกลับ</h2>
+              <p id="authSub">ดวงดาวรอคุณอยู่</p>
+            </div>
+            <div class="tabs" role="tablist">
+              <button role="tab" class="tab active" data-tab="login">เข้าสู่ระบบ</button>
+              <button role="tab" class="tab" data-tab="register">สมัครบัญชี</button>
+              <span class="tab-ink"></span>
+            </div>
+
+            <form class="form" id="loginForm" data-panel="login">
+              <label>อีเมล
+                <input type="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+              </label>
+              <label>รหัสผ่าน
+                <input type="password" name="password" autocomplete="current-password" placeholder="••••••••" required minlength="6">
+              </label>
+              <div class="row">
+                <label class="check"><input type="checkbox"> จดจำฉันไว้</label>
+                <a href="#" class="link">ลืมรหัสผ่าน?</a>
+              </div>
+              <button class="btn-gold full" type="submit">เข้าสู่ระบบ</button>
+            </form>
+
+            <form class="form" id="registerForm" data-panel="register" hidden>
+              <label>ชื่อที่ใช้แสดง
+                <input type="text" name="name" autocomplete="nickname" placeholder="เช่น ดาวเหนือ" required>
+              </label>
+              <label>อีเมล
+                <input type="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+              </label>
+              <div class="two">
+                <label>วันเกิด
+                  <input type="date" name="birthdate" required>
+                </label>
+                <label><span>เวลาเกิด <small>(ถ้าทราบ)</small></span>
+                  <input type="time" name="birthtime">
+                </label>
+              </div>
+              <label>รหัสผ่าน
+                <input type="password" name="password" autocomplete="new-password" placeholder="อย่างน้อย 6 ตัวอักษร" required minlength="6">
+              </label>
+              <label class="check"><input type="checkbox" required> ยอมรับเงื่อนไขการใช้งาน</label>
+              <button class="btn-gold full" type="submit">สมัครและเปิดดวง</button>
+            </form>
+
+            <div class="divider"><span>หรือเข้าสู่ระบบด้วย</span></div>
+            <div class="socials">
+              <button type="button" class="social">Google</button>
+              <button type="button" class="social line">LINE</button>
+              <button type="button" class="social">Apple</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="common.js"></script>
+  <script src="services-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

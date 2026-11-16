@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>เสี่ยงเซียมซี — หมอดู.com</title>
+  <meta name="description" content="เสี่ยงเซียมซีออนไลน์ฟรี ตั้งจิตอธิษฐาน เขย่า แล้วอ่านคำทำนายพร้อมคำอธิบายภาษาไทยร่วมสมัย">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Kanit:wght@300;400;500;600&family=Charm:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="siamsi.css">
+</head>
+<body class="ready">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="nebula" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="index.html" class="logo"><span class="logo-eye">☾</span> หมอดู<span class="dot">.com</span></a>
+    <nav class="top-actions">
+      <a class="nav-link" href="services.html">บริการ</a>
+      <a class="nav-link" href="tarot.html">ไพ่ทาโรต์</a>
+      <a class="nav-link" href="siamsi.html" aria-current="page">เซียมซี</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page-head">
+      <p class="eyebrow">✦ ฟรี ✦</p>
+      <h1 class="page-title">เสี่ยงเซียมซี</h1>
+      <p class="subtitle" id="hint">ตั้งจิตอธิษฐานถึงเรื่องที่อยากรู้ แล้วกดเขย่ากระบอก</p>
+    </div>
+
+    <section id="stepShake">
+      <label class="wish">
+        <span>เรื่องที่อยากถาม <small>(ไม่บังคับ)</small></span>
+        <input id="wish" type="text" maxlength="100" placeholder="เช่น เรื่องงานช่วงนี้จะเป็นอย่างไร">
+      </label>
+
+      <button class="tube-wrap" id="tube" aria-label="เขย่ากระบอกเซียมซี">
+        <span class="sticks" id="sticks" aria-hidden="true"></span>
+        <span class="tube" aria-hidden="true">
+          <span class="band top"></span>
+          <span class="emblem">เซียมซี</span>
+          <span class="band bottom"></span>
+        </span>
+        <span class="tube-shadow" aria-hidden="true"></span>
+      </button>
+      <div class="drop-zone" aria-hidden="true"><span class="fallen" id="fallen"><b id="fallenNum"></b></span></div>
+
+      <button class="btn-gold big" id="shakeBtn">✧ เขย่าเซียมซี ✧</button>
+    </section>
+
+    <section class="result" id="result" hidden>
+      <article class="slip" id="slip">
+        <div class="slip-head">
+          <span class="slip-no">ใบที่ <b id="rNo"></b></span>
+          <span class="lv" id="rLv"></span>
+        </div>
+        <p class="your-wish" id="rWish" hidden></p>
+        <p class="verse" id="rVerse"></p>
+        <p class="meaning" id="rMeaning"></p>
+        <ul class="areas">
+          <li><span>💼 การงาน</span><p id="rWork"></p></li>
+          <li><span>💗 ความรัก</span><p id="rLove"></p></li>
+          <li><span>💰 การเงิน</span><p id="rMoney"></p></li>
+        </ul>
+      </article>
+      <div class="actions">
+        <button class="btn-gold big" id="againBtn">✧ เสี่ยงอีกครั้ง ✧</button>
+        <a class="btn-ghost big" href="services.html">ปรึกษาหมอดูเพิ่มเติม</a>
+      </div>
+      <p class="disclaimer">คำทำนายเซียมซีมีไว้เพื่อความบันเทิงและเป็นกำลังใจ ไม่ควรใช้แทนคำปรึกษาจากผู้เชี่ยวชาญ</p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="common.js"></script>
+  <script src="siamsi-data.js"></script>
+  <script src="siamsi.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+/* ===== หน้าบริการ ===== */
+
+/* ---------- ตัวกรองศาสตร์ ---------- */
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 18px; }
+.chip {
+  padding: 8px 16px; border-radius: 999px; font-size: .92rem;
+  color: var(--gold-2); border: 1px solid var(--line); background: rgba(20, 10, 50, .5);
+  transition: background .25s, border-color .25s, color .25s, transform .25s;
+}
+.chip:hover { border-color: var(--gold); transform: translateY(-2px); }
+.chip[aria-selected="true"] { background: linear-gradient(135deg, var(--gold-2), var(--gold)); color: #2a1503; font-weight: 600; border-color: transparent; }
+.chip .ci { margin-right: 6px; }
+
+.science-info {
+  max-width: 720px; margin: 0 auto 26px; padding: 18px 22px; border-radius: 18px; text-align: left;
+  background: rgba(245, 201, 107, .07); border: 1px solid var(--line);
+  animation: rise .5s ease both;
+}
+.science-info h2 { font-size: 1.15rem; font-weight: 500; color: var(--gold-2); margin-bottom: 4px; }
+.science-info p { color: var(--text); font-weight: 300; line-height: 1.7; }
+.science-info .uses { color: var(--gold); font-size: .9rem; margin-top: 6px; }
+
+/* ---------- การ์ดบริการ ---------- */
+.services { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; text-align: left; }
+.svc {
+  position: relative; display: flex; flex-direction: column; gap: 10px;
+  padding: 22px 22px 20px; border-radius: 20px;
+  background: linear-gradient(170deg, rgba(50, 25, 110, .72), rgba(14, 6, 38, .85));
+  border: 1px solid var(--line);
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+  animation: rise .5s ease both; animation-delay: var(--delay, 0s);
+}
+.svc:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 16px 50px rgba(123, 77, 255, .35); }
+.svc.is-soon { opacity: .82; }
+.svc-top { display: flex; align-items: center; gap: 12px; }
+.svc-icon {
+  flex: none; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center;
+  font-size: 1.6rem; background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .2), rgba(123, 77, 255, .35));
+  border: 1px solid var(--line); box-shadow: 0 0 18px rgba(123, 77, 255, .35);
+}
+.svc h3 { font-size: 1.2rem; font-weight: 500; color: var(--gold-2); line-height: 1.3; }
+.svc-badges { display: flex; gap: 6px; margin-top: 3px; }
+.badge-s { padding: 1px 10px; border-radius: 999px; font-size: .72rem; border: 1px solid; }
+.badge-s.free { color: #8ff0b5; border-color: rgba(143, 240, 181, .5); background: rgba(143, 240, 181, .08); }
+.badge-s.soon, .soon-badge { color: #ffcf8a; border-color: rgba(255, 207, 138, .5); background: rgba(255, 207, 138, .08); }
+.svc p { color: var(--muted); font-weight: 300; font-size: .92rem; line-height: 1.65; }
+.svc .get { color: var(--text); }
+.svc .get::before { content: "✦ "; color: var(--gold); }
+.svc-foot { margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line); display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+.price { font-size: .82rem; color: var(--muted); line-height: 1.4; }
+.price strong { display: block; font-size: 1.45rem; font-weight: 600; color: var(--gold); }
+.price .free-txt { color: #8ff0b5; }
+.svc .btn-gold, .svc .btn-ghost { flex: none; padding: 9px 18px; font-size: .92rem; }
+
+.empty { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 30px; }
+
+/* ---------- แบนเนอร์ ---------- */
+.free-banner {
+  display: flex; align-items: center; gap: 18px; margin-top: 30px; padding: 20px 24px;
+  border-radius: 22px; text-decoration: none; text-align: left; color: var(--text);
+  background: linear-gradient(110deg, rgba(180, 40, 40, .35), rgba(245, 201, 107, .18) 60%, rgba(123, 77, 255, .25));
+  border: 1px solid var(--gold); box-shadow: 0 10px 40px rgba(245, 201, 107, .15);
+  transition: transform .3s, box-shadow .3s;
+}
+.free-banner:hover { transform: translateY(-3px); box-shadow: 0 16px 50px rgba(245, 201, 107, .3); }
+.fb-icon { font-size: 2.6rem; animation: wiggle 2.4s ease-in-out infinite; }
+@keyframes wiggle { 0%, 70%, 100% { transform: rotate(0); } 75% { transform: rotate(-12deg); } 85% { transform: rotate(12deg); } 95% { transform: rotate(-6deg); } }
+.fb-text { flex: 1; font-weight: 300; line-height: 1.6; }
+.fb-text strong { font-size: 1.2rem; font-weight: 500; color: var(--gold-2); }
+.fb-go { color: var(--gold); font-weight: 500; white-space: nowrap; }
+
+/* ---------- หน้าต่างจอง ---------- */
+.book-head { text-align: center; margin-bottom: 14px; }
+.book-icon { font-size: 2.6rem; filter: drop-shadow(0 0 14px rgba(245, 201, 107, .6)); }
+.book-head h2 { font-family: "Charm", serif; font-size: 2rem; color: var(--gold-2); line-height: 1.3; }
+.soon-badge[hidden] { display: none; }
+.soon-badge { display: inline-block; padding: 2px 12px; border-radius: 999px; font-size: .8rem; border: 1px solid; }
+.book-detail dt { color: var(--gold); font-size: .85rem; margin-top: 10px; }
+.book-detail dd { color: var(--text); font-weight: 300; line-height: 1.65; }
+.book-note { margin-top: 12px; padding: 10px 14px; border-radius: 12px; font-size: .88rem; color: var(--gold-2); background: rgba(245, 201, 107, .08); border-left: 3px solid var(--gold); line-height: 1.6; }
+.tiers { border: 0; margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.tiers legend { color: var(--muted); font-size: .85rem; margin-bottom: 8px; }
+.tier { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(245, 201, 107, .25); background: rgba(0, 0, 0, .3); cursor: pointer; transition: border-color .25s, background .25s; }
+.tier:has(input:checked) { border-color: var(--gold); background: rgba(245, 201, 107, .1); }
+.tier:has(input:disabled) { opacity: .5; cursor: not-allowed; }
+.tier input { accent-color: var(--gold); }
+.tier .tl { flex: 1; }
+.tier .tp { color: var(--gold); font-weight: 600; }
+.tier small { color: #ffcf8a; margin-left: 6px; font-size: .75rem; }
+.book-foot { text-align: center; color: var(--muted); font-size: .78rem; margin-top: 12px; }
+.btn-gold.full { display: block; text-align: center; text-decoration: none; }
+
+@media (max-width: 560px) {
+  .services { grid-template-columns: 1fr; }
+  .chips { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; margin: 0 -16px 16px; padding: 4px 16px 8px; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: none; white-space: nowrap; }
+  .free-banner { flex-wrap: wrap; }
+  .fb-go { width: 100%; text-align: right; }
+}
