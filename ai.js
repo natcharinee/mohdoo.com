@@ -65,6 +65,13 @@ function renderChat(u) {
   const chat = u.aiChat || [];
   aiBody.innerHTML = `
     <p class="ai-member">✦ สมาชิกถึง ${thDate(u.aiUntil)}</p>
+    <form class="ai-code ${u.aiCode ? 'set' : ''}" id="aiCodeForm">
+      <span>🔑</span>
+      ${u.aiCode
+        ? `<b>ใช้รหัสทดลอง AI แล้ว</b><button type="button" class="link" id="aiCodeClear">เปลี่ยนรหัส</button>`
+        : `<input name="code" type="text" autocomplete="off" placeholder="รหัสทดลองใช้ AI (ถ้ามี)" maxlength="40"><button class="btn-gold" type="submit">ใช้รหัส</button>`}
+    </form>
+    <p class="ai-code-note" id="aiCodeNote">${u.aiCode ? '' : 'ไม่มีรหัสก็ลองคุยได้ แม่หมอจะตอบแบบตัวอย่าง'}</p>
     <div class="ai-log" id="aiLog">
       <div class="bubble ai">สวัสดีค่ะ คุณ${esc(u.first || u.name)} ✦ แม่หมอ AI พร้อมดูดวงให้แล้ว อยากรู้เรื่องไหนถามได้เลยนะคะ${u.birthdate ? '' : '<br><small>เพิ่มวันเกิดในหน้าบัญชี จะได้วิเคราะห์ได้แม่นขึ้นค่ะ</small>'}</div>
       ${chat.map((m) => `<div class="bubble ${m.role === 'user' ? 'me' : 'ai'}">${fmtMsg(m.content)}</div>`).join('')}
@@ -75,6 +82,17 @@ function renderChat(u) {
       <button class="btn-gold" type="submit" aria-label="ส่ง">➤</button>
     </form>`;
   scrollLog();
+  $('aiCodeForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const code = e.target.code?.value.trim();
+    if (!code) return;
+    const cur = currentUser(); cur.aiCode = code; persistUser(cur);
+    renderChat(cur);
+    toast('บันทึกรหัสแล้ว ลองถามแม่หมอ AI ได้เลย ✦');
+  });
+  $('aiCodeClear')?.addEventListener('click', () => {
+    const cur = currentUser(); delete cur.aiCode; persistUser(cur); renderChat(cur);
+  });
   const form = $('aiForm');
   const ta = form.q;
   ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = `${Math.min(ta.scrollHeight, 110)}px`; });
@@ -102,7 +120,7 @@ async function ask(text) {
   try {
     const r = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-AI-Code': u.aiCode || '' },
       body: JSON.stringify({
         messages: u.aiChat.slice(-20),
         profile: { first: u.first, last: u.last, birthdate: u.birthdate, birthtime: u.birthtime, birthplace: u.birthplace,
@@ -111,6 +129,11 @@ async function ask(text) {
     });
     if (r.ok) reply = (await r.json()).reply;
     else if (r.status === 429) reply = 'ตอนนี้มีคนถามเยอะมาก รอสักครู่แล้วลองใหม่นะคะ 🙏';
+    else if (r.status === 401) {
+      // ไม่มีรหัส / รหัสผิด → ตอบแบบตัวอย่าง และบอกให้กรอกรหัส
+      reply = demoReply(q, u, u.aiCode ? 'รหัสทดลองใช้ AI ไม่ถูกต้อง' : 'ยังไม่ได้กรอกรหัสทดลองใช้ AI');
+      if (u.aiCode) { const cur = currentUser(); delete cur.aiCode; persistUser(cur); }
+    }
   } catch (_) { /* ไม่มีเซิร์ฟเวอร์ AI (เช่น เปิดในเครื่อง) → ใช้คำตอบตัวอย่าง */ }
   if (!reply) reply = demoReply(q, u);
 
@@ -119,12 +142,13 @@ async function ask(text) {
   cur.aiChat = [...(cur.aiChat || []), { role: 'assistant', content: reply }].slice(-50);
   persistUser(cur);
   log.insertAdjacentHTML('beforeend', `<div class="bubble ai">${fmtMsg(reply)}</div>`);
+  if (u.aiCode && !currentUser().aiCode) renderChat(currentUser()); // รหัสผิด → แสดงช่องกรอกใหม่
   scrollLog();
   asking = false;
 }
 
 // ---------- คำตอบตัวอย่าง (ใช้เมื่อยังไม่ได้เชื่อม AI บนเซิร์ฟเวอร์) ----------
-function demoReply(q, u) {
+function demoReply(q, u, why = 'ยังไม่ได้เชื่อม AI จริงบนเซิร์ฟเวอร์') {
   const out = [];
   if (u.birthdate) {
     const { m, d, date } = birthParts(u);
@@ -140,7 +164,7 @@ function demoReply(q, u) {
   const cards = ['ดวงดาว ✦ ความหวังกำลังกลับมา', 'ดวงอาทิตย์ ☀ ความสำเร็จและความสุข', 'กงล้อแห่งโชคชะตา ☸ จุดเปลี่ยนที่ดี', 'จักรพรรดินี 🌸 ความอุดมสมบูรณ์', 'ฤๅษี 🏮 ถอยมาทบทวนสักนิด'];
   out.push(`**ไพ่ทาโรต์สำหรับคำถามนี้: ${cards[q.length % cards.length]}**`);
   out.push('สรุป: ค่อย ๆ ไปทีละก้าว ฟังใจตัวเอง แล้วเรื่องที่ถามจะคลี่คลายในทางที่ดีค่ะ ✦');
-  return `${out.join('\n')}\n\n(โหมดตัวอย่าง — ยังไม่ได้เชื่อม AI จริงบนเซิร์ฟเวอร์)`;
+  return `${out.join('\n')}\n\n(โหมดตัวอย่าง — ${why})`;
 }
 
 // ---------- ปุ่มกลางเมนูล่าง ----------

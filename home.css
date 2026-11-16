@@ -830,3 +830,13 @@ body.logged-in .table-svg { height: 214px; bottom: auto; }
 .test-mode { margin: -6px 0 14px; padding: 8px 12px; border-radius: 12px; font-size: .76rem; line-height: 1.55; text-align: center;
   color: #bff3d2; background: rgba(62, 224, 122, .1); border: 1px dashed rgba(62, 224, 122, .45); }
 #paidBtn small { font-size: .75em; font-weight: 400; opacity: .8; }
+
+/* รหัสทดลองใช้ AI */
+.ai-code { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 12px; margin-bottom: 4px; border-radius: 999px;
+  background: rgba(0, 0, 0, .35); border: 1px solid rgba(245, 201, 107, .3); }
+.ai-code input { flex: 1; min-width: 0; font: inherit; font-size: .82rem; color: var(--text); background: none; border: 0; outline: none; }
+.ai-code .btn-gold { flex: none; padding: 6px 14px; font-size: .78rem; }
+.ai-code.set b { flex: 1; font-size: .8rem; font-weight: 500; color: #bff3d2; }
+.ai-code .link { background: none; border: 0; color: var(--gold); font-size: .76rem; text-decoration: underline; padding-right: 8px; }
+.ai-code-note { text-align: center; font-size: .7rem; color: var(--muted); margin-bottom: 8px; min-height: 0; }
+.ai-code-note:empty { display: none; }

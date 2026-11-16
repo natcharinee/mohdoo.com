@@ -1,6 +1,10 @@
 // ===== หมอดู AI: Vercel Serverless Function =====
 // POST /api/chat  { messages: [{role, content}], profile: {...} }  →  { reply }
-// ต้องตั้งค่า Environment Variable บน Vercel: ANTHROPIC_API_KEY
+// ต้องตั้งค่า Environment Variables บน Vercel:
+//   ANTHROPIC_API_KEY  คีย์ของ Claude API
+//   MOHDOO_AI_CODE     รหัสทดลองใช้ AI (ใส่ได้หลายรหัส คั่นด้วยจุลภาค เช่น "moon2026,star99")
+// ทั้งสองค่าต้องตั้งครบ AI จริงจึงจะทำงาน — กันคนที่ไม่มีรหัสเรียกใช้แล้วเกิดค่าใช้จ่าย
+import { timingSafeEqual } from 'node:crypto';
 import Anthropic from '@anthropic-ai/sdk';
 
 const MAX_TURNS = 20;      // ส่งประวัติแชทย้อนหลังไม่เกิน 20 ข้อความ
@@ -20,6 +24,16 @@ const SYSTEM_PROMPT = `คุณคือ "หมอดู AI" ของแพ�
 
 const client = new Anthropic(); // อ่าน ANTHROPIC_API_KEY จาก environment
 
+// เทียบรหัสแบบใช้เวลาคงที่ (ไม่ให้เดารหัสจากเวลาตอบกลับ)
+function codeAllowed(given) {
+  const codes = (process.env.MOHDOO_AI_CODE || '').split(',').map((c) => c.trim()).filter(Boolean);
+  const g = Buffer.from(String(given || '').trim());
+  return codes.some((c) => {
+    const b = Buffer.from(c);
+    return b.length === g.length && timingSafeEqual(b, g);
+  });
+}
+
 function profileText(p = {}) {
   const lines = [
     p.first && `ชื่อ: ${p.first} ${p.last || ''}`.trim(),
@@ -36,7 +50,8 @@ function profileText(p = {}) {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
-  if (!process.env.ANTHROPIC_API_KEY) return res.status(503).json({ error: 'ai_not_configured' });
+  if (!process.env.ANTHROPIC_API_KEY || !process.env.MOHDOO_AI_CODE) return res.status(503).json({ error: 'ai_not_configured' });
+  if (!codeAllowed(req.headers['x-ai-code'])) return res.status(401).json({ error: 'invalid_code' });
 
   const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
   const history = (Array.isArray(body.messages) ? body.messages : [])
