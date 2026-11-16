@@ -36,7 +36,7 @@
 
 /* ---------- หัวเรื่อง ---------- */
 .gate-head { text-align: center; opacity: 0; animation: rise 1s ease .2s forwards; margin-bottom: calc(var(--g) * .1); position: relative; z-index: 3; }
-.gate-eyebrow { color: #ffc4ef; letter-spacing: .25em; font-size: clamp(.7rem, 2.4vw, .9rem); text-shadow: 0 0 10px var(--pink); }
+.gate-eyebrow { color: #ffc4ef; letter-spacing: .08em; font-size: clamp(.75rem, 2.4vw, .95rem); text-shadow: 0 0 10px var(--pink); }
 .gate-title { line-height: 1.15; }
 .gate-title span {
   display: inline-block; padding: 0 .1em .2em;

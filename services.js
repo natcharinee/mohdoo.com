@@ -59,9 +59,10 @@ function render(list) {
     const el = document.createElement('article');
     el.className = `svc ${s.open ? '' : 'is-soon'}`;
     el.style.setProperty('--delay', `${i * 0.05}s`);
-    const free = s.prices.every((p) => p.price === 0);
+    const free = s.prices.length > 0 && s.prices.every((p) => p.price === 0);
     const lowest = s.prices.filter((p) => p.price != null).sort((a, b) => a.price - b.price)[0];
     const priceLine = free ? '<strong class="free-txt">ฟรี</strong>'
+      : !lowest ? 'ราคา<strong>สอบถาม</strong>'
       : `${s.prices.length > 1 ? 'เริ่มต้น' : 'ราคา'}<strong>${fmt(lowest.price)} ฿</strong>`;
     const action = s.link
       ? `<a class="btn-gold" href="${s.link}">เริ่มเลย</a>`

@@ -360,3 +360,8 @@ body.ready .cta { opacity: 1; transform: none; }
 .embedded .page-head { margin-bottom: 18px; }
 .embedded, .embedded body { scrollbar-width: none; }
 .embedded ::-webkit-scrollbar { display: none; }
+
+/* ---------- อ่านง่าย: หัวข้อฟอนต์ Charm มีสระบน/ล่างสูง ต้องเว้นบรรทัดพอ และไม่ถ่างตัวอักษรไทย ---------- */
+.eyebrow { letter-spacing: .08em; }
+.page-title { line-height: 1.5; padding: .1em 0 .05em; }
+.auth-head h2 { line-height: 1.5; padding-top: .1em; }

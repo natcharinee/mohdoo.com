@@ -466,3 +466,112 @@ body:not(.logged-in) .panel { bottom: 0; }
 /* หลังเข้าสู่ระบบ: ตัดชายผ้าปูโต๊ะให้สั้นลง เหลือแค่ไพ่กับชื่อใต้ไพ่ */
 body.logged-in .table { height: 168px; overflow: hidden; }
 body.logged-in .table-svg { height: 214px; bottom: auto; }
+
+/* ============ วงล้อของขวัญต้อนรับ ============ */
+.gift {
+  position: absolute; inset: 0; z-index: 45; display: flex; align-items: center; justify-content: center;
+  padding: 50px 18px 30px; overflow-y: auto; scrollbar-width: none;
+  background: radial-gradient(80% 60% at 50% 45%, rgba(90, 35, 160, .97), rgba(10, 4, 30, .98));
+  opacity: 0; pointer-events: none; transform: scale(1.04); transition: opacity .4s, transform .4s;
+}
+.gift.open { opacity: 1; pointer-events: auto; transform: none; }
+.gift-inner { width: 100%; text-align: center; }
+.gift-eyebrow { color: #ffc4ef; font-size: .78rem; letter-spacing: .2em; text-shadow: 0 0 10px var(--pink); }
+.gift h2 { font-family: "Charm", serif; font-size: 2rem; line-height: 1.3; color: var(--gold-2); text-shadow: 0 0 16px rgba(245, 201, 107, .6); }
+.gift-sub { color: var(--muted); font-size: .85rem; margin-bottom: 14px; }
+.wheel-wrap { position: relative; width: 300px; max-width: 100%; aspect-ratio: 1; margin: 0 auto; }
+.wheel { width: 100%; height: 100%; filter: drop-shadow(0 0 24px rgba(177, 76, 255, .7)); }
+.wheel svg { width: 100%; height: 100%; display: block; }
+.w-ico { font-size: 22px; }
+.w-txt { font-size: 12.5px; fill: #fff3c9; font-family: "Kanit", sans-serif; font-weight: 500; }
+.bulb { fill: #fff3c9; animation: bulb .8s steps(1) infinite; }
+@keyframes bulb { 50% { fill: #f5c96b; opacity: .4; } }
+.wheel-pointer {
+  position: absolute; left: 50%; top: -6px; z-index: 2; width: 28px; height: 36px; margin-left: -14px;
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  background: linear-gradient(180deg, var(--gold-2), var(--gold-3)); filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .5));
+}
+.wheel-hub {
+  position: absolute; left: 50%; top: 50%; width: 76px; height: 76px; margin: -38px; border-radius: 50%; z-index: 2;
+  font-weight: 600; font-size: 1.05rem; color: #2a1503;
+  background: radial-gradient(circle at 35% 30%, #fff6d8, var(--gold) 55%, var(--gold-3));
+  box-shadow: 0 0 0 5px #1a0b3d, 0 0 0 7px var(--gold), 0 0 30px rgba(245, 201, 107, .8);
+  animation: hubPulse 1.6s ease-in-out infinite;
+}
+.wheel-hub:disabled { animation: none; opacity: .9; cursor: default; }
+@keyframes hubPulse { 50% { transform: scale(1.06); } }
+.gift-later { margin-top: 14px; color: var(--muted); font-size: .85rem; text-decoration: underline; }
+.gift-later[hidden] { display: none; }
+.gift-result { margin-top: 16px; animation: rise .5s ease both; }
+.gift-result[hidden] { display: none; }
+.win-card { display: flex; gap: 12px; align-items: center; text-align: left; padding: 14px; border-radius: 18px;
+  background: linear-gradient(120deg, rgba(245, 201, 107, .18), rgba(255, 122, 217, .12)); border: 1px solid var(--gold); }
+.win-ico { flex: none; width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; font-size: 1.8rem;
+  background: radial-gradient(circle at 35% 30%, #fff3, #4a2486); border: 1px solid var(--gold); }
+.win-label { font-size: .75rem; color: #ffc4ef; }
+.win-card h3, .reading-head h3 { font-size: 1.15rem; font-weight: 500; color: var(--gold-2); line-height: 1.3; }
+.win-card p:not(.win-label) { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+.win-actions { display: grid; gap: 8px; margin-top: 12px; }
+
+/* ============ คูปองของฉัน ============ */
+.spin-cta { width: 100%; display: flex; align-items: center; gap: 10px; text-align: left; padding: 12px 14px; border-radius: 16px; margin-bottom: 4px;
+  background: linear-gradient(110deg, rgba(245, 201, 107, .25), rgba(255, 122, 217, .18)); border: 1px solid var(--gold);
+  animation: ctaGlow 2.4s ease-in-out infinite; }
+.spin-cta span { font-size: 1.5rem; }
+.spin-cta b { flex: 1; font-size: .85rem; font-weight: 500; color: var(--gold-2); line-height: 1.4; }
+.spin-cta em { font-style: normal; font-size: .8rem; color: #fff; white-space: nowrap; }
+@keyframes ctaGlow { 50% { box-shadow: 0 0 22px rgba(245, 201, 107, .5); } }
+.sec-note { font-size: .78rem; color: var(--muted); }
+.coupons { display: grid; gap: 8px; }
+.coupon { position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 14px; border-radius: 14px;
+  background: linear-gradient(110deg, #3a1a74, #22104a); border: 1px dashed var(--gold); }
+.coupon::before, .coupon::after { content: ""; position: absolute; right: 64px; width: 14px; height: 14px; border-radius: 50%; background: #0d0724; }
+.coupon::before { top: -8px; } .coupon::after { bottom: -8px; }
+.cp-ico { font-size: 1.6rem; }
+.cp-txt { flex: 1; display: flex; flex-direction: column; line-height: 1.35; }
+.cp-txt small { font-size: .68rem; color: #ffc4ef; }
+.cp-txt b { font-size: .95rem; font-weight: 500; color: var(--gold-2); }
+.cp-txt em { font-style: normal; font-size: .7rem; color: var(--muted); }
+.cp-use { flex: none; width: 50px; padding: 8px 0; border-radius: 999px; font-weight: 600; font-size: .85rem; color: #2a1503;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold)); }
+
+/* ============ หน้าผลคำทำนายส่วนตัว ============ */
+#readingPanel { z-index: 20; }
+.reading-head { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
+.reading-lead { font-size: 1rem; color: var(--text); margin: 14px 0 6px; line-height: 1.6; }
+.reading-lead b { color: var(--gold-2); font-weight: 500; margin: 0 4px; }
+.reading-tip { font-size: .86rem; color: var(--muted); line-height: 1.75; font-weight: 300; }
+.reading-tip b { color: var(--gold-2); font-weight: 500; }
+.reading-note { margin-top: 22px; font-size: .72rem; color: var(--muted); opacity: .7; text-align: center; }
+.swatches { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+.swatches li { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 14px; background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .15); }
+.sw { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 2px solid #fff6; box-shadow: 0 0 12px rgba(255, 255, 255, .2); }
+.swatches small { display: block; font-size: .7rem; color: var(--muted); }
+.swatches b { font-size: .95rem; font-weight: 500; color: var(--text); }
+.num-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 8px 0; }
+.num-box { flex: 1; min-width: 0; text-align: center; padding: 10px 4px; border-radius: 14px; background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .2); }
+.num-box small { display: block; font-size: .68rem; color: var(--muted); }
+.num-box b { display: block; font-size: 1.5rem; color: var(--text); }
+.num-box span { display: block; font-size: .68rem; color: var(--lilac); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.num-box.gold { border-color: var(--gold); background: rgba(245, 201, 107, .12); }
+.num-box.gold b { color: var(--gold-2); }
+.num-plus { color: var(--muted); }
+.big-num { font-size: 1.8rem; }
+.lucky-nums { margin: 14px 0; padding: 14px; border-radius: 16px; text-align: center; background: rgba(245, 201, 107, .1); border: 1px solid var(--line); }
+.lucky-nums small { color: var(--muted); font-size: .78rem; }
+.lucky-nums div { display: flex; justify-content: center; gap: 12px; margin-top: 8px; }
+.lucky-nums span { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-size: 1.4rem; font-weight: 600; color: #2a1503;
+  background: radial-gradient(circle at 35% 30%, #fff6d8, var(--gold) 60%, var(--gold-3)); box-shadow: 0 0 16px rgba(245, 201, 107, .6); }
+.zodiac-badge { display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 18px; background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .2); }
+.zodiac-badge > span { font-size: 2.6rem; color: var(--gold); text-shadow: 0 0 14px var(--gold); width: 60px; text-align: center; }
+.zodiac-badge small { display: block; font-size: .72rem; color: var(--muted); }
+.zodiac-badge b { display: block; font-size: 1.3rem; font-weight: 500; color: var(--gold-2); }
+.zodiac-badge em { font-style: normal; font-size: .8rem; color: var(--lilac); }
+
+/* ============ อ่านง่าย: กันตัวอักษรไทยซ้อนกัน ============ */
+.gift { background: radial-gradient(80% 60% at 50% 45%, #4a1d86, #0b0420 80%); } /* ทึบ ไม่ให้ข้อความหน้าแรกทะลุ */
+.gift-eyebrow { letter-spacing: .06em; margin-bottom: 6px; }
+.gift h2 { font-size: 1.75rem; line-height: 1.6; padding-top: .15em; margin-bottom: 4px; }
+.gift-sub { line-height: 1.6; margin-bottom: 18px; }
+.w-txt { font-size: 12px; letter-spacing: 0; }
+.coupon .cp-txt b, .win-card h3, .reading-head h3 { line-height: 1.45; }

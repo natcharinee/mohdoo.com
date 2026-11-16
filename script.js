@@ -49,10 +49,11 @@ document.querySelectorAll('.tcard3').forEach((a) =>
 
 // ---------- บริการแนะนำ + ศาสตร์ (จาก services-data.js) ----------
 $('popular').innerHTML = SERVICES.filter((s) => s.open).map((s) => {
-  const min = Math.min(...s.prices.filter((p) => p.price != null).map((p) => p.price));
+  const priced = s.prices.filter((p) => p.price != null).map((p) => p.price);
   const href = s.link || 'services.html';
-  const price = min === 0 ? '<b class="free">ฟรี</b>' : `เริ่ม <b>${min.toLocaleString('th-TH')} ฿</b>`;
-  return `<a class="pop" href="${href}"><span class="pi">${s.icon}</span><span class="pn">${s.name}</span><span class="pp">${price}</span></a>`;
+  // ยังไม่มีราคา → ไม่แสดงบรรทัดราคา (แค่ไอคอน + ชื่อบริการ)
+  const price = priced.length ? `<span class="pp">เริ่ม <b>${Math.min(...priced).toLocaleString('th-TH')} ฿</b></span>` : '';
+  return `<a class="pop" href="${href}"><span class="pi">${s.icon}</span><span class="pn">${s.name}</span>${price}</a>`;
 }).join('');
 
 // ---------- หมวดหมู่ → ประเภทย่อย → รายชื่อหมอดู ----------
@@ -189,10 +190,23 @@ document.querySelectorAll('.form').forEach((f) =>
     e.preventDefault();
     const isLogin = f.id === 'loginForm';
     const data = new FormData(f);
-    const name = isLogin ? String(data.get('email')).split('@')[0] : String(data.get('name'));
-    try { localStorage.setItem(USER_KEY, JSON.stringify({ name })); } catch (_) {}
+    const prev = currentUser() || {};
+    const user = isLogin
+      ? { ...prev, name: prev.name || String(data.get('email')).split('@')[0] }
+      : {
+          name: String(data.get('first')).trim(),
+          first: String(data.get('first')).trim(),
+          last: String(data.get('last')).trim(),
+          birthdate: String(data.get('birthdate')),
+          birthtime: String(data.get('birthtime') || ''),
+          coupons: [],
+          wheelSpun: false,
+        };
+    try { localStorage.setItem(USER_KEY, JSON.stringify(user)); } catch (_) {}
     closeSheet();
     applyUser();
+    // สมัครใหม่ → วงล้อของขวัญต้อนรับ (welcome-gift.js)
+    if (!isLogin && typeof startWelcomeGift === 'function') setTimeout(startWelcomeGift, 900);
     toast(isLogin ? 'เข้าสู่ระบบสำเร็จ (ตัวอย่าง — ยังไม่เชื่อมระบบหลังบ้าน)' : 'สมัครสำเร็จ! ยินดีต้อนรับสู่หมอดู.com ✦');
     const r = screen.getBoundingClientRect();
     burst(r.left + r.width / 2, r.top + r.height / 2, 60, 260);

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0b0620">
   <title>หมอดู.com — รวมศาสตร์ทำนายจากทั่วโลก</title>
-  <meta name="description" content="หมอดู.com รวมศาสตร์การทำนายดวงจากทั่วโลก ไพ่ทาโรต์ โหราศาสตร์ไทย ดวงจีน เลขศาสตร์ ตั้งชื่อ ดูเบอร์ และเสี่ยงเซียมซีฟรี">
+  <meta name="description" content="หมอดู.com รวมศาสตร์การทำนายดวงจากทั่วโลก ไพ่ทาโรต์ โหราศาสตร์ไทย ดวงจีน เลขศาสตร์ ตั้งชื่อ ดูเบอร์ และเสี่ยงเซียมซี">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Kanit:wght@300;400;500;600&family=Charm:wght@700&display=swap" rel="stylesheet">
@@ -241,7 +241,7 @@
                   <a class="tcard3 mid" href="siamsi.html" data-ch="II">
                     <span class="beam"></span>
                     <span class="card-face"><span class="mc"></span></span>
-                    <span class="card-cap"><b>The Chariot</b>เซียมซีฟรี</span>
+                    <span class="card-cap"><b>The Chariot</b>เสี่ยงเซียมซี</span>
                   </a>
                   <a class="tcard3" href="services.html" data-ch="III">
                     <span class="beam"></span>
@@ -330,9 +330,14 @@
             </form>
 
             <form class="form" id="registerForm" data-panel="register" hidden>
-              <label>ชื่อที่ใช้แสดง
-                <input type="text" name="name" autocomplete="nickname" placeholder="เช่น ดาวเหนือ" required>
-              </label>
+              <div class="two">
+                <label>ชื่อ
+                  <input type="text" name="first" autocomplete="given-name" placeholder="ชื่อจริง" required>
+                </label>
+                <label>นามสกุล
+                  <input type="text" name="last" autocomplete="family-name" placeholder="นามสกุล" required>
+                </label>
+              </div>
               <label>อีเมล
                 <input type="email" name="email" autocomplete="email" placeholder="you@example.com" required>
               </label>
@@ -369,5 +374,6 @@
   <script src="services-data.js"></script>
   <script src="categories-data.js"></script>
   <script src="script.js"></script>
+  <script src="welcome-gift.js"></script>
 </body>
 </html>
