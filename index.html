@@ -266,12 +266,28 @@
             </section>
 
             <section class="app-section member-only">
-              <div class="sec-head"><h3>เลือกตามศาสตร์</h3></div>
-              <div class="sci-grid" id="sciGrid"></div>
+              <div class="sec-head"><h3>หมวดหมู่</h3></div>
+              <div class="cat-grid" id="catGrid"></div>
             </section>
 
             <p class="app-foot member-only">หมอดู.com · คำทำนายเพื่อความบันเทิงและเป็นแนวทางชีวิต</p>
           </div>
+
+          <!-- ===== หน้าหมวดหมู่ย่อย และรายชื่อหมอดู (เลื่อนเข้ามาจากขวา) ===== -->
+          <section class="panel" id="catPanel" aria-hidden="true" aria-labelledby="catPanelTitle">
+            <header class="panel-bar"><button class="back" data-back="catPanel">‹ กลับ</button><h2 id="catPanelTitle">หมวดหมู่ย่อย</h2></header>
+            <div class="panel-body" id="catBody"></div>
+          </section>
+          <section class="panel" id="typePanel" aria-hidden="true" aria-labelledby="typePanelTitle">
+            <header class="panel-bar"><button class="back" data-back="typePanel">‹ กลับ</button><h2 id="typePanelTitle">รายชื่อหมอดู</h2></header>
+            <div class="panel-body" id="typeBody"></div>
+          </section>
+
+          <!-- ===== หน้าบริการต่าง ๆ แสดงในโทรศัพท์ (ห้ามออกจอใหญ่) ===== -->
+          <section class="panel frame-panel" id="framePanel" aria-hidden="true" aria-labelledby="frameTitle">
+            <header class="panel-bar"><button class="back" id="frameBack">‹ กลับ</button><h2 id="frameTitle"></h2><span></span></header>
+            <iframe id="appFrame" title="หน้าบริการ" src="about:blank"></iframe>
+          </section>
 
           <!-- แถบเมนูล่าง -->
           <nav class="tabbar member-only" aria-label="เมนูหลัก">
@@ -351,6 +367,7 @@
 
   <script src="common.js"></script>
   <script src="services-data.js"></script>
+  <script src="categories-data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

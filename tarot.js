@@ -219,3 +219,7 @@ $('againBtn').addEventListener('click', () => {
   $('question').value = '';
   showStep('stepSpread', 'ตั้งคำถามในใจ แล้วเลือกรูปแบบการเปิดไพ่');
 });
+
+// เปิดจากลิงก์ เช่น tarot.html?spread=love หรือ ?spread=one → ข้ามไปขั้นสับไพ่เลย
+const preset = SPREADS.find((sp) => sp.id === new URLSearchParams(location.search).get('spread'));
+if (preset) startDraw(preset);

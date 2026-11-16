@@ -353,3 +353,10 @@ body.ready .cta { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* ---------- โหมดแสดงในโทรศัพท์ (iframe) ---------- */
+.embedded .topbar { display: none; }
+.embedded body { padding-top: 14px; }
+.embedded .page-head { margin-bottom: 18px; }
+.embedded, .embedded body { scrollbar-width: none; }
+.embedded ::-webkit-scrollbar { display: none; }

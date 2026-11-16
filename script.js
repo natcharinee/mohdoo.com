@@ -43,7 +43,7 @@ document.querySelectorAll('.tcard3').forEach((a) =>
     burst(r.left + r.width / 2, r.top + r.height / 2, 40, 160);
     // ยังไม่เข้าสู่ระบบ → ชวนสมัครก่อน
     if (!currentUser()) { setTimeout(() => openSheet('register'), 300); return; }
-    setTimeout(() => (location.href = a.href), 380);
+    setTimeout(() => openFrame(a.getAttribute('href')), 380);
   })
 );
 
@@ -55,9 +55,55 @@ $('popular').innerHTML = SERVICES.filter((s) => s.open).map((s) => {
   return `<a class="pop" href="${href}"><span class="pi">${s.icon}</span><span class="pn">${s.name}</span><span class="pp">${price}</span></a>`;
 }).join('');
 
-$('sciGrid').innerHTML = SCIENCES.map((s) =>
-  `<a class="sci" href="services.html?science=${s.id}"><span>${s.icon}</span>${s.name.split(' / ')[0]}</a>`
+// ---------- หมวดหมู่ → ประเภทย่อย → รายชื่อหมอดู ----------
+$('catGrid').innerHTML = CATEGORIES.map((c) =>
+  `<button class="cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small><em>${c.types.length} ประเภท ›</em></button>`
 ).join('');
+
+function openPanel(id) {
+  const p = $(id);
+  p.classList.add('open');
+  p.setAttribute('aria-hidden', 'false');
+  p.scrollTop = 0;
+  setTimeout(() => p.querySelector('.back').focus({ preventScroll: true }), 350);
+}
+function closePanel(id) {
+  const p = $(id);
+  p.classList.remove('open');
+  p.setAttribute('aria-hidden', 'true');
+}
+document.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => closePanel(b.dataset.back)));
+
+function openCat(id) {
+  const c = CATEGORIES.find((x) => x.id === id);
+  $('catBody').innerHTML = `
+    <div class="cat-hero"><span class="cat-ico big">${c.icon}</span><div><h3>${c.name}</h3><p>${c.desc}</p></div></div>
+    <ul class="type-list">
+      ${c.types.map((t, i) => `<li><button class="type-row" data-cat="${c.id}" data-type="${i}">
+        <span class="type-ico">${t.icon}</span><span class="type-txt"><b>${t.name}</b><small>${t.desc}</small></span><span class="chev">›</span>
+      </button></li>`).join('')}
+    </ul>`;
+  openPanel('catPanel');
+}
+function openType(catId, idx) {
+  const c = CATEGORIES.find((x) => x.id === catId);
+  const t = c.types[idx];
+  $('typeBody').innerHTML = `
+    <div class="cat-hero"><span class="cat-ico big">${t.icon}</span><div><p class="crumb">${c.name}</p><h3>${t.name}</h3><p>${t.desc}</p></div></div>
+    ${t.action ? `<a class="btn-gold full" href="${t.action.href}">${t.action.label}</a>` : ''}
+    <div class="sec-head"><h3>รายชื่อหมอดู</h3><span class="filters"><span>ตัวกรอง</span><span>เรียงตาม</span></span></div>
+    <div class="empty-seers">
+      <span class="es-ico">🔮</span>
+      <b>ยังไม่มีหมอดูในประเภทนี้</b>
+      <p>เมื่อหมอดูเปิดรับงานในหมวด “${t.name}” รายชื่อ ราคา และเวลาคิวจะแสดงที่นี่</p>
+      <button class="btn-ghost full" data-notify="${t.name}">แจ้งเตือนฉันเมื่อมีหมอดู</button>
+    </div>`;
+  $('typeBody').querySelector('[data-notify]').addEventListener('click', (e) =>
+    toast(`เราจะแจ้งเตือนเมื่อมีหมอดู “${e.currentTarget.dataset.notify}” (ตัวอย่าง — ยังไม่เชื่อมระบบหลังบ้าน)`));
+  openPanel('typePanel');
+}
+$('catGrid').addEventListener('click', (e) => { const b = e.target.closest('[data-cat]'); if (b) openCat(b.dataset.cat); });
+$('catBody').addEventListener('click', (e) => { const b = e.target.closest('[data-type]'); if (b) openType(b.dataset.cat, +b.dataset.type); });
 
 // ---------- Bottom sheet: เข้าสู่ระบบ / สมัคร ----------
 const screen = $('screen');
@@ -129,6 +175,7 @@ $('avatarBtn').addEventListener('click', toggleAccount);
 $('tabAccount').addEventListener('click', () => { $('app').scrollTop = 0; toggleAccount(); });
 $('logoutBtn').addEventListener('click', () => {
   try { localStorage.removeItem(USER_KEY); } catch (_) {}
+  closePanel('typePanel'); closePanel('catPanel');
   applyUser();
   toast('ออกจากระบบแล้ว แล้วพบกันใหม่ ✦');
 });
@@ -288,4 +335,59 @@ if (seen || hashAuth) {
     burst(d.left + d.width / 2, d.top + d.height * 0.55, 30, 120);
   }, 3300);
   setTimeout(openGate, 3700);
+}
+
+
+// ---------- เปิดหน้าบริการภายในโทรศัพท์ ----------
+const APP_PAGES = { 'tarot.html': 'ไพ่ทาโรต์', 'siamsi.html': 'เสี่ยงเซียมซี', 'services.html': 'บริการ' };
+const pageOf = (href) => (href || '').split(/[?#]/)[0].split('/').pop();
+const isAppPage = (href) => pageOf(href) in APP_PAGES;
+const frame = $('appFrame');
+
+function openFrame(href) {
+  if (!isAppPage(href)) return;
+  $('frameTitle').textContent = APP_PAGES[pageOf(href)];
+  frame.src = href;
+  openPanel('framePanel');
+}
+function closeFrame() {
+  closePanel('framePanel');
+  setTimeout(() => { if (!$('framePanel').classList.contains('open')) frame.src = 'about:blank'; }, 450);
+}
+// ชื่อบนแถบ = ชื่อหน้าที่กำลังแสดง (หน้าย่อยกดลิงก์ไปหน้าอื่นได้ภายในโทรศัพท์)
+frame.addEventListener('load', () => {
+  try {
+    const t = frame.contentDocument.title.split(' — ')[0];
+    if (t && frame.src !== 'about:blank') $('frameTitle').textContent = t;
+  } catch (_) {}
+});
+$('frameBack').addEventListener('click', closeFrame);
+// หน้าย่อยขอกลับหน้าแรก / เปิดสมัคร / เข้าสู่ระบบ
+addEventListener('message', (e) => {
+  if (e.origin !== location.origin || !e.data || e.data.type !== 'mohdoo-nav') return;
+  closeFrame();
+  closePanel('typePanel'); closePanel('catPanel');
+  const h = (e.data.href.split('#')[1] || '');
+  if (h === 'register' || h === 'login') setTimeout(() => openSheet(h), 300);
+});
+
+// ทุกลิงก์ในโทรศัพท์ที่ไปหน้าบริการ → เปิดในโทรศัพท์
+$('screen').addEventListener('click', (e) => {
+  const a = e.target.closest('a[href]');
+  if (!a || a.classList.contains('tcard3')) return;
+  const href = a.getAttribute('href');
+  if (isAppPage(href)) { e.preventDefault(); openFrame(href); return; }
+  if (pageOf(href) === 'index.html' && a.closest('.tabbar')) {
+    e.preventDefault();
+    closeFrame(); closePanel('typePanel'); closePanel('catPanel');
+    $('app').scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+// มาจากหน้าย่อยที่ถูกเปิดตรง ๆ บนจอใหญ่ เช่น index.html?app=tarot.html → เปิดในโทรศัพท์
+const appParam = new URLSearchParams(location.search).get('app');
+if (appParam && isAppPage(appParam)) {
+  try { sessionStorage.setItem('gateOpened', '1'); } catch (_) {}
+  if (!opened) skipGate();
+  openFrame(appParam);
 }

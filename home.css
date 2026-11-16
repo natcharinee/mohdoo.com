@@ -290,7 +290,7 @@ body.ready .phone-slot { opacity: 1; transform: none; }
 
 /* แถบเมนูล่าง */
 .tabbar {
-  position: absolute; left: 0; right: 0; bottom: 0; z-index: 20; height: 88px; padding: 8px 10px 26px;
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 25; height: 88px; padding: 8px 10px 26px;
   display: grid; grid-template-columns: repeat(5, 1fr); align-items: end;
   background: rgba(16, 8, 40, .82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   border-top: 1px solid rgba(227, 179, 255, .18);
@@ -304,7 +304,7 @@ body.ready .phone-slot { opacity: 1; transform: none; }
   background: linear-gradient(135deg, var(--gold-2), var(--gold) 50%, var(--gold-3));
   box-shadow: 0 0 0 4px #160a36, 0 0 24px rgba(245, 201, 107, .6);
 }
-.home-indicator { position: absolute; left: 50%; bottom: 8px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: rgba(255, 255, 255, .85); z-index: 21; }
+.home-indicator { position: absolute; left: 50%; bottom: 8px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: rgba(255, 255, 255, .85); z-index: 26; }
 
 /* Bottom sheet */
 .sheet-backdrop { position: absolute; inset: 0; z-index: 40; background: rgba(5, 2, 20, .6); backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity .35s; }
@@ -376,11 +376,93 @@ body.logged-in .avatar { background: linear-gradient(135deg, var(--gold-2), var(
 
 /* ============ หลังเข้าสู่ระบบ: แม่หมอครึ่งบน บริการครึ่งล่าง ============ */
 body.logged-in .seer-scene {
-  zoom: .58;                       /* ย่อทั้งฉากให้เหลือราวครึ่งจอ */
-  margin: 0 calc(-18px / .58); padding: 0 calc(18px / .58);
+  zoom: .5;                        /* ย่อฉากแม่หมอให้เหลือราวหนึ่งในสามของจอ */
+  margin: 0 calc(-18px / .5); padding: 0 calc(18px / .5);
 }
+body.logged-in .app-title, body.logged-in .bolts { display: none; }
+body.logged-in .seer { margin-top: 24px; }
 body.logged-in .hello { margin-top: 10px; }
 body.logged-in .app-section { margin-top: 16px; }
 @media (max-width: 600px) {
-  body.logged-in .seer-scene { margin: 0 calc(-16px / .58); padding: 0 calc(16px / .58); }
+  body.logged-in .seer-scene { margin: 0 calc(-16px / .5); padding: 0 calc(16px / .5); }
 }
+
+/* ============ หมวดหมู่ (6 หมวด) ============ */
+.cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cat {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left;
+  padding: 14px 12px 12px; border-radius: 18px; overflow: hidden;
+  background: linear-gradient(165deg, rgba(80, 36, 150, .75), rgba(22, 9, 52, .9));
+  border: 1px solid rgba(227, 179, 255, .25); transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.cat::after { content: ""; position: absolute; right: -30px; top: -30px; width: 90px; height: 90px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 122, 217, .25), transparent 70%); }
+.cat:hover { transform: translateY(-3px); border-color: var(--lilac); box-shadow: 0 10px 30px rgba(177, 76, 255, .35); }
+.cat-ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-size: 1.35rem;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .25), rgba(123, 77, 255, .4)); border: 1px solid rgba(245, 201, 107, .4); }
+.cat-ico.big { width: 56px; height: 56px; font-size: 1.8rem; flex: none; border-radius: 16px; }
+.cat b { font-size: .98rem; font-weight: 500; color: var(--gold-2); margin-top: 4px; }
+.cat small { font-size: .74rem; line-height: 1.45; color: var(--muted); font-weight: 300;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cat em { font-style: normal; font-size: .72rem; color: var(--lilac); margin-top: 4px; }
+
+/* ============ แผงเลื่อนเข้า (หมวดหมู่ย่อย / รายชื่อหมอดู) ============ */
+.panel {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 88px; z-index: 18;
+  overflow-y: auto; scrollbar-width: none; padding: 50px 18px 24px;
+  background:
+    radial-gradient(120% 50% at 50% 0%, #3a1670 0%, transparent 60%), #0d0724;
+  transform: translateX(105%); transition: transform .4s cubic-bezier(.2, .9, .3, 1);
+  box-shadow: -20px 0 40px rgba(0, 0, 0, .4);
+}
+.panel::-webkit-scrollbar { display: none; }
+.panel.open { transform: none; }
+#typePanel { z-index: 19; }
+.panel-bar { position: sticky; top: -50px; z-index: 2; display: grid; grid-template-columns: 70px 1fr 70px; align-items: center;
+  margin: -50px -18px 12px; padding: 54px 12px 10px; background: linear-gradient(180deg, #1c0c44 70%, rgba(28, 12, 68, 0)); }
+.panel-bar h2 { text-align: center; font-size: 1rem; font-weight: 500; color: var(--gold-2); }
+.back { justify-self: start; padding: 6px 10px; border-radius: 999px; color: var(--lilac); font-size: .9rem; }
+.back:hover { background: rgba(255, 255, 255, .08); }
+
+.cat-hero { display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 18px; margin-bottom: 14px;
+  background: linear-gradient(120deg, rgba(245, 201, 107, .12), rgba(177, 76, 255, .15)); border: 1px solid var(--line); }
+.cat-hero h3 { font-size: 1.15rem; font-weight: 500; color: var(--gold-2); line-height: 1.3; }
+.cat-hero p { font-size: .82rem; color: var(--muted); line-height: 1.5; font-weight: 300; }
+.cat-hero .crumb { color: var(--lilac); font-size: .75rem; }
+
+.type-list { list-style: none; display: grid; gap: 8px; }
+.type-row { width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; padding: 12px; border-radius: 16px;
+  background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .15); transition: background .2s, border-color .2s; }
+.type-row:hover { background: rgba(227, 179, 255, .1); border-color: var(--lilac); }
+.type-ico { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-size: 1.25rem;
+  background: radial-gradient(circle at 35% 30%, #fff3, #4a2486); border: 1px solid rgba(245, 201, 107, .4); }
+.type-txt { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.type-txt b { font-size: .95rem; font-weight: 500; color: var(--text); }
+.type-txt small { font-size: .76rem; color: var(--muted); line-height: 1.45; font-weight: 300; }
+.chev { color: var(--lilac); font-size: 1.4rem; }
+
+#typeBody > .btn-gold.full { display: flex; margin-bottom: 18px; text-decoration: none; }
+.filters { display: flex; gap: 6px; }
+.filters span { font-size: .75rem; padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(227, 179, 255, .25); color: var(--muted); }
+.empty-seers { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; padding: 26px 18px 20px; border-radius: 18px;
+  border: 1px dashed rgba(227, 179, 255, .3); background: rgba(255, 255, 255, .03); }
+.es-ico { font-size: 2.4rem; filter: drop-shadow(0 0 12px #b14cff); }
+.empty-seers b { color: var(--gold-2); font-weight: 500; }
+.empty-seers p { font-size: .82rem; color: var(--muted); line-height: 1.6; font-weight: 300; margin-bottom: 8px; }
+
+@media (max-width: 600px) {
+  .panel { bottom: calc(env(safe-area-inset-bottom) + 66px); padding-top: calc(env(safe-area-inset-top) + 10px); }
+  .panel-bar { top: calc(-10px - env(safe-area-inset-top)); margin-top: calc(-10px - env(safe-area-inset-top)); padding-top: calc(env(safe-area-inset-top) + 12px); }
+}
+
+/* ============ หน้าบริการในโทรศัพท์ (iframe) ============ */
+.frame-panel { z-index: 21; padding: 0; display: flex; flex-direction: column; overflow: hidden; background: #0d0724; }
+.frame-panel .panel-bar { position: relative; top: 0; margin: 0; padding: 50px 12px 8px; flex: none; }
+.frame-panel iframe { flex: 1; width: 100%; border: 0; display: block; background: #0d0724; }
+body:not(.logged-in) .panel { bottom: 0; }
+@media (max-width: 600px) {
+  .frame-panel .panel-bar { padding-top: calc(env(safe-area-inset-top) + 10px); margin: 0; top: 0; }
+  body:not(.logged-in) .panel { bottom: 0; }
+}
+/* หลังเข้าสู่ระบบ: ตัดชายผ้าปูโต๊ะให้สั้นลง เหลือแค่ไพ่กับชื่อใต้ไพ่ */
+body.logged-in .table { height: 168px; overflow: hidden; }
+body.logged-in .table-svg { height: 214px; bottom: auto; }
