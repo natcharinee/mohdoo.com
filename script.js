@@ -10,12 +10,14 @@ addEventListener('resize', fitPhone);
 fitPhone();
 
 // ---------- วงแหวนไพ่รอบศีรษะหมอดู ----------
-const ringSyms = ['☾', '✦', '☀', '♄', '✧', '☿', '♀', '✶', '♃', '☽'];
-ringSyms.forEach((sym, i) => {
+// การ์ดลาเวนเดอร์ขอบทอง เว้นช่องด้านหน้าไว้ให้เห็นใบหน้า (เหมือน reference)
+const ringCards = [['☾', 40], ['✦', 75], ['☀', 110], ['♄', 145], ['👁', 180], ['♀', 215], ['✶', 250], ['♃', 285], ['☽', 320]];
+ringCards.forEach(([sym, ang], i) => {
   const c = document.createElement('span');
   c.className = 'rcard';
-  c.style.setProperty('--a', `${(360 / ringSyms.length) * i}deg`);
-  c.textContent = sym;
+  c.style.setProperty('--a', `${ang}deg`);
+  c.style.setProperty('--d', `${-i * 0.4}s`);
+  c.innerHTML = `<i>${sym}</i>`;
   $('ring').appendChild(c);
 });
 
@@ -32,7 +34,6 @@ function magicCircle(runes = '✦ ☾ ✧ ☉ ✦ ☽ ✧ ★ ✦ ☾ ✧ ☉ �
   </svg>`;
 }
 document.querySelectorAll('.mc').forEach((el) => (el.innerHTML = magicCircle()));
-$('tableSigil').innerHTML = magicCircle('☉ ☽ ♂ ☿ ♃ ♀ ♄ ☊ ☋ ☉ ☽ ♂ ☿ ♃ ♀ ♄');
 
 // ไพ่บนโต๊ะ: ประกายก่อนเปลี่ยนหน้า
 document.querySelectorAll('.tcard3').forEach((a) =>

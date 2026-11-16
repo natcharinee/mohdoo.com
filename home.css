@@ -151,67 +151,112 @@ body.ready .phone-slot { opacity: 1; transform: none; }
 .app-logo span:last-child { font-family: "Cinzel Decorative", serif; font-size: .8rem; color: var(--gold); }
 .avatar { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .08); border: 1px solid rgba(227, 179, 255, .35); font-size: 1.05rem; }
 
-/* ฉากหมอดู */
-.seer-scene { position: relative; text-align: center; margin-top: 4px; }
-.app-title { position: relative; z-index: 4; line-height: 1.2; }
-.app-title span { font-size: 4.2rem; display: inline-block; padding: 0 .1em .2em; }
-.app-title small { display: block; font-family: "Cinzel Decorative", serif; font-size: .78rem; letter-spacing: .45em; color: #ffc4ef; text-shadow: 0 0 10px var(--pink); margin-top: -2px; }
-.bolts { position: absolute; top: 0; left: 0; width: 100%; height: 90px; z-index: 3; pointer-events: none; }
-.bolts path { fill: none; stroke: #f3d9ff; stroke-width: 2; stroke-linejoin: round; filter: drop-shadow(0 0 4px #c77dff) drop-shadow(0 0 10px #b14cff); opacity: 0; animation: bolt 4s steps(1) infinite; }
-.bolts path:nth-child(2) { animation-delay: 1.3s; }
-.bolts path:nth-child(3) { animation-delay: 2.6s; }
-@keyframes bolt { 0% { opacity: 1; } 4% { opacity: .2; } 7% { opacity: 1; } 11%, 100% { opacity: 0; } }
+/* ฉากหมอดู (องค์ประกอบตาม reference) */
+.seer-scene { position: relative; text-align: center; margin: 0 -18px; padding: 0 18px; isolation: isolate; }
+.hall { position: absolute; left: 0; top: -6px; width: 100%; height: 340px; z-index: -1; opacity: .9;
+  -webkit-mask: linear-gradient(180deg, #000 60%, transparent); mask: linear-gradient(180deg, #000 60%, transparent); }
 
-.seer { position: relative; width: 250px; height: 275px; margin: 6px auto 0; perspective: 900px; transform-style: preserve-3d; }
-.seer-svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: translateZ(0); filter: drop-shadow(0 0 18px rgba(177, 76, 255, .45)); }
+.app-title { position: relative; z-index: 4; line-height: 1.2; margin-top: 2px; }
+.app-title span { font-size: 4.3rem; display: inline-block; padding: 0 .1em .2em; }
+.app-title small { display: block; font-family: "Cinzel Decorative", serif; font-size: .8rem; letter-spacing: .45em; color: #ffc4ef; text-shadow: 0 0 10px var(--pink); margin-top: -6px; }
+.bolts { position: absolute; top: -4px; left: 8%; width: 84%; height: 104px; z-index: 5; pointer-events: none; }
+.bolts path { fill: none; stroke: #f6e2ff; stroke-width: 1.8; stroke-linejoin: round; filter: drop-shadow(0 0 3px #d79bff) drop-shadow(0 0 9px #b14cff); opacity: 0; animation: bolt 3.6s steps(1) infinite; }
+.bolts path:nth-child(2) { animation-delay: .9s; }
+.bolts path:nth-child(3) { animation-delay: 1.8s; }
+.bolts path:nth-child(4) { animation-delay: 2.4s; }
+.bolts path:nth-child(5) { animation-delay: 3s; }
+@keyframes bolt { 0% { opacity: 1; } 4% { opacity: .2; } 8% { opacity: 1; } 12%, 100% { opacity: 0; } }
+
+/* ลูกเต๋าลอยข้างฮู้ด */
+.sdie { position: absolute; z-index: 3; display: grid; place-items: center; animation: floaty 5s ease-in-out infinite; }
+.sdie.d20 { left: 10px; top: 250px; width: 40px; height: 44px;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: conic-gradient(from 30deg, #efe6ff, #8f78d9, #fbf7ff, #6b55b8, #d9ccff, #8f78d9, #efe6ff);
+  filter: drop-shadow(0 0 10px #c9b8ff); }
+.sdie.d20 b { font-family: "Cinzel Decorative", serif; font-size: .62rem; color: #2a1660; }
+.sdie.d6 { right: 12px; top: 232px; width: 30px; height: 30px; border-radius: 7px; transform: rotate(18deg);
+  background: linear-gradient(135deg, #3a2a20, #120a06); border: 1.5px solid #ff9a3c; box-shadow: 0 0 16px rgba(255, 154, 60, .7); animation-delay: -2.5s;
+  grid-template-columns: repeat(3, 1fr); padding: 5px; }
+.sdie.d6 i { width: 5px; height: 5px; border-radius: 50%; background: #ffb36b; box-shadow: 0 0 4px #ffb36b; }
+.sdie.d6 i:nth-child(1) { grid-column: 1; grid-row: 1; }
+.sdie.d6 i:nth-child(2) { grid-column: 2; grid-row: 2; }
+.sdie.d6 i:nth-child(3) { grid-column: 3; grid-row: 3; }
+
+/* หมอดู + วงไพ่ */
+.seer { position: relative; z-index: 2; width: 312px; height: 340px; margin: -10px auto 0; perspective: 1000px; transform-style: preserve-3d; }
+.seer-svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: translateZ(0); filter: drop-shadow(0 0 22px rgba(177, 76, 255, .5)); }
 .gem-glow { animation: pulse 2.4s ease-in-out infinite; transform-origin: 150px 276px; }
-
-.halo-ring {
-  position: absolute; left: 50%; top: 58px; width: 0; height: 0; transform-style: preserve-3d;
-  animation: ringSpin 18s linear infinite;
-}
-@keyframes ringSpin { from { transform: rotateX(-24deg) rotateY(0); } to { transform: rotateX(-24deg) rotateY(360deg); } }
+.halo-ring { position: absolute; left: 50%; top: 92px; width: 0; height: 0; transform-style: preserve-3d; animation: ringSway 9s ease-in-out infinite; }
+@keyframes ringSway { 0%, 100% { transform: rotateX(-12deg) rotateY(-9deg); } 50% { transform: rotateX(-12deg) rotateY(9deg); } }
 .rcard {
-  position: absolute; width: 32px; height: 48px; left: -16px; top: -24px;
-  transform: rotateY(var(--a)) translateZ(122px);
-  border-radius: 5px; border: 1.5px solid #e9c8ff;
-  background: linear-gradient(160deg, #6b3fb8, #2a1260);
-  box-shadow: 0 0 14px rgba(227, 179, 255, .7), inset 0 0 0 2px rgba(20, 8, 50, .8);
-  display: grid; place-items: center; font-size: 1.1rem; color: #fff3c9;
-  backface-visibility: visible;
+  position: absolute; width: 44px; height: 66px; left: -22px; top: -33px;
+  transform: rotateY(var(--a)) translateZ(150px);
+  transform-style: preserve-3d;
 }
-.rcard::after { content: ""; position: absolute; inset: 3px; border-radius: 3px; border: 1px solid rgba(245, 201, 107, .5); }
+.rcard::before {
+  content: ""; position: absolute; inset: 0; border-radius: 5px;
+  background: linear-gradient(170deg, #f1e6ff, #c4a8f0 55%, #9a7ad8);
+  border: 2px solid #f5c96b; box-shadow: 0 0 16px rgba(227, 179, 255, .8), inset 0 0 0 2px rgba(255, 255, 255, .5);
+  animation: rbob 3.4s ease-in-out infinite; animation-delay: var(--d);
+}
+.rcard i {
+  position: absolute; left: 50%; top: 50%; width: 26px; height: 26px; margin: -13px; border-radius: 50%;
+  display: grid; place-items: center; font-style: normal; font-size: .85rem; color: #ffe7a8;
+  background: radial-gradient(circle, #4a2486, #22114a); border: 1px solid #f5c96b;
+  animation: rbob 3.4s ease-in-out infinite; animation-delay: var(--d);
+}
+@keyframes rbob { 50% { transform: translateY(-6px); } }
 
-/* โต๊ะและไพ่ 3 ใบ */
-.table { position: relative; margin-top: -54px; height: 190px; z-index: 5; }
-.table-cloth {
-  position: absolute; left: -18px; right: -18px; top: 20px; bottom: 0;
-  border-radius: 50% 50% 0 0 / 34% 34% 0 0;
-  background:
-    radial-gradient(70% 60% at 50% 20%, rgba(255, 122, 217, .35), transparent 70%),
-    linear-gradient(180deg, #8a2d8f, #4d1460 45%, #23073a);
-  box-shadow: inset 0 6px 0 rgba(255, 180, 240, .25), 0 -10px 40px rgba(209, 77, 255, .35);
-  overflow: hidden;
-}
-.table-sigil { position: absolute; left: 50%; top: 22px; width: 300px; height: 300px; margin-left: -150px; transform: rotateX(70deg); opacity: .55; }
-.table-sigil svg { width: 100%; height: 100%; animation: spin 40s linear infinite; }
-.table-cards { position: relative; display: flex; justify-content: center; gap: 12px; padding-top: 30px; }
-.tcard3 { width: 98px; text-decoration: none; perspective: 500px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+/* โต๊ะกลม */
+.table { position: relative; z-index: 5; height: 214px; margin: -96px -18px 0; }
+.table-svg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 -8px 30px rgba(209, 77, 255, .45)); }
+.cloth-sigil { filter: drop-shadow(0 0 4px #ff9ae4); }
+.table-cards { position: absolute; left: 0; right: 0; top: 24px; display: flex; justify-content: center; gap: 10px; z-index: 2; }
+.tcard3 { position: relative; width: 92px; text-decoration: none; perspective: 420px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .card-face {
-  position: relative; display: grid; place-items: center; width: 92px; height: 116px;
+  position: relative; display: grid; place-items: center; width: 84px; height: 110px;
   border-radius: 8px; border: 2px solid var(--gold);
-  background: linear-gradient(160deg, #241050, #0f0630);
-  box-shadow: 0 0 0 3px rgba(20, 8, 50, .9) inset, 0 0 0 4px var(--gold-3) inset, 0 12px 20px rgba(0, 0, 0, .55), 0 0 20px rgba(209, 77, 255, .4);
-  transform: rotateX(42deg); transition: transform .35s cubic-bezier(.3, 1.4, .5, 1), box-shadow .35s;
+  background: radial-gradient(circle at 50% 50%, #3a1c78, #120632 70%);
+  box-shadow: 0 0 0 3px rgba(20, 8, 50, .9) inset, 0 0 0 4px var(--gold-3) inset, 0 14px 20px rgba(0, 0, 0, .55), 0 0 22px rgba(143, 216, 255, .45);
+  transform: rotateX(50deg); transition: transform .35s cubic-bezier(.3, 1.4, .5, 1), box-shadow .35s;
 }
-.tcard3.mid .card-face { transform: rotateX(42deg) translateY(-6px); }
-.tcard3:hover .card-face, .tcard3:focus-visible .card-face { transform: rotateX(10deg) translateY(-14px); box-shadow: 0 0 0 3px rgba(20, 8, 50, .9) inset, 0 0 0 4px var(--gold-3) inset, 0 18px 30px rgba(0, 0, 0, .5), 0 0 36px rgba(255, 122, 217, .8); }
+.tcard3.mid .card-face { transform: rotateX(50deg) translateY(-4px); }
+.tcard3:hover .card-face, .tcard3:focus-visible .card-face { transform: rotateX(16deg) translateY(-14px); box-shadow: 0 0 0 3px rgba(20, 8, 50, .9) inset, 0 0 0 4px var(--gold-3) inset, 0 18px 30px rgba(0, 0, 0, .5), 0 0 36px rgba(143, 216, 255, .9); }
 .tcard3:focus-visible { outline: none; }
-.mc { width: 74px; height: 74px; }
-.mc svg { width: 100%; height: 100%; animation: spin 14s linear infinite; filter: drop-shadow(0 0 6px #7ad8ff) drop-shadow(0 0 12px #ff7ad9); }
+.mc { width: 72px; height: 72px; }
+.mc svg { width: 100%; height: 100%; animation: spin 14s linear infinite; filter: drop-shadow(0 0 5px #bff0ff) drop-shadow(0 0 12px #8fd8ff); }
 .tcard3:nth-child(2) .mc svg { animation-direction: reverse; }
-.card-cap { font-size: .78rem; color: var(--muted); line-height: 1.3; text-align: center; }
-.card-cap b { display: block; font-family: "Cinzel Decorative", serif; font-size: .74rem; color: #ffd0f0; text-shadow: 0 0 8px var(--pink); }
+.beam {
+  position: absolute; left: 50%; bottom: 62px; width: 66px; height: 80px; margin-left: -33px; pointer-events: none;
+  background: radial-gradient(50% 100% at 50% 100%, rgba(207, 245, 255, .55), rgba(143, 216, 255, .15) 60%, transparent 75%);
+  filter: blur(3px); animation: beam 2.8s ease-in-out infinite;
+}
+.tcard3:nth-child(2) .beam { animation-delay: -1s; }
+.tcard3:nth-child(3) .beam { animation-delay: -2s; }
+@keyframes beam { 50% { opacity: .45; transform: scaleY(.85); } }
+.card-cap { font-size: .76rem; color: #f3dcff; line-height: 1.3; text-align: center; text-shadow: 0 1px 4px #000; }
+.card-cap b { display: block; font-family: "Cinzel Decorative", serif; font-size: .72rem; color: #ffd0f0; text-shadow: 0 0 8px var(--pink); }
+
+/* ของประกอบบนโต๊ะ */
+.tprop { position: absolute; z-index: 1; pointer-events: none; }
+.candle { width: 16px; height: 70px; }
+.candle.l { left: 22px; top: -34px; }
+.candle.r { right: 74px; top: -44px; transform: scale(.85); transform-origin: bottom; }
+.candle .wx { position: absolute; bottom: 8px; left: 0; width: 16px; height: 44px; border-radius: 4px 4px 2px 2px; background: linear-gradient(90deg, #d8b98e, #fff1d6 40%, #e9cfa6 70%, #b8946a); }
+.candle .hd { position: absolute; bottom: 0; left: -8px; width: 32px; height: 10px; border-radius: 50%; background: linear-gradient(180deg, var(--gold-2), var(--gold-3)); }
+.candle .fl { position: absolute; bottom: 52px; left: 3px; width: 10px; height: 20px; border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+  background: radial-gradient(ellipse at 50% 75%, #fff 0 20%, #ffe08a 40%, #ff9a3c 70%, transparent 72%);
+  box-shadow: 0 0 20px 8px rgba(255, 180, 90, .35); animation: flicker .18s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+.gems { left: 46px; top: 18px; width: 40px; height: 22px; }
+.gems i { position: absolute; bottom: 0; width: 12px; height: 18px; clip-path: polygon(50% 0, 100% 40%, 50% 100%, 0 40%); background: linear-gradient(160deg, #fff, #d7c4ff 50%, #8a6ce0); filter: drop-shadow(0 0 4px #d7c4ff); }
+.gems i:nth-child(1) { left: 0; }
+.gems i:nth-child(2) { left: 11px; height: 22px; background: linear-gradient(160deg, #fff, #ffc9ec 50%, #e06cc0); }
+.gems i:nth-child(3) { left: 24px; height: 14px; }
+.torb { right: 6px; top: -70px; width: 60px; }
+.torb .glass { display: block; width: 54px; height: 54px; margin: 0 auto -10px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff9 0, #d6b8ff88 16%, #6a2bc0dd 55%, #1a0640 82%);
+  box-shadow: 0 0 22px rgba(176, 102, 255, .9); position: relative; z-index: 1; }
+.tstand { display: block; width: 60px; }
 
 /* CTA + sections */
 .app-cta { display: grid; gap: 10px; margin: 20px 0 6px; }
@@ -301,8 +346,8 @@ body.ready .phone-slot { opacity: 1; transform: none; }
 }
 @media (max-width: 360px) {
   .app-title span { font-size: 3.4rem; }
-  .card-face { width: 80px; height: 104px; }
-  .tcard3 { width: 86px; }
+  .card-face { width: 76px; height: 100px; }
+  .tcard3 { width: 82px; }
   .table-cards { gap: 8px; }
 }
 
