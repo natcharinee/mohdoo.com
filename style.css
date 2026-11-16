@@ -365,3 +365,16 @@ body.ready .cta { opacity: 1; transform: none; }
 .eyebrow { letter-spacing: .08em; }
 .page-title { line-height: 1.5; padding: .1em 0 .05em; }
 .auth-head h2 { line-height: 1.5; padding-top: .1em; }
+
+/* ---------- ฟอนต์ Charm: สระบน/วรรณยุกต์สูงมาก → เว้นบรรทัดและระยะด้านบนให้พอ ---------- */
+.page-head .eyebrow { margin-bottom: .35em; }
+.page-title { line-height: 1.75; padding-top: .15em; margin: 0; }
+.auth-head h2 { line-height: 1.65; padding-top: .15em; }
+.logo, .app-logo { line-height: 1.6; }
+/* หัวข้อเล็กที่อยู่เหนือหัวข้อ Charm ทุกหน้า (page-head / tarot-head / อื่น ๆ) */
+.eyebrow + .page-title { margin-top: .12em; padding-top: .2em; }
+/* หัวข้อไล่สีทอง (background-clip: text) วาดสีได้เฉพาะในกรอบของตัวเอง —
+   หางของ ไ / โ และวรรณยุกต์ใน Charm สูงเกินกรอบ จึงต้องขยายกรอบขึ้นไปให้คลุมทั้งตัวอักษร */
+.page-title, .eyebrow + .page-title { padding: .5em .3em .25em; margin-top: -.15em; line-height: 1.4; }
+.eyebrow + .page-title { margin-top: .2em; }
+.page-title + .subtitle { margin-top: .35em; }

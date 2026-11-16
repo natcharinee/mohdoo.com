@@ -98,3 +98,6 @@
   .free-banner { flex-wrap: wrap; }
   .fb-go { width: 100%; text-align: right; }
 }
+
+/* ฟอนต์ Charm: เว้นบรรทัดให้สระบนไม่ชน */
+.book-head h2 { line-height: 1.65; padding-top: .1em; }

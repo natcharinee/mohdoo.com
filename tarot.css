@@ -143,3 +143,7 @@ body { overflow-x: hidden; }
   .actions { flex-direction: column; }
   .actions > * { width: 100%; }
 }
+
+/* ฟอนต์ Charm: เว้นบรรทัดให้สระบนไม่ชน */
+.reading h3 { line-height: 1.65; padding-top: .1em; }
+.reading .en { margin-top: -2px; }

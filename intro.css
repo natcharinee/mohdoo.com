@@ -194,3 +194,10 @@
 @media (max-width: 600px) {
   .gate-intro { --g: min(96vw, calc((100dvh - 220px) / 1.02)); }
 }
+
+/* ฟอนต์ Charm: เว้นบรรทัดให้สระบนไม่ชน */
+.gate-eyebrow { margin-bottom: .3em; }
+.gate-title { line-height: 1.5; }
+.gate-title span { padding-top: .15em; }
+.gate-title span { padding: .5em .3em .25em; margin-top: -.3em; }
+.gate-title span { margin-top: 0; }

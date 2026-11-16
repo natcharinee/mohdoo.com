@@ -777,3 +777,12 @@ body.logged-in .table-svg { height: 214px; bottom: auto; }
 .otp-error { font-size: .8rem; color: #ff8a9a; text-align: center; }
 .sheet .two > label, #editForm .two > label { min-width: 0; }
 .sheet .form input, .sheet .form select, #editForm input, #editForm select { width: 100%; min-width: 0; }
+
+/* ============ ฟอนต์ Charm: เว้นบรรทัดให้สระบนไม่ชน ============ */
+.app-title { line-height: 1.5; }
+.app-title span { padding-top: .18em; }
+.gift h2 { line-height: 1.7; padding-top: .2em; }
+.hist-verse { line-height: 1.8; }
+.app-title small { margin-top: .9em; }   /* สระ ู ของ “หมอดู” ห้อยลงยาว ต้องเว้นที่ให้ */
+.app-title span { padding: .5em .3em .25em; margin-top: -.3em; }
+.app-title span { margin-top: 0; }

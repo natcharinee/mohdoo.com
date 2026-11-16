@@ -102,3 +102,8 @@
   .actions { flex-direction: column; }
   .actions > * { width: 100%; }
 }
+
+/* ฟอนต์ Charm: เว้นบรรทัดให้สระบนไม่ชน */
+.verse { line-height: 1.8; padding-top: .1em; }
+.slip-no b { line-height: 1; }
+.emblem { line-height: 1.7; }
