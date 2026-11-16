@@ -466,7 +466,6 @@ $('screen').addEventListener('click', (e) => {
   if (!a || a.classList.contains('tcard3')) return;
   const href = a.getAttribute('href');
   if (a.dataset.svc) { e.preventDefault(); startCheckout(itemFromService(a.dataset.svc)); return; }
-  if (a.classList.contains('tab-center')) { e.preventDefault(); startCheckout(itemFromHref(href)); return; }
   if (isAppPage(href)) {
     e.preventDefault();
     if (a.closest('.tabbar')) { closeAllPanels(); setActiveTab(a.dataset.tabId || 'services'); }

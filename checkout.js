@@ -120,7 +120,7 @@ function renderSummary() {
     </fieldset>
     <div class="pay-total"><span>ยอดชำระ</span><b id="payTotal">${baht(item.tiers[order.tier].price)}</b></div>
     <button class="btn-gold full" id="toQR">ชำระเงินด้วย QR ›</button>
-    <p class="pay-note">ชำระแล้วจึงเริ่มบริการ · ${item.next.kind === 'form' ? 'ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย' : 'ขั้นต่อไปเริ่มดูดวงได้ทันที'}</p>`;
+    <p class="pay-note">ชำระแล้วจึงเริ่มบริการ · ${item.next.kind === 'form' ? 'ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย' : item.next.kind === 'ai' ? 'ใช้ได้ทันทีหลังชำระ' : 'ขั้นต่อไปเริ่มดูดวงได้ทันที'}</p>`;
   $('payBody').querySelectorAll('input[name="ptier"]').forEach((r) => r.addEventListener('change', () => {
     order.tier = +r.value;
     $('payTotal').textContent = baht(item.tiers[order.tier].price);
@@ -183,7 +183,7 @@ function confirmPaid() {
     const next = order.item.next;
     $('payBody').innerHTML = `
       <div class="pay-ok"><span class="ok-ring">✓</span><h3>ชำระเงินสำเร็จ</h3><p>${baht(order.amount)} · ${order.no}</p></div>
-      <button class="btn-gold full" id="goNext">${next.kind === 'frame' ? '✦ เริ่มดูดวงเลย' : 'กรอกข้อมูลสำหรับการทำนาย ›'}</button>`;
+      <button class="btn-gold full" id="goNext">${next.kind === 'ai' ? '✦ เริ่มคุยกับหมอดู AI' : next.kind === 'frame' ? '✦ เริ่มดูดวงเลย' : 'กรอกข้อมูลสำหรับการทำนาย ›'}</button>`;
     $('goNext').addEventListener('click', proceed);
   }, 1400);
 }
@@ -194,6 +194,7 @@ function addPayment() {
 }
 function proceed() {
   const next = order.item.next;
+  if (next.kind === 'ai') { activateAI(); return; }
   if (next.kind === 'frame') {
     closePanel('payPanel');
     const sep = next.href.includes('?') ? '&' : '?';

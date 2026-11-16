@@ -786,3 +786,42 @@ body.logged-in .table-svg { height: 214px; bottom: auto; }
 .app-title small { margin-top: .9em; }   /* สระ ู ของ “หมอดู” ห้อยลงยาว ต้องเว้นที่ให้ */
 .app-title span { padding: .5em .3em .25em; margin-top: -.3em; }
 .app-title span { margin-top: 0; }
+
+/* ============ หมอดู AI ============ */
+.ai-ico { width: 36px; height: 36px; display: block; }
+.ai-hero { text-align: center; padding: 8px 6px 14px; }
+.ai-orb { position: relative; display: inline-grid; place-items: center; width: 92px; height: 92px; border-radius: 50%; margin-bottom: 10px;
+  background: radial-gradient(circle at 35% 30%, #fff, #d9b8ff 35%, #7a2fd0 75%, #3b1470);
+  box-shadow: 0 0 30px rgba(177, 76, 255, .8), 0 0 70px rgba(255, 122, 217, .35); animation: glow 3s ease-in-out infinite; }
+.ai-orb i { font-style: normal; font-weight: 800; font-size: 1.7rem; color: #2a0b55; }
+.ai-hero h3 { font-size: 1.2rem; font-weight: 500; color: var(--gold-2); line-height: 1.5; }
+.ai-hero p { font-size: .84rem; color: var(--muted); line-height: 1.65; }
+.ai-perks { list-style: none; display: grid; gap: 8px; margin-bottom: 14px; }
+.ai-perks li { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 14px; background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .15); }
+.ai-perks span { font-size: 1.3rem; }
+.ai-perks b { display: block; font-size: .9rem; font-weight: 500; color: var(--text); }
+.ai-perks small { font-size: .74rem; color: var(--muted); line-height: 1.5; }
+.buy-row b em { font-style: normal; font-size: .8rem; font-weight: 400; color: var(--muted); }
+
+.ai-panel { display: flex; flex-direction: column; }
+.ai-panel .panel-body { display: flex; flex-direction: column; min-height: 100%; }
+.ai-member { text-align: center; font-size: .72rem; color: var(--lilac); margin: -4px 0 10px; }
+.ai-log { flex: 1; display: flex; flex-direction: column; gap: 8px; padding-bottom: 10px; }
+.bubble { max-width: 86%; padding: 10px 13px; border-radius: 18px; font-size: .88rem; line-height: 1.65; word-wrap: break-word; }
+.bubble.ai { align-self: flex-start; color: var(--text); background: linear-gradient(160deg, rgba(92, 40, 168, .75), rgba(36, 14, 80, .9)); border: 1px solid rgba(227, 179, 255, .2); border-bottom-left-radius: 6px; }
+.bubble.ai b { color: var(--gold-2); font-weight: 500; }
+.bubble.ai small { color: var(--muted); }
+.bubble.me { align-self: flex-end; color: #2a1503; background: linear-gradient(135deg, var(--gold-2), var(--gold)); border-bottom-right-radius: 6px; }
+.bubble.typing { display: flex; gap: 4px; padding: 14px; }
+.bubble.typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--lilac); animation: dot 1s ease-in-out infinite; }
+.bubble.typing i:nth-child(2) { animation-delay: .15s; } .bubble.typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 50% { transform: translateY(-5px); opacity: .5; } }
+.ai-chips { display: flex; gap: 6px; overflow-x: auto; margin: 0 -18px 8px; padding: 2px 18px; scrollbar-width: none; }
+.ai-chips::-webkit-scrollbar { display: none; }
+.ai-chips button { flex: none; padding: 6px 12px; border-radius: 999px; font-size: .76rem; color: var(--gold-2); border: 1px solid var(--line); background: rgba(245, 201, 107, .08); white-space: nowrap; }
+.ai-input { position: sticky; bottom: -24px; display: flex; gap: 8px; align-items: flex-end; margin: 0 -18px -24px; padding: 10px 14px 14px;
+  background: linear-gradient(180deg, rgba(13, 7, 36, 0), #0d0724 30%); }
+.ai-input textarea { flex: 1; min-width: 0; resize: none; font: inherit; font-size: .9rem; color: var(--text); padding: 10px 14px; border-radius: 20px;
+  background: rgba(0, 0, 0, .45); border: 1px solid rgba(245, 201, 107, .3); outline: none; max-height: 110px; color-scheme: dark; }
+.ai-input textarea:focus { border-color: var(--gold); }
+.ai-input .btn-gold { flex: none; width: 42px; height: 42px; padding: 0; border-radius: 50%; font-size: 1rem; }
