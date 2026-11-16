@@ -190,6 +190,15 @@ $('revealBtn').addEventListener('click', () => {
   sum.innerHTML = `✦ <strong>สรุปภาพรวม</strong> ✦<br>${tone}${extra ? `<br><br>${extra}` : ''}`;
 
   showStep('stepResult', 'คำทำนายของคุณ');
+
+  // เปิดอยู่ในโทรศัพท์ของหน้าแรก → ส่งผลไปบันทึกใน “ประวัติการดูดวง” ของโปรไฟล์
+  if (window.parent !== window) {
+    window.parent.postMessage({ type: 'mohdoo-reading', entry: {
+      kind: 'tarot', icon: '🃏', title: `ไพ่ทาโรต์ · ${spread.name}`, question: q,
+      cards: drawn.map((d, i) => ({ pos: spread.positions[i], th: d.card.th, en: d.card.en, sym: d.card.sym, rev: d.reversed, text: d.reversed ? d.card.rev : d.card.up })),
+      summary: tone.replace(/<[^>]+>/g, ''),
+    } }, location.origin);
+  }
 });
 
 function suitLabel(card) {
@@ -215,7 +224,13 @@ function suitInsight(drawn) {
   return `✦ พลังของ <strong>ชุด${s.th} (ธาตุ${s.element})</strong> โดดเด่น เรื่องนี้เกี่ยวข้องกับ${s.theme}`;
 }
 
-$('againBtn').addEventListener('click', () => {
+$('againBtn').addEventListener('click', (e) => {
+  // ในโทรศัพท์: ดูอีกครั้ง = สั่งซื้อใหม่ (ชำระเงินก่อน)
+  if (window.parent !== window) {
+    const sp = new URLSearchParams(location.search).get('spread');
+    window.parent.postMessage({ type: 'mohdoo-checkout', href: `tarot.html${sp ? `?spread=${sp}` : ''}` }, location.origin);
+    return;
+  }
   $('question').value = '';
   showStep('stepSpread', 'ตั้งคำถามในใจ แล้วเลือกรูปแบบการเปิดไพ่');
 });

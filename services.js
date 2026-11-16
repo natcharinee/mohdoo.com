@@ -122,7 +122,17 @@ function openBook(id) {
   });
 
   const go = $('bookGo');
-  if (s.open) {
+  const inPhone = document.documentElement.classList.contains('embedded');
+  if (s.open && inPhone) {
+    // อยู่ในโทรศัพท์ (เข้าสู่ระบบแล้ว) → ไปขั้นตอนชำระเงินของหน้าแรก
+    go.textContent = 'จองและชำระเงิน ›';
+    go.href = '#';
+    go.onclick = (e) => {
+      e.preventDefault();
+      dlg.close();
+      window.parent.postMessage({ type: 'mohdoo-checkout', service: s.id }, location.origin);
+    };
+  } else if (s.open) {
     go.textContent = 'เข้าสู่ระบบเพื่อจอง';
     go.href = 'index.html#register';
     go.onclick = null;

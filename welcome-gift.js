@@ -12,7 +12,14 @@ const GIFTS = [
 const COUPON_DAYS = 30;
 
 // ---------- ข้อมูลผู้ใช้ ----------
-function saveUser(u) { try { localStorage.setItem(USER_KEY, JSON.stringify(u)); } catch (_) {} }
+function saveUser(u) { persistUser(u); }
+// ประวัติการดูดวง (ล่าสุดอยู่บนสุด เก็บไม่เกิน 50 รายการ)
+function addHistory(entry) {
+  const u = currentUser();
+  if (!u) return;
+  u.history = [{ id: `h${Date.now().toString(36)}`, at: Date.now(), ...entry }, ...(u.history || [])].slice(0, 50);
+  saveUser(u);
+}
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const thDate = (ts) => new Date(ts).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' });
 
@@ -81,7 +88,7 @@ function closeGift() { giftEl.classList.remove('open'); }
 $('giftLater').addEventListener('click', () => {
   closeGift();
   renderCoupons();
-  toast('หมุนวงล้อได้ภายหลังที่ “คูปองของฉัน” ✦');
+  toast('หมุนวงล้อได้ภายหลังที่หน้าบัญชี ✦');
 });
 
 // ---------- หมุน ----------
@@ -133,8 +140,7 @@ function showWin(g) {
     addCoupon(g.id);
     closeGift();
     renderCoupons();
-    toast(`เก็บคูปอง “${g.name}” แล้ว ดูได้ที่คูปองของฉัน 🎟`);
-    $('app').scrollTo({ top: $('couponSec').offsetTop - 60, behavior: 'smooth' });
+    toast(`เก็บคูปอง “${g.name}” แล้ว ดูได้ที่หน้าบัญชี 🎟`);
   });
 }
 
@@ -149,47 +155,18 @@ function addCoupon(giftId) {
 }
 
 // ส่วน "คูปองของฉัน" บนหน้าแรก (ใต้คำทักทาย)
-const couponSec = document.createElement('section');
-couponSec.className = 'app-section member-only';
-couponSec.id = 'couponSec';
-$('hello').after(couponSec);
-
+// คูปองแสดงเฉพาะในหน้าบัญชี (profile.js) — หน้าแรกไม่มีส่วนนี้
 function renderCoupons() {
-  const u = currentUser();
-  if (!u) { couponSec.innerHTML = ''; return; }
-  const live = (u.coupons || []).filter((c) => !c.used && c.expires > Date.now());
-  let html = '';
-  if (u.first && !u.wheelSpun) {
-    html = `<button class="spin-cta" id="spinCta"><span>🎡</span><b>คุณยังมีสิทธิ์หมุนวงล้อรับดวงฟรี 1 ครั้ง</b><em>หมุนเลย ›</em></button>`;
-  } else if (u.pendingGift) {
-    const g = GIFTS.find((x) => x.id === u.pendingGift);
-    html = `<button class="spin-cta" id="claimCta"><span>${g.icon}</span><b>คุณได้รับ “${g.name}” ยังไม่ได้เลือกใช้</b><em>รับเลย ›</em></button>`;
-  }
-  if (live.length) {
-    html += `<div class="sec-head"><h3>คูปองของฉัน</h3><span class="sec-note">${live.length} ใบ</span></div>
-      <div class="coupons">${live.map((c) => {
-        const g = GIFTS.find((x) => x.id === c.gift);
-        return `<div class="coupon">
-          <span class="cp-ico">${g.icon}</span>
-          <span class="cp-txt"><small>ดวงฟรี · ต้อนรับสมาชิกใหม่</small><b>${g.name}</b><em>ใช้ได้ถึง ${thDate(c.expires)}</em></span>
-          <button class="cp-use" data-coupon="${c.id}">ใช้</button>
-        </div>`;
-      }).join('')}</div>`;
-  }
-  couponSec.innerHTML = html;
-  couponSec.hidden = !html;
-  $('spinCta')?.addEventListener('click', startWelcomeGift);
-  $('claimCta')?.addEventListener('click', () => {
-    giftEl.classList.add('open');
-    showWin(GIFTS.find((x) => x.id === u.pendingGift));
-    $('spinBtn').disabled = true;
-    $('giftLater').hidden = true;
-  });
+  if (typeof renderProfile === 'function' && $('profilePanel')?.classList.contains('open')) renderProfile();
 }
-couponSec.addEventListener('click', (e) => {
-  const b = e.target.closest('[data-coupon]');
-  if (b) useCoupon(b.dataset.coupon);
-});
+function claimPending() {
+  const u = currentUser();
+  if (!u || !u.pendingGift) return;
+  giftEl.classList.add('open');
+  showWin(GIFTS.find((x) => x.id === u.pendingGift));
+  $('spinBtn').disabled = true;
+  $('giftLater').hidden = true;
+}
 
 function useCoupon(id) {
   const u = currentUser();
@@ -200,8 +177,9 @@ function useCoupon(id) {
   saveUser(u);
   renderCoupons();
   const g = GIFTS.find((x) => x.id === c.gift);
-  if (g.href) { openFrame(g.href); return; }
-  openReading(g, u);
+  if (g.href) { openFrame(`${g.href}${g.href.includes('?') ? '&' : '?'}paid=coupon`); return; }
+  addHistory({ kind: 'personal', gift: g.id, title: g.name, icon: g.icon });
+  openReading(g, currentUser());
 }
 
 // ---------- หน้าผลคำทำนาย (แผงในโทรศัพท์) ----------
@@ -320,16 +298,23 @@ const ELEMENT_TIP = {
   ลม: 'เติมพลังด้วยการพูดคุยและเรียนรู้สิ่งใหม่ คู่ที่เข้ากันดีคือราศีธาตุไฟ',
   น้ำ: 'เติมพลังด้วยดนตรีหรือการอยู่ใกล้น้ำ คู่ที่เข้ากันดีคือราศีธาตุดิน',
 };
-function readZodiac(u) {
-  const { m, d } = birthParts(u);
-  // หาราศีจากวันเริ่มของแต่ละราศี
+// หาราศีจากเดือน/วันเกิด
+function zodiacOf(m, d) {
   let z = ZODIAC[0];
   for (const item of ZODIAC.slice(1)) {
     const [sm, sd] = item[3];
     if (m > sm || (m === sm && d >= sd)) z = item;
   }
   if (m === 12 && d >= 22) z = ZODIAC[0];
-  const [name, sym, el, , trait] = z;
+  return z;
+}
+function lifeNumber(u) {
+  const { y, m, d } = birthParts(u);
+  return reduce([...`${y}${m}${d}`].reduce((a, b) => a + +b, 0));
+}
+function readZodiac(u) {
+  const { m, d } = birthParts(u);
+  const [name, sym, el, , trait] = zodiacOf(m, d);
   return `<div class="zodiac-badge"><span>${sym}&#xFE0E;</span><div><small>ราศีเกิด</small><b>ราศี${name}</b><em>ธาตุ${el}</em></div></div>
     <p class="reading-lead">นิสัยเด่นของคุณ</p>
     <p class="reading-tip">✦ ${trait}<br>✦ ${ELEMENT_TIP[el]}</p>`;

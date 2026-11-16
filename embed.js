@@ -10,6 +10,12 @@
   }
   if (!embedded) return;
   document.documentElement.classList.add('embedded');
+  var post = function (msg) { window.parent.postMessage(msg, location.origin); };
+  // หน้าไพ่ / เซียมซี ต้องชำระเงินก่อน (มี ?paid=...) ไม่งั้นส่งกลับไปขั้นตอนชำระเงิน
+  if ((page === 'tarot.html' || page === 'siamsi.html') && !/[?&]paid=/.test(location.search)) {
+    post({ type: 'mohdoo-checkout', href: page + location.search, guard: true });
+    document.documentElement.style.visibility = 'hidden';
+  }
   // ลิงก์กลับหน้าแรก / สมัคร / เข้าสู่ระบบ → บอกหน้าแรกให้จัดการ (ไม่ให้โหลดหน้าแรกซ้อนในโทรศัพท์)
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href]');
@@ -17,7 +23,10 @@
     var href = a.getAttribute('href');
     if (/^index\.html/.test(href)) {
       e.preventDefault();
-      window.parent.postMessage({ type: 'mohdoo-nav', href: href }, location.origin);
+      post({ type: 'mohdoo-nav', href: href });
+    } else if (/^(tarot|siamsi)\.html/.test(href)) {
+      e.preventDefault();
+      post({ type: 'mohdoo-checkout', href: href });
     }
   }, true);
 })();

@@ -43,7 +43,9 @@ document.querySelectorAll('.tcard3').forEach((a) =>
     burst(r.left + r.width / 2, r.top + r.height / 2, 40, 160);
     // ยังไม่เข้าสู่ระบบ → ชวนสมัครก่อน
     if (!currentUser()) { setTimeout(() => openSheet('register'), 300); return; }
-    setTimeout(() => openFrame(a.getAttribute('href')), 380);
+    const href = a.getAttribute('href');
+    // ไพ่ทาโรต์ / เซียมซี → จ่ายก่อน (checkout.js) · บริการ → เปิดหน้ารวมบริการ
+    setTimeout(() => (isAppPage(href) && pageOf(href) !== 'services.html' ? startCheckout(itemFromHref(href)) : openFrame(href)), 380);
   })
 );
 
@@ -53,7 +55,7 @@ $('popular').innerHTML = SERVICES.filter((s) => s.open).map((s) => {
   const href = s.link || 'services.html';
   // ยังไม่มีราคา → ไม่แสดงบรรทัดราคา (แค่ไอคอน + ชื่อบริการ)
   const price = priced.length ? `<span class="pp">เริ่ม <b>${Math.min(...priced).toLocaleString('th-TH')} ฿</b></span>` : '';
-  return `<a class="pop" href="${href}"><span class="pi">${s.icon}</span><span class="pn">${s.name}</span>${price}</a>`;
+  return `<a class="pop" href="${href}" data-svc="${s.id}"><span class="pi">${s.icon}</span><span class="pn">${s.name}</span>${price}</a>`;
 }).join('');
 
 // ---------- หมวดหมู่ → ประเภทย่อย → รายชื่อหมอดู ----------
@@ -72,6 +74,8 @@ function closePanel(id) {
   const p = $(id);
   p.classList.remove('open');
   p.setAttribute('aria-hidden', 'true');
+  // ปิดแผงสุดท้ายแล้ว → กลับมาไฮไลต์ “หน้าแรก”
+  if (!document.querySelector('.panel.open') && typeof setActiveTab === 'function') setActiveTab('home');
 }
 document.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => closePanel(b.dataset.back)));
 
@@ -91,7 +95,8 @@ function openType(catId, idx) {
   const t = c.types[idx];
   $('typeBody').innerHTML = `
     <div class="cat-hero"><span class="cat-ico big">${t.icon}</span><div><p class="crumb">${c.name}</p><h3>${t.name}</h3><p>${t.desc}</p></div></div>
-    ${t.action ? `<a class="btn-gold full" href="${t.action.href}">${t.action.label}</a>` : ''}
+    <div class="buy-row"><div><small>ราคาเริ่มต้น</small><b>${(() => { const it = itemFromType(catId, idx); const p = it.tiers.filter((x) => x.price != null).map((x) => x.price); return p.length ? `${Math.min(...p).toLocaleString('th-TH')} ฿` : 'สอบถาม'; })()}</b></div>
+      <button class="btn-gold" data-buy="${catId}|${idx}">ดูดวงประเภทนี้ ›</button></div>
     <div class="sec-head"><h3>รายชื่อหมอดู</h3><span class="filters"><span>ตัวกรอง</span><span>เรียงตาม</span></span></div>
     <div class="empty-seers">
       <span class="es-ico">🔮</span>
@@ -111,15 +116,23 @@ const screen = $('screen');
 const sheet = $('sheet');
 const tabs = document.querySelector('.tabs');
 const copy = {
-  login: ['ยินดีต้อนรับกลับ', 'ดวงดาวรอคุณอยู่'],
-  register: ['เปิดดวงครั้งแรก', 'ใส่วันเกิดเพื่อให้คำทำนายแม่นยำขึ้น'],
+  login: ['ยินดีต้อนรับกลับ', 'เข้าสู่ระบบด้วยเบอร์โทรศัพท์'],
+  register: ['เปิดดวงครั้งแรก', 'สมัครด้วยเบอร์โทรศัพท์ รับรหัส OTP ทาง SMS'],
 };
+// แผ่นสมัคร/เข้าสู่ระบบ: เบอร์โทร → OTP → (สมัครใหม่) ข้อมูลส่วนตัว
+let authMode = 'login';
+function showStep(step) {
+  document.querySelectorAll('#sheet [data-step]').forEach((f) => (f.hidden = f.dataset.step !== step));
+  const first = document.querySelector(`#sheet [data-step="${step}"] input`);
+  if (first) setTimeout(() => first.focus({ preventScroll: true }), 50);
+}
 function setTab(name) {
+  authMode = name;
   tabs.dataset.active = name;
   document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.tab === name));
-  document.querySelectorAll('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== name));
   $('authTitle').textContent = copy[name][0];
   $('authSub').textContent = copy[name][1];
+  showStep('phone');
 }
 let lastFocus = null;
 function openSheet(name) {
@@ -129,7 +142,7 @@ function openSheet(name) {
   sheet.setAttribute('aria-hidden', 'false');
   $('app').inert = true;
   document.querySelector('.tabbar').inert = true;
-  setTimeout(() => sheet.querySelector(`[data-panel="${name}"] input`)?.focus({ preventScroll: true }), 450);
+  setTimeout(() => $('phoneForm').phone.focus({ preventScroll: true }), 450);
 }
 function closeSheet() {
   screen.classList.remove('sheet-open');
@@ -145,18 +158,26 @@ $('sheetBackdrop').addEventListener('click', closeSheet);
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && screen.classList.contains('sheet-open')) closeSheet(); });
 
 // ---------- สถานะผู้ใช้ (ตัวอย่าง: เก็บในเบราว์เซอร์ ยังไม่มีระบบหลังบ้าน) ----------
-const USER_KEY = 'mohdooUser';
+const USER_KEY = 'mohdooUser';        // ผู้ใช้ที่เข้าสู่ระบบอยู่
+const ACCOUNTS_KEY = 'mohdooAccounts'; // บัญชีทั้งหมดในเบราว์เซอร์นี้ (key = เบอร์โทร) — ตัวอย่างแทนฐานข้อมูล
 function currentUser() {
   try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch (_) { return null; }
+}
+function accounts() {
+  try { return JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || {}; } catch (_) { return {}; }
+}
+// บันทึกผู้ใช้ปัจจุบัน + เก็บลงบัญชีตามเบอร์ (ออกจากระบบแล้วประวัติ/คูปองไม่หาย)
+function persistUser(u) {
+  try {
+    localStorage.setItem(USER_KEY, JSON.stringify(u));
+    if (u.phone) { const all = accounts(); all[u.phone] = u; localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(all)); }
+  } catch (_) {}
 }
 function applyUser() {
   const u = currentUser();
   document.body.classList.toggle('logged-in', !!u);
-  $('accountPop').hidden = true;
-  $('avatarBtn').setAttribute('aria-expanded', 'false');
   if (u) {
     $('avatarBtn').textContent = u.name.trim().charAt(0).toUpperCase() || '✦';
-    $('apName').textContent = u.name;
     $('hello').innerHTML = `สวัสดี คุณ${escapeHTML(u.name)} ✦<small>วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย</small>`;
   } else {
     $('avatarBtn').textContent = '👤';
@@ -164,55 +185,109 @@ function applyUser() {
   $('app').scrollTop = 0;
 }
 function escapeHTML(t) {
-  return t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  return String(t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
+function closeAllPanels() {
+  document.querySelectorAll('.panel.open').forEach((p) => closePanel(p.id));
+}
+// แถบเมนูล่าง: ไฮไลต์แท็บที่กำลังเปิด
+function setActiveTab(id) {
+  document.querySelectorAll('.tabbar [data-tab-id]').forEach((t) =>
+    t.dataset.tabId === id ? t.setAttribute('aria-current', 'page') : t.removeAttribute('aria-current'));
+}
+// ไอคอนมุมขวาบน / แท็บบัญชี → หน้าโปรไฟล์ (profile.js)
 function toggleAccount() {
   if (!currentUser()) return openSheet('login');
-  const pop = $('accountPop');
-  pop.hidden = !pop.hidden;
-  $('avatarBtn').setAttribute('aria-expanded', String(!pop.hidden));
+  openProfile();
 }
-$('avatarBtn').addEventListener('click', toggleAccount);
-$('tabAccount').addEventListener('click', () => { $('app').scrollTop = 0; toggleAccount(); });
-$('logoutBtn').addEventListener('click', () => {
+function logout() {
   try { localStorage.removeItem(USER_KEY); } catch (_) {}
-  closePanel('typePanel'); closePanel('catPanel');
+  closeAllPanels();
+  setActiveTab('home');
   applyUser();
   toast('ออกจากระบบแล้ว แล้วพบกันใหม่ ✦');
-});
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('#accountPop, #avatarBtn, #tabAccount')) $('accountPop').hidden = true;
-});
+}
+$('avatarBtn').addEventListener('click', toggleAccount);
+$('tabAccount').addEventListener('click', toggleAccount);
 applyUser();
 
-document.querySelectorAll('.form').forEach((f) =>
-  f.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const isLogin = f.id === 'loginForm';
-    const data = new FormData(f);
-    const prev = currentUser() || {};
-    const user = isLogin
-      ? { ...prev, name: prev.name || String(data.get('email')).split('@')[0] }
-      : {
-          name: String(data.get('first')).trim(),
-          first: String(data.get('first')).trim(),
-          last: String(data.get('last')).trim(),
-          birthdate: String(data.get('birthdate')),
-          birthtime: String(data.get('birthtime') || ''),
-          coupons: [],
-          wheelSpun: false,
-        };
-    try { localStorage.setItem(USER_KEY, JSON.stringify(user)); } catch (_) {}
-    closeSheet();
-    applyUser();
-    // สมัครใหม่ → วงล้อของขวัญต้อนรับ (welcome-gift.js)
-    if (!isLogin && typeof startWelcomeGift === 'function') setTimeout(startWelcomeGift, 900);
-    toast(isLogin ? 'เข้าสู่ระบบสำเร็จ (ตัวอย่าง — ยังไม่เชื่อมระบบหลังบ้าน)' : 'สมัครสำเร็จ! ยินดีต้อนรับสู่หมอดู.com ✦');
-    const r = screen.getBoundingClientRect();
-    burst(r.left + r.width / 2, r.top + r.height / 2, 60, 260);
-    f.reset();
-  })
-);
+const DEMO_OTP = '123456'; // ระบบทดสอบ — เปลี่ยนเป็นการส่ง/ตรวจ OTP จากระบบหลังบ้านเมื่อพร้อม
+let pendingPhone = '';
+let resendTimer = null;
+const cleanPhone = (v) => String(v).replace(/\D/g, '');
+const prettyPhone = (p) => p.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+
+$('phoneForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  pendingPhone = cleanPhone(e.target.phone.value);
+  if (!/^0\d{9}$/.test(pendingPhone)) { toast('กรุณากรอกเบอร์มือถือ 10 หลัก'); return; }
+  $('otpPhone').textContent = prettyPhone(pendingPhone);
+  $('otpError').hidden = true;
+  $('otpForm').reset();
+  startResend();
+  showStep('otp');
+  toast(`ส่งรหัส OTP ไปที่ ${prettyPhone(pendingPhone)} แล้ว (ทดสอบ: ${DEMO_OTP})`);
+});
+function startResend() {
+  let left = 60;
+  const btn = $('otpResend');
+  btn.disabled = true;
+  btn.innerHTML = 'ขอรหัสใหม่ได้ใน <span id="otpWait">60</span> วินาที';
+  clearInterval(resendTimer);
+  resendTimer = setInterval(() => {
+    left -= 1;
+    if (left > 0) { $('otpWait').textContent = left; return; }
+    clearInterval(resendTimer);
+    btn.disabled = false;
+    btn.textContent = 'ขอรหัส OTP ใหม่';
+  }, 1000);
+}
+$('otpResend').addEventListener('click', () => { startResend(); toast(`ส่งรหัสใหม่แล้ว (ทดสอบ: ${DEMO_OTP})`); });
+$('otpChange').addEventListener('click', () => { clearInterval(resendTimer); showStep('phone'); });
+$('otpForm').otp.addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6); $('otpError').hidden = true; });
+
+$('otpForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (e.target.otp.value !== DEMO_OTP) { $('otpError').hidden = false; e.target.otp.select(); return; }
+  clearInterval(resendTimer);
+  const existing = accounts()[pendingPhone];
+  if (existing) {
+    // มีบัญชีอยู่แล้ว → เข้าสู่ระบบ (แม้จะกดแท็บสมัคร)
+    finishAuth(existing, false);
+  } else {
+    if (authMode === 'login') toast('ยังไม่มีบัญชีสำหรับเบอร์นี้ กรอกข้อมูลเพื่อสมัครได้เลย');
+    authMode = 'register';
+    tabs.dataset.active = 'register';
+    document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.tab === 'register'));
+    $('authTitle').textContent = 'อีกนิดเดียว';
+    $('authSub').textContent = 'กรอกข้อมูลเพื่อใช้ทำนายดวงของคุณ';
+    showStep('info');
+  }
+});
+
+$('infoForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const d = new FormData(e.target);
+  const first = String(d.get('first')).trim();
+  finishAuth({
+    phone: pendingPhone, name: first, first, last: String(d.get('last')).trim(),
+    birthdate: String(d.get('birthdate')), birthtime: String(d.get('birthtime') || ''),
+    created: Date.now(), coupons: [], history: [], wheelSpun: false,
+  }, true);
+  e.target.reset();
+});
+
+function finishAuth(user, isNew) {
+  persistUser(user);
+  closeSheet();
+  applyUser();
+  $('phoneForm').reset();
+  // สมัครใหม่ → วงล้อของขวัญต้อนรับ (welcome-gift.js)
+  if (isNew && typeof startWelcomeGift === 'function') setTimeout(startWelcomeGift, 900);
+  toast(isNew ? 'สมัครสำเร็จ! ยินดีต้อนรับสู่หมอดู.com ✦' : `ยินดีต้อนรับกลับ คุณ${user.name} ✦`);
+  const r = screen.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height / 2, 60, 260);
+}
 document.querySelectorAll('.social').forEach((s) =>
   s.addEventListener('click', () => toast('การเข้าสู่ระบบผ่านโซเชียลจะเปิดให้ใช้เร็ว ๆ นี้'))
 );
@@ -390,10 +465,18 @@ $('screen').addEventListener('click', (e) => {
   const a = e.target.closest('a[href]');
   if (!a || a.classList.contains('tcard3')) return;
   const href = a.getAttribute('href');
-  if (isAppPage(href)) { e.preventDefault(); openFrame(href); return; }
+  if (a.dataset.svc) { e.preventDefault(); startCheckout(itemFromService(a.dataset.svc)); return; }
+  if (a.classList.contains('tab-center')) { e.preventDefault(); startCheckout(itemFromHref(href)); return; }
+  if (isAppPage(href)) {
+    e.preventDefault();
+    if (a.closest('.tabbar')) { closeAllPanels(); setActiveTab(a.dataset.tabId || 'services'); }
+    openFrame(href);
+    return;
+  }
   if (pageOf(href) === 'index.html' && a.closest('.tabbar')) {
     e.preventDefault();
-    closeFrame(); closePanel('typePanel'); closePanel('catPanel');
+    closeAllPanels(); setActiveTab('home');
+    setTimeout(() => (frame.src = 'about:blank'), 450);
     $('app').scrollTo({ top: 0, behavior: 'smooth' });
   }
 });

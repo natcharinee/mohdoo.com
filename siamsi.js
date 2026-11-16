@@ -51,6 +51,13 @@ function showResult(idx) {
   $('rLove').textContent = d.love;
   $('rMoney').textContent = d.money;
 
+  if (window.parent !== window) {
+    window.parent.postMessage({ type: 'mohdoo-reading', entry: {
+      kind: 'siamsi', icon: '🎋', title: `เซียมซีใบที่ ${idx + 1}`, question: wish,
+      no: idx + 1, lv: d.lv, verse: d.verse, meaning: d.meaning, work: d.work, love: d.love, money: d.money,
+    } }, location.origin);
+  }
+
   $('stepShake').hidden = true;
   $('result').hidden = false;
   $('hint').textContent = 'คำทำนายของคุณ';
@@ -61,6 +68,10 @@ function showResult(idx) {
 $('shakeBtn').addEventListener('click', shake);
 $('tube').addEventListener('click', shake);
 $('againBtn').addEventListener('click', () => {
+  if (window.parent !== window) {
+    window.parent.postMessage({ type: 'mohdoo-checkout', href: 'siamsi.html' }, location.origin);
+    return;
+  }
   $('result').hidden = true;
   $('stepShake').hidden = false;
   $('shakeBtn').disabled = false;
