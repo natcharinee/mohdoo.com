@@ -40,6 +40,7 @@ function renderAIPitch(u) {
     </ul>
     <div class="buy-row"><div><small>${expired ? 'สมาชิกหมดอายุแล้ว · ต่ออายุ' : 'สมาชิกรายเดือน'}</small><b>${AI_PRICE} ฿ <em>/ ${AI_DAYS} วัน</em></b></div>
       <button class="btn-gold" id="aiSubscribe">${expired ? 'ต่ออายุ ›' : 'สมัครเลย ›'}</button></div>
+    <p class="test-mode">🧪 โหมดทดลอง · ไม่มีการเก็บเงินจริง สมัครแล้วลองคุยได้เลย</p>
     <p class="pay-note">ชำระด้วย QR แล้วเริ่มคุยได้ทันที · คำทำนายเพื่อความบันเทิงและเป็นแนวทางชีวิต</p>`;
   $('aiSubscribe').addEventListener('click', () => startCheckout({
     key: 'ai-month', icon: '🔮', title: 'หมอดู AI รายเดือน', sub: 'ถามได้ไม่จำกัด วิเคราะห์จากทุกศาสตร์',

@@ -78,6 +78,7 @@ payPanel.id = 'payPanel';
 payPanel.setAttribute('aria-hidden', 'true');
 payPanel.innerHTML = `<header class="panel-bar"><button class="back">‹ กลับ</button><h2 id="payTitle">ชำระเงิน</h2><span></span></header>
   <ol class="pay-steps" aria-label="ขั้นตอน"><li data-s="1">เลือก</li><li data-s="2">ชำระเงิน</li><li data-s="3">เริ่มดูดวง</li></ol>
+  <p class="test-mode">🧪 โหมดทดลอง · ไม่มีการเก็บเงินจริง กด “ฉันชำระเงินแล้ว” เพื่อลองใช้บริการได้เลย</p>
   <div class="panel-body" id="payBody"></div>`;
 $('screen').insertBefore(payPanel, $('sheetBackdrop'));
 payPanel.querySelector('.back').addEventListener('click', cancelCheckout);
@@ -137,7 +138,7 @@ function renderQR() {
   setStep(2, 'สแกนเพื่อชำระเงิน');
   $('payBody').innerHTML = `
     <div class="qr-card">
-      <span class="demo-tag">ตัวอย่าง · ยังไม่เชื่อมระบบชำระเงิน</span>
+      <span class="demo-tag">โหมดทดลอง · ไม่ต้องสแกนจ่ายจริง</span>
       <p class="qr-head">สแกนจ่ายผ่านแอปธนาคาร</p>
       <div class="qr-box" id="qrBox"></div>
       <p class="qr-amount">${baht(order.amount)}</p>
@@ -145,7 +146,7 @@ function renderQR() {
       <p class="qr-timer">QR หมดอายุใน <b id="qrTime">${ORDER_MINUTES}:00</b></p>
     </div>
     <ol class="qr-how"><li>เปิดแอปธนาคาร แล้วเลือกสแกน QR</li><li>ตรวจยอดเงินให้ตรง แล้วยืนยันการโอน</li><li>กลับมากด “ฉันชำระเงินแล้ว”</li></ol>
-    <button class="btn-gold full" id="paidBtn">ฉันชำระเงินแล้ว</button>
+    <button class="btn-gold full" id="paidBtn">ฉันชำระเงินแล้ว <small>(ทดลอง)</small></button>
     <button class="btn-ghost full" id="cancelPay">ยกเลิกคำสั่งซื้อ</button>`;
   drawQR($('qrBox'), `MOHDOO-DEMO|${order.no}|${order.amount}THB|ไม่ใช่การชำระเงินจริง`);
   let left = ORDER_MINUTES * 60;
