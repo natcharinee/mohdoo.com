@@ -252,7 +252,7 @@ function renderIntake(fields) {
 // 1) หน้าย่อยใน iframe (บริการ / เซียมซีซ้ำ / ไพ่ซ้ำ) ขอจ่ายเงิน
 addEventListener('message', (e) => {
   if (e.origin !== location.origin || !e.data || e.data.type !== 'mohdoo-checkout') return;
-  const it = e.data.service ? itemFromService(e.data.service) : itemFromHref(e.data.href || '');
+  const it = e.data.service ? itemFromService(e.data.service, e.data.title) : itemFromHref(e.data.href || '');
   if (e.data.guard) closeFrame();
   if (it) startCheckout(it);
 });

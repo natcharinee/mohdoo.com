@@ -62,6 +62,7 @@ function activateAI() {
 
 // ---------- หน้าแชท ----------
 function renderChat(u) {
+  stopSpeaking();
   const chat = u.aiChat || [];
   aiBody.innerHTML = `
     <p class="ai-member">✦ สมาชิกถึง ${thDate(u.aiUntil)}</p>
@@ -73,12 +74,13 @@ function renderChat(u) {
     </form>
     <p class="ai-code-note" id="aiCodeNote">${u.aiCode ? '' : 'ไม่มีรหัสก็ลองคุยได้ แม่หมอจะตอบแบบตัวอย่าง'}</p>
     <div class="ai-log" id="aiLog">
-      <div class="bubble ai">สวัสดีค่ะ คุณ${esc(u.first || u.name)} ✦ แม่หมอ AI พร้อมดูดวงให้แล้ว อยากรู้เรื่องไหนถามได้เลยนะคะ${u.birthdate ? '' : '<br><small>เพิ่มวันเกิดในหน้าบัญชี จะได้วิเคราะห์ได้แม่นขึ้นค่ะ</small>'}</div>
-      ${chat.map((m) => `<div class="bubble ${m.role === 'user' ? 'me' : 'ai'}">${fmtMsg(m.content)}</div>`).join('')}
+      ${aiBubble(`สวัสดีค่ะ คุณ${u.first || u.name} ✦ แม่หมอ AI พร้อมดูดวงให้แล้ว อยากรู้เรื่องไหนถามได้เลยนะคะ${u.birthdate ? '' : '\nเพิ่มวันเกิดในหน้าบัญชี จะได้วิเคราะห์ได้แม่นขึ้นค่ะ'}`)}
+      ${chat.map((m) => (m.role === 'user' ? `<div class="bubble me">${fmtMsg(m.content)}</div>` : aiBubble(m.content))).join('')}
     </div>
     <div class="ai-chips" id="aiChips">${AI_SUGGEST.map((s) => `<button data-ask="${s}">${s}</button>`).join('')}</div>
     <form class="ai-input" id="aiForm">
-      <textarea name="q" rows="1" maxlength="1500" placeholder="พิมพ์คำถามของคุณ…" required></textarea>
+      ${Recognition ? '<button type="button" class="ai-mic" id="aiMic" aria-label="กดพูดถาม" aria-pressed="false">🎙️</button>' : ''}
+      <textarea name="q" rows="1" maxlength="1500" placeholder="พิมพ์หรือกดไมค์เพื่อพูด…" required></textarea>
       <button class="btn-gold" type="submit" aria-label="ส่ง">➤</button>
     </form>`;
   scrollLog();
@@ -101,6 +103,83 @@ function renderChat(u) {
   $('aiChips').addEventListener('click', (e) => { const b = e.target.closest('[data-ask]'); if (b) ask(b.dataset.ask); });
 }
 const fmtMsg = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+// คำตอบของแม่หมอ + ปุ่มฟังเสียง
+const aiBubble = (t) => `<div class="bubble ai"><div class="b-text">${fmtMsg(t)}</div>${canSpeak ? '<button type="button" class="speak" data-speak aria-label="ฟังเสียงอ่าน">🔊 ฟัง</button>' : ''}</div>`;
+
+// ---------- พูดถาม (แปลงเสียงเป็นข้อความ) ----------
+const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null;
+function toggleMic() {
+  if (!Recognition) return;
+  if (rec) { rec.stop(); return; }
+  const ta = $('aiForm').q;
+  const mic = $('aiMic');
+  stopSpeaking();
+  rec = new Recognition();
+  rec.lang = 'th-TH';
+  rec.interimResults = true;
+  rec.continuous = false;
+  let finalText = '';
+  rec.onresult = (e) => {
+    let interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) finalText += e.results[i][0].transcript;
+      else interim += e.results[i][0].transcript;
+    }
+    ta.value = (finalText + interim).trim();
+  };
+  rec.onerror = (e) => {
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') toast('กรุณาอนุญาตให้ใช้ไมโครโฟนในเบราว์เซอร์ก่อนนะคะ');
+    else if (e.error === 'no-speech') toast('ไม่ได้ยินเสียง ลองกดไมค์แล้วพูดอีกครั้งนะคะ');
+  };
+  rec.onend = () => {
+    mic.classList.remove('on'); mic.setAttribute('aria-pressed', 'false');
+    ta.placeholder = 'พิมพ์หรือกดไมค์เพื่อพูด…';
+    rec = null;
+    // พูดจบ → ส่งคำถามให้แม่หมออัตโนมัติ
+    if (finalText.trim()) { ask(finalText); ta.value = ''; }
+  };
+  mic.classList.add('on'); mic.setAttribute('aria-pressed', 'true');
+  ta.value = '';
+  ta.placeholder = 'กำลังฟัง… พูดคำถามได้เลย';
+  rec.start();
+}
+
+// ---------- อ่านคำตอบออกเสียง ----------
+const canSpeak = 'speechSynthesis' in window;
+let speakingBtn = null;
+function thaiVoice() {
+  const vs = speechSynthesis.getVoices();
+  return vs.find((v) => v.lang === 'th-TH') || vs.find((v) => v.lang && v.lang.startsWith('th'));
+}
+function stopSpeaking() {
+  if (!canSpeak) return;
+  speechSynthesis.cancel();
+  if (speakingBtn) { speakingBtn.classList.remove('on'); speakingBtn.textContent = '🔊 ฟัง'; speakingBtn = null; }
+}
+function speak(btn) {
+  if (speakingBtn === btn) { stopSpeaking(); return; }
+  stopSpeaking();
+  const text = btn.parentElement.querySelector('.b-text').innerText
+    .replace(/\(โหมดตัวอย่าง[^)]*\)/g, '').replace(/[✦✧☾☽☀☸•]/g, ' ').trim();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'th-TH';
+  const v = thaiVoice();
+  if (v) u.voice = v;
+  u.rate = 0.95;
+  u.onend = u.onerror = () => { if (speakingBtn === btn) stopSpeaking(); };
+  speakingBtn = btn;
+  btn.classList.add('on');
+  btn.textContent = '⏹ หยุด';
+  speechSynthesis.speak(u);
+}
+if (canSpeak) speechSynthesis.getVoices(); // โหลดรายชื่อเสียงไว้ก่อน
+aiPanel.querySelector('.back').addEventListener('click', () => { stopSpeaking(); if (rec) rec.abort(); });
+aiPanel.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-speak]');
+  if (b) speak(b);
+  if (e.target.closest('#aiMic')) toggleMic();
+});
 function scrollLog() { const l = $('aiLog'); if (l) aiPanel.scrollTop = aiPanel.scrollHeight; }
 
 let asking = false;
@@ -141,7 +220,7 @@ async function ask(text) {
   const cur = currentUser();
   cur.aiChat = [...(cur.aiChat || []), { role: 'assistant', content: reply }].slice(-50);
   persistUser(cur);
-  log.insertAdjacentHTML('beforeend', `<div class="bubble ai">${fmtMsg(reply)}</div>`);
+  log.insertAdjacentHTML('beforeend', aiBubble(reply));
   if (u.aiCode && !currentUser().aiCode) renderChat(currentUser()); // รหัสผิด → แสดงช่องกรอกใหม่
   scrollLog();
   asking = false;

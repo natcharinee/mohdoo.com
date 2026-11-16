@@ -101,3 +101,5 @@
 
 /* ฟอนต์ Charm: เว้นบรรทัดให้สระบนไม่ชน */
 .book-head h2 { line-height: 1.65; padding-top: .1em; }
+.world-banner { background: linear-gradient(110deg, rgba(94, 231, 255, .2), rgba(123, 77, 255, .3) 60%, rgba(245, 201, 107, .18)); }
+.world-banner + .free-banner { margin-top: 14px; }

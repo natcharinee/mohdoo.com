@@ -428,7 +428,7 @@ if (seen || hashAuth) {
 
 
 // ---------- เปิดหน้าบริการภายในโทรศัพท์ ----------
-const APP_PAGES = { 'tarot.html': 'ไพ่ทาโรต์', 'siamsi.html': 'เสี่ยงเซียมซี', 'services.html': 'บริการ' };
+const APP_PAGES = { 'tarot.html': 'ไพ่ทาโรต์', 'siamsi.html': 'เสี่ยงเซียมซี', 'services.html': 'บริการ', 'world.html': 'ศาสตร์ดูดวงทั่วโลก' };
 const pageOf = (href) => (href || '').split(/[?#]/)[0].split('/').pop();
 const isAppPage = (href) => pageOf(href) in APP_PAGES;
 const frame = $('appFrame');

@@ -153,3 +153,6 @@ dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
 // เปิดหน้าพร้อมตัวกรอง เช่น services.html?science=tarot
 const initial = new URLSearchParams(location.search).get('science');
 select(SCIENCES.some((s) => s.id === initial) ? initial : 'all');
+// มาจากหน้าศาสตร์ทั่วโลก: services.html?pkg=fengshui → เปิดรายละเอียดแพ็กเกจนั้น
+const pkgParam = new URLSearchParams(location.search).get('pkg');
+if (SERVICES.some((s) => s.id === pkgParam)) openBook(pkgParam);
