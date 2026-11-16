@@ -373,3 +373,14 @@ body.logged-in .avatar { background: linear-gradient(135deg, var(--gold-2), var(
 @media (max-width: 600px) {
   body:not(.logged-in) .app { padding-bottom: calc(env(safe-area-inset-bottom) + 24px); }
 }
+
+/* ============ หลังเข้าสู่ระบบ: แม่หมอครึ่งบน บริการครึ่งล่าง ============ */
+body.logged-in .seer-scene {
+  zoom: .58;                       /* ย่อทั้งฉากให้เหลือราวครึ่งจอ */
+  margin: 0 calc(-18px / .58); padding: 0 calc(18px / .58);
+}
+body.logged-in .hello { margin-top: 10px; }
+body.logged-in .app-section { margin-top: 16px; }
+@media (max-width: 600px) {
+  body.logged-in .seer-scene { margin: 0 calc(-16px / .58); padding: 0 calc(16px / .58); }
+}
