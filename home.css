@@ -1,4 +1,4 @@
-/* ===== หน้าแรกแบบ Phone mockup ===== */
+/* ===== หน้าแรก — เว็บเต็มจอ (มือถือ + คอม) ===== */
 :root {
   --s: .82;               /* สเกลโทรศัพท์ (JS คำนวณให้พอดีจอ) */
   --phone-w: 418px;
@@ -329,8 +329,8 @@ body.ready .phone-slot { opacity: 1; transform: none; }
 
 /* ============ จอกว้าง: โชว์ข้อความด้านข้าง ============ */
 
-/* ============ มือถือจริง: เต็มจอ ไม่มีกรอบ ============ */
-@media (max-width: 600px) {
+/* ============ เต็มจอ ไม่มีกรอบโทรศัพท์ ============ */
+@media all {
   body.home { overflow: hidden; }
   .stage .curtain, .stage .valance, .stage .candle, .stage .stage-orb, .stage .die, .stage .crystal-shard { display: none; }
   .device-wrap { padding: 0; display: block; }
@@ -370,7 +370,7 @@ body:not(.logged-in) .app-cta { margin-top: auto; padding-top: 16px; }
 .ap-item { width: 100%; text-align: left; padding: 8px 6px; border-radius: 10px; color: var(--text); font-size: .92rem; }
 .ap-item:hover { background: rgba(255, 255, 255, .08); }
 body.logged-in .avatar { background: linear-gradient(135deg, var(--gold-2), var(--gold)); color: #2a1503; font-weight: 600; border-color: transparent; }
-@media (max-width: 600px) {
+@media all {
   body:not(.logged-in) .app { padding-bottom: calc(env(safe-area-inset-bottom) + 24px); }
 }
 
@@ -383,7 +383,7 @@ body.logged-in .app-title, body.logged-in .bolts { display: none; }
 body.logged-in .seer { margin-top: 24px; }
 body.logged-in .hello { margin-top: 10px; }
 body.logged-in .app-section { margin-top: 16px; }
-@media (max-width: 600px) {
+@media all {
   body.logged-in .seer-scene { margin: 0 calc(-16px / .5); padding: 0 calc(16px / .5); }
 }
 
@@ -449,7 +449,7 @@ body.logged-in .app-section { margin-top: 16px; }
 .empty-seers b { color: var(--gold-2); font-weight: 500; }
 .empty-seers p { font-size: .82rem; color: var(--muted); line-height: 1.6; font-weight: 300; margin-bottom: 8px; }
 
-@media (max-width: 600px) {
+@media all {
   .panel { bottom: calc(env(safe-area-inset-bottom) + 66px); padding-top: calc(env(safe-area-inset-top) + 10px); }
   .panel-bar { top: calc(-10px - env(safe-area-inset-top)); margin-top: calc(-10px - env(safe-area-inset-top)); padding-top: calc(env(safe-area-inset-top) + 12px); }
 }
@@ -459,7 +459,7 @@ body.logged-in .app-section { margin-top: 16px; }
 .frame-panel .panel-bar { position: relative; top: 0; margin: 0; padding: 50px 12px 8px; flex: none; }
 .frame-panel iframe { flex: 1; width: 100%; border: 0; display: block; background: #0d0724; }
 body:not(.logged-in) .panel { bottom: 0; }
-@media (max-width: 600px) {
+@media all {
   .frame-panel .panel-bar { padding-top: calc(env(safe-area-inset-top) + 10px); margin: 0; top: 0; }
   body:not(.logged-in) .panel { bottom: 0; }
 }
@@ -860,3 +860,67 @@ body.logged-in .table-svg { height: 214px; bottom: auto; }
 .we-txt b { font-size: .98rem; font-weight: 500; color: var(--gold-2); }
 .we-txt small { font-size: .72rem; color: var(--muted); line-height: 1.45; }
 .we-go { font-size: 1.5rem; color: var(--gold); }
+
+/* =====================================================================
+   เว็บเต็มจอ: แท็บเล็ต / คอมพิวเตอร์ (ไม่มีกรอบโทรศัพท์แล้ว)
+   ===================================================================== */
+.stage, .btn-side, .statusbar, .home-indicator { display: none !important; }
+@media (min-width: 700px) {
+  :root { --gut: max(28px, calc((100vw - 1120px) / 2)); --pgut: max(28px, calc((100vw - 820px) / 2)); }
+  .app { padding: 0 var(--gut) 120px; }
+  body:not(.logged-in) .app { padding-bottom: 40px; }
+  .app-bar { position: sticky; top: 0; z-index: 16; height: 68px; margin: 0 calc(-1 * var(--gut)); padding: 0 var(--gut);
+    background: rgba(13, 7, 36, .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(227, 179, 255, .14); }
+  .app-logo { font-size: 1.7rem; }
+  .account-pop { top: 60px; }
+
+  /* ฉากหมอดูอยู่กลางจอ */
+  .seer-scene { max-width: 480px; margin: 12px auto 0; }
+  body.logged-in .seer-scene { zoom: .6; max-width: 800px; margin: 0 auto; padding: 0; }
+  .app-cta { width: min(420px, 100%); margin-inline: auto; }
+  .hello { text-align: center; font-size: 1.2rem; }
+
+  .hscroll { margin: 0 calc(-1 * var(--gut)); padding-inline: var(--gut); }
+  .pop { width: 170px; }
+  .cat-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .cat { padding: 18px 16px 16px; }
+  .world-entry { max-width: none; }
+  .app-section { margin-top: 28px; }
+  .sec-head h3 { font-size: 1.2rem; }
+
+  /* แผงต่าง ๆ: คอลัมน์อ่านง่ายกลางจอ */
+  .panel { padding-inline: var(--pgut); }
+  .panel-bar { margin-inline: calc(-1 * var(--pgut)); padding-inline: var(--pgut); }
+  .frame-panel { padding: 0; }
+  .frame-panel .panel-bar { margin: 0; padding-inline: var(--pgut); }
+  .ai-chips { margin-inline: calc(-1 * var(--pgut)); padding-inline: var(--pgut); }
+  .ai-input { margin-inline: calc(-1 * var(--pgut)); padding-inline: var(--pgut); }
+  .gift-inner { max-width: 440px; margin: 0 auto; }
+
+  /* เข้าสู่ระบบ / สมัคร: กล่องกลางจอแทน bottom sheet */
+  .sheet { left: 50%; right: auto; bottom: auto; top: 50%; width: min(460px, 92vw); max-height: 90vh; border-radius: 26px; border: 1px solid var(--line);
+    padding-bottom: 28px; transform: translate(-50%, -46%) scale(.97); opacity: 0; pointer-events: none;
+    transition: transform .35s cubic-bezier(.2, .9, .3, 1), opacity .25s; }
+  .screen.sheet-open .sheet { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
+  .grabber { display: none; }
+}
+
+/* คอมพิวเตอร์: เมนูหลักย้ายขึ้นแถบบน */
+@media (min-width: 960px) {
+  .tabbar { top: 0; bottom: auto; left: 50%; right: auto; transform: translateX(-50%); z-index: 30; height: 68px; padding: 0;
+    display: flex; align-items: center; gap: 4px; background: none; border: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .tabbar a, .tabbar button { flex-direction: row; gap: 7px; padding: 8px 14px; border-radius: 999px; font-size: .92rem; transition: background .2s, color .2s; }
+  .tabbar a:hover, .tabbar button:hover { background: rgba(255, 255, 255, .07); color: var(--text); }
+  .tabbar [aria-current="page"] { background: rgba(245, 201, 107, .12); }
+  .tabbar span { font-size: 1.05rem; }
+  .tab-center span { width: 26px; height: 26px; margin: 0; box-shadow: 0 0 12px rgba(245, 201, 107, .5); }
+  .tab-center span svg { width: 22px; height: 22px; }
+  .tab-center { border: 1px solid rgba(245, 201, 107, .45); }
+  .app { padding-bottom: 60px; }
+  /* แผงเริ่มใต้แถบบน ให้เมนูยังกดได้ */
+  body.logged-in .panel { top: 68px; bottom: 0; padding-top: 10px; }
+  body.logged-in .panel-bar { top: -10px; margin-top: -10px; padding-top: 12px; }
+  body.logged-in .frame-panel { padding-top: 0; }
+  body.logged-in .frame-panel .panel-bar { margin-top: 0; padding-top: 10px; }
+  .ai-input { bottom: -24px; }
+}

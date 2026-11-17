@@ -1,13 +1,5 @@
-// ===== หมอดู.com — หน้าแรก (phone mockup) =====
+// ===== หมอดู.com — หน้าแรก (เว็บเต็มจอ) =====
 const $ = (id) => document.getElementById(id);
-
-// ---------- ปรับขนาดโทรศัพท์ให้พอดีจอ ----------
-function fitPhone() {
-  const s = Math.min(1, (innerHeight - 40) / 872, (innerWidth - 32) / 418);
-  document.documentElement.style.setProperty('--s', Math.max(0.5, s).toFixed(3));
-}
-addEventListener('resize', fitPhone);
-fitPhone();
 
 // ---------- วงแหวนไพ่รอบศีรษะหมอดู ----------
 // การ์ดลาเวนเดอร์ขอบทอง เว้นช่องด้านหน้าไว้ให้เห็นใบหน้า (เหมือน reference)
