@@ -54,3 +54,22 @@
   .world-mode { max-width: none; }
   .wm { font-size: .8rem; }
 }
+
+/* หมวดหมู่หมอดู (โหมดตามวิธีดู) */
+.world-cats { margin-bottom: 18px; text-align: left; }
+.world-cats[hidden] { display: none; }
+.world-cats .sec-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.world-cats .sec-head h3 { font-size: 1.1rem; font-weight: 500; color: var(--gold-2); }
+.world-cats .sec-note { font-size: .78rem; color: var(--muted); }
+.w-sci-head { margin: 22px 0 0 !important; }
+.w-cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.w-cat { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; padding: 14px 12px 12px; border-radius: 18px; overflow: hidden;
+  color: var(--text); background: linear-gradient(165deg, rgba(80, 36, 150, .75), rgba(22, 9, 52, .9)); border: 1px solid rgba(227, 179, 255, .25);
+  transition: transform .2s, border-color .2s, box-shadow .2s; }
+.w-cat:hover { transform: translateY(-3px); border-color: var(--lilac); box-shadow: 0 10px 30px rgba(177, 76, 255, .35); }
+.w-cat .cat-ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-size: 1.35rem;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .25), rgba(123, 77, 255, .4)); border: 1px solid rgba(245, 201, 107, .4); }
+.w-cat b { font-size: .98rem; font-weight: 500; color: var(--gold-2); margin-top: 4px; }
+.w-cat small { font-size: .74rem; line-height: 1.45; color: var(--muted); font-weight: 300; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.w-cat em { font-style: normal; font-size: .72rem; color: var(--lilac); margin-top: 4px; }
+@media (min-width: 700px) { .w-cat-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; } }

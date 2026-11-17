@@ -59,6 +59,13 @@ function render() {
   $('worldNote').textContent = m ? m.desc : '';
   $('worldNote').hidden = !m;
 
+  // หมวดหมู่หมอดู (เดิมอยู่หน้าแรก) แสดงในโหมด “ตามวิธีดู” หน้ารวม
+  const showCats = state.mode === 'method' && state.filter === 'all';
+  $('worldCats').hidden = !showCats;
+  if (showCats) $('worldCats').innerHTML = `<div class="sec-head"><h3>หมวดหมู่หมอดู</h3><span class="sec-note">เลือกหมวด แล้วเลือกหมอดูที่ใช่</span></div>
+    <div class="w-cat-grid">${CATEGORIES.map((c) => `<button class="w-cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${esc(c.name)}</b><small>${esc(c.desc)}</small><em>${c.types.length} ประเภท ›</em></button>`).join('')}</div>
+    <div class="sec-head w-sci-head"><h3>ศาสตร์ทั้งหมด</h3></div>`;
+
   // หมวดบริการรวม (เช่น เบอร์และทะเบียน)
   const showGroup = (g) => state.filter === 'all' ||
     (state.mode === 'method' && g.methods.includes(state.filter)) ||
@@ -155,6 +162,11 @@ dlg.addEventListener('click', (e) => { if (e.target === dlg) closeDetail(); });
 
 // ---------- คลิกทั้งหน้า ----------
 document.addEventListener('click', (e) => {
+  const cat = e.target.closest('[data-cat]');
+  if (cat) {
+    if (inPhone) window.parent.postMessage({ type: 'mohdoo-cat', id: cat.dataset.cat }, location.origin);
+    return;
+  }
   const sci = e.target.closest('[data-sci]');
   if (sci) { openDetail(sci.dataset.sci); return; }
   const opt = e.target.closest('[data-opt]');

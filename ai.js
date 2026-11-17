@@ -76,9 +76,18 @@ const TAKSA_TIP = {
   อุตสาหะ: 'ขยันแล้วได้ผล งานค้างให้รีบเคลียร์', มนตรี: 'มีผู้ใหญ่ให้คำปรึกษา ขอความช่วยเหลือได้', กาลกิณี: 'ระวังคำพูดและการตัดสินใจเร่งด่วน',
 };
 function dayHash(str) { let h = 2166136261; for (const c of str) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; }
-function dailyReport(u) {
-  const now = new Date();
-  const key = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+const AREAS = [['ภาพรวม', 0], ['การงาน', 5], ['การเงิน', 9], ['ความรัก', 13], ['สุขภาพ', 17]];
+const AREA_TIP = {
+  การงาน: ['งานเดินหน้าได้ดี เหมาะเสนอไอเดียหรือเริ่มโปรเจกต์ใหม่', 'งานมีจุดสะดุดเล็กน้อย ตรวจรายละเอียดก่อนส่ง'],
+  การเงิน: ['เงินเข้ามือ มีโอกาสได้โชคเล็ก ๆ', 'เลี่ยงการใช้จ่ายตามอารมณ์ เก็บเงินไว้ก่อนดีกว่า'],
+  ความรัก: ['เสน่ห์แรง คนรอบตัวใจดีกับคุณ เหมาะบอกความรู้สึก', 'ใจเย็น ๆ ฟังอีกฝ่ายให้มากขึ้น เลี่ยงคำพูดแรง'],
+  สุขภาพ: ['ร่างกายสดชื่น เหมาะออกกำลังกาย', 'พักผ่อนให้พอ ดื่มน้ำเยอะ ๆ ระวังเหนื่อยสะสม'],
+};
+const dayKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+// คำนวณดวงของวันหนึ่ง (ผลเดิมทั้งวัน) → เก็บเป็นข้อมูล เพื่อแสดงและบันทึกประวัติ
+function computeDaily(u, now = new Date()) {
+  const key = dayKey(now);
   const seed = dayHash(`${u.phone || u.name}|${u.birthdate || ''}|${key}`);
   const pick = (arr, k) => arr[(seed >>> k) % arr.length];
   const stars = (k) => 2 + ((seed >>> k) % 4);               // 2–5 ดาว
@@ -88,25 +97,61 @@ function dailyReport(u) {
   const personal = reduce(lifeNumber(u) + reduce(now.getDate()) + reduce(now.getMonth() + 1) + reduce(now.getFullYear()));
   const [numTitle, numText] = NUM_MEANING[personal];
   const card = pick(DAILY_TAROT, 3);
-  const birthDay = birthParts(u).date.getDay();
-  const taksa = TAKSA[(now.getDay() - birthDay + 8) % 8];
-  const areas = [['ภาพรวม', 0], ['การงาน', 5], ['การเงิน', 9], ['ความรัก', 13], ['สุขภาพ', 17]];
-  const row = ([label, k]) => `<li><span>${label}</span><b>${'★'.repeat(stars(k))}<i>${'★'.repeat(5 - stars(k))}</i></b></li>`;
-  const lucky = [personal, reduce(personal + 3), reduce(now.getDate() + lifeNumber(u))];
+  const taksa = TAKSA[(now.getDay() - birthParts(u).date.getDay() + 8) % 8];
+  const parts = AREAS.slice(1).map(([label, k]) => [label, stars(k)]);
+  const scores = [['ภาพรวม', Math.round(parts.reduce((a, [, n]) => a + n, 0) / parts.length)], ...parts]; // ภาพรวม = เฉลี่ย 4 ด้าน
+  const lucky = [...new Set([personal, reduce(personal + 3), reduce(now.getDate() + lifeNumber(u))])];
+
+  // ---- สรุปรวมจากทุกศาสตร์ ----
+  const avg = parts.reduce((a, [, n]) => a + n, 0) / parts.length;
+  const sub = parts;
+  const best = sub.reduce((a, b) => (b[1] > a[1] ? b : a));
+  const worst = sub.reduce((a, b) => (b[1] < a[1] ? b : a));
+  const mood = avg >= 4.25 ? 'วันนี้ดวงเด่นมาก' : avg >= 3.5 ? 'วันนี้ดวงดี' : avg >= 2.75 ? 'วันนี้ดวงกลาง ๆ' : 'วันนี้ควรระวังตัว';
+  const summary = `${mood} ${best[0]}เด่นที่สุด (${AREA_TIP[best[0]][0]})` +
+    (worst[1] < best[1] ? ` ส่วน${worst[0]}ต้องระวัง ${AREA_TIP[worst[0]][1]}` : '') +
+    ` · ไพ่ ${card[0]} บอกว่า${card[2]} ทักษาวันนี้ตกเป็น${taksa} ${TAKSA_TIP[taksa]}` +
+    ` · ใส่สี${today.money}เสริมการเงิน สี${today.love}เสริมความรัก เลขนำโชค ${lucky.join(' ')}`;
+
+  return {
+    key, date: now.getTime(), scores, summary, mood,
+    zodiac: { name: zName, sym: zSym, el: zEl, tip: ELEMENT_TIP[zEl] },
+    number: { n: personal, title: numTitle, text: numText },
+    color: { day: today.day, work: today.work, money: today.money, love: today.love, avoid: today.avoid },
+    card, taksa: { name: taksa, tip: TAKSA_TIP[taksa] }, lucky,
+  };
+}
+
+function dailyHTML(r, note = '') {
+  const row = ([label, n]) => `<li><span>${label}</span><b>${'★'.repeat(n)}<i>${'★'.repeat(5 - n)}</i></b></li>`;
+  const c = r.color;
   return `<article class="daily">
-    <header class="daily-head"><span class="daily-date">${now.toLocaleDateString('th-TH', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</span><h3>ดวงของคุณวันนี้</h3></header>
-    <ul class="daily-stars">${areas.map(row).join('')}</ul>
+    <header class="daily-head"><span class="daily-date">${new Date(r.date).toLocaleDateString('th-TH', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</span><h3>ดวงของคุณวันนี้</h3></header>
+    <div class="daily-sum"><b>✦ สรุปรวมจากทุกศาสตร์</b><p>${esc(r.summary)}</p></div>
+    <ul class="daily-stars">${r.scores.map(row).join('')}</ul>
     <div class="daily-grid">
-      <div class="dg"><small>♈&#xFE0E; โหราศาสตร์ · ราศี${zName}</small><b>${zSym}&#xFE0E; ธาตุ${zEl}</b><p>${ELEMENT_TIP[zEl]}</p></div>
-      <div class="dg"><small>🔢 เลขศาสตร์ · เลขประจำวัน</small><b>${personal} · ${numTitle}</b><p>${numText}</p></div>
-      <div class="dg"><small>🎨 สีมงคลวัน${today.day}</small><b class="dg-colors">${['work', 'money', 'love'].map((k) => `<span class="sw" style="background:${HEX[today[k]]}" title="${today[k]}"></span>`).join('')}</b>
-        <p>งาน<b>สี${today.work}</b> · เงิน<b>สี${today.money}</b> · รัก<b>สี${today.love}</b><br>เลี่ยง<b>สี${today.avoid}</b></p></div>
-      <div class="dg"><small>🃏 ไพ่ทาโรต์ประจำวัน</small><b>${card[1]} ${card[0]}</b><p>${card[2]}</p></div>
-      <div class="dg"><small>🪷 ทักษา · วันนี้ตกเป็น</small><b>${taksa}</b><p>${TAKSA_TIP[taksa]}</p></div>
-      <div class="dg"><small>🍀 เลขนำโชควันนี้</small><b class="dg-nums">${[...new Set(lucky)].map((n) => `<span>${n}</span>`).join('')}</b><p>ใช้เป็นเลขโปรดของวัน</p></div>
+      <div class="dg"><small>♈&#xFE0E; โหราศาสตร์ · ราศี${r.zodiac.name}</small><b>${r.zodiac.sym}&#xFE0E; ธาตุ${r.zodiac.el}</b><p>${r.zodiac.tip}</p></div>
+      <div class="dg"><small>🔢 เลขศาสตร์ · เลขประจำวัน</small><b>${r.number.n} · ${r.number.title}</b><p>${r.number.text}</p></div>
+      <div class="dg"><small>🎨 สีมงคลวัน${c.day}</small><b class="dg-colors">${['work', 'money', 'love'].map((k) => `<span class="sw" style="background:${HEX[c[k]]}" title="${c[k]}"></span>`).join('')}</b>
+        <p>งาน<b>สี${c.work}</b> · เงิน<b>สี${c.money}</b> · รัก<b>สี${c.love}</b><br>เลี่ยง<b>สี${c.avoid}</b></p></div>
+      <div class="dg"><small>🃏 ไพ่ทาโรต์ประจำวัน</small><b>${r.card[1]} ${r.card[0]}</b><p>${r.card[2]}</p></div>
+      <div class="dg"><small>🪷 ทักษา · วันนี้ตกเป็น</small><b>${r.taksa.name}</b><p>${r.taksa.tip}</p></div>
+      <div class="dg"><small>🍀 เลขนำโชควันนี้</small><b class="dg-nums">${r.lucky.map((n) => `<span>${n}</span>`).join('')}</b><p>ใช้เป็นเลขโปรดของวัน</p></div>
     </div>
-    <p class="daily-note">${u.birthdate ? 'อัปเดตใหม่ทุกวันตอนเที่ยงคืน' : 'เพิ่มวันเกิดในหน้าบัญชี รายงานจะตรงกับคุณมากขึ้น'} · เพื่อความบันเทิงและเป็นแนวทางชีวิต</p>
+    ${note ? `<p class="daily-note">${note}</p>` : ''}
   </article>`;
+}
+
+// รายงานของวันนี้ + บันทึกลงประวัติวันละ 1 รายการ
+function dailyReport(u) {
+  const r = computeDaily(u);
+  if (!(u.history || []).some((h) => h.kind === 'daily' && h.key === r.key)) {
+    addHistory({ kind: 'daily', icon: '📜', title: 'รายงานดวงประจำวัน', key: r.key, report: r });
+  }
+  const past = (currentUser().history || []).filter((h) => h.kind === 'daily' && h.key !== r.key).slice(0, 6);
+  return dailyHTML(r, `${u.birthdate ? 'อัปเดตใหม่ทุกวันตอนเที่ยงคืน' : 'เพิ่มวันเกิดในหน้าบัญชี รายงานจะตรงกับคุณมากขึ้น'} · เพื่อความบันเทิงและเป็นแนวทางชีวิต`) +
+    (past.length ? `<div class="daily-past"><small>รายงานย้อนหลัง</small><div>${past.map((h) =>
+      `<button data-hist-daily="${h.id}">${new Date(h.report.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short' })}<em>${h.report.mood.replace('วันนี้', '')}</em></button>`).join('')}</div></div>` : '');
 }
 
 // ---------- หน้าแชท ----------
@@ -123,6 +168,7 @@ function renderChat(u) {
     </form>
     <p class="ai-code-note" id="aiCodeNote">${u.aiCode ? '' : 'ไม่มีรหัสก็ลองคุยได้ แม่หมอจะตอบแบบตัวอย่าง'}</p>
     ${dailyReport(u)}
+    <button class="cc-link" data-open-circle><span>👨‍👩‍👧</span><b>ดวงคนใกล้ตัววันนี้</b><small>แฟน · ครอบครัว · เพื่อน</small><em>›</em></button>
     <p class="ai-sub">✦ สงสัยเรื่องไหน ถามแม่หมอ AI ต่อได้เลย</p>
     <div class="ai-log" id="aiLog">
       ${aiBubble(`สวัสดีค่ะ คุณ${u.first || u.name} ✦ แม่หมอ AI พร้อมดูดวงให้แล้ว อยากรู้เรื่องไหนถามได้เลยนะคะ${u.birthdate ? '' : '\nเพิ่มวันเกิดในหน้าบัญชี จะได้วิเคราะห์ได้แม่นขึ้นค่ะ'}`)}
@@ -151,6 +197,7 @@ function renderChat(u) {
   ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = `${Math.min(ta.scrollHeight, 110)}px`; });
   ta.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); } });
   form.addEventListener('submit', (e) => { e.preventDefault(); ask(ta.value); ta.value = ''; ta.style.height = 'auto'; });
+  aiBody.querySelectorAll('[data-hist-daily]').forEach((b) => b.addEventListener('click', () => openHistory(b.dataset.histDaily)));
   $('aiChips').addEventListener('click', (e) => { const b = e.target.closest('[data-ask]'); if (b) ask(b.dataset.ask); });
 }
 const fmtMsg = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');

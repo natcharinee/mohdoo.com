@@ -99,6 +99,9 @@ function renderProfile() {
       <div class="pf-interest"><small>เรื่องที่อยากรู้</small><div>${(u.interests || []).length ? u.interests.map((i) => `<span>${esc(i)}</span>`).join('') : '<em>ยังไม่ได้เลือก</em>'}</div></div>
     </section>
 
+    ${bodySection(u)}
+    ${typeof circleCard === 'function' ? circleCard(u) : ''}
+
     <section class="pf-card">
       <div class="sec-head"><h3>คูปองของฉัน</h3><span class="sec-note">${live.length} ใบใช้ได้</span></div>
       ${!u.wheelSpun && u.first ? `<button class="spin-cta" data-spin><span>🎡</span><b>ยังมีสิทธิ์หมุนวงล้อรับดวงฟรี 1 ครั้ง</b><em>หมุนเลย ›</em></button>` : ''}
@@ -123,6 +126,72 @@ function renderProfile() {
     <p class="pf-note">ข้อมูลของคุณใช้เพื่อการทำนายเท่านั้น (ตัวอย่าง: เก็บไว้ในเบราว์เซอร์นี้)</p>`;
 }
 
+// ---------- หมอดูประจำตัว: รูปร่างกายสำหรับโหงวเฮ้ง / ลายมือ ----------
+// เก็บรูปย่อขนาดเล็กในเบราว์เซอร์ (ตัวอย่าง) · ต้องกดยินยอมก่อน และลบได้ทุกเมื่อ
+const BODY_SLOTS = [
+  { id: 'face', icon: '🙂', name: 'ใบหน้า', hint: 'หน้าตรง เห็นหน้าผากถึงคาง', sci: 'โหงวเฮ้ง' },
+  { id: 'body', icon: '🧍', name: 'รูปร่าง', hint: 'ยืนตรงเต็มตัว', sci: 'ลักษณะรูปร่าง' },
+  { id: 'palmL', icon: '🤚', name: 'ลายมือซ้าย', hint: 'แบมือ เห็นเส้นชัด', sci: 'ลายมือ' },
+  { id: 'palmR', icon: '✋', name: 'ลายมือขวา', hint: 'แบมือ เห็นเส้นชัด', sci: 'ลายมือ' },
+  { id: 'wrist', icon: '⌚', name: 'ข้อมือ', hint: 'เห็นเส้นข้อมือด้านใน', sci: 'เส้นข้อมือ' },
+  { id: 'foot', icon: '🦶', name: 'ลายเท้า', hint: 'ฝ่าเท้าทั้งฝ่า', sci: 'ลายเท้า' },
+];
+function profileScore(u) {
+  const checks = [u.first, u.last, u.birthdate, u.birthtime, u.birthplace, u.gender, (u.interests || []).length,
+    ...BODY_SLOTS.map((s) => (u.photos || {})[s.id])];
+  return Math.round((checks.filter(Boolean).length / checks.length) * 100);
+}
+function bodySection(u) {
+  const photos = u.photos || {};
+  const n = BODY_SLOTS.filter((s) => photos[s.id]).length;
+  const score = profileScore(u);
+  return `<section class="pf-card pf-body">
+    <div class="sec-head"><h3>ข้อมูลสำหรับหมอดูประจำตัว</h3><span class="sec-note">${n}/${BODY_SLOTS.length} รูป</span></div>
+    <div class="pf-meter"><div><span style="width:${score}%"></span></div><b>${score}%</b></div>
+    <p class="pf-empty">ยิ่งข้อมูลครบ หมอดูประจำตัวยิ่งรู้จักคุณ ใช้อ่านโหงวเฮ้ง ลายมือ และลักษณะร่างกาย ประกอบกับวันเดือนปีเกิด</p>
+    ${u.photoConsent ? `<div class="pf-photos">${BODY_SLOTS.map((s) => `<div class="pf-ph ${photos[s.id] ? 'has' : ''}">
+        <label class="ph-box">${photos[s.id] ? `<img src="${photos[s.id]}" alt="${s.name}">` : `<span>${s.icon}</span><em>+ เพิ่มรูป</em>`}
+          <input type="file" accept="image/*" data-photo="${s.id}" hidden></label>
+        <b>${s.name}</b><small>${photos[s.id] ? `ใช้ดู${s.sci}` : s.hint}</small>
+        ${photos[s.id] ? `<button class="ph-del" data-photo-del="${s.id}" aria-label="ลบรูป${s.name}">ลบ</button>` : ''}
+      </div>`).join('')}</div>
+      <p class="pf-note">🔒 รูปใช้เพื่อการทำนายของคุณเท่านั้น ลบได้ทุกเมื่อ · <button class="link" data-photo-revoke>ถอนความยินยอมและลบรูปทั้งหมด</button></p>
+      <p class="pf-note">การวิเคราะห์จากรูปด้วย AI จะเปิดในระยะถัดไป ตอนนี้เก็บรูปไว้ก่อน (ตัวอย่าง: เก็บในเบราว์เซอร์นี้)</p>`
+    : `<label class="pf-consent"><input type="checkbox" data-photo-consent>
+        <span>ฉันยินยอมให้หมอดู.com เก็บรูปใบหน้า รูปร่าง ลายมือ ข้อมือ และลายเท้าของฉัน เพื่อใช้ทำนายดวงของฉันเท่านั้น และลบได้ทุกเมื่อ</span></label>`}
+  </section>`;
+}
+// ย่อรูปก่อนเก็บ (ด้านยาวไม่เกิน 480px, JPEG) เพื่อไม่ให้เต็มพื้นที่เบราว์เซอร์
+function shrinkImage(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, 480 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(img.src);
+      resolve(c.toDataURL('image/jpeg', 0.72));
+    };
+    img.onerror = reject;
+    img.src = URL.createObjectURL(file);
+  });
+}
+profileBody.addEventListener('change', async (e) => {
+  const t = e.target;
+  if (t.matches('[data-photo-consent]') && t.checked) {
+    const u = currentUser(); u.photoConsent = Date.now(); saveUser(u); renderProfile(); return;
+  }
+  if (t.matches('[data-photo]') && t.files[0]) {
+    try {
+      const data = await shrinkImage(t.files[0]);
+      const u = currentUser(); u.photos = { ...(u.photos || {}), [t.dataset.photo]: data };
+      saveUser(u); renderProfile();
+      toast('บันทึกรูปแล้ว ✦');
+    } catch (_) { toast('อ่านไฟล์รูปไม่ได้ ลองรูปอื่นนะคะ'); }
+  }
+});
+
 function couponHTML(c, usable) {
   const g = GIFTS.find((x) => x.id === c.gift);
   const status = c.used ? `ใช้แล้ว ${thDate(c.usedAt || c.created)}` : usable ? `ใช้ได้ถึง ${thDate(c.expires)}` : 'หมดอายุแล้ว';
@@ -136,6 +205,7 @@ function couponHTML(c, usable) {
 function histLine(h) {
   if (h.kind === 'tarot') return esc(h.cards.map((c) => `${c.th}${c.rev ? ' (กลับหัว)' : ''}`).join(' · '));
   if (h.kind === 'siamsi') return esc(`${h.lv} · ${h.verse}`);
+  if (h.kind === 'daily') return esc(`${h.report.mood} · ${h.report.scores.map(([l, n]) => `${l} ${n}★`).slice(1).join(' ')}`);
   if (h.kind === 'order') return esc(`${h.status} · ${h.label} · ${Number(h.amount).toLocaleString('th-TH')} ฿`);
   return 'ผลคำทำนายจากข้อมูลส่วนตัวของคุณ';
 }
@@ -144,6 +214,12 @@ profileBody.addEventListener('click', (e) => {
   const t = e.target;
   if (t.closest('#pfEdit, [data-edit]')) return openEdit();
   if (t.closest('#pfLogout')) return logout();
+  const del = t.closest('[data-photo-del]');
+  if (del) { const u = currentUser(); delete (u.photos || {})[del.dataset.photoDel]; saveUser(u); renderProfile(); return; }
+  if (t.closest('[data-photo-revoke]')) {
+    if (!confirm('ลบรูปทั้งหมดและถอนความยินยอม?')) return;
+    const u = currentUser(); delete u.photos; delete u.photoConsent; saveUser(u); renderProfile(); toast('ลบรูปทั้งหมดแล้ว'); return;
+  }
   if (t.closest('[data-spin]')) return startWelcomeGift();
   if (t.closest('[data-claim]')) return claimPending();
   const cp = t.closest('[data-coupon]');
@@ -159,6 +235,10 @@ function openHistory(id) {
   if (!h) return;
   if (h.kind === 'personal') {
     openReading(GIFTS.find((g) => g.id === h.gift), u);
+  } else if (h.kind === 'daily') {
+    $('readingTitle').textContent = 'รายงานดวงประจำวัน';
+    $('readingBody').innerHTML = dailyHTML(h.report, 'รายงานที่บันทึกไว้ · เพื่อความบันเทิงและเป็นแนวทางชีวิต');
+    openPanel('readingPanel');
   } else {
     $('readingTitle').textContent = h.title;
     const q = h.question ? `<p class="hist-q">“${esc(h.question)}”</p>` : '';
@@ -170,7 +250,8 @@ function openHistory(id) {
           <span class="badge ${c.rev ? 'rev' : 'up'}">${c.rev ? 'ไพ่กลับหัว' : 'ไพ่ตั้ง'}</span>
           <p>${esc(c.text)}</p></div></div>`).join('') + `<p class="reading-tip">✦ ${esc(h.summary)}</p>`;
     } else if (h.kind === 'order') {
-      body = `<div class="order-status"><span class="spinner small"></span><div><b>${esc(h.status)}</b><small>หมอดูจะตอบกลับภายใน 24 ชั่วโมง</small></div></div>
+      body = `<div class="order-status"><span class="spinner small"></span><div><b>${esc(h.status)}</b><small>${esc(h.note || 'หมอดูจะตอบกลับภายใน 24 ชั่วโมง')}</small></div></div>
+        ${h.steps ? `<ol class="track">${h.steps.map((st, i) => `<li class="${i === 0 ? 'done' : i === 1 ? 'now' : ''}">${esc(st)}</li>`).join('')}</ol>` : ''}
         <ul class="order-info">
           <li><small>แพ็กเกจ</small><b>${esc(h.label)}</b></li>
           <li><small>ยอดชำระ</small><b>${Number(h.amount).toLocaleString('th-TH')} ฿</b></li>

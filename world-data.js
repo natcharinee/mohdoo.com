@@ -10,6 +10,9 @@ const WORLD_REGIONS = [
   { id: 'korea', icon: '🇰🇷', name: 'เกาหลี' },
   { id: 'india', icon: '🇮🇳', name: 'อินเดีย' },
   { id: 'thailand', icon: '🇹🇭', name: 'ไทย' },
+  { id: 'laos', icon: '🇱🇦', name: 'ลาว' },
+  { id: 'myanmar', icon: '🇲🇲', name: 'พม่า' },
+  { id: 'cambodia', icon: '🇰🇭', name: 'กัมพูชา (เขมร)' },
   { id: 'himalaya', icon: '🏔️', name: 'ทิเบต / หิมาลัย' },
   { id: 'europe', icon: '🇪🇺', name: 'ยุโรป' },
   { id: 'middle-east', icon: '🏜️', name: 'ตะวันออกกลาง' },
@@ -29,9 +32,9 @@ const WORLD_METHODS = [
 
 // หมวดบริการที่รวมหลายศาสตร์ไว้ด้วยกัน
 const WORLD_GROUPS = [
-  { id: 'numbers-plates', icon: '📱', name: 'เบอร์และทะเบียน',
-    desc: 'วิเคราะห์เบอร์โทรศัพท์และป้ายทะเบียนรถ หมอดูแต่ละท่านแจ้งหลักที่ใช้และขอบเขตคำแนะนำก่อนจอง',
-    packages: ['phone', 'plate'], sciences: ['numerology', 'taksa'], methods: ['numbers'] },
+  { id: 'numbers-plates', icon: '📱', name: 'เบอร์ ทะเบียน บัตรประชาชน และบ้านเลขที่',
+    desc: 'วิเคราะห์เบอร์โทรศัพท์ ป้ายทะเบียนรถ เลขบัตรประชาชน และบ้านเลขที่ หมอดูแต่ละท่านแจ้งหลักที่ใช้และขอบเขตคำแนะนำก่อนจอง',
+    packages: ['phone', 'plate', 'idcard', 'house'], sciences: ['numerology', 'taksa'], methods: ['numbers'] },
 ];
 
 const WORLD_SCIENCES = [
@@ -113,6 +116,17 @@ const WORLD_SCIENCES = [
     desc: 'ผังดวงกำเนิดแบบสายนะ ใช้ราศีทั้ง 12 ดาวเคราะห์ และเรือนชะตา อ่านนิสัย จังหวะชีวิต และเทียบดวงคู่',
     needs: ['วันเดือนปีเกิด', 'เวลาเกิด', 'สถานที่เกิด'], packages: ['fortune'] },
 
+  // ---------- ลาว · พม่า · เขมร ----------
+  { id: 'lao-horo', th: 'โหราศาสตร์ลาว', intl: 'Lao Astrology · ໂຫລາສາດ', region: 'ลาว', regions: ['laos'], methods: ['chart'],
+    desc: 'ใช้วันเกิดในสัปดาห์ ปีนักษัตร และปฏิทินจันทรคติแบบลาว ใกล้เคียงกับโหราศาสตร์ไทยสายล้านนาและอีสาน นิยมใช้ดูพื้นดวงและหาฤกษ์งานบุญ งานแต่ง ขึ้นบ้านใหม่',
+    needs: ['วันเดือนปีเกิด', 'เวลาเกิด (ถ้าทราบ)', 'คำถาม 1 เรื่อง'], packages: ['fortune'] },
+  { id: 'mahabote', th: 'มหาโบตะ', intl: 'Mahabote · Burmese Astrology', region: 'พม่า', regions: ['myanmar'], methods: ['chart'],
+    desc: 'โหราศาสตร์พม่าที่ใช้วันเกิดในสัปดาห์แบบ 8 วัน (แยกวันพุธกลางวันกับกลางคืน) ร่วมกับปีเกิดตามปฏิทินพม่า จัดเป็นผังเพื่ออ่านนิสัยและช่วงชีวิต และนิยมไหว้พระประจำวันเกิดที่เจดีย์',
+    needs: ['วันเดือนปีเกิด', 'เวลาเกิด (ใช้แยกวันพุธกลางวัน/กลางคืน)'], packages: ['fortune'] },
+  { id: 'khmer-horo', th: 'โหราศาสตร์เขมร', intl: 'Khmer Astrology · ហោរាសាស្ត្រ', region: 'กัมพูชา', regions: ['cambodia'], methods: ['chart'],
+    desc: 'ใช้ปฏิทินจันทรคติเขมรและปีนักษัตร 12 ปี ดูพื้นดวงและหาฤกษ์มงคล เช่น งานแต่งและขึ้นบ้านใหม่ อาจารย์มักให้คำแนะนำร่วมกับพิธีทางพุทธ',
+    needs: ['วันเดือนปีเกิด', 'คำถามหรืองานที่ต้องการหาฤกษ์'], packages: ['fortune', 'auspicious'] },
+
   // ---------- ตะวันออกกลาง ----------
   { id: 'coffee', th: 'อ่านกากกาแฟ', intl: 'Tasseography · Türk Kahvesi Falı', region: 'ตุรกี', regions: ['middle-east'], methods: ['lots'],
     desc: 'ดื่มกาแฟตุรกีแล้วคว่ำถ้วยลงบนจานรอง ผู้อ่านดูรูปทรงที่กากกาแฟทิ้งไว้ในถ้วย แล้วตีความเป็นเรื่องราว',
@@ -141,5 +155,5 @@ const WORLD_SCIENCES = [
     needs: ['ภาพฝ่ามือที่เห็นเส้นชัด'], packages: ['palm'] },
   { id: 'numerology', th: 'เลขศาสตร์', intl: 'Numerology', region: 'หลายภูมิภาค', regions: ['global', 'thailand'], methods: ['numbers'],
     desc: 'ให้ค่าตัวเลขกับตัวอักษรและชุดตัวเลข เช่น ชื่อ เบอร์โทรศัพท์ ทะเบียนรถ แล้วอ่านความหมายของผลรวม',
-    needs: ['ชื่อ เบอร์ หรือทะเบียนที่ต้องการวิเคราะห์'], packages: ['phone', 'plate', 'rename'] },
+    needs: ['ชื่อ เบอร์ หรือทะเบียนที่ต้องการวิเคราะห์'], packages: ['phone', 'plate', 'idcard', 'house', 'rename'] },
 ];

@@ -24,11 +24,6 @@
     <button class="skip" id="skipIntro">ข้าม ›</button>
 
     <div class="gate-stage" id="gateStage">
-      <div class="gate-head">
-        <p class="gate-eyebrow">✦ ยินดีต้อนรับผู้แสวงหาคำตอบ ✦</p>
-        <h1 class="gate-title"><span>หมอดู</span><small>.COM</small></h1>
-      </div>
-
       <div class="gate" id="gate" aria-hidden="true">
         <div class="sigil big" id="sigilBig"></div>
         <div class="sigil mid" id="sigilMid"></div>
@@ -36,55 +31,8 @@
           <defs><path id="zr" d="M200,200 m-182,0 a182,182 0 1,1 364,0 a182,182 0 1,1 -364,0"/></defs>
           <text><textPath href="#zr">♈&#xFE0E; ✦ ♉&#xFE0E; ✦ ♊&#xFE0E; ✦ ♋&#xFE0E; ✦ ♌&#xFE0E; ✦ ♍&#xFE0E; ✦ ♎&#xFE0E; ✦ ♏&#xFE0E; ✦ ♐&#xFE0E; ✦ ♑&#xFE0E; ✦ ♒&#xFE0E; ✦ ♓&#xFE0E; ✦</textPath></text>
         </svg>
-        <div class="card-orbit" id="cardOrbit"></div>
-
-        <div class="door">
-          <div class="door-arch">
-            <span class="arch-rune">☾ ✦ ☉ ✦ ☽</span>
-          </div>
-          <div class="doorway">
-            <div class="door-light"></div>
-            <div class="leaf left">
-              <svg viewBox="0 0 100 300" preserveAspectRatio="none" class="leaf-art">
-                <rect x="8" y="8" width="84" height="284" rx="6" class="la-frame"/>
-                <rect x="16" y="16" width="68" height="268" rx="4" class="la-inner"/>
-                <path d="M56 66 a26 26 0 1 0 0 52 a20 20 0 1 1 0 -52 Z" class="la-moon"/>
-                <path d="M30 150 H70 M30 158 H70 M50 140 V250" class="la-line"/>
-                <polygon points="50,180 58,205 50,230 42,205" class="la-gem"/>
-              </svg>
-              <span class="handle"></span>
-            </div>
-            <div class="leaf right">
-              <svg viewBox="0 0 100 300" preserveAspectRatio="none" class="leaf-art">
-                <rect x="8" y="8" width="84" height="284" rx="6" class="la-frame"/>
-                <rect x="16" y="16" width="68" height="268" rx="4" class="la-inner"/>
-                <circle cx="50" cy="92" r="14" class="la-moon"/>
-                <path d="M50 64 V72 M50 112 V120 M22 92 H30 M70 92 H78 M30 72 l6 6 M64 106 l6 6 M70 72 l-6 6 M36 106 l-6 6" class="la-line"/>
-                <path d="M30 150 H70 M30 158 H70 M50 140 V250" class="la-line"/>
-                <polygon points="50,180 58,205 50,230 42,205" class="la-gem"/>
-              </svg>
-              <span class="handle"></span>
-            </div>
-            <span class="seam"></span>
-          </div>
-          <div class="door-eye">
-            <svg viewBox="0 0 60 30"><path d="M2 15 Q30 -8 58 15 Q30 38 2 15 Z" class="eye-lid"/><circle cx="30" cy="15" r="8" class="eye-iris"/><circle cx="30" cy="15" r="3.5" class="eye-pupil"/></svg>
-          </div>
-          <div class="steps"><span></span><span></span></div>
-        </div>
-        <div class="touch" aria-hidden="true"><i></i><i></i><i></i></div>
-        <svg class="hand" viewBox="0 0 64 84" aria-hidden="true">
-          <defs><linearGradient id="handG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f1dcff"/></linearGradient></defs>
-          <rect x="22" y="0" width="12" height="42" rx="6"/>
-          <rect x="33" y="24" width="11" height="22" rx="5.5"/>
-          <rect x="43" y="28" width="10" height="20" rx="5"/>
-          <ellipse cx="15" cy="48" rx="6.5" ry="12" transform="rotate(-38 15 48)"/>
-          <rect x="16" y="32" width="38" height="34" rx="12"/>
-          <rect x="19" y="62" width="32" height="18" rx="4" class="cuff"/>
-          <path d="M19 66 H51" class="cuff-line"/>
-        </svg>
+        <span class="doorway door gate-core"></span>
       </div>
-
     </div>
     <div class="gate-flash" aria-hidden="true"></div>
   </div>
@@ -117,7 +65,6 @@
                 <g fill="url(#hwPillar)" opacity=".85"><rect x="282" y="210" width="26" height="650"/><rect x="1292" y="210" width="26" height="650"/><rect x="530" y="300" width="18" height="560"/><rect x="1052" y="300" width="18" height="560"/></g>
                 <g fill="#3b4a9a"><rect x="274" y="200" width="42" height="14" rx="3"/><rect x="1284" y="200" width="42" height="14" rx="3"/><rect x="524" y="290" width="30" height="12" rx="3"/><rect x="1046" y="290" width="30" height="12" rx="3"/></g>
                 <ellipse cx="800" cy="790" rx="820" ry="120" fill="url(#hwFloor)"/>
-                <g class="hw-lamps"><circle cx="230" cy="560" r="5" fill="#ffd27a"/><circle cx="230" cy="560" r="26" fill="#ffd27a" opacity=".18"/><circle cx="1370" cy="560" r="5" fill="#ffd27a"/><circle cx="1370" cy="560" r="26" fill="#ffd27a" opacity=".18"/></g>
               </svg>
               <!-- โถงโกธิกด้านหลัง -->
               <svg class="hall" viewBox="0 0 360 330" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
@@ -133,7 +80,17 @@
                 <path d="M70 330 V90 M290 330 V90" stroke="#2a3478" stroke-width="10" opacity=".7"/>
               </svg>
 
-              <h2 class="app-title"><span>หมอดู</span><small>MOHDOO · TALE</small></h2>
+              <h1 class="app-title">
+                <svg class="logo-crown" viewBox="0 0 120 54" aria-hidden="true">
+                  <defs><linearGradient id="crownG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff6d8"/><stop offset=".55" stop-color="#f5c96b"/><stop offset="1" stop-color="#c08a2e"/></linearGradient></defs>
+                  <path d="M60 4 V14 M44 10 L49 18 M76 10 L71 18 M30 22 L39 26 M90 22 L81 26" stroke="url(#crownG)" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M60 18 a17 17 0 1 0 0 34 a22 22 0 0 1 0 -34 Z" fill="url(#crownG)" transform="rotate(-90 60 35)"/>
+                  <path d="M60 24 l2.4 5.2 5.6.8 -4.1 3.9 1 5.6 -4.9-2.7 -4.9 2.7 1-5.6 -4.1-3.9 5.6-.8 Z" fill="#fff6d8"/>
+                  <circle cx="18" cy="34" r="1.8" fill="#f5c96b"/><circle cx="102" cy="34" r="1.8" fill="#f5c96b"/>
+                </svg>
+                <span>หมอดู</span>
+                <small><i class="fl"></i>MOHDOO · TALE<i class="fl r"></i></small>
+              </h1>
               <svg class="bolts" viewBox="0 0 300 100" aria-hidden="true">
                 <path d="M20 14 L44 36 L34 40 L60 66 L52 70 L70 92"/>
                 <path d="M280 8 L254 30 L266 35 L236 60 L246 64 L224 86"/>
@@ -147,62 +104,26 @@
 
               <div class="seer">
                 <div class="halo-ring" id="ring"></div>
-                <svg class="seer-svg" viewBox="0 0 300 330" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="hoodG" x1="0" x2="1" y1="0" y2="1">
-                      <stop offset="0" stop-color="#4a2486"/><stop offset=".5" stop-color="#22114a"/><stop offset="1" stop-color="#0e0628"/>
-                    </linearGradient>
-                    <linearGradient id="robeG" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0" stop-color="#2a1458"/><stop offset="1" stop-color="#0c0522"/>
-                    </linearGradient>
-                    <linearGradient id="rimL" x1="0" x2="1"><stop offset="0" stop-color="#ff86de"/><stop offset="1" stop-color="#ff86de" stop-opacity="0"/></linearGradient>
-                    <linearGradient id="rimR" x1="1" x2="0"><stop offset="0" stop-color="#8fd8ff"/><stop offset="1" stop-color="#8fd8ff" stop-opacity="0"/></linearGradient>
-                    <linearGradient id="faceG" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0" stop-color="#05020d"/><stop offset=".4" stop-color="#3a1f52"/><stop offset=".72" stop-color="#e3bfd9"/><stop offset="1" stop-color="#f6dbe8"/>
-                    </linearGradient>
-                    <radialGradient id="gemG"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#cdf3ff"/><stop offset="1" stop-color="#8fd8ff" stop-opacity="0"/></radialGradient>
-                  </defs>
-                  <!-- เสื้อคลุมไหล่กว้าง -->
-                  <path d="M-10 330 Q10 240 90 212 L210 212 Q290 240 310 330 Z" fill="url(#robeG)"/>
-                  <path d="M-10 330 Q10 240 90 212" fill="none" stroke="#ff86de" stroke-width="2" opacity=".6"/>
-                  <path d="M310 330 Q290 240 210 212" fill="none" stroke="#8fd8ff" stroke-width="2" opacity=".6"/>
-                  <!-- ฮู้ดทรงแหลม -->
-                  <path d="M58 240 Q44 118 100 58 Q150 4 200 58 Q256 118 242 240 Q206 216 150 216 Q94 216 58 240 Z" fill="url(#hoodG)"/>
-                  <path d="M58 240 Q44 118 100 58 Q150 4 150 4" fill="none" stroke="url(#rimL)" stroke-width="5" opacity=".9"/>
-                  <path d="M242 240 Q256 118 200 58 Q150 4 150 4" fill="none" stroke="url(#rimR)" stroke-width="4" opacity=".8"/>
-                  <path d="M80 220 Q72 140 110 88" fill="none" stroke="#6a3cb0" stroke-width="2" opacity=".6"/>
-                  <path d="M220 220 Q228 140 190 88" fill="none" stroke="#6a3cb0" stroke-width="2" opacity=".6"/>
-                  <!-- ใบหน้าในเงาฮู้ด -->
-                  <path d="M102 214 Q94 128 150 90 Q206 128 198 214 Q176 234 150 236 Q124 234 102 214 Z" fill="#04010c"/>
-                  <path d="M118 168 Q150 154 182 168 Q182 210 150 228 Q118 210 118 168 Z" fill="url(#faceG)"/>
-                  <path d="M138 206 Q150 211 162 206 Q156 214 150 214 Q144 214 138 206 Z" fill="#a8326e"/>
-                  <path d="M104 172 Q150 146 196 172 Q194 134 150 108 Q106 134 104 172 Z" fill="#04010c"/>
-                  <!-- ปกเสื้อและอัญมณี -->
-                  <path d="M116 222 L150 300 L184 222" fill="none" stroke="#7a52c0" stroke-width="3"/>
-                  <circle cx="150" cy="276" r="36" fill="url(#gemG)" class="gem-glow"/>
-                  <polygon points="150,250 166,276 150,304 134,276" fill="#effcff" stroke="#fff" stroke-width="1.2"/>
-                  <polygon points="150,250 166,276 150,276" fill="#a6e4f7"/>
-                  <polygon points="134,276 150,276 150,304" fill="#c7efff"/>
-                </svg>
+                <img class="seer-img" src="assets/seer.webp" alt="" width="840" height="840" decoding="async">
               </div>
 
               <!-- โต๊ะกลม -->
               <div class="table">
                 <svg class="table-svg" viewBox="0 0 360 200" preserveAspectRatio="none" aria-hidden="true">
                   <defs>
-                    <linearGradient id="clothTop" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#c44fb8"/><stop offset="1" stop-color="#7d2a8f"/></linearGradient>
-                    <linearGradient id="clothSkirt" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#6a1f7e"/><stop offset="1" stop-color="#2a0a3d"/></linearGradient>
+                    <linearGradient id="clothTop" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#7a1f4f"/><stop offset="1" stop-color="#3d0c2c"/></linearGradient>
+                    <linearGradient id="clothSkirt" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3d0c2c"/><stop offset="1" stop-color="#12030c"/></linearGradient>
                   </defs>
-                  <path d="M0 70 Q0 200 0 200 H360 V70 Z" fill="url(#clothSkirt)"/>
-                  <path d="M30 120 Q34 170 26 200 M90 128 Q96 170 88 200 M150 132 Q154 170 150 200 M210 132 Q206 170 212 200 M270 128 Q264 170 272 200 M330 120 Q326 170 334 200" stroke="#2a0a3d" stroke-width="6" opacity=".5" fill="none"/>
-                  <ellipse cx="180" cy="70" rx="186" ry="62" fill="url(#clothTop)"/>
-                  <ellipse cx="180" cy="70" rx="186" ry="62" fill="none" stroke="#ffb3ee" stroke-width="2" opacity=".6"/>
+                  <path d="M12 70 Q10 140 6 200 H354 Q350 140 348 70 Z" fill="url(#clothSkirt)"/>
+                  <path d="M40 118 Q44 170 36 200 M95 128 Q100 170 92 200 M150 132 Q154 170 150 200 M210 132 Q206 170 212 200 M265 128 Q260 170 268 200 M320 118 Q316 170 324 200" stroke="#2a0a3d" stroke-width="6" opacity=".5" fill="none"/>
+                  <ellipse cx="180" cy="70" rx="168" ry="60" fill="url(#clothTop)"/>
+                  <ellipse cx="180" cy="70" rx="168" ry="60" fill="none" stroke="#e07aa8" stroke-width="2" opacity=".45"/>
                   <!-- วงเวท hexagram บนผ้า -->
                   <g class="cloth-sigil" transform="translate(180 72) scale(1 .33)">
-                    <circle r="150" fill="none" stroke="#ffd2f3" stroke-width="3"/>
-                    <circle r="136" fill="none" stroke="#ffd2f3" stroke-width="1.5" stroke-dasharray="6 6"/>
-                    <polygon points="0,-136 118,68 -118,68" fill="none" stroke="#ffd2f3" stroke-width="3"/>
-                    <polygon points="0,136 118,-68 -118,-68" fill="none" stroke="#ffd2f3" stroke-width="3"/>
+                    <circle r="150" fill="none" stroke="#f0b0d0" stroke-width="3"/>
+                    <circle r="136" fill="none" stroke="#f0b0d0" stroke-width="1.5" stroke-dasharray="6 6"/>
+                    <polygon points="0,-136 118,68 -118,68" fill="none" stroke="#f0b0d0" stroke-width="3"/>
+                    <polygon points="0,136 118,-68 -118,-68" fill="none" stroke="#f0b0d0" stroke-width="3"/>
                   </g>
                 </svg>
 
@@ -215,6 +136,21 @@
                   <svg viewBox="0 0 60 36" class="tstand"><path d="M8 4 Q30 14 52 4 L46 30 Q30 36 14 30 Z" fill="#2a2140" stroke="#9a80c8"/><circle cx="30" cy="18" r="8" fill="none" stroke="#efe0ff" stroke-width="1.2"/><polygon points="30,10.5 34.4,23.9 23,15.6 37,15.6 25.6,23.9" fill="none" stroke="#efe0ff" stroke-width="1"/></svg>
                 </span>
 
+                <span class="tprop incense" aria-hidden="true"><svg viewBox="0 0 40 90">
+                  <defs><linearGradient id="brassG" x1="0" x2="1"><stop offset="0" stop-color="#7a5a2a"/><stop offset=".45" stop-color="#e8c47a"/><stop offset="1" stop-color="#6a4a1e"/></linearGradient></defs>
+                  <g class="smoke" fill="none" stroke="#d9cfe8" stroke-linecap="round"><path d="M20 30 Q12 20 20 12 Q28 4 20 -6" stroke-width="2" opacity=".35"/><path d="M21 30 Q28 22 22 14 Q16 6 24 -2" stroke-width="1.4" opacity=".25"/></g>
+                  <path d="M20 26 l3 6 h-6 Z" fill="url(#brassG)"/><path d="M10 44 Q10 32 20 32 Q30 32 30 44 Z" fill="url(#brassG)"/>
+                  <path d="M8 44 h24 l-3 12 h-18 Z" fill="url(#brassG)"/><rect x="17" y="56" width="6" height="14" fill="url(#brassG)"/>
+                  <path d="M9 78 Q20 70 31 78 Z" fill="url(#brassG)"/><ellipse cx="20" cy="79" rx="12" ry="3" fill="#5a4018"/>
+                </svg></span>
+                <span class="tprop amethyst" aria-hidden="true"><svg viewBox="0 0 70 50">
+                  <defs><linearGradient id="amG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f3e6ff"/><stop offset=".4" stop-color="#b48cff"/><stop offset="1" stop-color="#4a1fa0"/></linearGradient></defs>
+                  <ellipse cx="35" cy="44" rx="30" ry="6" fill="#1a0b2e"/>
+                  <polygon points="22,44 26,14 32,8 34,44" fill="url(#amG)"/><polygon points="32,44 36,4 42,12 42,44" fill="url(#amG)"/>
+                  <polygon points="40,44 46,18 52,24 50,44" fill="url(#amG)"/><polygon points="12,44 16,26 22,24 22,44" fill="url(#amG)"/><polygon points="50,44 56,30 60,34 58,44" fill="url(#amG)"/>
+                  <path d="M36 6 L38 40 M26 16 L28 40 M46 20 L47 40" stroke="#fff" stroke-width=".8" opacity=".6"/>
+                </svg></span>
+                <span class="tprop runes" aria-hidden="true"><i>ᚠ</i><i>ᛟ</i><i>ᚱ</i><i>ᛉ</i></span>
                 <div class="table-cards">
                   <a class="tcard3" href="tarot.html" data-ch="I">
                     <span class="beam"></span>
@@ -257,11 +193,6 @@
               </a>
             </nav>
 
-            <section class="app-section member-only">
-              <div class="sec-head"><h3>หมวดหมู่</h3></div>
-              <div class="cat-grid" id="catGrid"></div>
-            </section>
-
             <p class="app-foot member-only">หมอดู.com · คำทำนายเพื่อความบันเทิงและเป็นแนวทางชีวิต</p>
           </div>
 
@@ -293,7 +224,7 @@
                 <text x="20" y="22.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#2a0b55" font-family="Kanit, sans-serif">AI</text>
                 <path d="M29 6 l1.2 2.6 2.6 1.2 -2.6 1.2 -1.2 2.6 -1.2 -2.6 -2.6 -1.2 2.6 -1.2 Z" fill="#fff6d8"/>
               </svg></span>ดูดวงประจำวัน</a>
-            <a href="services.html" data-tab-id="services"><span>✨</span>มงคล</a>
+            <button id="tabMongkol" data-tab-id="services"><span>✨</span>มงคล</button>
             <button id="tabAccount" data-tab-id="account"><span>👤</span>บัญชี</button>
           </nav>
 
@@ -381,5 +312,7 @@
   <script src="seers-data.js"></script>
   <script src="seers.js"></script>
   <script src="ai.js"></script>
+  <script src="circle.js"></script>
+  <script src="mongkol.js"></script>
 </body>
 </html>

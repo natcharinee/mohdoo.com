@@ -29,6 +29,57 @@ const FORM_FIELDS = {
     { name: 'direction', label: 'หน้าบ้าน/หน้าร้านหันทิศไหน', placeholder: 'เช่น ทิศตะวันออก' },
   ],
 };
+// สถานที่ทำพิธี (รายชื่อตัวอย่าง รอยืนยันพาร์ทเนอร์)
+const MERIT_PLACES = ['ให้ทีมเลือกสถานที่ที่เหมาะกับดวง', 'วัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) · กรุงเทพฯ', 'วัดพระเชตุพนฯ (วัดโพธิ์) · กรุงเทพฯ',
+  'วัดพระธาตุดอยสุเทพ · เชียงใหม่', 'วัดพระธาตุพนม · นครพนม', 'วัดพระปฐมเจดีย์ · นครปฐม', 'วัดพระธาตุหริภุญชัย · ลำพูน'];
+const CHONG_PLACES = ['ให้ทีมเลือกสถานที่', 'วัดมังกรกมลาวาส (เล่งเน่ยยี่) · กรุงเทพฯ', 'ศาลเจ้าพ่อเสือ · กรุงเทพฯ'];
+Object.assign(FORM_FIELDS, {
+  idcard: [{ name: 'idnum', label: 'เลขบัตรประชาชน 13 หลัก (ระบบเก็บเฉพาะผลรวมและเลขท้าย 4 หลัก)', mask: 'idcard', required: true,
+    inputmode: 'numeric', pattern: '[0-9 -]{13,17}', placeholder: 'x-xxxx-xxxxx-xx-x' }],
+  house: [
+    { name: 'houseno', label: 'บ้านเลขที่ที่ต้องการวิเคราะห์ (ไม่ต้องใส่ถนนหรือจังหวัด)', required: true, placeholder: 'เช่น 99/123', maxlength: 20 },
+    { name: 'type', label: 'ประเภทที่อยู่', type: 'select', options: ['บ้าน', 'คอนโด / ห้องชุด', 'ร้านค้า', 'สำนักงาน', 'บ้านที่กำลังจะซื้อ / เช่า'] },
+    { name: 'wish', label: 'อยากให้ช่วยดูเรื่องไหนเป็นพิเศษ', type: 'textarea', placeholder: 'เช่น การเงินของครอบครัว ค้าขาย สุขภาพ' },
+  ],
+  merit: [
+    { name: 'for', label: 'ทำบุญให้ใคร', type: 'select', options: ['ตัวเอง', 'คนในครอบครัว', 'อุทิศให้ผู้ล่วงลับ'] },
+    { name: 'names', label: 'ชื่อ-นามสกุลผู้รับบุญ', prefill: 'fullname', required: true },
+    { name: 'kind', label: 'รายการทำบุญ', type: 'select', options: ['ถวายสังฆทาน', 'ถวายภัตตาหาร', 'บริจาคค่าน้ำค่าไฟวัด', 'ปล่อยปลา'] },
+    { name: 'place', label: 'สถานที่', type: 'select', options: MERIT_PLACES },
+    { name: 'wish', label: 'คำอธิษฐาน / ข้อความถึงผู้ล่วงลับ', type: 'textarea' },
+  ],
+  pray: [
+    { name: 'names', label: 'ชื่อ-นามสกุล', prefill: 'fullname', required: true },
+    { name: 'place', label: 'สถานที่', type: 'select', options: MERIT_PLACES },
+    { name: 'wish', label: 'คำอธิษฐานของคุณ', type: 'textarea', required: true, placeholder: 'เช่น ขอให้งานใหม่ราบรื่น สุขภาพแข็งแรง' },
+  ],
+  sadoh: [
+    { name: 'names', label: 'ชื่อ-นามสกุล', prefill: 'fullname', required: true },
+    { name: 'issue', label: 'เรื่องที่อยากสะเดาะเคราะห์', type: 'textarea', required: true, placeholder: 'เช่น ช่วงนี้งานติดขัด มีเรื่องขัดแย้งบ่อย' },
+    { name: 'method', label: 'วิธีสะเดาะเคราะห์', type: 'select', options: ['ให้หมอดูเลือกตามดวง', 'ปล่อยปลา / ปล่อยนก', 'ถวายสังฆทาน', 'ทำบุญโลงศพ'] },
+  ],
+  pichong: [
+    { name: 'names', label: 'ชื่อ-นามสกุล', prefill: 'fullname', required: true },
+    { name: 'place', label: 'สถานที่', type: 'select', options: CHONG_PLACES },
+    { name: 'note', label: 'เรื่องที่อยากขอพรเพิ่ม', type: 'textarea' },
+  ],
+});
+// สินค้า: ที่อยู่จัดส่ง
+const SHIP_FIELDS = [
+  { name: 'receiver', label: 'ชื่อผู้รับ', prefill: 'fullname', required: true },
+  { name: 'tel', label: 'เบอร์โทรผู้รับ', prefill: 'phone', required: true, inputmode: 'tel' },
+  { name: 'address', label: 'ที่อยู่จัดส่ง', type: 'textarea', required: true, placeholder: 'บ้านเลขที่ ถนน แขวง/ตำบล เขต/อำเภอ จังหวัด รหัสไปรษณีย์' },
+];
+// ข้อความหลังส่งข้อมูล + ขั้นตอนติดตามงาน (บริการที่ไม่ใช่หมอดูตอบ)
+const AFTER = {
+  merit: { status: 'รับเรื่องแล้ว · เตรียมทำพิธี', title: 'รับเรื่องเรียบร้อย',
+    text: 'ทีมจะทำพิธีให้ภายใน 3 วัน และส่งรูปถ่ายกับวิดีโอยืนยันมาที่ “ประวัติการดูดวง”',
+    steps: ['รับเรื่องและตรวจข้อมูล', 'ทีมทำพิธีที่สถานที่จริง', 'ส่งรูปถ่าย + วิดีโอยืนยัน'] },
+  shop: { status: 'รับคำสั่งซื้อ · เตรียมจัดส่ง', title: 'สั่งซื้อเรียบร้อย',
+    text: 'ร้านจะจัดส่งภายใน 3–5 วันทำการ และแจ้งเลขพัสดุใน “ประวัติการดูดวง”',
+    steps: ['รับคำสั่งซื้อ', 'เตรียมและแพ็กสินค้า', 'จัดส่งพร้อมเลขพัสดุ'] },
+};
+
 const ASK_FIELDS = [
   { name: 'topic', label: 'เรื่องที่อยากถาม', type: 'select', options: ['การงาน', 'การเงิน', 'ความรัก', 'สุขภาพ', 'การเรียน', 'ครอบครัว', 'อื่น ๆ'] },
   { name: 'question', label: 'คำถามของคุณ', type: 'textarea', required: true, placeholder: 'เล่าสถานการณ์สั้น ๆ แล้วถามสิ่งที่อยากรู้' },
@@ -43,6 +94,7 @@ function itemFromService(id, title) {
     key: s.id, icon: s.icon, title: title || s.name, sub: s.get,
     tiers: s.prices.map((p) => ({ label: p.label, price: p.price, soon: p.soon || !s.open })),
     next: s.link ? { kind: 'frame', href: s.link } : { kind: 'form', fields: FORM_FIELDS[s.id] || ASK_FIELDS },
+    done: AFTER[s.group],
   };
 }
 function itemFromType(catId, idx) {
@@ -212,11 +264,13 @@ function renderIntake(fields) {
   setStep(3, 'กรอกข้อมูลสำหรับการทำนาย');
   const input = (f) => {
     const req = f.required ? 'required' : '';
-    const val = f.prefill ? esc(u[f.prefill] || '') : '';
+    const pre = { fullname: [u.first || u.name, u.last].filter(Boolean).join(' ') };
+    const val = f.prefill ? esc(pre[f.prefill] ?? u[f.prefill] ?? '') : '';
+    const extra = `${f.inputmode ? `inputmode="${f.inputmode}"` : ''} ${f.pattern ? `pattern="${f.pattern}"` : ''} ${f.maxlength ? `maxlength="${f.maxlength}"` : ''}`;
     if (f.type === 'textarea') return `<textarea name="${f.name}" rows="3" ${req} placeholder="${esc(f.placeholder || '')}">${val}</textarea>`;
     if (f.type === 'select') return `<select name="${f.name}">${f.options.map((o) => `<option>${o}</option>`).join('')}</select>`;
     if (f.type === 'file') return `<input type="file" name="${f.name}" accept="image/*" ${req}>`;
-    return `<input type="${f.type || 'text'}" name="${f.name}" ${req} value="${val}" placeholder="${esc(f.placeholder || '')}">`;
+    return `<input type="${f.type || 'text'}" name="${f.name}" ${req} ${extra} value="${val}" placeholder="${esc(f.placeholder || '')}" autocomplete="off">`;
   };
   $('payBody').innerHTML = `
     <div class="intake-me">
@@ -229,18 +283,25 @@ function renderIntake(fields) {
     <form class="form" id="intakeForm">
       ${u.birthdate ? '' : '<label>วันเกิดของคุณ<input type="date" name="birthdate" required></label>'}
       ${fields.map((f) => `<label>${f.label}${f.required ? '' : ' <small>(ไม่บังคับ)</small>'}${input(f)}</label>`).join('')}
-      <button class="btn-gold full" type="submit">ส่งให้หมอดู ›</button>
+      <button class="btn-gold full" type="submit">${order.item.done ? 'ยืนยัน ›' : 'ส่งให้หมอดู ›'}</button>
     </form>`;
   $('intakeForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const data = {};
     new FormData(e.target).forEach((v, k) => { data[k] = v instanceof File ? (v.name || '') : String(v); });
+    // เลขบัตรประชาชน: เก็บเฉพาะผลรวมและเลขท้าย 4 หลัก ไม่เก็บเลขเต็ม
+    fields.filter((f) => f.mask === 'idcard').forEach((f) => {
+      const d = (data[f.name] || '').replace(/\D/g, '');
+      data[f.name] = `•••••••••${d.slice(-4)} · ผลรวม ${[...d].reduce((a, b) => a + +b, 0)}`;
+    });
+    const done = order.item.done;
     if (data.birthdate) { const cur = currentUser(); cur.birthdate = data.birthdate; saveUser(cur); }
-    addHistory({ kind: 'order', icon: order.item.icon, title: order.item.title, status: 'รอหมอดูตอบ',
-      no: order.no, amount: order.amount, label: order.label, data, fields: fields.map((f) => [f.name, f.label]) });
+    addHistory({ kind: 'order', icon: order.item.icon, title: order.item.title, status: done ? done.status : 'รอหมอดูตอบ',
+      no: order.no, amount: order.amount, label: order.label, data, fields: fields.map((f) => [f.name, f.label]),
+      ...(done ? { steps: done.steps, note: done.text } : {}) });
     $('payBody').innerHTML = `
-      <div class="pay-ok"><span class="ok-ring">✦</span><h3>ส่งข้อมูลให้หมอดูแล้ว</h3>
-        <p>หมอดูจะตอบกลับภายใน 24 ชั่วโมง<br>ดูสถานะและคำตอบได้ที่ “ประวัติการดูดวง” ในหน้าบัญชี</p></div>
+      <div class="pay-ok"><span class="ok-ring">✦</span><h3>${done ? done.title : 'ส่งข้อมูลให้หมอดูแล้ว'}</h3>
+        <p>${done ? done.text : 'หมอดูจะตอบกลับภายใน 24 ชั่วโมง<br>ดูสถานะและคำตอบได้ที่ “ประวัติการดูดวง” ในหน้าบัญชี'}</p></div>
       <button class="btn-gold full" id="toProfile">ไปที่หน้าบัญชี</button>
       <button class="btn-ghost full" id="toHome">กลับหน้าแรก</button>`;
     $('toProfile').addEventListener('click', openProfile);

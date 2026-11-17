@@ -201,3 +201,18 @@
 .gate-title span { padding-top: .15em; }
 .gate-title span { padding: .5em .3em .25em; margin-top: -.3em; }
 .gate-title span { margin-top: 0; }
+
+/* ===== อินโทร: วงเวทหมุน แล้วเข้าสู่หน้าเข้าสู่ระบบ/สมัคร ===== */
+.gate-intro { --g: min(84vmin, 640px); }
+.gate { width: var(--g); height: var(--g); }
+.gate-core { width: calc(var(--g) * .3); height: calc(var(--g) * .3); transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 244, 214, .9), rgba(255, 196, 239, .45) 40%, rgba(177, 76, 255, .2) 65%, transparent 72%);
+  opacity: 0; animation: coreIn 1.4s ease .6s forwards, corePulse 2.4s ease-in-out 2s infinite; }
+@keyframes coreIn { to { opacity: .85; } }
+@keyframes corePulse { 50% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; } }
+/* ตอนเปิด: วงเวทเร่งหมุน สว่างขึ้น แล้วซูมเข้าหาแสงกลางวง */
+.gate-intro.opening .sigil.big svg { animation-duration: 4s; }
+.gate-intro.opening .sigil.mid svg { animation-duration: 2.6s; }
+.gate-intro.opening .sigil { filter: drop-shadow(0 0 10px #ff9ae4) brightness(1.4); transition: filter .6s; }
+.gate-intro.opening .gate-core { transform: translate(-50%, -50%) scale(1.8); opacity: 1; transition: transform .8s ease; animation: none; }
+.gate .gate-core { inset: auto; left: 50%; top: 50%; right: auto; bottom: auto; box-shadow: none; overflow: visible; }

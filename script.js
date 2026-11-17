@@ -9,9 +9,35 @@ ringCards.forEach(([sym, ang], i) => {
   c.className = 'rcard';
   c.style.setProperty('--a', `${ang}deg`);
   c.style.setProperty('--d', `${-i * 0.4}s`);
-  c.innerHTML = `<i>${sym}</i>`;
+  c.innerHTML = ringCardSVG(sym, i);
   $('ring').appendChild(c);
 });
+// หน้าไพ่แบบทาโรต์: พื้นม่วงเข้ม ขอบทองสองชั้น ลายตาข่าย ดวงอาทิตย์รัศมีทองตรงกลาง และพระจันทร์หัว-ท้าย
+function ringCardSVG(sym, i) {
+  const id = `rc${i}`;
+  const rays = Array.from({ length: 16 }, (_, k) => {
+    const a = (k * Math.PI) / 8, r1 = 10.5, r2 = k % 2 ? 13 : 15;
+    return `M${(22 + r1 * Math.cos(a)).toFixed(2)} ${(33 + r1 * Math.sin(a)).toFixed(2)} L${(22 + r2 * Math.cos(a)).toFixed(2)} ${(33 + r2 * Math.sin(a)).toFixed(2)}`;
+  }).join(' ');
+  return `<svg class="rface" viewBox="0 0 44 66" aria-hidden="true">
+    <defs>
+      <linearGradient id="${id}b" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3b1a7a"/><stop offset=".55" stop-color="#1e0b4a"/><stop offset="1" stop-color="#2b0f5e"/></linearGradient>
+      <linearGradient id="${id}g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fff1c2"/><stop offset=".5" stop-color="#f5c96b"/><stop offset="1" stop-color="#b8862e"/></linearGradient>
+      <pattern id="${id}p" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 3 H6" stroke="#7a52c0" stroke-width=".5" opacity=".55"/></pattern>
+      <radialGradient id="${id}c"><stop offset="0" stop-color="#6a3cc0"/><stop offset="1" stop-color="#1e0b4a"/></radialGradient>
+    </defs>
+    <rect x="1" y="1" width="42" height="64" rx="4" fill="url(#${id}b)" stroke="url(#${id}g)" stroke-width="2"/>
+    <rect x="4" y="4" width="36" height="58" rx="2.5" fill="url(#${id}p)" stroke="url(#${id}g)" stroke-width=".8"/>
+    <path d="M4 9 Q9 9 9 4 M40 9 Q35 9 35 4 M4 57 Q9 57 9 62 M40 57 Q35 57 35 62" fill="none" stroke="url(#${id}g)" stroke-width=".8"/>
+    <path d="M22 7.5 a4 4 0 1 0 0 8 a3.1 3.1 0 1 1 0 -8 Z" fill="url(#${id}g)" transform="rotate(-30 22 11.5)"/>
+    <path d="M22 50.5 a4 4 0 1 0 0 8 a3.1 3.1 0 1 1 0 -8 Z" fill="url(#${id}g)" transform="rotate(150 22 54.5)"/>
+    <path d="M8 20 l.9 1.9 1.9.9 -1.9.9 -.9 1.9 -.9-1.9 -1.9-.9 1.9-.9 Z M36 20 l.9 1.9 1.9.9 -1.9.9 -.9 1.9 -.9-1.9 -1.9-.9 1.9-.9 Z M8 42 l.9 1.9 1.9.9 -1.9.9 -.9 1.9 -.9-1.9 -1.9-.9 1.9-.9 Z M36 42 l.9 1.9 1.9.9 -1.9.9 -.9 1.9 -.9-1.9 -1.9-.9 1.9-.9 Z" fill="#ffe7a8"/>
+    <path d="${rays}" stroke="url(#${id}g)" stroke-width="1.1" stroke-linecap="round"/>
+    <circle cx="22" cy="33" r="9.5" fill="url(#${id}c)" stroke="url(#${id}g)" stroke-width="1.2"/>
+    <circle cx="22" cy="33" r="7.4" fill="none" stroke="#f5c96b" stroke-width=".4" stroke-dasharray="1 1.2"/>
+    <text x="22" y="36.3" text-anchor="middle" font-size="9" fill="#ffe7a8" font-family="serif">${sym}&#xFE0E;</text>
+  </svg>`;
+}
 
 // ---------- วงเวทมนตร์ (ใช้บนไพ่ 3 ใบและบนผ้าปูโต๊ะ) ----------
 function magicCircle(runes = '✦ ☾ ✧ ☉ ✦ ☽ ✧ ★ ✦ ☾ ✧ ☉ ✦ ☽ ✧ ★') {
@@ -42,9 +68,7 @@ document.querySelectorAll('.tcard3').forEach((a) =>
 );
 
 // ---------- หมวดหมู่ → ประเภทย่อย → รายชื่อหมอดู ----------
-$('catGrid').innerHTML = CATEGORIES.map((c) =>
-  `<button class="cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small><em>${c.types.length} ประเภท ›</em></button>`
-).join('');
+// (หมวดหมู่ย้ายไปอยู่ในหน้า “ดูดวงตามประเภท” world.html?mode=method)
 
 function openPanel(id) {
   const p = $(id);
@@ -57,6 +81,7 @@ function closePanel(id) {
   const p = $(id);
   p.classList.remove('open');
   p.setAttribute('aria-hidden', 'true');
+  if (id === 'catPanel' || id === 'framePanel') $('framePanel').style.zIndex = ''; // คืนลำดับชั้นหน้าบริการ
   // ปิดแผงสุดท้ายแล้ว → กลับมาไฮไลต์ “หน้าแรก”
   if (!document.querySelector('.panel.open') && typeof setActiveTab === 'function') setActiveTab('home');
 }
@@ -91,7 +116,6 @@ function openType(catId, idx) {
     toast(`เราจะแจ้งเตือนเมื่อมีหมอดู “${e.currentTarget.dataset.notify}” (ตัวอย่าง — ยังไม่เชื่อมระบบหลังบ้าน)`));
   openPanel('typePanel');
 }
-$('catGrid').addEventListener('click', (e) => { const b = e.target.closest('[data-cat]'); if (b) openCat(b.dataset.cat); });
 $('catBody').addEventListener('click', (e) => { const b = e.target.closest('[data-type]'); if (b) openType(b.dataset.cat, +b.dataset.type); });
 
 // ---------- Bottom sheet: เข้าสู่ระบบ / สมัคร ----------
@@ -161,7 +185,7 @@ function applyUser() {
   document.body.classList.toggle('logged-in', !!u);
   if (u) {
     $('avatarBtn').textContent = u.name.trim().charAt(0).toUpperCase() || '✦';
-    $('hello').innerHTML = `สวัสดี คุณ${escapeHTML(u.name)} ✦<small>วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย</small>`;
+    $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">สวัสดี</span> <b class="hello-name">คุณ${escapeHTML(u.name)}</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย<i class="fl r"></i></small>`;
   } else {
     $('avatarBtn').textContent = '👤';
   }
@@ -275,7 +299,7 @@ document.querySelectorAll('.social').forEach((s) =>
   s.addEventListener('click', () => toast('การเข้าสู่ระบบผ่านโซเชียลจะเปิดให้ใช้เร็ว ๆ นี้'))
 );
 
-// ---------- อินโทร: ประตูแห่งโชคชะตา ----------
+// ---------- อินโทร: วงเวทหมุน → เข้าสู่ระบบ/สมัคร ----------
 const intro = $('intro');
 const hashAuth = ['register', 'login'].includes(location.hash.slice(1));
 
@@ -302,8 +326,8 @@ function sigilSVG(rings, star, text) {
     <text class="sg-text"><textPath href="#${id}">${text}</textPath></text>
   </svg>`;
 }
-$('sigilBig').innerHTML = sigilSVG([44, 38, 30], 8, 'ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ✦ ☉ ☽ ♂ ☿ ♃ ♀ ♄ ✦ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ✦ ☉ ☽ ♂ ☿ ♃ ♀ ♄ ✦');
-$('sigilMid').innerHTML = sigilSVG([40, 34], 6, '✧ ☾ ✧ ☀ ✧ ☾ ✧ ☀ ✧ ☾ ✧ ☀ ✧ ☾ ✧ ☀ ✧ ☾ ✧ ☀ ✧');
+if ($('sigilBig')) $('sigilBig').innerHTML = sigilSVG([44, 38, 30], 8, 'ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ✦ ☉ ☽ ♂ ☿ ♃ ♀ ♄ ✦ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ✦ ☉ ☽ ♂ ☿ ♃ ♀ ♄ ✦');
+if ($('sigilMid')) $('sigilMid').innerHTML = sigilSVG([40, 34], 6, '✧ ☾ ✧ ☀ ✧ ☾ ✧ ☀ ✧ ☾ ✧ ☀ ✧ ☾ ✧ ☀ ✧ ☾ ✧ ☀ ✧');
 
 // ไพ่โคจรรอบประตู
 ['☾', '✦', '☀', '♃', '✧', '☿', '♀', '✶'].forEach((sym, i, arr) => {
@@ -313,7 +337,7 @@ $('sigilMid').innerHTML = sigilSVG([40, 34], 6, '✧ ☾ ✧ ☀ ✧ ☾ ✧ ☀
   c.style.setProperty('--y', `${Math.sin(i * 1.7) * 22}px`);
   c.style.setProperty('--d', `${1.1 + i * 0.12}s`);
   c.textContent = sym;
-  $('cardOrbit').appendChild(c);
+  if ($('cardOrbit')) $('cardOrbit').appendChild(c);
 });
 
 // กระแสอนุภาคหมุนวนเข้าหาประตู
@@ -358,7 +382,9 @@ function revealSite() {
   intro.classList.add('done');
   document.body.classList.add('ready');
   burst(innerWidth / 2, innerHeight / 2, 70, 360);
+  // เข้าเว็บแล้ว: ยังไม่ล็อกอิน → เปิดหน้าสมัคร/เข้าสู่ระบบทันที
   if (hashAuth) setTimeout(() => openSheet(location.hash.slice(1)), 600);
+  else if (!currentUser()) setTimeout(() => openSheet('register'), 700);
   setTimeout(() => { vRun = false; intro.classList.add('gone'); }, 1000);
 }
 
@@ -375,8 +401,8 @@ function openGate() {
   const stage = $('gateStage');
   const sr = stage.getBoundingClientRect();
   stage.style.transformOrigin = `${door.left + door.width / 2 - sr.left}px ${door.top + door.height * 0.55 - sr.top}px`;
-  setTimeout(() => intro.classList.add('zooming'), 1150);
-  setTimeout(revealSite, 2200);
+  setTimeout(() => intro.classList.add('zooming'), 700);
+  setTimeout(revealSite, 1700);
 }
 function skipGate() {
   if (opened) return;
@@ -398,15 +424,8 @@ if (seen || hashAuth) {
   document.body.classList.add('ready');
   if (hashAuth) setTimeout(() => openSheet(location.hash.slice(1)), 500);
 } else {
-  // มือค่อย ๆ เลื่อนมาแตะประตู แล้วประตูเปิดเอง (ผู้ใช้ไม่ต้องกด)
-  setTimeout(() => !opened && intro.classList.add('hand-in'), 2100);
-  setTimeout(() => {
-    if (opened) return;
-    intro.classList.add('tap');
-    const d = document.querySelector('.doorway').getBoundingClientRect();
-    burst(d.left + d.width / 2, d.top + d.height * 0.55, 30, 120);
-  }, 3300);
-  setTimeout(openGate, 3700);
+  // วงเวทหมุนสักครู่ แล้วเข้าเว็บเอง (ผู้ใช้ไม่ต้องกด)
+  setTimeout(openGate, 2800);
 }
 
 
@@ -434,6 +453,13 @@ frame.addEventListener('load', () => {
   } catch (_) {}
 });
 $('frameBack').addEventListener('click', closeFrame);
+// หน้า “ดูดวงตามประเภท” ขอเปิดหมวดหมู่หมอดู → ซ้อนแผงหมวดหมู่ไว้บนหน้านั้น กดกลับแล้วกลับมาหน้าเดิม
+addEventListener('message', (e) => {
+  if (e.origin !== location.origin || !e.data || e.data.type !== 'mohdoo-cat') return;
+  if (!CATEGORIES.some((c) => c.id === e.data.id)) return;
+  $('framePanel').style.zIndex = '16';
+  openCat(e.data.id);
+});
 // หน้าย่อยขอกลับหน้าแรก / เปิดสมัคร / เข้าสู่ระบบ
 addEventListener('message', (e) => {
   if (e.origin !== location.origin || !e.data || e.data.type !== 'mohdoo-nav') return;
@@ -470,3 +496,32 @@ if (appParam && isAppPage(appParam)) {
   if (!opened) skipGate();
   openFrame(appParam);
 }
+
+// ---------- หน้าแรกพอดี 1 หน้าจอ (ไม่ต้องเลื่อน) ----------
+// วัดความสูงของส่วนอื่น แล้วย่อ/ขยายฉากแม่หมอให้พอดีพื้นที่ที่เหลือ
+function fitHome() {
+  const app = $('app');
+  const scene = document.querySelector('.seer-scene');
+  const bar = document.querySelector('.tabbar');
+  if (!app || !scene) return;
+  const member = document.body.classList.contains('logged-in');
+  app.style.paddingBottom = `${member && bar ? bar.offsetHeight + 12 : 24}px`;
+  scene.style.setProperty('--sz', 1);
+  const h1 = scene.getBoundingClientRect().height;
+  const others = app.scrollHeight - h1;
+  const z = Math.min(1, (app.clientHeight - others) / h1);
+  if (z >= 0.38) {
+    scene.style.setProperty('--sz', z.toFixed(3));
+    app.classList.add('fit');
+  } else {                                   // จอเตี้ยมาก → ใช้ขนาดเล็กสุดแล้วให้เลื่อนได้
+    scene.style.setProperty('--sz', 0.38);
+    app.classList.remove('fit');
+  }
+  app.scrollTop = 0;
+}
+addEventListener('resize', fitHome);
+addEventListener('load', fitHome);
+if (document.fonts) document.fonts.ready.then(fitHome);
+const _applyUserFit = applyUser;
+applyUser = function () { _applyUserFit(); requestAnimationFrame(fitHome); };
+fitHome();

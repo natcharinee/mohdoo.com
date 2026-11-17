@@ -1009,3 +1009,300 @@ body.logged-in .hello small { font-size: .85rem; }
 }
 @keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
 @keyframes lampGlow { 0%, 100% { opacity: .12; } 50% { opacity: .3; } }
+
+/* ============ หมอดูประจำตัว: สรุปรวม / ย้อนหลัง / รูปร่างกาย ============ */
+.daily-sum { padding: 12px 14px; margin-bottom: 12px; border-radius: 16px; background: rgba(245, 201, 107, .1); border: 1px solid rgba(245, 201, 107, .35); }
+.daily-sum b { display: block; font-size: .86rem; font-weight: 500; color: var(--gold-2); margin-bottom: 4px; }
+.daily-sum p { font-size: .82rem; line-height: 1.75; color: var(--text); font-weight: 300; }
+.daily-past { margin: -4px 0 14px; }
+.daily-past small { display: block; font-size: .74rem; color: var(--lilac); margin-bottom: 6px; }
+.daily-past > div { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.daily-past button { flex: none; display: flex; flex-direction: column; align-items: center; padding: 6px 12px; border-radius: 12px; font-size: .78rem; color: var(--text);
+  background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .2); }
+.daily-past button em { font-style: normal; font-size: .64rem; color: var(--muted); }
+.daily-past button:hover { border-color: var(--gold); }
+
+.pf-meter { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.pf-meter div { flex: 1; height: 8px; border-radius: 999px; background: rgba(0, 0, 0, .35); overflow: hidden; }
+.pf-meter span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--gold-3), var(--gold), var(--gold-2)); }
+.pf-meter b { font-size: .9rem; color: var(--gold-2); font-weight: 600; }
+.pf-consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; padding: 12px; border-radius: 14px; font-size: .8rem; line-height: 1.6; color: var(--text);
+  background: rgba(245, 201, 107, .08); border: 1px dashed var(--gold); cursor: pointer; }
+.pf-consent input { margin-top: 4px; accent-color: var(--gold); }
+.pf-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+.pf-ph { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; min-width: 0; }
+.ph-box { width: 100%; aspect-ratio: 3 / 4; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; overflow: hidden;
+  background: rgba(0, 0, 0, .3); border: 1.5px dashed rgba(227, 179, 255, .35); transition: border-color .2s; }
+.ph-box:hover { border-color: var(--gold); }
+.ph-box span { font-size: 1.8rem; }
+.ph-box em { font-style: normal; font-size: .7rem; color: var(--lilac); }
+.pf-ph.has .ph-box { border-style: solid; border-color: var(--gold); }
+.ph-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pf-ph b { font-size: .8rem; font-weight: 500; color: var(--gold-2); margin-top: 4px; }
+.pf-ph small { font-size: .64rem; color: var(--muted); line-height: 1.4; }
+.ph-del { position: absolute; top: 6px; right: 6px; padding: 2px 8px; border-radius: 999px; font-size: .66rem; color: #fff; background: rgba(0, 0, 0, .6); }
+.pf-body .pf-note { text-align: left; margin-top: 8px; }
+@media (min-width: 700px) { .pf-photos { grid-template-columns: repeat(6, 1fr); } }
+
+/* ============ หน้าแรกพอดี 1 หน้าจอ: ขนาดฉากคำนวณจาก JS (--sz) ============ */
+.app.fit { overflow: hidden; }
+.app-foot { display: none; }
+.seer-scene, body.logged-in .seer-scene { zoom: var(--sz, 1); margin-inline: calc(-16px / var(--sz, 1)); padding-inline: calc(16px / var(--sz, 1)); }
+@media (min-width: 700px) {
+  .seer-scene, body.logged-in .seer-scene { margin-inline: auto; padding-inline: 18px; }
+}
+body.logged-in .hello { margin-top: 8px; }
+body.logged-in .pick-grid { margin-top: 12px; }
+@media (max-width: 699px) {
+  /* มือถือ: ปุ่มเลือกดูดวงแบบกะทัดรัด ให้ฉากได้พื้นที่มากขึ้น */
+  .pick { flex-direction: row; align-items: center; gap: 10px; padding: 12px; }
+  .pick-ico { width: 40px; height: 40px; font-size: 1.4rem; flex: none; }
+  .pick-txt b { font-size: .92rem; }
+  .pick-txt small { font-size: .66rem; }
+}
+@media (min-width: 700px) {
+  body.logged-in .pick { padding: 12px 20px; }
+  body.logged-in .pick-ico { width: 48px; height: 48px; font-size: 1.7rem; }
+  body.logged-in .hello { margin-top: 4px; font-size: 1.3rem; }
+  body.logged-in .hello small { font-size: .88rem; }
+  body.logged-in .pick-grid { margin-top: 10px; }
+  .app-bar { height: 56px; }
+}
+@media (max-width: 699px) {
+  .pick-grid { grid-template-columns: 1fr; gap: 8px; }
+  .pick { padding: 10px 14px; }
+  .pick-txt b { font-size: .98rem; }
+  .pick-txt small { font-size: .7rem; }
+  .pick-go { display: block; font-size: 1.4rem; color: var(--gold); margin-left: auto; }
+  .pick-txt { flex: 1; }
+}
+
+/* ฉากถูกย่อด้วย zoom (--sz) → ขยายโถงกว้างและแสงพื้นหลังกลับให้เต็มความกว้างจอจริง */
+@media (min-width: 700px) {
+  .hall-wide { width: calc(100vw / var(--sz, 1)); left: calc(50% - 50vw / var(--sz, 1)); }
+  body.logged-in .seer-scene::before { left: calc(50% - 50vw / var(--sz, 1)); right: calc(50% - 50vw / var(--sz, 1)); }
+}
+@media (min-width: 700px) {
+  .hw-flame:not([opacity]) { animation: lampGlow2 2.4s ease-in-out infinite; }   /* เปลวเทียนกะพริบ (ไม่แตะแสงเรืองที่ตั้ง opacity ไว้) */
+  .hw-cards { animation: hwCards 6s ease-in-out infinite; }                         /* ไพ่ลอยขึ้นลงทั้งชุด */
+}
+@keyframes lampGlow2 { 0%, 100% { opacity: .7; } 50% { opacity: 1; } }
+@keyframes hwCards { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+
+/* ไพ่วงแหวนรอบแม่หมอ: หน้าไพ่ลายทาโรต์ (SVG) แทนการ์ดสีเรียบ */
+.rcard::before, .rcard i { display: none; }
+.rface { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+  filter: drop-shadow(0 0 6px rgba(245, 201, 107, .55)) drop-shadow(0 0 14px rgba(177, 76, 255, .6));
+  animation: rbob 3.4s ease-in-out infinite; animation-delay: var(--d); }
+
+/* ============ โลโก้หลัก “หมอดู” (แทนแถบโลโก้ด้านบน) ============ */
+.app-bar { display: none !important; }
+.app-title, body.logged-in .app-title { display: block; position: relative; z-index: 4; margin: 6px 0 0; line-height: 1.5; }
+body.logged-in .bolts { display: block; }
+/* วงเวทหมุนช้า ๆ และแสงเรืองด้านหลังโลโก้ */
+.app-title::before { content: ""; position: absolute; left: 50%; top: 46%; width: 250px; height: 250px; margin: -125px; z-index: -1; border-radius: 50%;
+  border: 1.5px dashed rgba(245, 201, 107, .45); box-shadow: inset 0 0 0 10px rgba(245, 201, 107, .05), 0 0 0 14px rgba(227, 179, 255, .06);
+  background: repeating-conic-gradient(from 0deg, rgba(245, 201, 107, .16) 0 2deg, transparent 2deg 15deg);
+  -webkit-mask: radial-gradient(circle, transparent 58%, #000 60%, #000 70%, transparent 72%); mask: radial-gradient(circle, transparent 58%, #000 60%, #000 70%, transparent 72%);
+  animation: spin 40s linear infinite; }
+.app-title::after { content: ""; position: absolute; left: 50%; top: 48%; width: 300px; height: 190px; margin: -95px -150px; z-index: -2; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(177, 76, 255, .55), rgba(245, 201, 107, .12) 60%, transparent); filter: blur(6px); animation: pulse 4s ease-in-out infinite; }
+.logo-crown { display: block; width: 92px; height: 42px; margin: 0 auto -18px; filter: drop-shadow(0 0 8px rgba(245, 201, 107, .8)); }
+.app-title span {
+  font-size: 4.6rem;
+  background: linear-gradient(180deg, #fffaf0 0%, #ffe7a8 30%, #f5c96b 52%, #e3b3ff 78%, #b47cff 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(90, 40, 0, .55)) drop-shadow(0 0 10px rgba(245, 201, 107, .65)) drop-shadow(0 0 28px rgba(177, 76, 255, .85));
+  animation: logoGlow 5s ease-in-out infinite;
+}
+@keyframes logoGlow {
+  0%, 100% { filter: drop-shadow(0 2px 0 rgba(90, 40, 0, .55)) drop-shadow(0 0 10px rgba(245, 201, 107, .65)) drop-shadow(0 0 28px rgba(177, 76, 255, .85)); }
+  50% { filter: drop-shadow(0 2px 0 rgba(90, 40, 0, .55)) drop-shadow(0 0 16px rgba(255, 231, 168, .95)) drop-shadow(0 0 44px rgba(199, 125, 255, 1)); }
+}
+.app-title small { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: .6em;
+  font-family: "Cinzel Decorative", serif; font-size: .85rem; letter-spacing: .4em; color: #ffe7a8; text-shadow: 0 0 10px rgba(245, 201, 107, .9), 0 0 22px rgba(177, 76, 255, .8); }
+.app-title .fl { position: relative; width: 46px; height: 1.5px; background: linear-gradient(90deg, transparent, #f5c96b); }
+.app-title .fl.r { transform: scaleX(-1); }
+.app-title .fl::after { content: ""; position: absolute; right: -4px; top: -3.5px; width: 8px; height: 8px; transform: rotate(45deg); background: #ffe7a8; box-shadow: 0 0 8px #f5c96b; }
+.app-title, body.logged-in .app-title { margin-top: 30px; }
+.app-title span { font-size: 5.2rem; }
+.logo-crown { width: 104px; height: 48px; margin-bottom: -22px; }
+.bolts { top: 20px; }
+.bolts path:nth-child(3), .bolts path:nth-child(4), .bolts path:nth-child(5) { display: none; } /* สายฟ้ากลางบังมงกุฎโลโก้ */
+.bolts { display: none !important; } /* โลโก้หลักเด่นพอแล้ว ไม่ให้สายฟ้าตัดผ่านตัวอักษร */
+
+/* ============ ฉากแม่หมอโทนมืดขลัง: ฮู้ดผ้าจีบ มือโอบลูกแก้วเรืองแสง ============ */
+.seer-svg { filter: drop-shadow(0 0 26px rgba(120, 60, 220, .45)); }
+.orb-energy { transform-box: view-box; transform-origin: 150px 214px; animation: spin 7s linear infinite; }
+.orb-halo { animation: orbPulse 3s ease-in-out infinite; transform-box: view-box; transform-origin: 150px 214px; }
+@keyframes orbPulse { 0%, 100% { opacity: .75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+.orb-spark { animation: twinkle 1.8s ease-in-out infinite; }
+.chain circle { filter: drop-shadow(0 0 1.5px #ffe7a8); }
+/* ไม่ใช้ของประกอบชุดเดิม */
+.tprop.candle, .tprop.gems, .tprop.torb, .sdie { display: none !important; }
+.table-svg { filter: drop-shadow(0 -6px 26px rgba(160, 40, 110, .35)); }
+.cloth-sigil { opacity: .5; filter: drop-shadow(0 0 3px #ff7ab0); }
+/* กระถางกำยาน ผลึกอเมทิสต์ หินรูน */
+.incense { left: 26px; top: -62px; width: 36px; height: 82px; }
+.incense svg, .amethyst svg { width: 100%; height: 100%; overflow: visible; }
+.smoke path { animation: smoke 4s ease-in-out infinite; }
+.smoke path + path { animation-delay: -2s; }
+@keyframes smoke { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: .4; } 100% { opacity: 0; transform: translateY(-10px); } }
+.amethyst { right: 18px; top: -26px; width: 74px; height: 52px; filter: drop-shadow(0 0 10px rgba(180, 140, 255, .9)) drop-shadow(0 0 22px rgba(120, 60, 255, .6)); animation: amGlow 3s ease-in-out infinite; }
+@keyframes amGlow { 50% { filter: drop-shadow(0 0 16px rgba(200, 160, 255, 1)) drop-shadow(0 0 32px rgba(120, 60, 255, .8)); } }
+.runes { right: 96px; top: 2px; display: flex; gap: 3px; }
+.runes i { display: grid; place-items: center; width: 14px; height: 12px; border-radius: 4px; font-style: normal; font-size: .55rem; color: #cfc6dd;
+  background: linear-gradient(160deg, #5a5368, #2a2433); box-shadow: 0 2px 3px rgba(0, 0, 0, .5); }
+.runes i:nth-child(2) { transform: translateY(4px) rotate(-12deg); } .runes i:nth-child(3) { transform: translateY(-2px) rotate(8deg); }
+/* ตัดเฉพาะชายผ้าด้านล่าง ไม่ตัดของที่วางบนโต๊ะ */
+body.logged-in .table { overflow: visible; clip-path: inset(-140px -60px 0 -60px); }
+.orb-set { filter: drop-shadow(0 0 10px rgba(167, 123, 255, .8)); }
+.orb-halo { opacity: .95; }
+/* แม่หมอการ์ตูน: กะพริบตา */
+.seer-svg .eyes { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+/* แม่หมอเงา: เหรียญแกว่งเบา ๆ ดาวบนผ้าคลุมกะพริบ แสงลูกแก้วสะท้อนหน้า */
+.seer-svg .coins { transform-box: view-box; transform-origin: 150px 80px; animation: coinSway 4s ease-in-out infinite; }
+@keyframes coinSway { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+.cloak-stars path { animation: twinkle 2.6s ease-in-out infinite; }
+.cloak-stars path:nth-child(even) { animation-delay: -1.3s; }
+.face-glow { animation: orbPulse 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.hood-star { filter: drop-shadow(0 0 4px #ffe7a8); }
+
+/* ============ แม่หมอ: ภาพที่ผู้ใช้ออกแบบเอง (assets/seer.webp พื้นหลังโปร่งใส) ============ */
+.seer-img { position: absolute; left: 50%; top: -58px; width: 350px; height: auto; max-width: none; transform: translateX(-50%); z-index: 1;
+  filter: drop-shadow(0 0 24px rgba(160, 90, 255, .55)); animation: seerFloat 6s ease-in-out infinite; pointer-events: none; }
+@keyframes seerFloat { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-4px); } }
+.halo-ring { top: 70px; z-index: 2; }
+.seer-img { top: -44px; width: 335px; }
+
+/* ============ รอยต่อฉาก ↔ คำทักทาย: ค่อย ๆ จาง ไม่ตัดเป็นขอบแข็ง ============ */
+/* ชายผ้าปูโต๊ะจางลงด้านล่าง (แทนการตัดตรง) */
+body.logged-in .table, .table { -webkit-mask: none; mask: none; }
+.table .table-svg { -webkit-mask: linear-gradient(180deg, #000 0, #000 55%, transparent 92%); mask: linear-gradient(180deg, #000 0, #000 55%, transparent 92%); }
+body.logged-in .table .table-svg { height: 200px; }
+body.logged-in .table { clip-path: none; height: 200px; }
+/* โถง ประตูโค้ง และเสา จางทั้งด้านบนและด้านล่าง */
+@media (min-width: 700px) {
+  .hall-wide { -webkit-mask: linear-gradient(180deg, transparent 0, #000 12%, #000 68%, transparent 100%); mask: linear-gradient(180deg, transparent 0, #000 12%, #000 68%, transparent 100%); }
+}
+.seer-scene .hall { -webkit-mask: linear-gradient(90deg, transparent 0, #000 14%, #000 86%, transparent 100%), linear-gradient(180deg, #000 40%, transparent 85%);
+  -webkit-mask-composite: source-in; mask: linear-gradient(90deg, transparent 0, #000 14%, #000 86%, transparent 100%), linear-gradient(180deg, #000 40%, transparent 85%); mask-composite: intersect; }
+/* ชื่อใต้ไพ่ยังคมชัด: ยกไว้เหนือส่วนที่จาง */
+.card-cap { position: relative; z-index: 3; }
+/* ของประกอบวางบนผิวโต๊ะ (ไม่ลอยนอกโต๊ะ) */
+.incense { left: 12%; top: -14px; width: 32px; height: 74px; }
+.amethyst { right: 11%; top: 10px; width: 64px; height: 46px; }
+.runes { right: 26%; top: 34px; }
+.runes { right: 24%; top: 4px; }
+
+/* ============ คำทักทาย: เด่นขึ้น ============ */
+body.logged-in .hello { text-align: center; margin-top: 6px; line-height: 1.5; }
+.hello-line { display: inline-flex; align-items: center; gap: .35em; font-size: 1.45rem; }
+.hello-hi { color: #f3dcff; font-weight: 300; }
+.hello-name { font-weight: 600; font-size: 1.12em; padding: .1em .05em;
+  background: linear-gradient(180deg, #fffaf0 0%, #ffe7a8 35%, #f5c96b 65%, #d9a24a 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 8px rgba(245, 201, 107, .55)) drop-shadow(0 0 22px rgba(177, 76, 255, .55)); }
+.hello-spark { font-style: normal; color: #ffe7a8; text-shadow: 0 0 10px #f5c96b, 0 0 20px #b14cff; animation: twinkle 2.4s ease-in-out infinite; }
+body.logged-in .hello small { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 2px; font-size: .9rem; color: #d9c4ff; font-weight: 300; }
+.hello small .fl { flex: none; position: relative; width: 34px; height: 1.5px; background: linear-gradient(90deg, transparent, #f5c96b); }
+.hello small .fl.r { transform: scaleX(-1); }
+.hello small .fl::after { content: ""; position: absolute; right: -3px; top: -2.5px; width: 6px; height: 6px; transform: rotate(45deg); background: #ffe7a8; box-shadow: 0 0 6px #f5c96b; }
+@media (min-width: 700px) {
+  .hello-line { font-size: 1.85rem; }
+  body.logged-in .hello small { font-size: 1rem; }
+  .hello small .fl { width: 60px; }
+}
+@media (max-width: 380px) { .hello small .fl { display: none; } .hello-line { font-size: 1.3rem; } }
+
+/* ============ แท็บมงคล: ทำบุญ · แก้ดวง · ร้านเครื่องราง ============ */
+.mk-hero { display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 18px; margin-bottom: 14px;
+  background: linear-gradient(120deg, rgba(245, 201, 107, .14), rgba(177, 76, 255, .18)); border: 1px solid var(--line); }
+.mk-ico { flex: none; width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; font-size: 1.8rem;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .25), rgba(123, 77, 255, .45)); border: 1px solid rgba(245, 201, 107, .5); }
+.mk-hero h3 { font-size: 1.12rem; font-weight: 500; color: var(--gold-2); line-height: 1.4; }
+.mk-hero p { font-size: .8rem; color: var(--muted); line-height: 1.55; font-weight: 300; }
+.mk-sec { margin-bottom: 18px; }
+.mk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mk-card { display: flex; flex-direction: column; gap: 6px; padding: 14px 12px; border-radius: 18px;
+  background: linear-gradient(165deg, rgba(80, 36, 150, .75), rgba(22, 9, 52, .9)); border: 1px solid rgba(245, 201, 107, .3); }
+.mk-ci { font-size: 1.7rem; }
+.mk-card b { color: var(--gold-2); font-weight: 500; }
+.mk-card p { flex: 1; font-size: .72rem; line-height: 1.5; color: var(--muted); font-weight: 300; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.mk-card .btn-gold { padding: 8px 10px; font-size: .82rem; }
+.mk-proof { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
+.mk-proof li { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; padding: 10px 6px; border-radius: 14px;
+  font-size: .7rem; line-height: 1.4; color: var(--text); background: rgba(0, 0, 0, .25); border: 1px dashed rgba(245, 201, 107, .35); }
+.mk-proof span { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .72rem; font-weight: 600; color: #2a1503;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold)); }
+.mk-tip { font-size: .8rem; color: var(--muted); margin: -2px 0 10px; }
+.mk-tip b { color: var(--gold-2); font-weight: 500; }
+.mk-shop { display: grid; gap: 8px; }
+.mk-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .18); }
+.mk-pi { flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 1.5rem; background: radial-gradient(circle at 35% 30%, #fff3, #4a2486); }
+.mk-it { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.mk-it b { font-size: .9rem; font-weight: 500; color: var(--text); }
+.mk-it small { font-size: .72rem; color: var(--muted); line-height: 1.45; }
+.mk-buy { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.mk-buy b { color: var(--gold); font-size: .9rem; }
+.mk-buy .btn-ghost { padding: 5px 12px; font-size: .78rem; }
+.mk-all { margin: 4px 0 8px; }
+@media (min-width: 700px) { .mk-grid { grid-template-columns: repeat(4, 1fr); } .mk-shop { grid-template-columns: 1fr 1fr; } }
+
+/* ขั้นตอนติดตามงาน (ทำบุญ / สินค้า) */
+.track { list-style: none; display: grid; gap: 0; margin: 4px 0 14px; padding-left: 4px; }
+.track li { position: relative; padding: 6px 0 10px 26px; font-size: .84rem; color: var(--muted); }
+.track li::before { content: ""; position: absolute; left: 0; top: 7px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(227, 179, 255, .4); background: #160a36; }
+.track li:not(:last-child)::after { content: ""; position: absolute; left: 7px; top: 23px; bottom: -6px; width: 2px; background: rgba(227, 179, 255, .25); }
+.track li.done { color: var(--text); } .track li.done::before { background: var(--gold); border-color: var(--gold); }
+.track li.now { color: var(--gold-2); } .track li.now::before { border-color: var(--gold); box-shadow: 0 0 10px var(--gold); }
+
+/* ============ ดวงคนใกล้ตัว ============ */
+.cc-list { display: grid; gap: 10px; margin-bottom: 14px; }
+.cc-card { padding: 12px; border-radius: 18px; background: linear-gradient(165deg, rgba(70, 30, 130, .7), rgba(20, 8, 50, .85)); border: 1px solid rgba(227, 179, 255, .22); }
+.cc-top { display: flex; align-items: center; gap: 12px; }
+.cc-av { flex: none; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-size: 1.4rem; background: radial-gradient(circle at 35% 30%, #fff3, #4a2486); border: 1px solid rgba(245, 201, 107, .45); }
+.cc-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cc-tx b { color: var(--gold-2); font-weight: 500; }
+.cc-tx small { font-size: .72rem; color: var(--muted); }
+.cc-ring { --p: 70; flex: none; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+  background: conic-gradient(var(--gold) calc(var(--p) * 1%), rgba(255, 255, 255, .1) 0); }
+.cc-ring b { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: .8rem; color: var(--gold-2); background: #1a0b3e; }
+.cc-act { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+.cc-act .btn-gold, .cc-act .btn-ghost { padding: 7px 14px; font-size: .8rem; }
+.cc-del { margin-left: auto; font-size: .76rem; color: var(--muted); }
+.cc-family { padding: 14px; border-radius: 18px; margin-bottom: 14px; background: rgba(245, 201, 107, .07); border: 1px solid var(--line); }
+.cc-family .sec-head { align-items: center; }
+.cc-els { display: grid; gap: 6px; margin-bottom: 10px; }
+.cc-els div { display: grid; grid-template-columns: 52px 1fr 18px; align-items: center; gap: 8px; font-size: .76rem; color: var(--muted); }
+.cc-els span { height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--gold) var(--n), rgba(255, 255, 255, .1) var(--n)); }
+.cc-els b { color: var(--gold-2); text-align: right; }
+.cc-today { list-style: none; display: grid; gap: 6px; margin-top: 10px; }
+.cc-today li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 12px; background: rgba(0, 0, 0, .25); font-size: .82rem; }
+.cc-today li span { flex: 1; }
+.cc-today li b { color: var(--gold); font-size: .72rem; letter-spacing: -.05em; }
+.cc-today li b i { font-style: normal; color: rgba(255, 255, 255, .18); }
+.cc-today li small { width: 64px; text-align: right; color: var(--muted); font-size: .7rem; }
+.cc-add { margin-bottom: 10px; border-radius: 16px; border: 1px solid var(--line); padding: 4px 12px 12px; background: rgba(0, 0, 0, .2); }
+.cc-add summary { cursor: pointer; padding: 10px 0; color: var(--gold-2); font-weight: 500; }
+.cc-add .two > label { min-width: 0; } .cc-add input, .cc-add select { width: 100%; min-width: 0; }
+.cc-add select { font: inherit; color: var(--text); padding: 11px 12px; border-radius: 12px; background: rgba(0, 0, 0, .35); border: 1px solid rgba(245, 201, 107, .2); color-scheme: dark; }
+.cc-pair { display: flex; align-items: center; justify-content: space-around; margin: 6px 0 14px; }
+.cc-pair > div { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--gold-2); }
+.cc-pair .cc-ring { width: 84px; height: 84px; } .cc-pair .cc-ring b { width: 68px; height: 68px; font-size: 1.15rem; }
+.cc-lines { list-style: none; display: grid; gap: 8px; margin: 10px 0; }
+.cc-lines li { padding: 10px 12px; border-radius: 14px; background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .18); }
+.cc-lines small { display: block; font-size: .7rem; color: var(--lilac); }
+.cc-lines b { font-size: .9rem; font-weight: 500; color: var(--gold-2); }
+.cc-lines p { font-size: .8rem; color: var(--muted); line-height: 1.6; }
+.cc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.cc-chips span { padding: 4px 10px; border-radius: 999px; font-size: .78rem; background: rgba(0, 0, 0, .3); border: 1px solid rgba(227, 179, 255, .25); }
+.cc-link { width: 100%; display: flex; align-items: center; gap: 10px; text-align: left; margin: -4px 0 14px; padding: 12px 14px; border-radius: 16px;
+  background: linear-gradient(120deg, rgba(245, 201, 107, .12), rgba(177, 76, 255, .2)); border: 1px solid var(--line); color: var(--text); }
+.cc-link span { font-size: 1.4rem; } .cc-link b { font-weight: 500; color: var(--gold-2); } .cc-link small { flex: 1; font-size: .74rem; color: var(--muted); } .cc-link em { font-style: normal; color: var(--gold); font-size: 1.3rem; }
+/* มงคล: สลับ บริการมงคล / วัตถุมงคล */
+.mk-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; margin-bottom: 14px; border-radius: 999px; background: rgba(0, 0, 0, .35); border: 1px solid var(--line); }
+.mk-switch button { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 8px; border-radius: 999px; font-size: .92rem; color: var(--muted); transition: background .25s, color .25s; }
+.mk-switch button[aria-selected="true"] { color: #2a1503; font-weight: 600; background: linear-gradient(135deg, var(--gold-2), var(--gold)); }
+.mk-sec[hidden] { display: none; }
