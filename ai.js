@@ -1,9 +1,9 @@
-// ===== หมอดู AI: สมาชิกรายเดือน ถามได้ไม่จำกัด วิเคราะห์จากทุกศาสตร์ =====
-const AI_PRICE = 299;      // ราคาต่อเดือน (ตัวอย่าง — แก้ได้)
+// ===== ดูดวงประจำวัน (สมาชิกรายเดือน): รายงานดวงทุกวันจากทุกศาสตร์ + ถามแม่หมอ AI =====
+const AI_PRICE = 150;      // ราคาต่อเดือน
 const AI_DAYS = 30;
 const AI_SUGGEST = ['ดวงความรักเดือนนี้เป็นอย่างไร', 'ควรเปลี่ยนงานช่วงนี้ไหม', 'สีมงคลและเลขนำโชคของฉัน', 'ดวงการเงินปีนี้', 'ฉันกับเขาเข้ากันได้ไหม'];
 
-const aiPanel = makePanel('aiPanel', 'หมอดู AI');
+const aiPanel = makePanel('aiPanel', 'ดูดวงประจำวัน');
 aiPanel.classList.add('ai-panel');
 const aiBody = aiPanel.querySelector('.panel-body');
 
@@ -29,12 +29,13 @@ function renderAIPitch(u) {
   aiBody.innerHTML = `
     <div class="ai-hero">
       <span class="ai-orb"><i>AI</i></span>
-      <h3>หมอดู AI ส่วนตัวของคุณ</h3>
-      <p>คุยถามตอบได้ทุกเรื่อง ตลอด 24 ชั่วโมง วิเคราะห์จากทุกศาสตร์ด้วยข้อมูลเกิดของคุณ</p>
+      <h3>ดูดวงประจำวัน รายเดือน</h3>
+      <p>รายงานดวงของคุณทุกวัน ดึงจากทุกศาสตร์ด้วยข้อมูลเกิดของคุณ พร้อมถามแม่หมอ AI ได้ตลอด 24 ชั่วโมง</p>
     </div>
     <ul class="ai-perks">
-      <li><span>♾️</span><div><b>ถามได้ไม่จำกัด</b><small>จ่ายเหมารายเดือน ไม่ต้องจ่ายทีละคำถาม</small></div></li>
-      <li><span>🔮</span><div><b>วิเคราะห์จากทุกศาสตร์</b><small>โหราศาสตร์ไทย–สากล ดวงจีน เลขศาสตร์ ทักษา ไพ่ทาโรต์ สีมงคล</small></div></li>
+      <li><span>📜</span><div><b>รายงานดวงทุกวัน</b><small>เปิดมาเจอดวงวันนี้ทันที ภาพรวม งาน เงิน รัก สุขภาพ</small></div></li>
+      <li><span>🔮</span><div><b>รวมทุกศาสตร์</b><small>ราศี เลขศาสตร์ สีมงคลตามวัน ไพ่ทาโรต์ และทักษา</small></div></li>
+      <li><span>♾️</span><div><b>ถามต่อได้ไม่จำกัด</b><small>สงสัยเรื่องไหนถามแม่หมอ AI ได้เลย ไม่จ่ายเพิ่ม</small></div></li>
       <li><span>🧬</span><div><b>รู้จักคุณ</b><small>ใช้วันเกิด เวลาเกิด และเรื่องที่สนใจจากโปรไฟล์</small></div></li>
       <li><span>⚡</span><div><b>ตอบทันที</b><small>ไม่ต้องรอคิวหมอดู</small></div></li>
     </ul>
@@ -43,8 +44,8 @@ function renderAIPitch(u) {
     <p class="test-mode">🧪 โหมดทดลอง · ไม่มีการเก็บเงินจริง สมัครแล้วลองคุยได้เลย</p>
     <p class="pay-note">ชำระด้วย QR แล้วเริ่มคุยได้ทันที · คำทำนายเพื่อความบันเทิงและเป็นแนวทางชีวิต</p>`;
   $('aiSubscribe').addEventListener('click', () => startCheckout({
-    key: 'ai-month', icon: '🔮', title: 'หมอดู AI รายเดือน', sub: 'ถามได้ไม่จำกัด วิเคราะห์จากทุกศาสตร์',
-    tiers: [{ label: `${AI_DAYS} วัน · ถามได้ไม่จำกัด`, price: AI_PRICE }],
+    key: 'ai-month', icon: '🔮', title: 'ดูดวงประจำวัน รายเดือน', sub: 'รายงานดวงทุกวันจากทุกศาสตร์ + ถามแม่หมอ AI',
+    tiers: [{ label: `${AI_DAYS} วัน · รายงานทุกวัน`, price: AI_PRICE }],
     next: { kind: 'ai' },
   }));
 }
@@ -60,6 +61,54 @@ function activateAI() {
   openAI();
 }
 
+// ---------- รายงานดวงประจำวัน (คำนวณจากวันนี้ + ข้อมูลเกิด ได้ผลเดิมทั้งวัน) ----------
+const DAILY_TAROT = [
+  ['The Sun', '☀️', 'พลังบวกเต็มที่ เหมาะเริ่มเรื่องใหม่และเปิดตัว'], ['The Star', '⭐', 'ความหวังกลับมา มีคนพร้อมช่วยเหลือ'],
+  ['The Empress', '🌸', 'ความอุดมสมบูรณ์ เงินและความรักงอกงาม'], ['The Magician', '🪄', 'ไอเดียดี ลงมือทำแล้วสำเร็จ'],
+  ['Wheel of Fortune', '🎡', 'จังหวะชีวิตเปลี่ยนเป็นทางดี มีโชคเข้ามา'], ['Strength', '🦁', 'ใจเย็นแต่หนักแน่น จะผ่านเรื่องยากได้'],
+  ['The Lovers', '💞', 'เรื่องหัวใจเด่น ต้องเลือกด้วยใจจริง'], ['Temperance', '⚖️', 'ค่อยเป็นค่อยไป หาจุดสมดุลแล้วทุกอย่างลงตัว'],
+  ['The Chariot', '🏇', 'มุ่งมั่นไปข้างหน้า ชนะอุปสรรคได้'], ['The Hermit', '🏮', 'วันดีสำหรับทบทวนตัวเอง ตัดสินใจอย่างรอบคอบ'],
+];
+const TAKSA = ['บริวาร', 'อายุ', 'เดช', 'ศรี', 'มูละ', 'อุตสาหะ', 'มนตรี', 'กาลกิณี'];
+const TAKSA_TIP = {
+  บริวาร: 'คนรอบตัวช่วยหนุน งานที่ต้องพึ่งทีมจะไปได้ดี', อายุ: 'ดูแลสุขภาพ พักผ่อนให้พอ', เดช: 'มีอำนาจและความน่าเชื่อถือ เจรจาได้ผล',
+  ศรี: 'โชคลาภและเสน่ห์เด่น เหมาะเรื่องเงินและความรัก', มูละ: 'เหมาะเก็บออม วางรากฐาน ทำเรื่องบ้านหรือทรัพย์สิน',
+  อุตสาหะ: 'ขยันแล้วได้ผล งานค้างให้รีบเคลียร์', มนตรี: 'มีผู้ใหญ่ให้คำปรึกษา ขอความช่วยเหลือได้', กาลกิณี: 'ระวังคำพูดและการตัดสินใจเร่งด่วน',
+};
+function dayHash(str) { let h = 2166136261; for (const c of str) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; }
+function dailyReport(u) {
+  const now = new Date();
+  const key = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+  const seed = dayHash(`${u.phone || u.name}|${u.birthdate || ''}|${key}`);
+  const pick = (arr, k) => arr[(seed >>> k) % arr.length];
+  const stars = (k) => 2 + ((seed >>> k) % 4);               // 2–5 ดาว
+  const today = DAY_COLORS[now.getDay()];
+  const { m, d } = birthParts(u);
+  const [zName, zSym, zEl] = zodiacOf(m, d);
+  const personal = reduce(lifeNumber(u) + reduce(now.getDate()) + reduce(now.getMonth() + 1) + reduce(now.getFullYear()));
+  const [numTitle, numText] = NUM_MEANING[personal];
+  const card = pick(DAILY_TAROT, 3);
+  const birthDay = birthParts(u).date.getDay();
+  const taksa = TAKSA[(now.getDay() - birthDay + 8) % 8];
+  const areas = [['ภาพรวม', 0], ['การงาน', 5], ['การเงิน', 9], ['ความรัก', 13], ['สุขภาพ', 17]];
+  const row = ([label, k]) => `<li><span>${label}</span><b>${'★'.repeat(stars(k))}<i>${'★'.repeat(5 - stars(k))}</i></b></li>`;
+  const lucky = [personal, reduce(personal + 3), reduce(now.getDate() + lifeNumber(u))];
+  return `<article class="daily">
+    <header class="daily-head"><span class="daily-date">${now.toLocaleDateString('th-TH', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</span><h3>ดวงของคุณวันนี้</h3></header>
+    <ul class="daily-stars">${areas.map(row).join('')}</ul>
+    <div class="daily-grid">
+      <div class="dg"><small>♈&#xFE0E; โหราศาสตร์ · ราศี${zName}</small><b>${zSym}&#xFE0E; ธาตุ${zEl}</b><p>${ELEMENT_TIP[zEl]}</p></div>
+      <div class="dg"><small>🔢 เลขศาสตร์ · เลขประจำวัน</small><b>${personal} · ${numTitle}</b><p>${numText}</p></div>
+      <div class="dg"><small>🎨 สีมงคลวัน${today.day}</small><b class="dg-colors">${['work', 'money', 'love'].map((k) => `<span class="sw" style="background:${HEX[today[k]]}" title="${today[k]}"></span>`).join('')}</b>
+        <p>งาน<b>สี${today.work}</b> · เงิน<b>สี${today.money}</b> · รัก<b>สี${today.love}</b><br>เลี่ยง<b>สี${today.avoid}</b></p></div>
+      <div class="dg"><small>🃏 ไพ่ทาโรต์ประจำวัน</small><b>${card[1]} ${card[0]}</b><p>${card[2]}</p></div>
+      <div class="dg"><small>🪷 ทักษา · วันนี้ตกเป็น</small><b>${taksa}</b><p>${TAKSA_TIP[taksa]}</p></div>
+      <div class="dg"><small>🍀 เลขนำโชควันนี้</small><b class="dg-nums">${[...new Set(lucky)].map((n) => `<span>${n}</span>`).join('')}</b><p>ใช้เป็นเลขโปรดของวัน</p></div>
+    </div>
+    <p class="daily-note">${u.birthdate ? 'อัปเดตใหม่ทุกวันตอนเที่ยงคืน' : 'เพิ่มวันเกิดในหน้าบัญชี รายงานจะตรงกับคุณมากขึ้น'} · เพื่อความบันเทิงและเป็นแนวทางชีวิต</p>
+  </article>`;
+}
+
 // ---------- หน้าแชท ----------
 function renderChat(u) {
   stopSpeaking();
@@ -73,6 +122,8 @@ function renderChat(u) {
         : `<input name="code" type="text" autocomplete="off" placeholder="รหัสทดลองใช้ AI (ถ้ามี)" maxlength="40"><button class="btn-gold" type="submit">ใช้รหัส</button>`}
     </form>
     <p class="ai-code-note" id="aiCodeNote">${u.aiCode ? '' : 'ไม่มีรหัสก็ลองคุยได้ แม่หมอจะตอบแบบตัวอย่าง'}</p>
+    ${dailyReport(u)}
+    <p class="ai-sub">✦ สงสัยเรื่องไหน ถามแม่หมอ AI ต่อได้เลย</p>
     <div class="ai-log" id="aiLog">
       ${aiBubble(`สวัสดีค่ะ คุณ${u.first || u.name} ✦ แม่หมอ AI พร้อมดูดวงให้แล้ว อยากรู้เรื่องไหนถามได้เลยนะคะ${u.birthdate ? '' : '\nเพิ่มวันเกิดในหน้าบัญชี จะได้วิเคราะห์ได้แม่นขึ้นค่ะ'}`)}
       ${chat.map((m) => (m.role === 'user' ? `<div class="bubble me">${fmtMsg(m.content)}</div>` : aiBubble(m.content))).join('')}

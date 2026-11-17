@@ -41,15 +41,6 @@ document.querySelectorAll('.tcard3').forEach((a) =>
   })
 );
 
-// ---------- บริการแนะนำ + ศาสตร์ (จาก services-data.js) ----------
-$('popular').innerHTML = SERVICES.filter((s) => s.open).map((s) => {
-  const priced = s.prices.filter((p) => p.price != null).map((p) => p.price);
-  const href = s.link || 'services.html';
-  // ยังไม่มีราคา → ไม่แสดงบรรทัดราคา (แค่ไอคอน + ชื่อบริการ)
-  const price = priced.length ? `<span class="pp">เริ่ม <b>${Math.min(...priced).toLocaleString('th-TH')} ฿</b></span>` : '';
-  return `<a class="pop" href="${href}" data-svc="${s.id}"><span class="pi">${s.icon}</span><span class="pn">${s.name}</span>${price}</a>`;
-}).join('');
-
 // ---------- หมวดหมู่ → ประเภทย่อย → รายชื่อหมอดู ----------
 $('catGrid').innerHTML = CATEGORIES.map((c) =>
   `<button class="cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small><em>${c.types.length} ประเภท ›</em></button>`

@@ -103,6 +103,22 @@
 
             <!-- ฉากหมอดู (วาดใหม่ทั้งหมด อิงองค์ประกอบจาก reference) -->
             <section class="seer-scene">
+              <!-- ฉากโถงกว้างเต็มจอ (แสดงเฉพาะจอใหญ่) -->
+              <svg class="hall-wide" viewBox="0 0 1600 860" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <defs>
+                  <linearGradient id="hwArch" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#22306e"/><stop offset="1" stop-color="#120a33" stop-opacity=".2"/></linearGradient>
+                  <radialGradient id="hwWin" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#8fb0ff" stop-opacity=".45"/><stop offset="1" stop-color="#2a2a7a" stop-opacity="0"/></radialGradient>
+                  <radialGradient id="hwFloor" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#c44fb8" stop-opacity=".55"/><stop offset=".6" stop-color="#6a1f7e" stop-opacity=".35"/><stop offset="1" stop-color="#2a0a3d" stop-opacity="0"/></radialGradient>
+                  <linearGradient id="hwPillar" x1="0" x2="1"><stop offset="0" stop-color="#151a4a"/><stop offset=".5" stop-color="#2c3a86"/><stop offset="1" stop-color="#151a4a"/></linearGradient>
+                </defs>
+                <g class="hw-stars" fill="#f3e6ff"><circle cx="1194" cy="44" r="1"/><circle cx="116" cy="279" r="1"/><circle cx="1128" cy="234" r="1"/><circle cx="1132" cy="50" r="2"/><circle cx="146" cy="223" r="1"/><circle cx="246" cy="168" r="1.4"/><circle cx="1160" cy="112" r="1"/><circle cx="212" cy="300" r="2"/><circle cx="84" cy="274" r="2"/><circle cx="1361" cy="252" r="1.4"/><circle cx="326" cy="144" r="1"/><circle cx="1577" cy="195" r="2"/><circle cx="479" cy="80" r="2"/><circle cx="1208" cy="97" r="1.4"/><circle cx="451" cy="180" r="1.4"/><circle cx="1548" cy="55" r="1"/><circle cx="296" cy="51" r="2"/><circle cx="1496" cy="217" r="2"/><circle cx="1063" cy="201" r="1"/><circle cx="139" cy="131" r="1.4"/><circle cx="1293" cy="220" r="1.4"/><circle cx="1210" cy="225" r="2"/><circle cx="1180" cy="162" r="2"/><circle cx="1407" cy="138" r="1"/><circle cx="104" cy="138" r="2"/><circle cx="1052" cy="113" r="1.4"/><circle cx="308" cy="234" r="2"/><circle cx="398" cy="283" r="2"/><circle cx="1507" cy="223" r="1.4"/><circle cx="1146" cy="225" r="1"/><circle cx="215" cy="245" r="1"/><circle cx="132" cy="72" r="1"/><circle cx="1143" cy="33" r="1"/><circle cx="232" cy="149" r="1.4"/><circle cx="392" cy="79" r="1.4"/><circle cx="1531" cy="179" r="1"/></g>
+                <path d="M45 860 V330 Q45 190 150 156 Q255 190 255 330 V860 Z M330 860 V400 Q330 280 410 246 Q490 280 490 400 V860 Z M1345 860 V330 Q1345 190 1450 156 Q1555 190 1555 330 V860 Z M1110 860 V400 Q1110 280 1190 246 Q1270 280 1270 400 V860 Z" fill="url(#hwArch)" stroke="#3b4a9a" stroke-width="2" stroke-opacity=".7"/>
+                <path d="M59 860 V340 Q59 212 150 178 Q241 212 241 340 V860 Z M344 860 V410 Q344 302 410 268 Q476 302 476 410 V860 Z M1359 860 V340 Q1359 212 1450 178 Q1541 212 1541 340 V860 Z M1124 860 V410 Q1124 302 1190 268 Q1256 302 1256 410 V860 Z" fill="url(#hwWin)"/>
+                <g fill="url(#hwPillar)" opacity=".85"><rect x="282" y="210" width="26" height="650"/><rect x="1292" y="210" width="26" height="650"/><rect x="530" y="300" width="18" height="560"/><rect x="1052" y="300" width="18" height="560"/></g>
+                <g fill="#3b4a9a"><rect x="274" y="200" width="42" height="14" rx="3"/><rect x="1284" y="200" width="42" height="14" rx="3"/><rect x="524" y="290" width="30" height="12" rx="3"/><rect x="1046" y="290" width="30" height="12" rx="3"/></g>
+                <ellipse cx="800" cy="790" rx="820" ry="120" fill="url(#hwFloor)"/>
+                <g class="hw-lamps"><circle cx="230" cy="560" r="5" fill="#ffd27a"/><circle cx="230" cy="560" r="26" fill="#ffd27a" opacity=".18"/><circle cx="1370" cy="560" r="5" fill="#ffd27a"/><circle cx="1370" cy="560" r="26" fill="#ffd27a" opacity=".18"/></g>
+              </svg>
               <!-- โถงโกธิกด้านหลัง -->
               <svg class="hall" viewBox="0 0 360 330" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
                 <defs>
@@ -227,16 +243,19 @@
 
             <p class="hello member-only" id="hello"></p>
 
-            <section class="app-section member-only">
-              <div class="sec-head"><h3>บริการแนะนำ</h3><a href="services.html">ดูทั้งหมด</a></div>
-              <div class="hscroll" id="popular"></div>
-            </section>
-
-            <a class="world-entry member-only" href="world.html">
-              <span class="we-globe">🌏</span>
-              <span class="we-txt"><b>ศาสตร์ดูดวงทั่วโลก</b><small>จีน ญี่ปุ่น อินเดีย ไทย ยุโรป แอฟริกา · เลือกตามประเทศหรือวิธีดู</small></span>
-              <span class="we-go">›</span>
-            </a>
+            <!-- เลือกดูศาสตร์ดูดวง 2 แบบ (เปิดหน้า world.html) -->
+            <nav class="pick-grid member-only" aria-label="เลือกวิธีดูดวง">
+              <a class="pick" href="world.html?mode=method">
+                <span class="pick-ico">🔮</span>
+                <span class="pick-txt"><b>ดูดวงตามประเภท</b><small>ไพ่ · ผังดวง · เสี่ยงทาย · ลายมือ · เลขศาสตร์</small></span>
+                <span class="pick-go">›</span>
+              </a>
+              <a class="pick" href="world.html?mode=region">
+                <span class="pick-ico spin">🌏</span>
+                <span class="pick-txt"><b>ดูดวงตามประเทศ</b><small>จีน · ญี่ปุ่น · อินเดีย · ไทย · ยุโรป · แอฟริกา</small></span>
+                <span class="pick-go">›</span>
+              </a>
+            </nav>
 
             <section class="app-section member-only">
               <div class="sec-head"><h3>หมวดหมู่</h3></div>
