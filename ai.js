@@ -88,7 +88,7 @@ const dayKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2,
 // คำนวณดวงของวันหนึ่ง (ผลเดิมทั้งวัน) → เก็บเป็นข้อมูล เพื่อแสดงและบันทึกประวัติ
 function computeDaily(u, now = new Date()) {
   const key = dayKey(now);
-  const seed = dayHash(`${u.phone || u.name}|${u.birthdate || ''}|${key}`);
+  const seed = dayHash(`${localPhone(u.phone) || u.name}|${u.birthdate || ''}|${key}`);
   const pick = (arr, k) => arr[(seed >>> k) % arr.length];
   const stars = (k) => 2 + ((seed >>> k) % 4);               // 2–5 ดาว
   const today = DAY_COLORS[now.getDay()];

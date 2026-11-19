@@ -58,7 +58,7 @@ function fortuneFile(u) {
     add({ id: 'name', icon: '✍️', label: 'ชื่อ-นามสกุล', value: `${fullName} · ผลรวม ${sum} (${NUM_MEANING[reduce(sum)][0]})`, n: reduce(sum),
       count: 1 + nameOrders.length, at: nameOrders[0]?.at });
   }
-  const phones = [...new Set([u.phone, ...withField('numbers').flatMap((h) => lines(h.data.numbers))].map(digitsOf).filter((p) => p.length >= 9))];
+  const phones = [...new Set([localPhone(u.phone), ...withField('numbers').flatMap((h) => lines(h.data.numbers))].map(digitsOf).filter((p) => p.length >= 9))];
   if (phones.length) {
     const main = phones[0];
     add({ id: 'phone', icon: '📱', label: 'เบอร์โทร', value: phones.map((p) => `${p.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3')} (ผลรวม ${digitSum(p)})`).join(' · '),

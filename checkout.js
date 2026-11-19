@@ -281,7 +281,7 @@ function renderIntake(fields) {
   setStep(3, 'กรอกข้อมูลสำหรับการทำนาย');
   const input = (f) => {
     const req = f.required ? 'required' : '';
-    const pre = { fullname: [u.first || u.name, u.last].filter(Boolean).join(' ') };
+    const pre = { fullname: [u.first || u.name, u.last].filter(Boolean).join(' '), phone: localPhone(u.phone) };
     const val = f.prefill ? esc(pre[f.prefill] ?? u[f.prefill] ?? '') : '';
     const extra = `${f.inputmode ? `inputmode="${f.inputmode}"` : ''} ${f.pattern ? `pattern="${f.pattern}"` : ''} ${f.maxlength ? `maxlength="${f.maxlength}"` : ''}`;
     if (f.type === 'textarea') return `<textarea name="${f.name}" rows="3" ${req} placeholder="${esc(f.placeholder || '')}">${val}</textarea>`;

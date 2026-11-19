@@ -239,18 +239,56 @@ applyUser();
 const DEMO_OTP = '123456'; // ระบบทดสอบ — เปลี่ยนเป็นการส่ง/ตรวจ OTP จากระบบหลังบ้านเมื่อพร้อม
 let pendingPhone = '';
 let resendTimer = null;
-const cleanPhone = (v) => String(v).replace(/\D/g, '');
-const prettyPhone = (p) => p.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+// ---------- เบอร์โทร: เลือกประเทศ + เบอร์ไม่ต้องมี 0 นำหน้า → เก็บเป็น +รหัสประเทศ (เช่น +66812345678) ----------
+const PHONE_COUNTRIES = [
+  ['66', '🇹🇭', 'ไทย'], ['856', '🇱🇦', 'ลาว'], ['95', '🇲🇲', 'เมียนมา'], ['855', '🇰🇭', 'กัมพูชา'], ['84', '🇻🇳', 'เวียดนาม'],
+  ['60', '🇲🇾', 'มาเลเซีย'], ['65', '🇸🇬', 'สิงคโปร์'], ['62', '🇮🇩', 'อินโดนีเซีย'], ['63', '🇵🇭', 'ฟิลิปปินส์'],
+  ['86', '🇨🇳', 'จีน'], ['852', '🇭🇰', 'ฮ่องกง'], ['886', '🇹🇼', 'ไต้หวัน'], ['81', '🇯🇵', 'ญี่ปุ่น'], ['82', '🇰🇷', 'เกาหลีใต้'],
+  ['91', '🇮🇳', 'อินเดีย'], ['61', '🇦🇺', 'ออสเตรเลีย'], ['44', '🇬🇧', 'สหราชอาณาจักร'], ['1', '🇺🇸', 'สหรัฐฯ / แคนาดา'],
+];
+$('phoneCc').innerHTML = PHONE_COUNTRIES.map(([cc, flag, name]) => `<option value="${cc}" title="${name}">${flag} +${cc}</option>`).join('');
+const nationalDigits = (v) => String(v).replace(/\D/g, '').replace(/^0+/, '');
+const cleanPhone = (v, cc = $('phoneCc').value) => `+${cc}${nationalDigits(v)}`;
+const ccOf = (p) => PHONE_COUNTRIES.map(([cc]) => cc).sort((a, b) => b.length - a.length).find((cc) => String(p).startsWith(`+${cc}`));
+// เบอร์แบบในประเทศ (ไทย: 0812345678) ใช้แสดงผล เติมฟอร์ม และคำนวณเลขศาสตร์ · รองรับบัญชีเก่าที่เก็บเป็น 08…
+function localPhone(p) {
+  p = String(p || '');
+  if (p.startsWith('+66')) return `0${p.slice(3)}`;
+  return p;
+}
+function prettyPhone(p) {
+  p = String(p || '');
+  const cc = ccOf(p);
+  if (!cc) return p.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+  const n = p.slice(cc.length + 1);
+  if (cc === '66') return `+66 ${n.replace(/(\d{2})(\d{3})(\d+)/, '$1 $2 $3')}`;
+  return `+${cc} ${n.replace(/(\d{3})(?=\d{4})/, '$1 ')}`;
+}
+// บัญชีเก่า (ก่อนมีรหัสประเทศ) เก็บด้วยคีย์ 08xxxxxxxx
+const legacyKey = (full) => (full.startsWith('+66') ? `0${full.slice(3)}` : null);
+function findAccount(full) {
+  const all = accounts();
+  return all[full] || (legacyKey(full) && all[legacyKey(full)]) || null;
+}
+$('phoneForm').phone.addEventListener('input', (e) => {
+  // พิมพ์ 0 นำหน้ามา → ตัดออกให้อัตโนมัติ
+  const v = e.target.value.replace(/[^\d\s-]/g, '').replace(/^0+/, '');
+  if (v !== e.target.value) e.target.value = v;
+});
 
 $('phoneForm').addEventListener('submit', (e) => {
   e.preventDefault();
   pendingPhone = cleanPhone(e.target.phone.value);
-  if (!/^0\d{9}$/.test(pendingPhone)) { toast('กรุณากรอกเบอร์มือถือ 10 หลัก'); return; }
+  const nat = nationalDigits(e.target.phone.value);
+  const okLen = $('phoneCc').value === '66' ? nat.length === 9 : nat.length >= 6 && nat.length <= 13;
+  if (!okLen) { toast($('phoneCc').value === '66' ? 'กรุณากรอกเบอร์มือถือ 9 หลัก (ไม่ต้องใส่ 0 ข้างหน้า)' : 'กรุณากรอกเบอร์มือถือให้ถูกต้อง'); return; }
   // สมัครด้วยเบอร์ที่มีบัญชีแล้ว → ไม่ให้สมัครซ้ำ เปลี่ยนเป็นเข้าสู่ระบบ
-  if (authMode === 'register' && accounts()[pendingPhone]) {
+  if (authMode === 'register' && findAccount(pendingPhone)) {
     const phone = e.target.phone.value;
+    const cc = $('phoneCc').value;
     setTab('login');
     e.target.phone.value = phone;
+    $('phoneCc').value = cc;
     $('phoneNotice').innerHTML = `เบอร์ <b>${prettyPhone(pendingPhone)}</b> มีบัญชีอยู่แล้ว<br>กรุณาเข้าสู่ระบบ กด “ขอรหัส OTP” เพื่อเข้าสู่ระบบได้เลย`;
     $('phoneNotice').hidden = false;
     return;
@@ -285,8 +323,15 @@ $('otpForm').addEventListener('submit', (e) => {
   e.preventDefault();
   if (e.target.otp.value !== DEMO_OTP) { $('otpError').hidden = false; e.target.otp.select(); return; }
   clearInterval(resendTimer);
-  const existing = accounts()[pendingPhone];
+  const existing = findAccount(pendingPhone);
   if (existing) {
+    // บัญชีเก่าที่เก็บเป็น 08… → ย้ายไปเก็บแบบมีรหัสประเทศ
+    if (existing.phone !== pendingPhone) {
+      const all = accounts();
+      delete all[existing.phone];
+      localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(all));
+      existing.phone = pendingPhone;
+    }
     // มีบัญชีอยู่แล้ว → เข้าสู่ระบบ (หน้ากรอกเบอร์เปลี่ยนเป็นแท็บเข้าสู่ระบบให้แล้ว)
     finishAuth(existing, false);
   } else {
@@ -317,6 +362,7 @@ function finishAuth(user, isNew) {
   closeSheet(true);
   applyUser();
   $('phoneForm').reset();
+  $('phoneCc').value = (user.phone && ccOf(user.phone)) || '66';
   // ยังไม่เคยหมุนวงล้อของขวัญต้อนรับ (สมัครใหม่ หรือบัญชีเดิมที่ยังไม่ได้หมุน) → เปิดวงล้อก่อน แล้วค่อยทำสิ่งที่กดไว้ต่อ
   // บัญชีเดิมที่กด “ไว้ทีหลัง” จะไม่ถูกถามซ้ำภายใน 3 วัน (ยังหมุนได้จากหน้าบัญชี)
   const later = user.giftLaterAt && Date.now() - user.giftLaterAt < 3 * 864e5;

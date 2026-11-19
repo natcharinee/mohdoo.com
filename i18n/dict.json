@@ -175,6 +175,14 @@
   "Please enter a 10-digit mobile number",
   "请输入10位手机号码"
  ],
+ "กรุณากรอกเบอร์มือถือ 9 หลัก (ไม่ต้องใส่ 0 ข้างหน้า)": [
+  "Please enter a 9-digit mobile number (no leading 0)",
+  "请输入9位手机号码（无需开头的0）"
+ ],
+ "กรุณากรอกเบอร์มือถือให้ถูกต้อง": [
+  "Please enter a valid mobile number",
+  "请输入正确的手机号码"
+ ],
  "กรุณาอนุญาตให้ใช้ไมโครโฟนในเบราว์เซอร์ก่อนนะคะ": [
   "Please allow microphone access in your browser first.",
   "请先在浏览器中允许使用麦克风。"
@@ -3211,6 +3219,10 @@
   "Listen more to your inner voice; the answer you seek is within you",
   "多倾听内心的声音，你寻找的答案就在你心中"
  ],
+ "ฟิลิปปินส์": [
+  "Philippines",
+  "菲律宾"
+ ],
  "ฟ้า": [
   "Sky blue",
   "天蓝色"
@@ -3346,6 +3358,10 @@
  "มาดากัสการ์": [
   "Madagascar",
   "马达加斯加"
+ ],
+ "มาเลเซีย": [
+  "Malaysia",
+  "马来西亚"
  ],
  "มิตรภาพ · การเฉลิมฉลอง · ชุมชน": [
   "Friendship · Celebration · Community",
@@ -3690,6 +3706,10 @@
  "รหัสทดลองใช้ AI ไม่ถูกต้อง": [
   "Invalid AI trial code",
   "AI试用码无效"
+ ],
+ "รหัสประเทศ": [
+  "Country code",
+  "国家代码"
  ],
  "รหัสไม่ถูกต้อง ลองอีกครั้ง": [
   "Incorrect code, please try again",
@@ -4727,6 +4747,14 @@
   "Hello,",
   "你好，"
  ],
+ "สหรัฐฯ / แคนาดา": [
+  "USA / Canada",
+  "美国 / 加拿大"
+ ],
+ "สหราชอาณาจักร": [
+  "United Kingdom",
+  "英国"
+ ],
  "สอบถาม": [
   "Ask",
   "咨询"
@@ -4774,6 +4802,10 @@
  "สำเร็จตามเป้าหมาย มีชื่อเสียงดี": [
   "Goals achieved, with a fine reputation",
   "达成目标，名声良好"
+ ],
+ "สิงคโปร์": [
+  "Singapore",
+  "新加坡"
  ],
  "สิงห์": [
   "Leo",
@@ -5327,6 +5359,10 @@
   "Designed in your lucky colours",
   "依你的幸运色设计"
  ],
+ "ออสเตรเลีย": [
+  "Australia",
+  "澳大利亚"
+ ],
  "อังคาร": [
   "Tuesday",
   "星期二"
@@ -5370,6 +5406,10 @@
  "อินเดีย": [
   "India",
   "印度"
+ ],
+ "อินโดนีเซีย": [
+  "Indonesia",
+  "印度尼西亚"
  ],
  "อิลม์ อัลรอมล์": [
   "ʿIlm al-Raml",
@@ -5583,8 +5623,16 @@
   "Grave Feng Shui",
   "阴宅风水"
  ],
+ "ฮ่องกง": [
+  "Hong Kong",
+  "香港"
+ ],
  "เกาหลี": [
   "Korea",
+  "韩国"
+ ],
+ "เกาหลีใต้": [
+  "South Korea",
   "韩国"
  ],
  "เกิด": [
@@ -6447,6 +6495,10 @@
   "Time and place of asking (recorded automatically)",
   "提问的时间与地点（系统自动记录）"
  ],
+ "เวียดนาม": [
+  "Vietnam",
+  "越南"
+ ],
  "เสน่ห์แรง คนรอบตัวใจดีกับคุณ เหมาะบอกความรู้สึก": [
   "Strong charm — people are kind to you; a good time to confess your feelings",
   "魅力十足，身边人对你友善，适合表白心意"
@@ -7119,6 +7171,10 @@
   "Drew stick no.",
   "抽得第"
  ],
+ "ไต้หวัน": [
+  "Taiwan",
+  "台湾"
+ ],
  "ไทย": [
   "Thailand",
   "泰国"
@@ -7386,6 +7442,10 @@
  "ไม่ต้องใช้ข้อมูลส่วนตัว": [
   "No personal information needed",
   "无需个人信息"
+ ],
+ "ไม่ต้องใส่ 0 ข้างหน้า เช่น 81 234 5678": [
+  "No leading 0, e.g. 81 234 5678",
+  "无需输入开头的0，例如 81 234 5678"
  ],
  "ไม่พบรูปในแฟ้มดวง": [
   "no photo found in your Fortune File",

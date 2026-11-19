@@ -70,7 +70,7 @@ function renderProfile() {
     <div class="pf-hero">
       <div class="pf-avatar">${esc((u.first || u.name || '✦').charAt(0).toUpperCase())}${b ? `<span class="pf-sign">${b.zodiac.split(' ')[0]}</span>` : ''}</div>
       <h3 translate="no">${esc(fullName)}</h3>
-      ${u.phone ? `<p>📱 ${esc(u.phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'))}</p>` : u.email ? `<p>${esc(u.email)}</p>` : ''}
+      ${u.phone ? `<p>📱 ${esc(prettyPhone(u.phone))}</p>` : u.email ? `<p>${esc(u.email)}</p>` : ''}
       ${u.created ? `<p class="pf-since">สมาชิกตั้งแต่ ${thDate(u.created)}</p>` : ''}
       <button class="btn-ghost pf-edit" id="pfEdit">✎ แก้ไขข้อมูล</button>
     </div>
