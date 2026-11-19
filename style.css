@@ -276,6 +276,9 @@ body.ready .cta { opacity: 1; transform: none; }
 .tab.active { color: #2a1503; font-weight: 600; }
 .tab-ink { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 999px; background: linear-gradient(135deg, var(--gold-2), var(--gold)); transition: transform .35s cubic-bezier(.3, .9, .3, 1.1); }
 .tabs[data-active="register"] .tab-ink { transform: translateX(100%); }
+/* หน้าแอปหลัก: “สมัครบัญชี” อยู่ปุ่มแรก (ซ้าย) · “เข้าสู่ระบบ” อยู่ขวา */
+#sheet .tabs .tab-ink { transform: translateX(100%); }
+#sheet .tabs[data-active="register"] .tab-ink { transform: none; }
 
 .form { display: flex; flex-direction: column; gap: 12px; }
 .form[hidden] { display: none; }
