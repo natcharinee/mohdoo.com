@@ -531,6 +531,10 @@
   "Step",
   "步骤"
  ],
+ "ขั้นตอนการทำพิธีแทนคุณ": [
+  "How we perform the ritual for you",
+  "代办仪式流程"
+ ],
  "ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย": [
   "Next: enter details for your reading",
   "下一步：填写占卜资料"
@@ -1422,6 +1426,10 @@
  "จองและชำระเงิน": [
   "Book and pay",
   "预约并付款"
+ ],
+ "จองและแจ้งชื่อ": [
+  "Book and share names",
+  "预约并提供姓名"
  ],
  "จองและแจ้งชื่อ-คำอธิษฐาน": [
   "Book and submit names & prayers",
@@ -2471,6 +2479,10 @@
   "Who is the merit for?",
   "为谁做功德？"
  ],
+ "ทำพิธีที่วัดหรือสถานที่จริงตามที่เลือก": [
+  "At the real temple or place you chose",
+  "在您选择的寺庙或实地进行"
+ ],
  "ทำพิธีสะเดาะเคราะห์ตามดวง เช่น ปล่อยปลา ถวายสังฆทาน หรือทำบุญโลงศพ ตามที่หมอดูแนะนำจากวันเดือนปีเกิด": [
   "A misfortune-removal ritual suited to your chart, such as releasing fish, offering Sangkhathan, or the coffin merit ritual, as advised by the fortune teller from your birth date",
   "根据您的命盘举行消灾仪式，如放生鱼、供僧礼包或躺棺功德，由占卜师依您的出生日期建议"
@@ -2510,6 +2522,10 @@
  "ทีมทำพิธีที่สถานที่จริง": [
   "Our team performs the ritual on site",
   "团队在实地举行仪式"
+ ],
+ "ทีมทำพิธีแทนคุณ": [
+  "Our team performs it for you",
+  "团队代您完成仪式"
  ],
  "ทีมไม่ประสานกัน หรืองานยังขาดคุณภาพ": [
   "The team isn't in sync, or the work still lacks quality",
@@ -3859,6 +3875,10 @@
   "Taking on more than you can handle; finances start to stumble",
   "承担超出能力的工作，财务开始受阻"
  ],
+ "รับรูปและวิดีโอยืนยัน": [
+  "Get photo & video proof",
+  "收取照片和视频凭证"
+ ],
  "รับรู้คำบอกกล่าวเพื่อชี้ทางให้ชีวิต": [
   "Receive messages that guide your life",
   "接收指引人生的讯息"
@@ -5066,6 +5086,10 @@
  "ส่งรูปให้หมอดูแล้ว ตอบภายใน 24 ชั่วโมง": [
   "Photo sent to the fortune teller · reply within 24 hours",
   "照片已发送给占卜师 · 24小时内回复"
+ ],
+ "ส่งให้ภายใน 3 วัน ดูได้ใน “ประวัติการดูดวง”": [
+  "Sent within 3 days, viewable in “Reading history”",
+  "3天内发送，可在“算命记录”查看"
  ],
  "ส่งให้หมอดู": [
   "Send to fortune teller",
@@ -7122,6 +7146,10 @@
  "ใบไม้": [
   "Leaves",
   "树叶"
+ ],
+ "ใส่ชื่อผู้รับบุญ คำอธิษฐาน และเลือกสถานที่": [
+  "Enter the recipient’s name, your prayer and choose a place",
+  "填写受福者姓名、祈愿并选择地点"
  ],
  "ใส่สี": [
   "Wear",

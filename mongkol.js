@@ -38,11 +38,14 @@ function renderMongkol() {
           <p>${esc(s.about)}</p>
           <button class="btn-gold" data-merit="${s.id}">จองพิธี ›</button>
         </article>`).join('')}</div>
-      <ol class="mk-proof">
-        <li><span>1</span>จองและแจ้งชื่อ-คำอธิษฐาน</li>
-        <li><span>2</span>ทีมทำพิธีที่สถานที่จริง</li>
-        <li><span>3</span>ส่งรูป + วิดีโอยืนยันใน 3 วัน</li>
-      </ol>
+      <section class="mk-steps">
+        <h4>ขั้นตอนการทำพิธีแทนคุณ</h4>
+        <ol>
+          <li><span class="ms-ico">📝</span><em>1</em><b>จองและแจ้งชื่อ</b><small>ใส่ชื่อผู้รับบุญ คำอธิษฐาน และเลือกสถานที่</small></li>
+          <li><span class="ms-ico">🛕</span><em>2</em><b>ทีมทำพิธีแทนคุณ</b><small>ทำพิธีที่วัดหรือสถานที่จริงตามที่เลือก</small></li>
+          <li><span class="ms-ico">📸</span><em>3</em><b>รับรูปและวิดีโอยืนยัน</b><small>ส่งให้ภายใน 3 วัน ดูได้ใน “ประวัติการดูดวง”</small></li>
+        </ol>
+      </section>
     </section>
 
     <section class="mk-sec" ${mkTab === 'items' ? '' : 'hidden'}>

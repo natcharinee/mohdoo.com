@@ -528,6 +528,18 @@ frame.addEventListener('load', () => {
     const t = frame.contentDocument.title.split(' — ')[0];
     if (t && frame.src !== 'about:blank') $('frameTitle').textContent = t;
   } catch (_) {}
+  // แถบหัว (‹ กลับ + ชื่อหน้า) เลื่อนหายไปพร้อมเนื้อหาในหน้าย่อย ไม่ค้างด้านบน
+  const bar = $('framePanel').querySelector('.panel-bar');
+  bar.style.marginTop = '0px';
+  try {
+    const w = frame.contentWindow;
+    const onScroll = () => {
+      const y = w.scrollY || w.document.scrollingElement?.scrollTop || 0;
+      bar.style.marginTop = `${-Math.min(y, bar.offsetHeight)}px`;
+    };
+    w.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  } catch (_) {}
 });
 $('frameBack').addEventListener('click', closeFrame);
 // หน้า “ดูดวงตามประเภท” ขอเปิดหมวดหมู่หมอดู → ซ้อนแผงหมวดหมู่ไว้บนหน้านั้น กดกลับแล้วกลับมาหน้าเดิม

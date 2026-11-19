@@ -1400,3 +1400,55 @@ body.app-ui .hello small { display: flex; align-items: center; justify-content: 
 @media (max-width: 699px) { .cc-select { font-size: 16px; } }
 .phone-row .cc-select { flex: 0 0 104px; width: 104px; max-width: 104px; }
 .phone-row input:not([type="checkbox"]) { flex: 1 1 auto; width: auto; min-width: 0; }
+
+/* ===== แถบหัวทุกหน้า (‹ กลับ + ชื่อหน้า): เด่นชัดขึ้น ===== */
+.panel-bar { grid-template-columns: 104px 1fr 104px; background: linear-gradient(180deg, #1a0b40 78%, rgba(26, 11, 64, 0));
+  border-bottom: 1px solid rgba(240, 200, 120, .14); }
+.panel-bar h2 { font-size: 1.3rem; font-weight: 600; letter-spacing: .02em; color: var(--gold-2);
+  text-shadow: 0 0 14px rgba(245, 201, 107, .35); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.panel-bar .back { display: inline-flex; align-items: center; gap: 4px; padding: 8px 16px 8px 12px; font-size: 1rem; font-weight: 500;
+  color: var(--gold-2); background: rgba(240, 200, 120, .1); border: 1px solid rgba(240, 200, 120, .4); border-radius: 999px;
+  transition: background .2s, border-color .2s, transform .15s; }
+.panel-bar .back:hover { background: rgba(240, 200, 120, .2); border-color: var(--gold); }
+.panel-bar .back:active { transform: scale(.96); }
+@media (max-width: 699px) {
+  .panel-bar { grid-template-columns: 92px 1fr 92px; }
+  .panel-bar h2 { font-size: 1.15rem; }
+  .panel-bar .back { padding: 7px 14px 7px 10px; font-size: .95rem; }
+}
+/* สวิตช์ บริการมงคล / วัตถุมงคล: ปุ่มที่ไม่ได้เลือกก็อ่านชัด */
+.mk-switch { padding: 5px; border-color: rgba(240, 200, 120, .3); }
+.mk-switch button { padding: 12px 10px; font-size: 1.02rem; font-weight: 500; color: var(--text); }
+.mk-switch button span { font-size: 1.15rem; }
+.mk-switch button:not([aria-selected="true"]):hover { background: rgba(240, 200, 120, .1); color: var(--gold-2); }
+.mk-switch button[aria-selected="true"] { box-shadow: 0 4px 16px rgba(240, 200, 120, .3); }
+/* แถบหัวเลื่อนผ่านไปพร้อมเนื้อหา (ไม่ค้างด้านบน) */
+.panel-bar, body.app-ui .panel-bar { position: relative; top: auto; }
+.frame-panel .panel-bar { will-change: margin-top; }
+
+/* ===== ขั้นตอนการทำพิธี (หน้ามงคล) ===== */
+.mk-steps { margin-top: 16px; padding: 18px 16px 16px; border-radius: 20px;
+  background: linear-gradient(160deg, rgba(240, 200, 120, .09), rgba(255, 255, 255, .03)); border: 1px solid rgba(240, 200, 120, .25); }
+.mk-steps h4 { margin: 0 0 14px; text-align: center; font-size: 1rem; font-weight: 600; color: var(--gold-2); letter-spacing: .02em; }
+.mk-steps ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; position: relative; }
+/* เส้นทองเชื่อมระหว่างขั้น */
+.mk-steps ol::before { content: ""; position: absolute; top: 27px; left: 16.6%; right: 16.6%; height: 2px;
+  background: linear-gradient(90deg, rgba(240, 200, 120, .15), var(--gold), rgba(240, 200, 120, .15)); }
+.mk-steps li { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; }
+.ms-ico { position: relative; z-index: 1; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-size: 1.5rem;
+  background: radial-gradient(circle at 35% 30%, #3b1f78, #1a0b40); border: 2px solid var(--gold); box-shadow: 0 0 18px rgba(245, 201, 107, .3); }
+.mk-steps em { position: absolute; top: -4px; left: calc(50% + 16px); z-index: 2; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  font-style: normal; font-size: .72rem; font-weight: 700; color: #2a1503; background: linear-gradient(135deg, var(--gold-2), var(--gold)); }
+.mk-steps b { margin-top: 6px; font-size: .92rem; font-weight: 600; color: var(--text); }
+.mk-steps small { font-size: .76rem; line-height: 1.5; color: var(--muted); max-width: 220px; }
+/* มือถือ: เรียงแนวตั้ง เส้นทองด้านซ้าย */
+@media (max-width: 599px) {
+  .mk-steps ol { grid-template-columns: 1fr; gap: 14px; }
+  .mk-steps ol::before { top: 28px; bottom: 28px; left: 27px; right: auto; width: 2px; height: auto;
+    background: linear-gradient(180deg, rgba(240, 200, 120, .15), var(--gold), rgba(240, 200, 120, .15)); }
+  .mk-steps li { display: grid; grid-template-columns: 56px 1fr; column-gap: 14px; text-align: left; align-items: center; }
+  .ms-ico { grid-row: span 2; }
+  .mk-steps em { left: 38px; }
+  .mk-steps b { margin-top: 0; align-self: end; }
+  .mk-steps small { align-self: start; max-width: none; }
+}
