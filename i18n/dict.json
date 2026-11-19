@@ -1511,6 +1511,14 @@
   "You received",
   "你获得了"
  ],
+ "คุยสด โทร / วิดีโอคอล": [
+  "Live call / video call",
+  "实时通话 / 视频通话"
+ ],
+ "คุยสดกับหมอดูแบบเรียลไทม์": [
+  "Talk live with the fortune teller",
+  "与占卜师实时交流"
+ ],
  "คุ้มครอง · เดินทาง": [
   "Protection · Travel",
   "护佑 · 出行"
@@ -1878,6 +1886,10 @@
  "ชำระเงินด้วย QR ก่อน แล้วกรอกคำถามให้หมอดู": [
   "Pay by QR first, then fill in your question for the fortune teller",
   "先扫码付款，再填写给占卜师的问题"
+ ],
+ "ชำระเงินด้วย QR แล้วพิมพ์คำถาม หมอดูจะตอบกลับเป็นข้อความภายใน 24 ชั่วโมง": [
+  "Pay by QR and type your question. The fortune teller replies in writing within 24 hours",
+  "扫码支付后输入问题，占卜师将在24小时内文字回复"
  ],
  "ชำระเงินด้วย QR ›": [
   "Pay with QR ›",
@@ -3158,6 +3170,10 @@
  "น้ำไหลรินสู่ทะเล ค่อยเป็นค่อยไปถึงปลายทาง": [
   "Water trickles to the sea, reaching its destination step by step",
   "细水流向大海，循序渐进终达彼岸"
+ ],
+ "บนแอป": [
+  "in the app",
+  "在App中"
  ],
  "บริการ": [
   "Services",
@@ -5263,6 +5279,10 @@
   "Lamphun",
   "南奔"
  ],
+ "ลิงก์ดาวน์โหลดแอปหมอดู.com จะเปิดให้เร็ว ๆ นี้": [
+  "Mohdoo.com app download links are coming soon",
+  "Mohdoo.com App 下载链接即将开放"
+ ],
  "ลึกซึ้ง ช่างสังเกต ชอบค้นหาความจริงและความรู้": [
   "Profound, observant, seeks truth and knowledge",
   "深刻、善于观察、喜欢探寻真理与知识"
@@ -6787,6 +6807,10 @@
   "Details sent to the fortune teller",
   "资料已发送给占卜师"
  ],
+ "ส่งคำถามถึง": [
+  "Send a question to",
+  "向此占卜师提问："
+ ],
  "ส่งผัง ทางเข้า เคาน์เตอร์ และพื้นที่รับลูกค้า": [
   "Send the floor plan, entrance, counter and customer area",
   "提供平面图、入口、柜台及接待区"
@@ -8026,6 +8050,10 @@
  "ฮ่องกง": [
   "Hong Kong",
   "香港"
+ ],
+ "฿ · บนแอป": [
+  "฿ · in the app",
+  "฿ · 在App中"
  ],
  "เกาหลี": [
   "Korea",
@@ -9467,6 +9495,10 @@
   "Calls, negotiations and asking for help go well",
   "打电话联系、谈判、求助都很顺利"
  ],
+ "โทรหรือวิดีโอคอลกับ": [
+  "Call or video call",
+  "与"
+ ],
  "โบสถ์ปรกโพธิ์และหลวงพ่อนิลมณี": [
   "Prok Pho ordination hall and Luang Pho Nil Mani",
   "菩提树覆盖的戒堂与龙婆尼拉玛尼"
@@ -9778,6 +9810,10 @@
  "ให้หมอดูเลือกตามดวง": [
   "Let the fortune teller choose based on your fortune",
   "由占卜师根据你的命理选择"
+ ],
+ "ได้บนแอปหมอดู.com": [
+  "in the Mohdoo.com app",
+  "在Mohdoo.com App中通话或视频"
  ],
  "ได้รับ": [
   "Received",

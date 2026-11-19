@@ -1533,3 +1533,16 @@ body.app-ui .hello small { display: flex; align-items: center; justify-content: 
 .pay-sum b { color: var(--text); font-weight: 500; }
 #toQR:disabled { opacity: .55; cursor: not-allowed; filter: grayscale(.3); }
 @media (max-width: 599px) { .dn-row input { font-size: 16px; } }
+
+/* ===== คุยสดกับหมอดู → ใช้บนแอป ===== */
+.app-card { margin-top: 14px; background: linear-gradient(150deg, rgba(240, 200, 120, .12), rgba(76, 38, 150, .25)); border-color: rgba(240, 200, 120, .35); }
+.app-card-head { display: flex; gap: 12px; align-items: flex-start; }
+.app-ico { flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 1.4rem;
+  background: radial-gradient(circle at 35% 30%, #4a2a8a, #1a0b40); border: 1px solid rgba(240, 200, 120, .5); }
+.app-card h3 { margin: 0; font-size: 1rem; color: var(--gold-2); }
+.app-card p { margin: 3px 0 0; font-size: .8rem; color: var(--text); line-height: 1.5; }
+.app-dls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.app-dl { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 10px; border-radius: 12px; font: inherit; font-size: .88rem; font-weight: 500;
+  color: #fff; background: #0b0618; border: 1px solid rgba(255, 255, 255, .25); text-decoration: none; cursor: pointer; }
+.app-dl:hover { border-color: var(--gold); }
+.app-dl span { font-size: 1.05rem; }
