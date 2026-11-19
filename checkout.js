@@ -25,8 +25,12 @@ const FORM_FIELDS = {
   palm: [
     { name: 'palmL', label: 'ภาพฝ่ามือซ้ายที่เห็นเส้นชัด', type: 'file', slot: 'palmL', required: true },
     { name: 'palmR', label: 'ภาพฝ่ามือขวา', type: 'file', slot: 'palmR' },
+    { name: 'topic', label: 'อยากรู้เรื่องไหน', type: 'select', options: ['ภาพรวม', 'ความรัก', 'การงาน', 'การเงิน', 'สุขภาพ'] },
   ],
-  face: [{ name: 'face', label: 'ภาพใบหน้าตรง ไม่สวมแว่น', type: 'file', slot: 'face', required: true }],
+  face: [
+    { name: 'face', label: 'ภาพใบหน้าตรง ไม่สวมแว่น เห็นหน้าผากถึงคาง', type: 'file', slot: 'face', required: true },
+    { name: 'topic', label: 'อยากรู้เรื่องไหน', type: 'select', options: ['ภาพรวม', 'ความรัก', 'การงาน', 'การเงิน', 'สุขภาพ'] },
+  ],
   fengshui: [
     { name: 'photo', label: 'ภาพหรือผังพื้นที่', type: 'file', slot: 'place', required: true },
     { name: 'direction', label: 'หน้าบ้าน/หน้าร้านหันทิศไหน', placeholder: 'เช่น ทิศตะวันออก' },
@@ -332,10 +336,16 @@ function renderIntake(fields) {
     if (data.birthdate) cur.birthdate = data.birthdate;
     shots.filter((s) => s.src).forEach((s) => savePhoto(cur, s.slot, s.src, order.item.title));
     if (!saveUserWithPhotos(cur)) { delete form.dataset.busy; return; }
-    addHistory({ kind: 'order', svc: order.item.key, icon: order.item.icon, title: order.item.title, status: done ? done.status : 'รอหมอดูตอบ',
+    const histId = addHistory({ kind: 'order', svc: order.item.key, icon: order.item.icon, title: order.item.title, status: done ? done.status : 'รอหมอดูตอบ',
       no: order.no, amount: order.amount, label: order.label, data, fields: fields.map((f) => [f.name, f.label]),
       photos: shots.map((s) => s.slot),
       ...(done ? { steps: done.steps, note: done.text } : {}) });
+    // ลายมือ / โหงวเฮ้ง → แม่หมอ AI อ่านรูปทันที (ถ้า AI ยังไม่พร้อม จะส่งต่อให้หมอดูตอบภายหลัง)
+    if (PHOTO_KINDS[order.item.key]) {
+      const slots = shots.map((s) => s.slot);
+      runPhotoReading({ histId, kind: PHOTO_KINDS[order.item.key], slots, topic: data.topic || 'ภาพรวม', retry: () => renderIntake(fields) });
+      return;
+    }
     $('payBody').innerHTML = `
       <div class="pay-ok"><span class="ok-ring">✦</span><h3>${done ? done.title : 'ส่งข้อมูลให้หมอดูแล้ว'}</h3>
         <p>${done ? done.text : 'หมอดูจะตอบกลับภายใน 24 ชั่วโมง<br>ดูสถานะและคำตอบได้ที่ “ประวัติการดูดวง” ในหน้าบัญชี'}</p></div>

@@ -263,7 +263,10 @@ function openHistory(id) {
           <span class="badge ${c.rev ? 'rev' : 'up'}">${c.rev ? 'ไพ่กลับหัว' : 'ไพ่ตั้ง'}</span>
           <p>${esc(c.text)}</p></div></div>`).join('') + `<p class="reading-tip">✦ ${esc(h.summary)}</p>`;
     } else if (h.kind === 'order') {
-      body = `<div class="order-status"><span class="spinner small"></span><div><b>${esc(h.status)}</b><small>${esc(h.note || 'หมอดูจะตอบกลับภายใน 24 ชั่วโมง')}</small></div></div>
+      body = h.reading
+        ? `<div class="ai-reading-body">${fmtReading(h.reading)}</div>${h.summary ? `<p class="ai-reading-sum"><b>✦ สรุป</b>${esc(h.summary)}</p>` : ''}`
+        : `<div class="order-status"><span class="spinner small"></span><div><b>${esc(h.status)}</b><small>${esc(h.note || 'หมอดูจะตอบกลับภายใน 24 ชั่วโมง')}</small></div></div>`;
+      body += `
         ${h.steps ? `<ol class="track">${h.steps.map((st, i) => `<li class="${i === 0 ? 'done' : i === 1 ? 'now' : ''}">${esc(st)}</li>`).join('')}</ol>` : ''}
         <ul class="order-info">
           <li><small>แพ็กเกจ</small><b>${esc(h.label)}</b></li>

@@ -84,7 +84,9 @@ function fortuneFile(u) {
     const cur = (u.photos || {})[s.id];
     const old = (u.photoLog || []).filter((p) => p.slot === s.id);
     if (!cur && !old.length) return;
-    add({ id: `photo-${s.id}`, icon: s.icon, label: s.name, value: `${cur ? 'มีรูปล่าสุด' : 'มีรูปเก่า'} · ใช้ดู${s.sci}`,
+    const kind = Object.keys(KIND_SLOTS).find((k) => KIND_SLOTS[k].includes(s.id));
+    const rd = kind && (u.photoReadings || {})[kind];
+    add({ id: `photo-${s.id}`, icon: s.icon, label: s.name, value: rd ? `แม่หมอ AI อ่าน${PHOTO_KIND_NAME[kind]} (${rd.topic}): ${rd.summary}` : `${cur ? 'มีรูปล่าสุด' : 'มีรูปเก่า'} · ใช้ดู${s.sci}`,
       at: (u.photoAt || {})[s.id], count: (cur ? 1 : 0) + old.length,
       photos: [...(cur ? [{ src: cur, at: (u.photoAt || {})[s.id] }] : []), ...old] });
   });
@@ -142,7 +144,12 @@ function dailyFromFile(u, personal, now) {
   if (recent(t)) out.lines.push({ icon: '🃏', label: 'ไพ่ที่คุณเปิดล่าสุด', text: `${t.card.th}${t.card.rev ? ' (กลับหัว)' : ''} · ${thDate(t.at)} · ยังเป็นพลังหลักของช่วงนี้ ${t.card.text || ''}`.trim() });
   const s = file.find((f) => f.id === 'siamsi');
   if (recent(s)) out.lines.push({ icon: '🎋', label: 'เซียมซีล่าสุด', text: `ใบที่ ${s.last.no} (${s.last.lv}) · ${s.last.meaning || s.last.verse}` });
-  const body = file.filter((f) => f.photos);
+  Object.entries(u.photoReadings || {}).forEach(([kind, rd]) => {
+    if (rd.summary && now - rd.at < 90 * 864e5) {
+      out.lines.push({ icon: kind === 'palm' ? '✋' : '🧿', label: `${PHOTO_KIND_NAME[kind]}ของคุณ (อ่านเมื่อ ${thDate(rd.at)})`, text: rd.summary });
+    }
+  });
+  const body = file.filter((f) => f.photos && !(u.photoReadings || {})[Object.keys(KIND_SLOTS).find((k) => KIND_SLOTS[k].includes(f.id.slice(6)))]);
   if (body.length) {
     out.lines.push({ icon: '🖐️', label: 'รูปในแฟ้มดวง', text: `${body.map((f) => f.label).join(' · ')} · หมอดูประจำตัวใช้ประกอบการดูดวงของคุณ (การอ่านรูปด้วย AI เปิดในระยะถัดไป)` });
   }
@@ -163,4 +170,75 @@ function fileSection(u) {
       </li>`).join('')}</ul>`
     : '<p class="pf-empty">ยังไม่มีข้อมูล เริ่มดูดวงครั้งแรกแล้วแฟ้มจะค่อย ๆ เติมเต็ม</p>'}
   </section>`;
+}
+
+// ---------- แม่หมอ AI อ่านรูป (ลายมือ / โหงวเฮ้ง) ----------
+// เรียก /api/reading (Claude อ่านรูป) → เก็บผลไว้ในประวัติและแฟ้มดวง (u.photoReadings)
+const PHOTO_KINDS = { palm: 'palm', face: 'face' };
+const PHOTO_KIND_NAME = { palm: 'ลายมือ', face: 'โหงวเฮ้ง' };
+const KIND_SLOTS = { palm: ['palmL', 'palmR'], face: ['face'] };
+
+function updateHistory(id, patch) {
+  const u = currentUser();
+  const h = (u.history || []).find((x) => x.id === id);
+  if (!h) return;
+  Object.assign(h, patch);
+  saveUser(u);
+}
+const fmtReading = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+
+async function aiReadPhotos(kind, slots, topic) {
+  const u = currentUser();
+  const images = (slots.length ? slots : KIND_SLOTS[kind]).map((slot) => ({ slot, data: (u.photos || {})[slot] })).filter((i) => i.data);
+  if (!images.length) return { status: 'nophoto' };
+  try {
+    const r = await fetch('/api/reading', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-AI-Code': u.aiCode || '' },
+      body: JSON.stringify({ kind, topic, images,
+        profile: { first: u.first || u.name, birthdate: u.birthdate, gender: u.gender, file: fortuneFileText(u), lang: window.LANG || 'th' } }),
+    });
+    if (r.ok) { const j = await r.json(); return { status: j.unclear ? 'unclear' : 'ok', ...j }; }
+    if (r.status === 401) return { status: 'nocode' };
+    if (r.status === 429) return { status: 'busy' };
+    return { status: 'offline' };
+  } catch (_) { return { status: 'offline' }; } // เปิดในเครื่อง / ไม่มีเซิร์ฟเวอร์ AI
+}
+
+async function runPhotoReading({ histId, kind, slots, topic, retry }) {
+  const name = PHOTO_KIND_NAME[kind];
+  $('payBody').innerHTML = `<div class="pay-wait ai-reading-wait"><span class="ai-orb"><i>AI</i></span>
+    <p>แม่หมอ AI กำลังอ่าน${name}ของคุณ…</p><small>ใช้เวลาประมาณ 10–30 วินาที</small></div>`;
+  const r = await aiReadPhotos(kind, slots, topic);
+  const foot = `<button class="btn-gold full" id="toProfile">ไปที่แฟ้มดวงในหน้าบัญชี</button>
+    <button class="btn-ghost full" id="toHome">กลับหน้าแรก</button>`;
+
+  if (r.status === 'ok') {
+    setStep(3, 'คำอ่านจากแม่หมอ AI');
+    const u = currentUser();
+    u.photoReadings = { ...(u.photoReadings || {}), [kind]: { at: Date.now(), topic, summary: r.summary, histId } };
+    saveUser(u);
+    updateHistory(histId, { status: 'แม่หมอ AI อ่านแล้ว', reading: r.reading, summary: r.summary, topic, note: '' });
+    $('payBody').innerHTML = `<article class="ai-reading">
+        <header><span class="ok-ring">✦</span><div><small>แม่หมอ AI อ่าน${name} · ${esc(topic)}</small><h3>คำอ่าน${name}ของคุณ</h3></div></header>
+        <div class="ai-reading-body">${fmtReading(r.reading)}</div>
+        ${r.summary ? `<p class="ai-reading-sum"><b>✦ สรุป</b>${esc(r.summary)}</p>` : ''}
+        <p class="pf-note">เก็บไว้ในแฟ้มดวงแล้ว และนำไปรวมในรายงานดวงประจำวัน · เพื่อความบันเทิงและเป็นแนวทางชีวิต</p>
+      </article>${foot}`;
+  } else if (r.status === 'unclear') {
+    updateHistory(histId, { status: 'รูปไม่ชัด รอรูปใหม่', note: r.reading });
+    $('payBody').innerHTML = `<div class="pay-ok"><span class="ok-ring">📷</span><h3>ขอรูปใหม่อีกครั้งนะคะ</h3>
+        <p>${fmtReading(r.reading || 'รูปยังไม่ชัดพอให้อ่าน')}</p></div>
+      <button class="btn-gold full" id="retryPhoto">ส่งรูปใหม่ (ไม่เสียเงินเพิ่ม)</button>${foot}`;
+    $('retryPhoto').addEventListener('click', retry);
+  } else {
+    // AI ยังไม่พร้อม → ส่งต่อให้หมอดูตอบตามปกติ (ไม่มีคำอ่านปลอม)
+    const why = { nocode: 'ยังไม่ได้กรอกรหัสทดลองใช้ AI (กรอกได้ในหน้า “ดูดวงประจำวัน”)', busy: 'ตอนนี้มีคนใช้ AI เยอะมาก',
+      offline: 'ยังไม่ได้เชื่อม AI บนเซิร์ฟเวอร์', nophoto: 'ไม่พบรูปในแฟ้มดวง' }[r.status];
+    updateHistory(histId, { status: 'รอหมอดูตอบ', note: `ส่งรูปให้หมอดูแล้ว ตอบภายใน 24 ชั่วโมง · ${why}` });
+    $('payBody').innerHTML = `<div class="pay-ok"><span class="ok-ring">✦</span><h3>ส่งรูปให้หมอดูแล้ว</h3>
+        <p>แม่หมอ AI ยังอ่านรูปให้ทันทีไม่ได้ (${esc(why)})<br>หมอดูจะตอบกลับภายใน 24 ชั่วโมง ดูคำตอบได้ที่ “ประวัติการดูดวง”</p></div>${foot}`;
+  }
+  $('toProfile').addEventListener('click', openProfile);
+  $('toHome').addEventListener('click', () => { closeAllPanels(); setActiveTab('home'); });
 }

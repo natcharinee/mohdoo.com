@@ -19,9 +19,11 @@ function addHistory(entry) {
   if (!u) return;
   // เก็บทุกประวัติการดูดวง (ไม่ตัดทิ้ง) · ยกเว้นรายงานประจำวันเก็บย้อนหลัง 120 วัน
   let daily = 0;
-  u.history = [{ id: `h${Date.now().toString(36)}`, at: Date.now(), ...entry }, ...(u.history || [])]
+  const id = `h${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+  u.history = [{ id, at: Date.now(), ...entry }, ...(u.history || [])]
     .filter((h) => h.kind !== 'daily' || ++daily <= 120);
   saveUser(u);
+  return id;
 }
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const thDate = (ts) => new Date(ts).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -36,8 +38,8 @@ giftEl.setAttribute('aria-labelledby', 'giftTitle');
 giftEl.innerHTML = `
   <div class="gift-inner">
     <p class="gift-eyebrow">✦ ของขวัญต้อนรับสมาชิกใหม่ ✦</p>
-    <h2 id="giftTitle">หมุนวงล้อรับดวงฟรี 1 อย่าง</h2>
-    <p class="gift-sub" id="giftSub">หมุนได้ 1 ครั้ง ผลที่ได้จะใช้ทันทีหรือเก็บเป็นคูปองก็ได้</p>
+    <h2 id="giftTitle">หมุนวงล้อ รับดูดวงฟรี 1 ครั้ง</h2>
+    <p class="gift-sub" id="giftSub">หมุนได้ 1 ครั้ง รางวัลที่ได้จะใช้ทันทีหรือเก็บเป็นคูปองก็ได้</p>
     <div class="wheel-wrap">
       <span class="wheel-pointer" aria-hidden="true"></span>
       <div class="wheel" id="wheel">${wheelSVG()}</div>
@@ -93,6 +95,8 @@ function closeGift() {
   if (typeof resumeAfterAuth === 'function' && !document.querySelector('.panel.open')) resumeAfterAuth();
 }
 $('giftLater').addEventListener('click', () => {
+  const u = currentUser();
+  if (u) { u.giftLaterAt = Date.now(); saveUser(u); }
   closeGift();
   renderCoupons();
   toast('หมุนวงล้อได้ภายหลังที่หน้าบัญชี ✦');

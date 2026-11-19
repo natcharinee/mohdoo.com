@@ -179,6 +179,10 @@
   "Please allow microphone access in your browser first.",
   "请先在浏览器中允许使用麦克风。"
  ],
+ "กรุณาเข้าสู่ระบบ กด “ขอรหัส OTP” เพื่อเข้าสู่ระบบได้เลย": [
+  "Please log in. Tap “Get OTP code” to log in",
+  "请登录，点击“获取验证码”即可登录"
+ ],
  "กลยุทธ์ · ความไม่ซื่อตรง · ทำคนเดียว": [
   "Strategy · Dishonesty · Going it alone",
   "策略 · 不诚实 · 单独行动"
@@ -471,9 +475,17 @@
   "yours",
   "你的"
  ],
+ "ของคุณ (อ่านเมื่อ": [
+  "(read on",
+  "（解读于"
+ ],
  "ของคุณ: สี": [
   "yours: colour",
   "你的：颜色"
+ ],
+ "ของคุณ…": [
+  "…",
+  "…"
  ],
  "ขอรหัส OTP": [
   "Request OTP",
@@ -486,6 +498,14 @@
  "ขอรหัสใหม่ได้ใน": [
   "Request a new code in",
   "重新获取验证码："
+ ],
+ "ขอรูปใหม่อีกครั้งนะคะ": [
+  "Please send a new photo",
+  "请重新上传照片"
+ ],
+ "ขออภัยค่ะ แม่หมอ AI อ่านรูปนี้ไม่ได้ ลองส่งรูปใหม่ที่เห็นเฉพาะฝ่ามือหรือใบหน้าชัด ๆ นะคะ 🙏": [
+  "Sorry, the AI Seer can't read this photo. Please send a new one that clearly shows just the palm or the face 🙏",
+  "抱歉，AI占卜师无法解读这张照片。请重新上传只清楚拍到手掌或脸部的照片 🙏"
  ],
  "ขอเพิ่มเติม (ถ้ามี)": [
   "Extra requests (if any)",
@@ -1147,6 +1167,14 @@
   "Your prayer",
   "你的祈愿"
  ],
+ "คำอ่าน": [
+  "Your reading:",
+  "解读："
+ ],
+ "คำอ่านจากแม่หมอ AI": [
+  "Reading from the AI Seer",
+  "AI占卜师的解读"
+ ],
  "คำอ่านพร้อมผังประกอบ": [
   "Reading with an accompanying chart",
   "解读附图示"
@@ -1154,6 +1182,10 @@
  "คำอ่านลายมือแบบข้อความสำหรับ 1 หัวข้อ เช่น งานหรือความสัมพันธ์": [
   "A written palm reading on 1 topic, such as work or relationships",
   "针对1个主题的文字手相解读，如事业或感情"
+ ],
+ "คำอ่านลายมือแบบข้อความสำหรับ 1 หัวข้อ เช่น งานหรือความสัมพันธ์ บอกว่าอ่านจากเส้นไหน": [
+  "A written palm reading on 1 topic, such as career or relationships, noting which lines it reads from",
+  "针对1个主题（如事业或感情）的文字手相解读，并说明依据哪条掌纹"
  ],
  "คำอ่านและคำแนะนำ 1 จุด": [
   "Reading and advice for 1 spot",
@@ -2066,6 +2098,10 @@
  "ตอนนี้มีคนถามเยอะมาก รอสักครู่แล้วลองใหม่นะคะ": [
   "Lots of people are asking right now — please wait a moment and try again.",
   "现在提问的人很多，请稍后再试。"
+ ],
+ "ตอนนี้มีคนใช้ AI เยอะมาก": [
+  "the AI is very busy right now",
+  "AI目前使用人数过多"
  ],
  "ตอบทันที": [
   "Instant answers",
@@ -3219,6 +3255,10 @@
   "Front-facing face photo, no glasses",
   "正面照，不戴眼镜"
  ],
+ "ภาพใบหน้าตรง ไม่สวมแว่น เห็นหน้าผากถึงคาง": [
+  "Front-facing photo, no glasses, forehead to chin visible",
+  "正面照，不戴眼镜，露出额头到下巴"
+ ],
  "ภาพใบหน้าตรงตามมุมที่ผู้เชี่ยวชาญกำหนด": [
   "Front-facing photo at the angle the expert specifies",
   "按专家要求角度拍摄的正面照"
@@ -3350,6 +3390,10 @@
  "มีน": [
   "Pisces",
   "双鱼座"
+ ],
+ "มีบัญชีอยู่แล้ว": [
+  "already has an account",
+  "已有账户"
  ],
  "มีบางอย่างไม่เป็นธรรม หรือคุณยังไม่ยอมรับผลของการกระทำบางอย่าง": [
   "Something is unfair, or you haven't yet accepted the consequences of your actions",
@@ -3535,9 +3579,17 @@
   "No AI trial code entered yet",
   "尚未输入AI试用码"
  ],
+ "ยังไม่ได้กรอกรหัสทดลองใช้ AI (กรอกได้ในหน้า “ดูดวงประจำวัน”)": [
+  "no AI trial code entered yet (enter it on the “Daily Horoscope” page)",
+  "尚未输入AI试用码（可在“每日运势”页面输入）"
+ ],
  "ยังไม่ได้เชื่อม AI จริงบนเซิร์ฟเวอร์": [
   "Real AI isn't connected on the server yet",
   "服务器尚未接入真实AI"
+ ],
+ "ยังไม่ได้เชื่อม AI บนเซิร์ฟเวอร์": [
+  "the AI is not connected on the server yet",
+  "服务器尚未连接AI"
  ],
  "ยังไม่ได้เลือก": [
   "Not selected",
@@ -3995,6 +4047,10 @@
   "Space photo / floor plan",
   "空间照片 / 户型图"
  ],
+ "รูปยังไม่ชัดพอให้อ่าน": [
+  "The photo isn't clear enough to read",
+  "照片不够清晰，无法解读"
+ ],
  "รูปร่าง": [
   "Body shape",
   "身形"
@@ -4042,6 +4098,10 @@
  "รูปในแฟ้มดวง": [
   "Photos in your Fortune File",
   "命理档案中的照片"
+ ],
+ "รูปไม่ชัด รอรูปใหม่": [
+  "Photo unclear · waiting for a new one",
+  "照片不清晰 · 等待新照片"
  ],
  "รู้จักคุณ": [
   "knows you",
@@ -4615,6 +4675,10 @@
   "Membership expired · Renew",
   "会员已过期 · 续费"
  ],
+ "สรุป": [
+  "Summary",
+  "总结"
+ ],
  "สรุป: ค่อย ๆ ไปทีละก้าว ฟังใจตัวเอง แล้วเรื่องที่ถามจะคลี่คลายในทางที่ดีค่ะ": [
   "In short: take it one step at a time, listen to your heart, and your question will resolve for the better.",
   "总结：一步一步来，倾听内心，你所问之事自会往好的方向化解。"
@@ -4919,6 +4983,14 @@
   "Send clear photos of your palms, as the fortune teller requires",
   "按占卜师要求提供掌纹清晰的手掌照片"
  ],
+ "ส่งภาพฝ่ามือที่เห็นเส้นชัด แม่หมอ AI อ่านเส้นหลักและเนินมือให้ทันที แล้วเก็บไว้ในแฟ้มดวง": [
+  "Send a photo of your palm with clear lines. The AI Seer reads the main lines and mounts right away and keeps it in your Fortune File",
+  "上传掌纹清晰的手掌照片，AI占卜师立即解读主线和掌丘，并保存到命理档案"
+ ],
+ "ส่งภาพใบหน้าตรง แม่หมอ AI อ่านตามตำราโหงวเฮ้งให้ทันที แล้วเก็บไว้ในแฟ้มดวง": [
+  "Send a front-facing photo. The AI Seer reads it by classic face-reading texts right away and keeps it in your Fortune File",
+  "上传正面照，AI占卜师立即按面相古法解读，并保存到命理档案"
+ ],
  "ส่งภาพใบหน้าตามมุมที่ผู้เชี่ยวชาญกำหนด อ่านตามตำราที่แจ้งไว้": [
   "Send face photos at the angles the expert specifies; read by the stated texts",
   "按专家指定角度提供面部照片，依所述典籍解读"
@@ -4950,6 +5022,18 @@
  "ส่งรูปและทิศของจุดในบ้านที่ต้องการดู เช่น ประตู ห้องนอน หรือมุมทำงาน": [
   "Send photos and directions of the spot you want checked, such as a door, bedroom or work corner",
   "提供要看的位置照片及朝向，如大门、卧室或工作角"
+ ],
+ "ส่งรูปใหม่ (ไม่เสียเงินเพิ่ม)": [
+  "Send a new photo (no extra charge)",
+  "重新上传照片（不另收费）"
+ ],
+ "ส่งรูปให้หมอดูแล้ว": [
+  "Photo sent to the fortune teller",
+  "照片已发送给占卜师"
+ ],
+ "ส่งรูปให้หมอดูแล้ว ตอบภายใน 24 ชั่วโมง": [
+  "Photo sent to the fortune teller · reply within 24 hours",
+  "照片已发送给占卜师 · 24小时内回复"
  ],
  "ส่งให้หมอดู": [
   "Send to fortune teller",
@@ -5039,6 +5123,10 @@
   "The fortune teller will reply within 24 hours",
   "占卜师将在24小时内回复"
  ],
+ "หมอดูจะตอบกลับภายใน 24 ชั่วโมง ดูคำตอบได้ที่ “ประวัติการดูดวง”": [
+  "The fortune teller will reply within 24 hours. See the answer in “Reading history”",
+  "占卜师将在24小时内回复，可在“算命记录”中查看"
+ ],
  "หมอดูทั้งหมด": [
   "All fortune tellers",
   "全部占卜师"
@@ -5079,6 +5167,10 @@
   "Spin!",
   "转！"
  ],
+ "หมุนวงล้อ รับดูดวงฟรี 1 ครั้ง": [
+  "Spin the wheel for 1 free reading",
+  "转动转盘，免费算命1次"
+ ],
  "หมุนวงล้อรับดวงฟรี 1 อย่าง": [
   "Spin the wheel for 1 free reading",
   "转动转盘，免费获得 1 次运势"
@@ -5094,6 +5186,10 @@
  "หมุนได้ 1 ครั้ง ผลที่ได้จะใช้ทันทีหรือเก็บเป็นคูปองก็ได้": [
   "1 spin only; use the result right away or save it as a coupon",
   "仅可转 1 次，结果可立即使用或保存为优惠券"
+ ],
+ "หมุนได้ 1 ครั้ง รางวัลที่ได้จะใช้ทันทีหรือเก็บเป็นคูปองก็ได้": [
+  "One spin only. Use your prize now or save it as a coupon",
+  "仅可转动1次，奖品可立即使用或存为优惠券"
  ],
  "หยุด": [
   "Stop",
@@ -5170,6 +5266,10 @@
  "อนาคตของความสัมพันธ์": [
   "Future of the relationship",
   "感情的未来"
+ ],
+ "อยากรู้เรื่องไหน": [
+  "What would you like to know?",
+  "想了解哪方面？"
  ],
  "อยากรู้เรื่องไหนเป็นพิเศษ": [
   "Anything in particular you want to know?",
@@ -5523,6 +5623,10 @@
   "Saved to your Fortune File",
   "已保存到命理档案"
  ],
+ "เก็บไว้ในแฟ้มดวงแล้ว และนำไปรวมในรายงานดวงประจำวัน · เพื่อความบันเทิงและเป็นแนวทางชีวิต": [
+  "Saved to your Fortune File and included in your daily horoscope · for entertainment and life guidance",
+  "已保存到命理档案并纳入每日运势 · 仅供娱乐与生活参考"
+ ],
  "เขย่ากระบอกเซียมซี": [
   "Shake the Siam Si cup",
   "摇动签筒"
@@ -5746,6 +5850,10 @@
  "เน้นออมมากกว่าใช้": [
   "Focus on saving more than spending",
   "多存少花"
+ ],
+ "เบอร์": [
+  "Number",
+  "号码"
  ],
  "เบอร์ ทะเบียน บัตรประชาชน และบ้านเลขที่": [
   "Phone numbers, plates, ID cards and house numbers",
@@ -6595,9 +6703,25 @@
   "Two rivers meet and become one great stream",
   "两条河流交汇，汇成大江"
  ],
+ "แม่หมอ AI กำลังอ่าน": [
+  "The AI Seer is reading your",
+  "AI占卜师正在解读你的"
+ ],
  "แม่หมอ AI พร้อมดูดวงให้แล้ว อยากรู้เรื่องไหนถามได้เลยนะคะ": [
   "The AI Seer is ready to read your fortune — ask about anything you like.",
   "AI占卜师已准备好为你算命，想知道什么尽管问吧。"
+ ],
+ "แม่หมอ AI ยังอ่านรูปให้ทันทีไม่ได้": [
+  "The AI Seer can't read the photo right now",
+  "AI占卜师暂时无法即时解读照片"
+ ],
+ "แม่หมอ AI อ่าน": [
+  "AI Seer reading ·",
+  "AI占卜师解读 ·"
+ ],
+ "แม่หมอ AI อ่านแล้ว": [
+  "Read by the AI Seer",
+  "AI占卜师已解读"
  ],
  "แรงจูงใจหดหาย หรือเริ่มช้าเกินไป ลองหาเหตุผลที่ทำให้อยากทำอีกครั้ง": [
   "Motivation is fading, or you're starting too slowly; find a reason to want it again",
@@ -6891,6 +7015,10 @@
   "Use it now",
   "立即使用"
  ],
+ "ใช้เวลาประมาณ 10–30 วินาที": [
+  "Takes about 10–30 seconds",
+  "约需10–30秒"
+ ],
  "ใช้เวลาเรียบง่ายด้วยกันแล้วจะใกล้ชิดขึ้น": [
   "Spend simple time together and you'll grow closer",
   "一起度过简单的时光，会更加亲近"
@@ -7006,6 +7134,10 @@
  "ไปที่หน้าบัญชี": [
   "Go to account page",
   "前往账户页"
+ ],
+ "ไปที่แฟ้มดวงในหน้าบัญชี": [
+  "Go to my Fortune File",
+  "前往我的命理档案"
  ],
  "ไปได้ดี ถ้าฟังกันมากขึ้นและให้พื้นที่ส่วนตัว": [
   "Going well, if you listen more and give each other space",
@@ -7254,6 +7386,10 @@
  "ไม่ต้องใช้ข้อมูลส่วนตัว": [
   "No personal information needed",
   "无需个人信息"
+ ],
+ "ไม่พบรูปในแฟ้มดวง": [
+  "no photo found in your Fortune File",
+  "命理档案中没有照片"
  ],
  "ไม่พบหมอดูที่ตรงกับการค้นหา": [
   "No fortune tellers match your search",

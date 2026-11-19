@@ -137,6 +137,7 @@ function setTab(name) {
   document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.tab === name));
   $('authTitle').textContent = copy[name][0];
   $('authSub').textContent = copy[name][1];
+  $('phoneNotice').hidden = true;
   showStep('phone');
 }
 let lastFocus = null;
@@ -245,6 +246,16 @@ $('phoneForm').addEventListener('submit', (e) => {
   e.preventDefault();
   pendingPhone = cleanPhone(e.target.phone.value);
   if (!/^0\d{9}$/.test(pendingPhone)) { toast('กรุณากรอกเบอร์มือถือ 10 หลัก'); return; }
+  // สมัครด้วยเบอร์ที่มีบัญชีแล้ว → ไม่ให้สมัครซ้ำ เปลี่ยนเป็นเข้าสู่ระบบ
+  if (authMode === 'register' && accounts()[pendingPhone]) {
+    const phone = e.target.phone.value;
+    setTab('login');
+    e.target.phone.value = phone;
+    $('phoneNotice').innerHTML = `เบอร์ <b>${prettyPhone(pendingPhone)}</b> มีบัญชีอยู่แล้ว<br>กรุณาเข้าสู่ระบบ กด “ขอรหัส OTP” เพื่อเข้าสู่ระบบได้เลย`;
+    $('phoneNotice').hidden = false;
+    return;
+  }
+  $('phoneNotice').hidden = true;
   $('otpPhone').textContent = prettyPhone(pendingPhone);
   $('otpError').hidden = true;
   $('otpForm').reset();
@@ -276,7 +287,7 @@ $('otpForm').addEventListener('submit', (e) => {
   clearInterval(resendTimer);
   const existing = accounts()[pendingPhone];
   if (existing) {
-    // มีบัญชีอยู่แล้ว → เข้าสู่ระบบ (แม้จะกดแท็บสมัคร)
+    // มีบัญชีอยู่แล้ว → เข้าสู่ระบบ (หน้ากรอกเบอร์เปลี่ยนเป็นแท็บเข้าสู่ระบบให้แล้ว)
     finishAuth(existing, false);
   } else {
     if (authMode === 'login') toast('ยังไม่มีบัญชีสำหรับเบอร์นี้ กรอกข้อมูลเพื่อสมัครได้เลย');
@@ -306,8 +317,10 @@ function finishAuth(user, isNew) {
   closeSheet(true);
   applyUser();
   $('phoneForm').reset();
-  // สมัครใหม่ → วงล้อของขวัญต้อนรับ (welcome-gift.js) แล้วค่อยทำสิ่งที่กดไว้ต่อ · เข้าสู่ระบบ → ทำต่อทันที
-  if (isNew && typeof startWelcomeGift === 'function') setTimeout(startWelcomeGift, 900);
+  // ยังไม่เคยหมุนวงล้อของขวัญต้อนรับ (สมัครใหม่ หรือบัญชีเดิมที่ยังไม่ได้หมุน) → เปิดวงล้อก่อน แล้วค่อยทำสิ่งที่กดไว้ต่อ
+  // บัญชีเดิมที่กด “ไว้ทีหลัง” จะไม่ถูกถามซ้ำภายใน 3 วัน (ยังหมุนได้จากหน้าบัญชี)
+  const later = user.giftLaterAt && Date.now() - user.giftLaterAt < 3 * 864e5;
+  if (!user.wheelSpun && (isNew || !later) && typeof startWelcomeGift === 'function') setTimeout(startWelcomeGift, 900);
   else resumeAfterAuth();
   toast(isNew ? 'สมัครสำเร็จ! ยินดีต้อนรับสู่หมอดู.com ✦' : `ยินดีต้อนรับกลับ คุณ${user.name} ✦`);
   const r = screen.getBoundingClientRect();
