@@ -36,10 +36,14 @@ const FORM_FIELDS = {
     { name: 'direction', label: 'หน้าบ้าน/หน้าร้านหันทิศไหน', placeholder: 'เช่น ทิศตะวันออก' },
   ],
 };
-// สถานที่ทำพิธี (รายชื่อตัวอย่าง รอยืนยันพาร์ทเนอร์)
-const MERIT_PLACES = ['ให้ทีมเลือกสถานที่ที่เหมาะกับดวง', 'วัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) · กรุงเทพฯ', 'วัดพระเชตุพนฯ (วัดโพธิ์) · กรุงเทพฯ',
-  'วัดพระธาตุดอยสุเทพ · เชียงใหม่', 'วัดพระธาตุพนม · นครพนม', 'วัดพระปฐมเจดีย์ · นครปฐม', 'วัดพระธาตุหริภุญชัย · ลำพูน'];
-const CHONG_PLACES = ['ให้ทีมเลือกสถานที่', 'วัดมังกรกมลาวาส (เล่งเน่ยยี่) · กรุงเทพฯ', 'ศาลเจ้าพ่อเสือ · กรุงเทพฯ'];
+// สถานที่ทำพิธี: ดึงจาก places-data.js (160 แห่ง แยกตามภาค) · เลือกจากหน้ามงคลแล้วจะถูกเลือกไว้ให้ในฟอร์ม
+const PLACE_PICK = 'ให้ทีมเลือกสถานที่ที่เหมาะกับดวง';
+const placeLabel = (p) => `${p.name} · ${p.prov}`;
+const placeGroups = (keep = () => true) => PLACE_REGIONS
+  .map((r) => [r.name, PLACES.filter((p) => p.region === r.id && keep(p)).map(placeLabel)])
+  .filter(([, list]) => list.length);
+const MERIT_PLACES = [PLACE_PICK];
+const CHONG_PLACES = ['ให้ทีมเลือกสถานที่'];
 Object.assign(FORM_FIELDS, {
   idcard: [{ name: 'idnum', label: 'เลขบัตรประชาชน 13 หลัก (ระบบเก็บเฉพาะผลรวมและเลขท้าย 4 หลัก)', mask: 'idcard', required: true,
     inputmode: 'numeric', pattern: '[0-9 -]{13,17}', placeholder: 'x-xxxx-xxxxx-xx-x' }],
@@ -62,22 +66,23 @@ Object.assign(FORM_FIELDS, {
     { name: 'for', label: 'ทำบุญให้ใคร', type: 'select', options: ['ตัวเอง', 'คนในครอบครัว', 'อุทิศให้ผู้ล่วงลับ'] },
     { name: 'names', label: 'ชื่อ-นามสกุลผู้รับบุญ', prefill: 'fullname', required: true },
     { name: 'kind', label: 'รายการทำบุญ', type: 'select', options: ['ถวายสังฆทาน', 'ถวายภัตตาหาร', 'บริจาคค่าน้ำค่าไฟวัด', 'ปล่อยปลา'] },
-    { name: 'place', label: 'สถานที่', type: 'select', options: MERIT_PLACES },
+    { name: 'place', label: 'สถานที่', type: 'select', options: MERIT_PLACES, groups: placeGroups() },
     { name: 'wish', label: 'คำอธิษฐาน / ข้อความถึงผู้ล่วงลับ', type: 'textarea' },
   ],
   pray: [
     { name: 'names', label: 'ชื่อ-นามสกุล', prefill: 'fullname', required: true },
-    { name: 'place', label: 'สถานที่', type: 'select', options: MERIT_PLACES },
+    { name: 'place', label: 'สถานที่', type: 'select', options: MERIT_PLACES, groups: placeGroups() },
     { name: 'wish', label: 'คำอธิษฐานของคุณ', type: 'textarea', required: true, placeholder: 'เช่น ขอให้งานใหม่ราบรื่น สุขภาพแข็งแรง' },
   ],
   sadoh: [
     { name: 'names', label: 'ชื่อ-นามสกุล', prefill: 'fullname', required: true },
     { name: 'issue', label: 'เรื่องที่อยากสะเดาะเคราะห์', type: 'textarea', required: true, placeholder: 'เช่น ช่วงนี้งานติดขัด มีเรื่องขัดแย้งบ่อย' },
     { name: 'method', label: 'วิธีสะเดาะเคราะห์', type: 'select', options: ['ให้หมอดูเลือกตามดวง', 'ปล่อยปลา / ปล่อยนก', 'ถวายสังฆทาน', 'ทำบุญโลงศพ'] },
+    { name: 'place', label: 'สถานที่', type: 'select', options: MERIT_PLACES, groups: placeGroups() },
   ],
   pichong: [
     { name: 'names', label: 'ชื่อ-นามสกุล', prefill: 'fullname', required: true },
-    { name: 'place', label: 'สถานที่', type: 'select', options: CHONG_PLACES },
+    { name: 'place', label: 'สถานที่', type: 'select', options: CHONG_PLACES, groups: placeGroups((p) => p.tags.includes('chong')) },
     { name: 'note', label: 'เรื่องที่อยากขอพรเพิ่ม', type: 'textarea' },
   ],
 });
@@ -285,7 +290,13 @@ function renderIntake(fields) {
     const val = f.prefill ? esc(pre[f.prefill] ?? u[f.prefill] ?? '') : '';
     const extra = `${f.inputmode ? `inputmode="${f.inputmode}"` : ''} ${f.pattern ? `pattern="${f.pattern}"` : ''} ${f.maxlength ? `maxlength="${f.maxlength}"` : ''}`;
     if (f.type === 'textarea') return `<textarea name="${f.name}" rows="3" ${req} placeholder="${esc(f.placeholder || '')}">${val}</textarea>`;
-    if (f.type === 'select') return `<select name="${f.name}">${f.options.map((o) => `<option>${o}</option>`).join('')}</select>`;
+    if (f.type === 'select') {
+      // ค่าที่เลือกไว้ก่อน (เช่น เลือกวัดจากหน้ามงคล) → เลือกไว้ให้
+      const want = order.item.preset && order.item.preset[f.name];
+      const opt = (o) => `<option ${o === want ? 'selected' : ''}>${esc(o)}</option>`;
+      return `<select name="${f.name}">${f.options.map(opt).join('')}${(f.groups || []).map(([label, list]) =>
+        `<optgroup label="${esc(label)}">${list.map(opt).join('')}</optgroup>`).join('')}</select>`;
+    }
     if (f.type === 'file') {
       // มีรูปในแฟ้มดวงแล้ว → ใช้รูปเดิมได้เลย หรือเลือกรูปใหม่ (รูปเดิมเก็บไว้ดูย้อนหลัง)
       const old = f.slot && (u.photos || {})[f.slot];

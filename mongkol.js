@@ -38,6 +38,7 @@ function renderMongkol() {
           <p>${esc(s.about)}</p>
           <button class="btn-gold" data-merit="${s.id}">จองพิธี ›</button>
         </article>`).join('')}</div>
+      ${placesHTML()}
       <section class="mk-steps">
         <h4>ขั้นตอนการทำพิธีแทนคุณ</h4>
         <ol>
@@ -67,6 +68,47 @@ function renderMongkol() {
     <p class="pf-note">โหมดทดลอง · ยังไม่มีการเก็บเงินและจัดส่งจริง รายชื่อสถานที่เป็นตัวอย่าง รอยืนยันพาร์ทเนอร์</p>`;
 }
 
+// ---------- สถานที่ทำพิธี: แยกตามภาค + เรื่องที่อยากขอ (places-data.js) ----------
+let plRegion = 'feat';   // 'feat' = วัดแนะนำ หรือ id ภาค
+let plWish = 'all';
+let plMore = false;
+let plOpen = null;       // สถานที่ที่กำลังเลือกพิธี
+const PL_SHOW = 12;
+const RITUALS = [['merit', '🙏', 'ทำบุญแทน'], ['pray', '🛕', 'ไหว้พระแทน'], ['sadoh', '🕊️', 'สะเดาะเคราะห์'], ['pichong', '🏮', 'แก้ปีชง']];
+const wishOf = (id) => PLACE_WISHES.find((w) => w.id === id);
+function placesHTML() {
+  const inRegion = PLACES.filter((p) => (plRegion === 'feat' ? p.feat : p.region === plRegion));
+  const list = inRegion.filter((p) => plWish === 'all' || p.tags.includes(plWish));
+  const wishes = PLACE_WISHES.filter((w) => inRegion.some((p) => p.tags.includes(w.id)));
+  const shown = plMore ? list : list.slice(0, PL_SHOW);
+  const chip = (attr, id, label, on, n) => `<button class="pl-chip ${on ? 'on' : ''}" ${attr}="${id}" aria-pressed="${on}">${label}${n != null ? `<em>${n}</em>` : ''}</button>`;
+  const card = (p) => `<article class="pl-card ${plOpen === p.no ? 'open' : ''}">
+      <div class="pl-top"><span class="pl-ico">${p.icon}</span>
+        <div class="pl-name"><b>${esc(p.name)}</b><small>📍 ${esc(p.loc)}</small></div>
+        ${p.feat ? '<span class="pl-feat">✦ แนะนำ</span>' : ''}</div>
+      <p class="pl-deity"><span>องค์สักการะ</span>${esc(p.deity)}</p>
+      <p class="pl-good">${esc(p.good)}</p>
+      <div class="pl-tags">${p.tags.filter((t) => t !== 'general').map((t) => `<span>${wishOf(t).icon} ${wishOf(t).name}</span>`).join('') || '<span>🙏 ขอพรทั่วไป</span>'}</div>
+      ${plOpen === p.no
+        ? `<div class="pl-pick"><small>เลือกพิธีที่ให้ทีมทำแทนที่นี่</small><div>${RITUALS
+            .filter(([id]) => id !== 'pichong' || p.tags.includes('chong'))
+            .map(([id, icon, name]) => `<button class="btn-gold" data-pl-book="${p.no}|${id}">${icon} ${name}</button>`).join('')}</div>
+            <button class="link" data-pl-open="">ยกเลิก</button></div>`
+        : `<button class="btn-ghost pl-book" data-pl-open="${p.no}">จองพิธีที่นี่ ›</button>`}
+    </article>`;
+  return `<section class="pl">
+    <div class="sec-head"><h3>สถานที่ทำพิธี</h3><span class="sec-note">${PLACES.length} แห่งทั่วไทย</span></div>
+    <p class="pl-lead">เลือกวัดหรือศาลที่อยากให้ทีมไปทำพิธีแทน แยกตามภาคและเรื่องที่อยากขอพร</p>
+    <div class="pl-regions">${chip('data-pl-region', 'feat', '✦ วัดเด่นแนะนำ', plRegion === 'feat')}${PLACE_REGIONS.map((r) =>
+      chip('data-pl-region', r.id, `${r.icon} ${r.name}`, plRegion === r.id, PLACES.filter((p) => p.region === r.id).length)).join('')}</div>
+    <div class="pl-wishes">${chip('data-pl-wish', 'all', 'ทุกเรื่อง', plWish === 'all')}${wishes.map((w) =>
+      chip('data-pl-wish', w.id, `${w.icon} ${w.name}`, plWish === w.id)).join('')}</div>
+    ${list.length ? `<div class="pl-grid">${shown.map(card).join('')}</div>` : '<p class="pf-empty">ยังไม่มีสถานที่สำหรับเรื่องนี้ในภาคนี้ ลองเลือกภาคอื่นดูนะคะ</p>'}
+    ${!plMore && list.length > PL_SHOW ? `<button class="btn-ghost full pl-more" data-pl-more>ดูเพิ่มอีก ${list.length - PL_SHOW} แห่ง ›</button>` : ''}
+    <p class="pf-note">ข้อมูลสถานที่และเรื่องที่ขอพรเป็นความเชื่อของผู้ศรัทธา · ก่อนทำพิธี ทีมจะยืนยันเวลาเปิดและข้อกำหนดของสถานที่อีกครั้ง</p>
+  </section>`;
+}
+
 function shopItem(p) {
   const u = currentUser();
   const day = u && u.birthdate ? DAY_COLORS[birthParts(u).date.getDay()] : null;
@@ -89,6 +131,20 @@ mongkolBody.addEventListener('click', (e) => {
   const s = e.target.closest('[data-shop]');
   if (s) { startCheckout(shopItem(SHOP_ITEMS.find((p) => p.id === s.dataset.shop))); return; }
   if (e.target.closest('[data-all]')) openFrame('services.html');
+  const rg = e.target.closest('[data-pl-region]');
+  if (rg) { plRegion = rg.dataset.plRegion; plWish = 'all'; plMore = false; plOpen = null; renderMongkol(); return; }
+  const wi = e.target.closest('[data-pl-wish]');
+  if (wi) { plWish = wi.dataset.plWish; plMore = false; plOpen = null; renderMongkol(); return; }
+  if (e.target.closest('[data-pl-more]')) { plMore = true; renderMongkol(); return; }
+  const op = e.target.closest('[data-pl-open]');
+  if (op) { plOpen = op.dataset.plOpen ? +op.dataset.plOpen : null; renderMongkol(); return; }
+  const bk = e.target.closest('[data-pl-book]');
+  if (bk) {
+    const [no, svc] = bk.dataset.plBook.split('|');
+    const p = PLACES.find((x) => x.no === +no);
+    const item = itemFromService(svc);
+    if (p && item) startCheckout({ ...item, sub: `${item.sub || ''} · ${p.name}`, preset: { place: placeLabel(p) } });
+  }
 });
 
 function openMongkol() {

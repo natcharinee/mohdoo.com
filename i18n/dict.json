@@ -171,6 +171,18 @@
   "Enthusiastic and bold",
   "热情积极，敢闯敢拼"
  ],
+ "กระบี่": [
+  "Krabi",
+  "甲米"
+ ],
+ "กระแสสื่อโซเชียลมีรายงาน": [
+  "Reported on social media",
+  "社交媒体有相关报道"
+ ],
+ "กรุงเทพฯ": [
+  "Bangkok",
+  "曼谷"
+ ],
  "กรุณากรอกเบอร์มือถือ 10 หลัก": [
   "Please enter a 10-digit mobile number",
   "请输入10位手机号码"
@@ -235,6 +247,10 @@
   "Brave, enthusiastic, a natural leader",
   "勇敢、热情、喜欢当领导者"
  ],
+ "กวนอิมและองค์สักการะ": [
+  "Guan Yin and revered deities",
+  "观音及供奉神祇"
+ ],
  "กันย์": [
   "Virgo",
   "处女座"
@@ -267,13 +283,33 @@
   "Cambodia (Khmer)",
   "柬埔寨（高棉）"
  ],
+ "กาญจนบุรี": [
+  "Kanchanaburi",
+  "北碧"
+ ],
  "การขยาย · โอกาสไกลตัว · รอผล": [
   "Expansion · Distant opportunities · Awaiting results",
   "扩张 · 远方机遇 · 等待结果"
  ],
+ "การค้าขายและความร่มเย็นของชุมชนริมน้ำ": [
+  "Trade and the peace of the riverside community",
+  "商贸与河畔社区的安宁"
+ ],
  "การงาน": [
   "career",
   "事业"
+ ],
+ "การงาน · การเรียน": [
+  "Career · Study",
+  "事业 · 学业"
+ ],
+ "การงาน การเรียน สอบแข่งขัน งานศิลปะ และเริ่มต้นสิ่งใหม่": [
+  "Work, study, competitive exams, arts and new beginnings",
+  "事业、学业、竞争考试、艺术及新的开始"
+ ],
+ "การงานและความสำเร็จตามความเชื่อ": [
+  "Work and success, as believed by worshippers",
+  "事业与成功（据信众信仰）"
  ],
  "การจากไป · แสวงหาสิ่งที่ลึกซึ้งกว่า": [
   "Leaving · Seeking something deeper",
@@ -346,6 +382,10 @@
  "การเงิน": [
   "money",
   "财运"
+ ],
+ "การเงิน · ค้าขาย": [
+  "Money · Trade",
+  "财运 · 生意"
  ],
  "การเงิน การงาน และความมั่นคง": [
   "Money, work and stability",
@@ -495,6 +535,58 @@
   "…",
   "…"
  ],
+ "ขอนแก่น": [
+  "Khon Kaen",
+  "孔敬"
+ ],
+ "ขอพรความสำเร็จและครอบครัวตามความเชื่อ": [
+  "Prayers for success and family, as believed by worshippers",
+  "祈求成功与家庭（据信众信仰）"
+ ],
+ "ขอพรทั่วไป": [
+  "General blessings",
+  "一般祈福"
+ ],
+ "ขอพรทั่วไป ความร่มเย็น และกำลังใจเรื่องสุขภาพ": [
+  "General blessings, peace and encouragement for health",
+  "一般祈福、安宁及健康方面的精神支持"
+ ],
+ "ขอพรทั่วไป ความสำเร็จ การงาน และความราบรื่น": [
+  "General blessings, success, work and smooth progress",
+  "一般祈福、成功、事业与顺利"
+ ],
+ "ขอพรทั่วไปตามความเชื่อพญานาค": [
+  "General blessings according to Naga beliefs",
+  "按那伽信仰的一般祈福"
+ ],
+ "ขอพรทั่วไปและความร่มเย็น": [
+  "General blessings and peace",
+  "一般祈福与安宁"
+ ],
+ "ขอพรทั่วไปและชมวัด": [
+  "General blessings and temple sightseeing",
+  "一般祈福与参观寺庙"
+ ],
+ "ขอพรทั่วไปและชมศิลปกรรม": [
+  "General blessings and viewing the artwork",
+  "一般祈福与欣赏艺术"
+ ],
+ "ขอพรทั่วไปและสักการะตามความเชื่อพญานาคลุ่มน้ำโขง": [
+  "General blessings and worship according to Mekong Naga beliefs",
+  "按湄公河流域那伽信仰的一般祈福与参拜"
+ ],
+ "ขอพรทั่วไปและสักการะเทพจีน": [
+  "General blessings and worship of Chinese deities",
+  "一般祈福与参拜中国神祇"
+ ],
+ "ขอพรทั่วไปและโชคลาภตามความเชื่อ": [
+  "General blessings and good fortune, as believed by worshippers",
+  "一般祈福与好运（据信众信仰）"
+ ],
+ "ขอพรให้สมหวังและธรรมเนียมถวายดอกมะลิแก้บน": [
+  "Prayers for wishes to come true, with the tradition of offering jasmine to fulfil vows",
+  "祈求心愿达成，有献茉莉花还愿的传统"
+ ],
  "ขอรหัส OTP": [
   "Request OTP",
   "获取验证码"
@@ -510,6 +602,10 @@
  "ขอรูปใหม่อีกครั้งนะคะ": [
   "Please send a new photo",
   "请重新上传照片"
+ ],
+ "ขอลูกและครอบครัวตามความเชื่อท้องถิ่น": [
+  "Prayers for children and family, according to local belief",
+  "求子与家庭（据当地信仰）"
  ],
  "ขออภัยค่ะ แม่หมอ AI อ่านรูปนี้ไม่ได้ ลองส่งรูปใหม่ที่เห็นเฉพาะฝ่ามือหรือใบหน้าชัด ๆ นะคะ 🙏": [
   "Sorry, the AI Seer can't read this photo. Please send a new one that clearly shows just the palm or the face 🙏",
@@ -607,6 +703,10 @@
   "The information isn't clear yet; don't believe things easily, check from every angle",
   "信息尚不明朗，切勿轻信，要全面核实"
  ],
+ "ข้อมูลสถานที่และเรื่องที่ขอพรเป็นความเชื่อของผู้ศรัทธา · ก่อนทำพิธี ทีมจะยืนยันเวลาเปิดและข้อกำหนดของสถานที่อีกครั้ง": [
+  "Place details and wishes reflect worshippers’ beliefs · Before the ritual, our team reconfirms opening times and the place’s rules",
+  "地点信息与祈愿内容源自信众信仰 · 举行仪式前，团队会再次确认开放时间及场所规定"
+ ],
  "ข้อมูลสำหรับหมอดูประจำตัว": [
   "Details for your personal fortune teller",
   "专属占卜师参考资料"
@@ -683,6 +783,10 @@
   "Family",
   "家庭"
  ],
+ "ครอบครัว · ขอลูก": [
+  "Family · Children",
+  "家庭 · 求子"
+ ],
  "ครอบครัวอบอุ่น · ความสุขสมบูรณ์": [
   "Warm family · Complete happiness",
   "温馨家庭 · 圆满幸福"
@@ -691,9 +795,17 @@
   "A warm family that supports each other well",
   "家庭温暖，互相扶持"
  ],
+ "ครอบครัวและความรักตามความเชื่อ": [
+  "Family and love, as believed by worshippers",
+  "家庭与爱情（据信众信仰）"
+ ],
  "ครอบครัวและบ้านเป็นที่พึ่งใจ กลับไปหาคนที่รักแล้วจะมีแรง": [
   "Family and home are your refuge; return to your loved ones and you'll regain strength",
   "家庭是心灵依靠，回到所爱之人身边便会重获力量"
+ ],
+ "ครอบครัวและศรัทธาชุมชนจีน": [
+  "Family and the faith of the Chinese community",
+  "家庭与华人社区的信仰"
  ],
  "ครั้ง": [
   "times",
@@ -763,6 +875,14 @@
   "New ideas and curiosity — ask questions and learn",
   "新想法与好奇心，多提问多学习"
  ],
+ "ความคุ้มครองและสิริมงคล": [
+  "Protection and auspiciousness",
+  "护佑与吉祥"
+ ],
+ "ความคุ้มครองและสิริมงคลตามความเชื่อ": [
+  "Protection and auspiciousness, as believed by worshippers",
+  "护佑与吉祥（据信众信仰）"
+ ],
  "ความจริงใจของคุณจะชนะใจคนที่ชอบ": [
   "Your sincerity will win the heart of the one you like",
   "您的真诚会赢得心仪之人的心"
@@ -774,6 +894,10 @@
  "ความชัดเจนกำลังมา คุณรู้แล้วว่าต้องการอะไรจริง ๆ": [
   "Clarity is coming — you now know what you truly want",
   "清晰即将到来，你已知道自己真正想要什么"
+ ],
+ "ความซื่อสัตย์ บารมี และค้าขายตามความเชื่อ": [
+  "Honesty, prestige and trade, as believed by worshippers",
+  "诚信、威望与经商（据信众信仰）"
  ],
  "ความตั้งใจและการฝึกฝนจะทำให้คุณเก่งขึ้นเรื่อย ๆ": [
   "Determination and practice will make you better and better",
@@ -819,6 +943,10 @@
   "Stability · Authority · Structure",
   "稳定 · 权威 · 秩序"
  ],
+ "ความมั่นคง การงาน และความเป็นสิริมงคล": [
+  "Stability, work and auspiciousness",
+  "稳定、事业与吉祥"
+ ],
  "ความมั่นคงที่ยั่งยืน ทั้งการเงินและครอบครัว": [
   "Lasting stability in both finances and family",
   "财务与家庭皆长久稳定"
@@ -855,9 +983,17 @@
   "Love · Choice · Harmony",
   "爱情 · 选择 · 和谐"
  ],
+ "ความรัก · คู่ครอง": [
+  "Love · Partner",
+  "爱情 · 姻缘"
+ ],
  "ความรัก ความรู้สึก และความสัมพันธ์": [
   "Love, feelings and relationships",
   "爱情、情感与关系"
+ ],
+ "ความรัก คู่ครอง ความอุดมสมบูรณ์ และความมั่งคั่ง": [
+  "Love, partners, fertility and wealth",
+  "爱情、伴侣、丰饶与财富"
  ],
  "ความรักต้องใช้เวลาให้เติบโต": [
   "Love needs time to grow",
@@ -867,6 +1003,18 @@
   "Warm love and happy news in the family",
   "爱情温暖，家中有喜事"
  ],
+ "ความรักและครอบครัวตามความเชื่อผู้ศรัทธา": [
+  "Love and family, as believed by worshippers",
+  "爱情与家庭（据信众信仰）"
+ ],
+ "ความรักและความสัมพันธ์ โดยชื่อและการระบุองค์เทวรูปมีข้ออภิปราย ควรใช้ชื่อสถานที่กำกับ": [
+  "Love and relationships; the name and identification of the deity image are debated, so the place name should be used",
+  "爱情与人际关系；神像的名称与身份存在争议，宜以地点名称标注"
+ ],
+ "ความรักและคู่ครอง เชื่อมกับตำนานพระนางสร้อยดอกหมาก": [
+  "Love and partners, linked to the legend of Phra Nang Soi Dok Mak",
+  "爱情与伴侣，与帕南索多玛公主的传说相关"
+ ],
  "ความรักใหม่ · ความรู้สึกล้นใจ · การเยียวยา": [
   "New love · Overflowing feelings · Healing",
   "新恋情 · 情感满溢 · 疗愈"
@@ -874,6 +1022,10 @@
  "ความรักไปได้ไกล หมั่นบอกความรู้สึกกันบ่อย ๆ": [
   "Love can go far — share your feelings often",
   "感情可以长久，记得常常表达心意"
+ ],
+ "ความร่มเย็นและศรัทธาชุมชนเมืองเก่า": [
+  "Peace and the faith of the old-town community",
+  "安宁与老城社区的信仰"
  ],
  "ความร่ำรวย · ความสำเร็จทางธุรกิจ · รากฐานมั่นคง": [
   "Wealth · Business success · Solid foundations",
@@ -939,9 +1091,17 @@
   "Success · Happiness · Positive energy",
   "成功 · 快乐 · 正能量"
  ],
+ "ความสำเร็จ กำลังใจ และรำลึกพระมหากรุณาธิคุณ": [
+  "Success, encouragement and remembrance of royal benevolence",
+  "成功、精神鼓励及缅怀王室恩德"
+ ],
  "ความสำเร็จทางการเงินและธุรกิจ คุณคือคนที่สร้างรากฐานได้มั่นคง": [
   "Financial and business success — you build solid foundations",
   "财务与事业成功，你善于打下稳固根基"
+ ],
+ "ความสำเร็จและขอพรทั่วไป มีธรรมเนียมกระซิบคำขอพรที่หนูมุสิกะ": [
+  "Success and general blessings, with the custom of whispering wishes to the mouse Musika",
+  "成功与一般祈福，有向鼠神穆希卡耳语许愿的习俗"
  ],
  "ความสำเร็จและความสุข": [
   "Success and happiness",
@@ -950,6 +1110,18 @@
  "ความสำเร็จและคำชื่นชมกำลังมา คุณสมควรได้รับมัน": [
   "Success and praise are coming — you deserve them",
   "成功与赞誉即将到来，这是你应得的"
+ ],
+ "ความสำเร็จและชมสถาปัตยกรรม": [
+  "Success and architecture viewing",
+  "成功与欣赏建筑"
+ ],
+ "ความสำเร็จและรำลึกวีรกรรมตามศรัทธาท้องถิ่น": [
+  "Success and remembrance of heroic deeds, according to local faith",
+  "成功及缅怀英勇事迹（据当地信仰）"
+ ],
+ "ความสำเร็จและสักการะพระพิฆเนศ": [
+  "Success and worship of Ganesha",
+  "成功与参拜象神"
  ],
  "ความสุขยังอยู่ แค่ถูกเมฆบังชั่วคราว ลองมองหาแง่ดีในวันนี้": [
   "Happiness is still here, just hidden by clouds for now — look for the bright side today",
@@ -1035,6 +1207,10 @@
   "Sharpness · Independence · Directness",
   "敏锐 · 独立 · 直率"
  ],
+ "ความเชื่อท้องถิ่น": [
+  "Local belief",
+  "当地信仰"
+ ],
  "ความเบื่อหน่าย · การไตร่ตรอง · มองข้ามโอกาส": [
   "Boredom · Contemplation · Overlooking opportunities",
   "厌倦 · 沉思 · 忽视机会"
@@ -1098,6 +1274,10 @@
  "คอนโด / ห้องชุด": [
   "Condo / apartment",
   "公寓"
+ ],
+ "คำชะโนดหรือวังนาคินทร์คำชะโนด": [
+  "Kham Chanot (Wang Nakhin Kham Chanot)",
+  "坎差诺（坎差诺那伽宫）"
  ],
  "คำตอบ 1 เรื่องแบบข้อความ": [
   "A written answer to 1 question",
@@ -1327,6 +1507,14 @@
   "You received",
   "你获得了"
  ],
+ "คุ้มครอง · เดินทาง": [
+  "Protection · Travel",
+  "护佑 · 出行"
+ ],
+ "คุ้มครองการเดินทางทางน้ำและความร่มเย็นของชุมชน": [
+  "Protection for water travel and peace of the community",
+  "护佑水上出行与社区安宁"
+ ],
  "คูปอง": [
   "Coupon",
   "优惠券"
@@ -1366,6 +1554,18 @@
  "ค้นหาหมอดู หรือศาสตร์ เช่น ไพ่ทาโรต์": [
   "Search fortune tellers or sciences, e.g. Tarot",
   "搜索占卜师或占卜术，例如塔罗牌"
+ ],
+ "ค้าขาย ความร่มเย็น และประเพณีศรัทธาของชุมชนจีน": [
+  "Trade, peace and faith traditions of the Chinese community",
+  "经商、安宁与华人社区的信仰传统"
+ ],
+ "ค้าขาย ธุรกิจ และการดำเนินชีวิตตามคำสอนของผู้ศรัทธา": [
+  "Trade, business and living by the teachings, as believed by worshippers",
+  "经商、事业及依教诲生活（据信众信仰）"
+ ],
+ "ค้าขาย โชคลาภ และขอพรให้สมหวัง": [
+  "Trade, good fortune and prayers for wishes to come true",
+  "经商、好运与祈求心愿达成"
  ],
  "ฆตฑฒ๋": [
   "ฆตฑฒ๋",
@@ -1422,6 +1622,14 @@
  "จองพิธี": [
   "Book a ritual",
   "预约仪式"
+ ],
+ "จองพิธีที่นี่": [
+  "Book a ritual here",
+  "在此预约仪式"
+ ],
+ "จองพิธีที่นี่ ›": [
+  "Book a ritual here ›",
+  "在此预约仪式 ›"
  ],
  "จองและชำระเงิน": [
   "Book and pay",
@@ -1495,6 +1703,10 @@
   "Arrange your desk and workspace to boost career and money",
   "布置办公桌与工作空间，提升事业与财运"
  ],
+ "จันทบุรี": [
+  "Chanthaburi",
+  "尊武里"
+ ],
  "จันทร์": [
   "Monday",
   "星期一"
@@ -1510,6 +1722,10 @@
  "จำนวนธูปและสีเทียนตามวันเกิด": [
   "Number of incense sticks and candle colours by birth day",
   "依出生日决定香支数量与蜡烛颜色"
+ ],
+ "จิตรกรรมปู่ม่านย่าม่านและพระประธาน": [
+  "Pu Man Ya Man mural and the principal Buddha image",
+  "“普曼雅曼”壁画与主佛像"
  ],
  "จิตสัมผัส": [
   "Psychic reading",
@@ -1527,9 +1743,17 @@
   "Zi Wei Dou Shu",
   "紫微斗数"
  ],
+ "จุดขอพรในเมือง": [
+  "Prayer spot in the city",
+  "城中祈福点"
+ ],
  "จุดจบ · ถึงที่สุด · เริ่มใหม่": [
   "Ending · Culmination · New beginning",
   "终结 · 极致 · 重新开始"
+ ],
+ "จุดถ่ายภาพที่ควรติดตาม": [
+  "Photo spot worth following",
+  "值得关注的拍照点"
  ],
  "จุดวางของหรือสัตว์มงคล": [
   "Placement of items or auspicious animals",
@@ -1538,6 +1762,22 @@
  "จุดวางสัตว์มงคล": [
   "Placement of auspicious animals",
   "吉祥物摆放位置"
+ ],
+ "จุดสักการะที่รู้จักในชื่อพระตรีมูรติ หน้าเซ็นทรัลเวิลด์": [
+  "Worship spot known as the Trimurti, in front of CentralWorld",
+  "被称为三相神的参拜点，位于CentralWorld前"
+ ],
+ "จุดสักการะภายในวัด": [
+  "Worship spot within the temple",
+  "寺内参拜点"
+ ],
+ "จุดสักการะและตลาดน้ำ": [
+  "Worship spot and floating market",
+  "参拜点与水上市场"
+ ],
+ "จุดสักการะและพระพุทธรูปบนยอดเขา": [
+  "Worship spot and hilltop Buddha image",
+  "参拜点与山顶佛像"
  ],
  "จุดเปลี่ยนที่ดี": [
   "A good turning point",
@@ -1550,6 +1790,10 @@
  "ฉลู (วัว)": [
   "Chalu (Ox)",
   "丑（牛）"
+ ],
+ "ฉะเชิงเทรา": [
+  "Chachoengsao",
+  "北柳"
  ],
  "ฉันกับเขาเข้ากันได้ไหม": [
   "Are we compatible?",
@@ -1567,9 +1811,21 @@
   "A win that costs more than it gains · Conflict",
   "得不偿失的胜利 · 冲突"
  ],
+ "ชมพุทธศิลป์และไหว้พระ": [
+  "Buddhist art and paying respects to the Buddha",
+  "欣赏佛教艺术与礼佛"
+ ],
  "ชมพู": [
   "Pink",
   "粉色"
+ ],
+ "ชมศิลปกรรมและไหว้พระ": [
+  "Art and paying respects to the Buddha",
+  "欣赏艺术与礼佛"
+ ],
+ "ชลบุรี": [
+  "Chonburi",
+  "春武里"
  ],
  "ชวด (หนู)": [
   "Chuat (Rat)",
@@ -2067,6 +2323,10 @@
   "Phone Number Reading",
   "手机号解读"
  ],
+ "ดูเพิ่มอีก": [
+  "Show",
+  "再看"
+ ],
  "ดูเมื่อ": [
   "Viewed on",
   "查看时间"
@@ -2110,6 +2370,14 @@
  "ตรวจสอบรายจ่ายประจำ": [
   "Review your regular expenses",
   "检查日常固定开支"
+ ],
+ "ตรัง": [
+  "Trang",
+  "董里"
+ ],
+ "ตราด": [
+  "Trat",
+  "达叻"
  ],
  "ตอนนี้มีคนถามเยอะมาก รอสักครู่แล้วลองใหม่นะคะ": [
   "Lots of people are asking right now — please wait a moment and try again.",
@@ -2215,6 +2483,10 @@
   "Clairvoyance",
   "天眼通"
  ],
+ "ตาพรานบุญและโบสถ์สีชมพู": [
+  "Ta Phran Bun and the pink ordination hall",
+  "塔潘本与粉红色佛殿"
+ ],
  "ตามขอบเขตและค่าเดินทาง": [
   "Depends on scope and travel costs",
   "视范围及差旅费用而定"
@@ -2230,6 +2502,10 @@
  "ตามใบเสนอราคา": [
   "Per quotation",
   "按报价"
+ ],
+ "ตำบลศรีภูมิ อำเภอเมืองเชียงใหม่ เชียงใหม่": [
+  "Si Phum Subdistrict, Mueang Chiang Mai District, Chiang Mai",
+  "清迈府直辖县诗蓬区"
  ],
  "ตีความความฝันและลางบอกเหตุ ดี-ร้าย": [
   "Interpret dreams and omens, good or bad",
@@ -2343,6 +2619,14 @@
   "It's time to walk away from what no longer fulfils you",
   "是时候离开那些无法再满足你内心的事物了"
  ],
+ "ถือศีลกินผักและศรัทธาชุมชน": [
+  "Vegetarian festival and community faith",
+  "九皇斋节与社区信仰"
+ ],
+ "ถือศีลกินผักและสิริมงคล": [
+  "Vegetarian festival and auspiciousness",
+  "九皇斋节与吉祥"
+ ],
  "ถ้วย": [
   "Cups",
   "圣杯"
@@ -2350,6 +2634,26 @@
  "ถ้าลูกยังไม่คลอด เริ่มจากความหมายและเสียงได้ก่อน ถ้าต้องการอิงวันเกิด จะยืนยันรายชื่ออีกครั้งหลังคลอด": [
   "If your baby isn't born yet, we can start with meaning and sound; if you want to use the birth date, the list will be confirmed after birth",
   "如宝宝尚未出生，可先从含义与读音入手；如需依据生日，出生后再确认名单"
+ ],
+ "ถ้ำนาคา อุทยานแห่งชาติภูลังกา": [
+  "Naga Cave, Phu Langka National Park",
+  "那伽洞，普兰卡国家公园"
+ ],
+ "ถ้ำนาคี อุทยานแห่งชาติภูลังกา": [
+  "Naki Cave, Phu Langka National Park",
+  "那琪洞，普兰卡国家公园"
+ ],
+ "ถ้ำพญานาคและวังบาดาลจำลอง": [
+  "Naga cave and replica underwater palace",
+  "那伽洞与仿建水下宫殿"
+ ],
+ "ถ้ำลอดมหาจักรพรรดิ์และจุดสักการะภายใน": [
+  "Maha Chakkraphat tunnel cave and inner worship spot",
+  "玛哈差克拉帕穿洞与洞内参拜点"
+ ],
+ "ถ้ำและสถาปัตยกรรมประยุกต์": [
+  "Cave and applied architecture",
+  "洞穴与应用建筑"
  ],
  "ทรงตัว": [
   "Steady",
@@ -2459,17 +2763,73 @@
   "Make merit · online fortune remedies",
   "做功德 · 在线改运"
  ],
+ "ทำบุญ ภาวนา และชมวิหารแก้ว": [
+  "Merit-making, meditation and the glass vihara",
+  "行善、禅修与参观琉璃殿"
+ ],
+ "ทำบุญ ภาวนา และบูชาพระธาตุ": [
+  "Merit-making, meditation and venerating the relic stupa",
+  "行善、禅修与礼拜舍利塔"
+ ],
  "ทำบุญ ไหว้พระ สะเดาะเคราะห์ และแก้ปีชงแทนคุณ ทีมงานทำพิธีที่สถานที่จริง แล้วส่งรูปและวิดีโอยืนยัน": [
   "We make merit, pray at temples, perform misfortune-removal rituals and clash-year remedies on your behalf at real sites, then send photos and videos as confirmation",
   "我们代你做功德、拜佛、举行消灾仪式及化太岁，在实地完成后发送照片和视频确认"
+ ],
+ "ทำบุญกุศล": [
+  "Charity merit",
+  "行善积德"
+ ],
+ "ทำบุญตามประเพณีจีนและไหว้ปีชง": [
+  "Merit-making in Chinese tradition and Pi Chong (Tai Sui) worship",
+  "中国传统行善与拜太岁"
  ],
  "ทำบุญตามรายการที่เลือก พร้อมรูปถ่ายและวิดีโอยืนยันภายใน 3 วัน": [
   "We make merit with your chosen offerings, with photo and video proof within 3 days",
   "按您选择的项目做功德，3天内提供照片和视频凭证"
  ],
+ "ทำบุญสาธารณกุศล สักการะ และขอความร่มเย็น": [
+  "Charitable merit-making, worship and prayers for peace",
+  "公益行善、参拜与祈求安宁"
+ ],
  "ทำบุญแทน": [
   "Merit on Your Behalf",
   "代做功德"
+ ],
+ "ทำบุญและชมพุทธศิลป์": [
+  "Merit-making and Buddhist art viewing",
+  "行善与欣赏佛教艺术"
+ ],
+ "ทำบุญและชมศิลปวัตถุ": [
+  "Merit-making and viewing artefacts",
+  "行善与欣赏文物"
+ ],
+ "ทำบุญและชมเจดีย์เอกลักษณ์": [
+  "Merit-making and the distinctive chedi",
+  "行善与参观独特佛塔"
+ ],
+ "ทำบุญและถ่ายภาพธรรมชาติ": [
+  "Merit-making and nature photography",
+  "行善与自然摄影"
+ ],
+ "ทำบุญและท่องเที่ยวชุมชน": [
+  "Merit-making and community tourism",
+  "行善与社区旅游"
+ ],
+ "ทำบุญและประวัติศาสตร์ท้องถิ่น": [
+  "Merit-making and local history",
+  "行善与地方历史"
+ ],
+ "ทำบุญและภาวนา": [
+  "Merit-making and meditation",
+  "行善与禅修"
+ ],
+ "ทำบุญและศรัทธาของลูกศิษย์": [
+  "Merit-making and the faith of disciples",
+  "行善与弟子们的信仰"
+ ],
+ "ทำบุญและสักการะพระเกจิ": [
+  "Merit-making and worship of revered monks",
+  "行善与参拜高僧"
  ],
  "ทำบุญโลงศพ": [
   "Donate coffins",
@@ -2555,6 +2915,10 @@
   "Everything will be judged fairly; honesty is the key",
   "一切都将得到公正的裁决，诚实是关键"
  ],
+ "ทุกเรื่อง": [
+  "All wishes",
+  "全部"
+ ],
  "ทุ่มให้งานหรือคนอื่นจนละเลยตัวเอง": [
   "Giving so much to work or others that you neglect yourself",
   "为工作或他人付出太多而忽略了自己"
@@ -2563,9 +2927,37 @@
   "fortune tellers",
   "位"
  ],
+ "ท่ามกงเยี่ย": [
+  "Tham Kong Yia",
+  "谭公爷"
+ ],
+ "ท้าวจตุโลกบาล": [
+  "Four Heavenly Kings (Chatulokaban)",
+  "四大天王"
+ ],
+ "ท้าวมหาพรหม": [
+  "Brahma (Thao Maha Phrom)",
+  "四面佛（大梵天）"
+ ],
+ "ท้าวสุรนารีและอุโบสถ": [
+  "Thao Suranari and the ordination hall",
+  "陶素拉尼女英雄与佛殿"
+ ],
+ "ท้าวเวสสุวรรณ": [
+  "Vessavana (Thao Wessuwan)",
+  "毗沙门天王"
+ ],
+ "ท้าวเวสสุวรรณและจุดสักการะ": [
+  "Vessavana and worship spot",
+  "毗沙门天王与参拜点"
+ ],
  "ธนู": [
   "Sagittarius",
   "射手座"
+ ],
+ "ธรรมชาติและความเชื่อพญานาค ต้องตรวจระบบเข้าชม": [
+  "Nature and Naga beliefs; check the visitor entry system",
+  "自然与那伽信仰；需确认入园预约制度"
  ],
  "ธาตุ": [
   "Element",
@@ -2611,6 +3003,34 @@
   "The bird flies home to its nest and finds warmth",
   "鸟儿归巢，寻得温暖"
  ],
+ "นครนายก": [
+  "Nakhon Nayok",
+  "那空那育"
+ ],
+ "นครปฐม": [
+  "Nakhon Pathom",
+  "佛统"
+ ],
+ "นครพนม": [
+  "Nakhon Phanom",
+  "那空拍侬"
+ ],
+ "นครราชสีมา": [
+  "Nakhon Ratchasima",
+  "呵叻（那空叻差是玛）"
+ ],
+ "นครศรีธรรมราช": [
+  "Nakhon Si Thammarat",
+  "洛坤（那空是贪玛叻）"
+ ],
+ "นครสวรรค์": [
+  "Nakhon Sawan",
+  "北榄坡（那空沙旺）"
+ ],
+ "นนทบุรี": [
+  "Nonthaburi",
+  "暖武里"
+ ],
  "นักคิด": [
   "The Thinker",
   "思想者"
@@ -2655,6 +3075,10 @@
   "Book a BaZi, Zi Wei or Western astrology chart reading with an expert",
   "预约专家解读八字、紫微或西洋占星命盘"
  ],
+ "นาจาและเทพตามประเพณีจีน": [
+  "Nezha and deities of Chinese tradition",
+  "哪吒与中国传统神祇"
+ ],
  "นาที": [
   "minutes",
   "分钟"
@@ -2690,6 +3114,10 @@
  "นิสัยเด่นของคุณ": [
   "Your standout traits",
   "你的突出性格"
+ ],
+ "น่าน": [
+  "Nan",
+  "难府"
  ],
  "น้ำ": [
   "Water",
@@ -2743,6 +3171,10 @@
   "Boriwan (dependants)",
   "眷属"
  ],
+ "บริเวณสี่แยกห้วยขวาง กรุงเทพฯ": [
+  "Huai Khwang Intersection area, Bangkok",
+  "曼谷辉煌十字路口一带"
+ ],
  "บวงสรวง": [
   "Offering ceremony",
   "祭祀仪式"
@@ -2775,6 +3207,82 @@
   "Wounds are healing; slowly let the pain go",
   "伤口正在愈合，慢慢放下痛苦"
  ],
+ "บารมี การงาน ค้าขาย และความคุ้มครอง": [
+  "Prestige, work, trade and protection",
+  "威望、事业、经商与护佑"
+ ],
+ "บึงกาฬ": [
+  "Bueng Kan",
+  "汶甘"
+ ],
+ "บุรีรัมย์": [
+  "Buriram",
+  "武里南"
+ ],
+ "บูชาพระธาตุ": [
+  "Relic worship",
+  "礼拜佛舍利"
+ ],
+ "บูชาพระธาตุ เสริมสิริมงคล เมตตา และความรักตามเรื่องเล่าศรัทธา": [
+  "Venerating the relic stupa for auspiciousness, kindness and love, according to faith stories",
+  "礼拜舍利塔，增添吉祥、人缘与爱情（据信仰传说）"
+ ],
+ "บูชาพระธาตุคู่เมือง": [
+  "Venerating the city's guardian relic stupa",
+  "礼拜城市守护舍利塔"
+ ],
+ "บูชาพระธาตุตามคติล้านนา": [
+  "Venerating the relic stupa in the Lanna tradition",
+  "按兰纳传统礼拜舍利塔"
+ ],
+ "บูชาพระธาตุสำคัญของภาคใต้และเสริมสิริมงคล เป็นคนละวัดกับวัดเจดีย์ไอ้ไข่": [
+  "Venerating a major relic stupa of the South for auspiciousness; a different temple from Wat Chedi (Ai Khai)",
+  "礼拜南部重要舍利塔祈求吉祥；与艾凯佛塔寺并非同一座寺庙"
+ ],
+ "บูชาพระธาตุและชมสถาปัตยกรรม": [
+  "Venerating the relic stupa and architecture viewing",
+  "礼拜舍利塔与欣赏建筑"
+ ],
+ "บูชาพระธาตุและชมเจดีย์": [
+  "Venerating the relic stupa and viewing the chedi",
+  "礼拜舍利塔与参观佛塔"
+ ],
+ "บูชาพระธาตุและถ่ายภาพ": [
+  "Venerating the relic stupa and photography",
+  "礼拜舍利塔与摄影"
+ ],
+ "บูชาพระธาตุและประเพณีชุมชน": [
+  "Venerating the relic stupa and community traditions",
+  "礼拜舍利塔与社区传统"
+ ],
+ "บูชาพระธาตุและมรดกล้านนา": [
+  "Venerating the relic stupa and Lanna heritage",
+  "礼拜舍利塔与兰纳遗产"
+ ],
+ "บูชาพระธาตุและมรดกศรีวิชัย": [
+  "Venerating the relic stupa and Srivijaya heritage",
+  "礼拜舍利塔与室利佛逝遗产"
+ ],
+ "บูชาพระธาตุและเที่ยวชุมชนกะดีจีน": [
+  "Venerating the relic stupa and visiting the Kudi Chin community",
+  "礼拜舍利塔与游览古迪真社区"
+ ],
+ "บูชาพระธาตุและไหว้พระ": [
+  "Venerating the relic stupa and paying respects to the Buddha",
+  "礼拜舍利塔与礼佛"
+ ],
+ "บูชาพระธาตุและไหว้พระธาตุประจำปีระกาตามคติล้านนา": [
+  "Venerating the relic stupa, the Year of the Rooster birth-year stupa in the Lanna tradition",
+  "礼拜舍利塔，兰纳传统中属鸡者的本命塔"
+ ],
+ "บูชาพระบรมสารีริกธาตุและงานประเพณี": [
+  "Venerating the Buddha's relics and traditional festivals",
+  "礼拜佛舍利与传统节庆"
+ ],
+ "บูชาและชมภูมิทัศน์ยอดเขา": [
+  "Worship and hilltop scenery",
+  "参拜与山顶风光"
+ ],
  "บ้าน": [
   "House",
   "住宅"
@@ -2799,6 +3307,14 @@
   "House number to analyse (no street or province needed)",
   "要分析的门牌号（无需填写街道或府）"
  ],
+ "ปทุมธานี": [
+  "Pathum Thani",
+  "巴吞他尼"
+ ],
+ "ประจวบคีรีขันธ์": [
+  "Prachuap Khiri Khan",
+  "巴蜀"
+ ],
  "ประตูบานใหม่เปิดรอ ก้าวเข้าไปอย่าหวั่นกลัว": [
   "A new door opens and waits; step through without fear",
   "新门已开，勇敢迈入勿惧"
@@ -2814,6 +3330,10 @@
  "ประเพณี · ครูบาอาจารย์ · ความเชื่อ": [
   "Tradition · Teachers · Belief",
   "传统 · 导师 · 信仰"
+ ],
+ "ประเพณีถือศีลกินผัก": [
+  "Vegetarian festival tradition",
+  "九皇斋节传统"
  ],
  "ประเภท": [
   "Type",
@@ -2866,6 +3386,10 @@
  "ปัญหาเรื่องมรดก หรือความมั่นคงที่เริ่มสั่นคลอน": [
   "Inheritance issues, or security that is starting to waver",
   "遗产问题，或开始动摇的稳定"
+ ],
+ "ปัตตานี": [
+  "Pattani",
+  "北大年"
  ],
  "ปาจื้อ": [
   "Bazi (Four Pillars)",
@@ -2942,6 +3466,10 @@
  "ปีเถาะ (กระต่าย)": [
   "Year of the Rabbit",
   "兔年"
+ ],
+ "ปู่อือลือ": [
+  "Pu Ue Lue",
+  "普乌鲁（龙王）"
  ],
  "ผลคำทำนายจากข้อมูลส่วนตัวของคุณ": [
   "Predictions based on your personal details",
@@ -3083,6 +3611,18 @@
   "Whole sole of the foot",
   "整个脚掌"
  ],
+ "พญานาค": [
+  "Naga",
+  "那伽"
+ ],
+ "พญานาค ไหว้พระ และชมศิลปกรรม": [
+  "Naga, paying respects to the Buddha and viewing the artwork",
+  "那伽、礼佛与欣赏艺术"
+ ],
+ "พญาศรีสัตตนาคราช": [
+  "Phaya Si Sattanakharat",
+  "帕耶西萨达那伽王"
+ ],
  "พยากรณ์ชีวิตผ่านลูกแก้ว": [
   "Life predictions through a crystal ball",
   "通过水晶球预测人生"
@@ -3091,9 +3631,265 @@
   "Predictions from life's foundations to the future",
   "从人生根基到未来的运势预测"
  ],
+ "พระคู่บ้านคู่เมือง ขอพรทั่วไปและกลับมาแก้บน": [
+  "The town's revered Buddha image: general blessings and returning to fulfil vows",
+  "城市守护佛像：一般祈福与还愿"
+ ],
+ "พระคู่บ้านคู่เมือง ขอพรทั่วไปและความร่มเย็น": [
+  "The town's revered Buddha image: general blessings and peace",
+  "城市守护佛像：一般祈福与安宁"
+ ],
+ "พระคู่บ้านคู่เมือง ไหว้พระและขอพรทั่วไป": [
+  "The town's revered Buddha image: paying respects and general blessings",
+  "城市守护佛像：礼佛与一般祈福"
+ ],
+ "พระธาตุช่อแฮ": [
+  "Phra That Cho Hae",
+  "秋海舍利塔"
+ ],
+ "พระธาตุดอยสุเทพ": [
+  "Phra That Doi Suthep",
+  "素贴山舍利塔"
+ ],
+ "พระธาตุพนม": [
+  "Phra That Phanom",
+  "帕侬舍利塔"
+ ],
+ "พระธาตุลำปางหลวง": [
+  "Phra That Lampang Luang",
+  "南邦銮舍利塔"
+ ],
+ "พระธาตุศรีสองรัก": [
+  "Phra That Si Song Rak",
+  "西松叻舍利塔"
+ ],
+ "พระธาตุศิลปะไทใหญ่": [
+  "Shan (Tai Yai)-style relic stupa",
+  "掸族（泰艾）风格舍利塔"
+ ],
+ "พระธาตุศิลางูและอาคารสีแดง": [
+  "Phra That Sila Ngu and the red building",
+  "诗拉努舍利塔与红色建筑"
+ ],
+ "พระธาตุหริภุญชัย": [
+  "Phra That Hariphunchai",
+  "哈利班超舍利塔"
+ ],
+ "พระธาตุเจดีย์ศรีมหาโพธิ์": [
+  "Phra That Chedi Si Maha Pho",
+  "西玛哈菩舍利塔"
+ ],
+ "พระธาตุเชิงชุมและหลวงพ่อพระองค์แสน": [
+  "Phra That Choeng Chum and Luang Pho Phra Ong Saen",
+  "呈春舍利塔与龙婆帕翁善佛像"
+ ],
+ "พระธาตุแช่แห้ง": [
+  "Phra That Chae Haeng",
+  "车亨舍利塔"
+ ],
+ "พระธาตุและหลวงพ่อผาเงา": [
+  "Relic stupa and Luang Pho Pha Ngao",
+  "舍利塔与龙婆帕高佛像"
+ ],
+ "พระนครศรีอยุธยา": [
+  "Phra Nakhon Si Ayutthaya",
+  "大城（阿瑜陀耶）"
+ ],
+ "พระบรมธาตุธรรมเจดีย์": [
+  "Phra Borommathat Thammachedi",
+  "佛舍利法塔"
+ ],
+ "พระบรมธาตุมหาเจดีย์": [
+  "Phra Borommathat Maha Chedi",
+  "佛舍利大塔"
+ ],
+ "พระบรมธาตุเจดีย์": [
+  "Phra Borommathat Chedi",
+  "佛舍利塔"
+ ],
+ "พระบรมธาตุเจดีย์และพื้นที่วัด": [
+  "Phra Borommathat Chedi and temple grounds",
+  "佛舍利塔与寺院范围"
+ ],
+ "พระบรมธาตุไชยา": [
+  "Phra Borommathat Chaiya",
+  "猜亚佛舍利塔"
+ ],
+ "พระบรมบรรพตหรือภูเขาทอง": [
+  "Phra Borom Banphot (Golden Mount)",
+  "金山（普考通）"
+ ],
+ "พระปฐมเจดีย์และพระร่วงโรจนฤทธิ์": [
+  "Phra Pathom Chedi and Phra Ruang Rochanarit",
+  "佛统大塔与帕銮罗差那立佛"
+ ],
+ "พระประธานทรงเครื่อง": [
+  "Crowned principal Buddha image",
+  "盛装主佛像"
+ ],
+ "พระประธานและจุดทำบุญ": [
+  "Principal Buddha image and merit-making spot",
+  "主佛像与行善点"
+ ],
+ "พระประธานและพื้นที่ปฏิบัติธรรม": [
+  "Principal Buddha image and meditation area",
+  "主佛像与修行区"
+ ],
+ "พระประธานและองค์ไท้ส่วยเอี้ย": [
+  "Principal Buddha image and Tai Sui",
+  "主佛像与太岁爷"
+ ],
+ "พระประธานและเทพตามประเพณีจีน": [
+  "Principal Buddha image and deities of Chinese tradition",
+  "主佛像与中国传统神祇"
+ ],
+ "พระประธานในอุโบสถ": [
+  "Principal Buddha image in the ordination hall",
+  "佛殿内主佛像"
+ ],
+ "พระปรางค์และพระประธาน": [
+  "Prang and principal Buddha image",
+  "高棉式佛塔与主佛像"
+ ],
+ "พระปรางค์และพระพุทธรูป": [
+  "Prang and Buddha images",
+  "高棉式佛塔与佛像"
+ ],
+ "พระผุด": [
+  "Phra Phut",
+  "浮出佛（帕普）"
+ ],
+ "พระพิฆเนศ": [
+  "Ganesha",
+  "象神"
+ ],
+ "พระพิฆเนศปางนอนเสวยสุข": [
+  "Reclining Ganesha (posture of blissful ease)",
+  "卧姿享乐象神"
+ ],
+ "พระพิฆเนศองค์ยืน": [
+  "Standing Ganesha",
+  "站立象神"
+ ],
+ "พระพิฆเนศและอุโบสถมหาเจดีย์": [
+  "Ganesha and the Great Chedi ordination hall",
+  "象神与大塔佛殿"
+ ],
+ "พระพุทธชินราช": [
+  "Phra Phuttha Chinnarat",
+  "成功佛（帕佛陀清那叻）"
+ ],
+ "พระพุทธธรรมกายเทพมงคลและพระมหาเจดีย์": [
+  "Phra Phuttha Thammakai Thep Mongkhon and the Great Chedi",
+  "法身吉祥佛与大塔"
+ ],
+ "พระพุทธรูปห้าองค์และเจดีย์โมเสก": [
+  "Five Buddha images and mosaic chedi",
+  "五尊佛像与马赛克佛塔"
+ ],
+ "พระพุทธรูปแกะสลักหน้าผา": [
+  "Cliff-carved Buddha image",
+  "崖壁雕刻佛像"
+ ],
+ "พระพุทธรูปและเจดีย์บนสำเภา": [
+  "Buddha image and chedi on a junk ship",
+  "帆船上的佛像与佛塔"
+ ],
+ "พระพุทธรูปในถ้ำ": [
+  "Buddha images in the cave",
+  "洞中佛像"
+ ],
+ "พระพุทธรูปใหญ่สีทอง": [
+  "Large golden Buddha image",
+  "金色大佛像"
+ ],
+ "พระพุทธรูปใหญ่และจุดสักการะ": [
+  "Large Buddha image and worship spot",
+  "大佛像与参拜点"
+ ],
+ "พระพุทธสิหิงค์": [
+  "Phra Phuttha Sihing",
+  "帕佛陀狮恒佛"
+ ],
+ "พระพุทธไสยาสน์": [
+  "Reclining Buddha",
+  "卧佛"
+ ],
+ "พระพุทธไสยาสน์หินอ่อน": [
+  "Marble reclining Buddha",
+  "大理石卧佛"
+ ],
+ "พระพุทธไสยาสน์ในถ้ำ": [
+  "Reclining Buddha in the cave",
+  "洞中卧佛"
+ ],
+ "พระมหาธาตุแก่นนคร": [
+  "Phra Mahathat Kaen Nakhon",
+  "坎那空大舍利塔"
+ ],
+ "พระมหาเจดีย์ชัยมงคล": [
+  "Phra Maha Chedi Chai Mongkhon",
+  "猜蒙空大佛塔"
+ ],
+ "พระศรีศากยมุนี": [
+  "Phra Si Sakyamuni",
+  "释迦牟尼佛（帕西沙迦牟尼）"
+ ],
  "พระสังฆราช": [
   "The Hierophant",
   "教皇"
+ ],
+ "พระอจนะ": [
+  "Phra Achana",
+  "帕阿差那佛"
+ ],
+ "พระเจดีย์ชัยมงคลและพระพุทธรูป": [
+  "Chedi Chai Mongkhon and Buddha image",
+  "猜蒙空佛塔与佛像"
+ ],
+ "พระเจ้าตนหลวง": [
+  "Phra Chao Ton Luang",
+  "帕昭敦銮大佛"
+ ],
+ "พระเจ้าใหญ่อินทร์แปลง": [
+  "Phra Chao Yai In Plaeng",
+  "帕昭艾因普朗大佛"
+ ],
+ "พระแก้วมรกต": [
+  "Emerald Buddha",
+  "玉佛"
+ ],
+ "พระแม่มหาอุมาเทวีและเทพในศาสนสถาน": [
+  "Mahauma Devi and deities in the shrine",
+  "乌玛女神与庙内神祇"
+ ],
+ "พระแม่ลักษมี": [
+  "Lakshmi",
+  "吉祥天女"
+ ],
+ "พระแม่ลักษมี เกษรวิลเลจ": [
+  "Lakshmi, Gaysorn Village",
+  "吉祥天女，Gaysorn Village"
+ ],
+ "พระแม่อุมาเทวี": [
+  "Uma Devi",
+  "乌玛女神"
+ ],
+ "พระแม่อุมาเทวี บิ๊กซีราชดำริ": [
+  "Uma Devi, Big C Ratchadamri",
+  "乌玛女神，Big C Ratchadamri"
+ ],
+ "พระโพธิสัตว์กวนอิม": [
+  "Guan Yin Bodhisattva",
+  "观音菩萨"
+ ],
+ "พระใหญ่": [
+  "Big Buddha",
+  "大佛"
+ ],
+ "พระใหญ่และพญาศรีมุกดามหามุนีนีลปาลนาคราช": [
+  "Big Buddha and Phaya Si Mukda Mahamuni Ninlapan Nakharat",
+  "大佛与帕耶西木达那伽王"
  ],
  "พฤษภ": [
   "Taurus",
@@ -3155,9 +3951,17 @@
   "Energy and opportunity are on your side — a good time for big undertakings",
   "能量与机遇站在你这边，正适合成就大事"
  ],
+ "พะเยา": [
+  "Phayao",
+  "帕尧"
+ ],
  "พักผ่อนให้พอ ดื่มน้ำเยอะ ๆ ระวังเหนื่อยสะสม": [
   "Get enough rest, drink plenty of water, beware of building fatigue",
   "充分休息，多喝水，小心疲劳累积"
+ ],
+ "พังงา": [
+  "Phang Nga",
+  "攀牙"
  ],
  "พันธนาการ · กิเลส · การยึดติด": [
   "Bondage · Desire · Attachment",
@@ -3170,6 +3974,10 @@
  "พิจิก": [
   "Scorpio",
   "天蝎座"
+ ],
+ "พิจิตร": [
+  "Phichit",
+  "披集"
  ],
  "พิธีบูชาครูบาอาจารย์ตามประเพณี": [
   "Traditional ceremony honouring teachers",
@@ -3187,6 +3995,10 @@
   "Type or tap the mic to speak…",
   "输入文字或点麦克风说话…"
  ],
+ "พิษณุโลก": [
+  "Phitsanulok",
+  "彭世洛"
+ ],
  "พี่น้อง": [
   "Sibling",
   "兄弟姐妹"
@@ -3198,6 +4010,10 @@
  "พื้นที่เก็บรูปในเบราว์เซอร์เต็ม ลองลบรูปเก่าในหน้าบัญชีนะคะ": [
   "Browser photo storage is full — try deleting old photos on the account page",
   "浏览器照片存储空间已满，请在账户页删除旧照片"
+ ],
+ "พุทธศิลป์และพื้นที่ภูเขาไฟ": [
+  "Buddhist art and volcanic landscape",
+  "佛教艺术与火山地貌"
  ],
  "พุธ": [
   "Wednesday",
@@ -3218,6 +4034,14 @@
  "พ่อ": [
   "Father",
   "父亲"
+ ],
+ "พ่อท่านคล้ายวาจาสิทธิ์": [
+  "Pho Than Khlai Wacha Sit",
+  "颇坦克莱（言灵高僧）"
+ ],
+ "พ่อปู่ศรีสุทโธและแม่ย่าศรีปทุมมา": [
+  "Pho Pu Si Suttho and Mae Ya Si Pathumma",
+  "西苏陀那伽王与西帕吞玛那伽后"
  ],
  "ฟรี": [
   "Free",
@@ -3246,6 +4070,26 @@
  "ฟ้าเปิดทางสว่าง ดาวนำทางกลางนภา": [
   "The heavens open a bright path, stars guide across the sky",
   "天开明路，星辰引路于苍穹"
+ ],
+ "ภาคกลาง · ตะวันตก": [
+  "Central · West",
+  "中部 · 西部"
+ ],
+ "ภาคตะวันออก": [
+  "East",
+  "东部"
+ ],
+ "ภาคอีสาน": [
+  "Northeast (Isan)",
+  "东北部（伊桑）"
+ ],
+ "ภาคเหนือ": [
+  "North",
+  "北部"
+ ],
+ "ภาคใต้": [
+  "South",
+  "南部"
  ],
  "ภาพถ้วยกาแฟหลังคว่ำ (ถ้าเปิดบริการ)": [
   "Photo of the overturned coffee cup (if the service is open)",
@@ -3295,6 +4139,18 @@
   "Heavy burden · Responsibility · Stress",
   "重担 · 责任 · 压力"
  ],
+ "ภาวนาและสัมผัสวัดป่า": [
+  "Meditation and experiencing a forest temple",
+  "禅修与体验森林寺"
+ ],
+ "ภาวนาและเรียนรู้ธรรมะ": [
+  "Meditation and learning the Dhamma",
+  "禅修与学习佛法"
+ ],
+ "ภูเก็ต": [
+  "Phuket",
+  "普吉"
+ ],
  "ภูเขาสูงชัน ปีนขึ้นทีละก้าว": [
   "A steep, high mountain — climb it one step at a time",
   "高山陡峭，一步一步向上攀登"
@@ -3311,9 +4167,17 @@
   "Legacy · Long-term wealth · Family",
   "传承 · 长久财富 · 家庭"
  ],
+ "มรดกวัฒนธรรม": [
+  "Cultural heritage",
+  "文化遗产"
+ ],
  "มหาสัตตเลข": [
   "Maha Sattalek (great seven numbers)",
   "七数大法"
+ ],
+ "มหาเจดีย์และสวนพุทธธรรม": [
+  "Great Chedi and Buddhist Dhamma garden",
+  "大佛塔与佛法园"
  ],
  "มหาโบตะ": [
   "Mahabote",
@@ -3447,6 +4311,10 @@
   "Older photo available",
   "有旧照片"
  ],
+ "มีสื่อกล่าวถึงดาราและพิธี": [
+  "Media mentions of celebrities and rituals",
+  "有媒体提及明星与仪式"
+ ],
  "มีอำนาจและความน่าเชื่อถือ เจรจาได้ผล": [
   "Authority and credibility — negotiations succeed",
   "有威望有信誉，谈判顺利"
@@ -3503,6 +4371,10 @@
   "A chance of promotion or praise",
   "有机会升职或获得称赞"
  ],
+ "มุกดาหาร": [
+  "Mukdahan",
+  "穆达汉"
+ ],
  "มุ่งมั่นไปข้างหน้า ชนะอุปสรรคได้": [
   "Press forward and overcome obstacles",
   "勇往直前，战胜阻碍"
@@ -3514,6 +4386,10 @@
  "ม่วง": [
   "Purple",
   "紫色"
+ ],
+ "ยกเลิก": [
+  "Cancel",
+  "取消"
  ],
  "ยกเลิกคำสั่งซื้อ": [
   "Cancel order",
@@ -3530,6 +4406,10 @@
  "ยอมรับเงื่อนไขการใช้งาน": [
   "Accept the terms of use",
   "接受使用条款"
+ ],
+ "ยะลา": [
+  "Yala",
+  "也拉"
  ],
  "ยังขาด": [
   "Still missing",
@@ -3582,6 +4462,10 @@
  "ยังไม่มีรายการสำหรับเรื่องนี้": [
   "No items for this topic yet",
   "此主题暂无项目"
+ ],
+ "ยังไม่มีสถานที่สำหรับเรื่องนี้ในภาคนี้ ลองเลือกภาคอื่นดูนะคะ": [
+  "No places for this wish in this region yet. Try another region",
+  "该地区暂无此类地点，请试试其他地区"
  ],
  "ยังไม่มีหมอดูในประเภทนี้": [
   "No fortune tellers in this type yet",
@@ -3687,6 +4571,22 @@
   "Europe and Western traditions",
   "欧洲及西方流派"
  ],
+ "ย่านบ้านหม้อ เขตพระนคร กรุงเทพฯ": [
+  "Ban Mo area, Phra Nakhon District, Bangkok",
+  "曼谷帕那空区班摩一带"
+ ],
+ "ย่านพลับพลาไชย กรุงเทพฯ": [
+  "Plaplachai area, Bangkok",
+  "曼谷帕拉柴一带"
+ ],
+ "ย่านเสาชิงช้า เขตพระนคร กรุงเทพฯ": [
+  "Giant Swing area, Phra Nakhon District, Bangkok",
+  "曼谷帕那空区大秋千一带"
+ ],
+ "ย่าโม": [
+  "Ya Mo",
+  "雅莫（陶素拉尼）"
+ ],
  "ย้ายบ้าน": [
   "Moving house",
   "搬家"
@@ -3731,6 +4631,10 @@
   "Incorrect code, please try again",
   "验证码错误，请重试"
  ],
+ "รอยพระพุทธบาทและเจดีย์": [
+  "Buddha footprint and chedi",
+  "佛足印与佛塔"
+ ],
  "รอระบุ": [
   "To be specified",
   "待定"
@@ -3766,6 +4670,10 @@
  "ระบุประเภทงาน ช่วงวันที่สะดวก และข้อมูลเกิดเมื่อผู้ให้บริการจำเป็นต้องใช้": [
   "Specify the type of event, convenient dates, and birth data if the provider needs it",
   "说明事项类型、方便的日期范围，以及服务者需要时的出生资料"
+ ],
+ "ระยอง": [
+  "Rayong",
+  "罗勇"
  ],
  "ระยะเวลา": [
   "Duration",
@@ -3931,6 +4839,10 @@
   "Trial price · Trial mode, no real charges yet",
   "试用报价 · 试用模式，尚未实际收费"
  ],
+ "ราชบุรี": [
+  "Ratchaburi",
+  "叻丕"
+ ],
  "ราชา": [
   "King",
   "国王"
@@ -3946,6 +4858,10 @@
  "รายการ)": [
   "items)",
   "项）"
+ ],
+ "รายการตรวจต่อ": [
+  "Items to verify",
+  "待核实事项"
  ],
  "รายการทำบุญ": [
   "Merit-making items",
@@ -4175,6 +5091,10 @@
   "Cheerful, a great communicator, charming with words and ideas",
   "开朗、善于沟通、言语和想法富有魅力"
  ],
+ "ร้อยเอ็ด": [
+  "Roi Et",
+  "黎逸"
+ ],
  "ร้านค้า": [
   "Shop",
   "店铺"
@@ -4251,6 +5171,14 @@
   "Hesitant to leave, or afraid of change",
   "犹豫是否离开，或害怕改变"
  ],
+ "ลานพญาศรีสัตตนาคราช": [
+  "Phaya Si Sattanakharat Plaza",
+  "帕耶西萨达那伽王广场"
+ ],
+ "ลายต้นกัลปพฤกษ์เรืองแสง": [
+  "Glowing Kalpavriksha (wish-fulfilling tree) mural",
+  "发光如意树图案"
+ ],
  "ลายพระจันทร์ ดาว และอักขระมงคล": [
   "Moon, star and sacred script patterns",
   "月亮、星星与吉祥符文图案"
@@ -4295,6 +5223,14 @@
   "Laos",
   "老挝"
  ],
+ "ลำปาง": [
+  "Lampang",
+  "南邦"
+ ],
+ "ลำพูน": [
+  "Lamphun",
+  "南奔"
+ ],
  "ลึกซึ้ง ช่างสังเกต ชอบค้นหาความจริงและความรู้": [
   "Profound, observant, seeks truth and knowledge",
   "深刻、善于观察、喜欢探寻真理与知识"
@@ -4331,33 +5267,541 @@
   "Monthly lucky wallpaper",
   "每月开运壁纸"
  ],
+ "วัดกลางบางพระ": [
+  "Wat Klang Bang Phra",
+  "挽帕中寺"
+ ],
+ "วัดกัลยาณมิตรวรมหาวิหาร": [
+  "Wat Kanlayanamit Woramahawihan",
+  "卡拉亚纳米寺（三宝公寺）"
+ ],
+ "วัดขุนอินทประมูล": [
+  "Wat Khun Inthapramun",
+  "坤因塔帕蒙寺"
+ ],
+ "วัดคูหาภิมุขหรือวัดหน้าถ้ำ": [
+  "Wat Khuha Phimuk (Wat Na Tham)",
+  "库哈披目寺（洞前寺）"
+ ],
+ "วัดจันทารามหรือวัดท่าซุง": [
+  "Wat Chantharam (Wat Tha Sung)",
+  "詹塔兰寺（塔松寺）"
+ ],
+ "วัดจุกเฌอ": [
+  "Wat Chuk Choe",
+  "朱车寺"
+ ],
+ "วัดจุฬาภรณ์วนาราม": [
+  "Wat Chulaphon Wanaram",
+  "朱拉蓬瓦那兰寺"
+ ],
+ "วัดจุฬามณี": [
+  "Wat Chulamani",
+  "朱拉玛尼寺"
+ ],
+ "วัดชนะสงคราม": [
+  "Wat Chana Songkhram",
+  "差那颂堪寺（胜战寺）"
+ ],
+ "วัดช้างให้ราษฎร์บูรณาราม": [
+  "Wat Chang Hai Rat Burana Ram",
+  "象赐寺（掌海寺）"
+ ],
+ "วัดญาณสังวรารามวรมหาวิหาร": [
+  "Wat Yannasangwararam Woramahawihan",
+  "亚纳桑瓦兰寺"
+ ],
+ "วัดดอนใหญ่": [
+  "Wat Don Yai",
+  "栋艾寺"
+ ],
+ "วัดดัง": [
+  "Famous temple",
+  "著名寺庙"
+ ],
+ "วัดดังใกล้กรุง": [
+  "Famous temple near Bangkok",
+  "曼谷近郊名寺"
+ ],
+ "วัดตะเคียน": [
+  "Wat Takhian",
+  "达希安寺"
+ ],
+ "วัดตะโก": [
+  "Wat Tako",
+  "达果寺"
+ ],
+ "วัดถ้ำพุหว้า": [
+  "Wat Tham Phu Wa",
+  "普瓦洞寺"
+ ],
+ "วัดถ้ำเขาหลวง": [
+  "Wat Tham Khao Luang",
+  "考銮洞寺"
+ ],
+ "วัดถ้ำเสือ": [
+  "Wat Tham Suea",
+  "虎洞寺"
+ ],
+ "วัดทิพยวารีวิหาร": [
+  "Wat Thippayawari Wihan",
+  "甘露寺（帝必雅瓦里寺）"
+ ],
+ "วัดท่าการ้อง": [
+  "Wat Tha Ka Rong",
+  "塔卡隆寺"
+ ],
+ "วัดท่าไม้": [
+  "Wat Tha Mai",
+  "塔迈寺"
+ ],
+ "วัดธาตุน้อย": [
+  "Wat That Noi",
+  "塔诺寺"
+ ],
+ "วัดบนผาและจุดชมวิว": [
+  "Cliffside temple and viewpoint",
+  "崖上寺庙与观景点"
+ ],
+ "วัดบรมราชากาญจนาภิเษกอนุสรณ์ หรือเล่งเน่ยยี่ 2": [
+  "Wat Borom Racha Kanchanaphisek Anusorn (Leng Noei Yi 2)",
+  "龙莲寺二（普门报恩寺）"
+ ],
+ "วัดบางกุ้ง": [
+  "Wat Bang Kung",
+  "挽恭寺"
+ ],
+ "วัดบางจาก": [
+  "Wat Bang Chak",
+  "挽差寺"
+ ],
+ "วัดบ้านเด่นสะหลีศรีเมืองแกน": [
+  "Wat Ban Den Sali Si Mueang Kaen",
+  "班丹萨利西勐坎寺"
+ ],
+ "วัดบ้านไร่": [
+  "Wat Ban Rai",
+  "班莱寺"
+ ],
+ "วัดประยุรวงศาวาส": [
+  "Wat Prayurawongsawat",
+  "巴育拉翁寺"
+ ],
+ "วัดปลายแหลม": [
+  "Wat Plai Laem",
+  "海角寺（帕莱兰寺）"
+ ],
+ "วัดปัญญานันทาราม": [
+  "Wat Panyanantaram",
+  "般若南达兰寺"
+ ],
+ "วัดปากน้ำ ภาษีเจริญ": [
+  "Wat Paknam Phasi Charoen",
+  "北榄寺（帕西乍能）"
+ ],
+ "วัดป่าภูก้อน": [
+  "Wat Pa Phu Kon",
+  "普恭森林寺"
+ ],
+ "วัดป่าสำคัญ": [
+  "Important forest temple",
+  "重要森林寺"
+ ],
+ "วัดผาตากเสื้อ": [
+  "Wat Pha Tak Suea",
+  "帕达苏崖寺"
+ ],
+ "วัดผาน้ำทิพย์เทพประสิทธิ์วนาราม": [
+  "Wat Pha Nam Thip Thep Prasit Wanaram",
+  "帕南提帖巴实森林寺"
+ ],
+ "วัดพนัญเชิงวรวิหาร": [
+  "Wat Phanan Choeng Worawihan",
+  "帕南春寺（三宝公庙）"
+ ],
+ "วัดพระทอง": [
+  "Wat Phra Thong",
+  "帕通寺（金佛寺）"
+ ],
+ "วัดพระธาตุช่อแฮ": [
+  "Wat Phra That Cho Hae",
+  "秋海舍利塔寺"
+ ],
+ "วัดพระธาตุดอยกองมู": [
+  "Wat Phra That Doi Kong Mu",
+  "功木山舍利塔寺"
+ ],
+ "วัดพระธาตุดอยคำ": [
+  "Wat Phra That Doi Kham",
+  "金山舍利塔寺（堆坎寺）"
+ ],
+ "วัดพระธาตุดอยพระฌาน": [
+  "Wat Phra That Doi Phra Chan",
+  "帕禅山舍利塔寺"
+ ],
  "วัดพระธาตุดอยสุเทพ · เชียงใหม่": [
   "Wat Phra That Doi Suthep · Chiang Mai",
   "素贴山双龙寺 · 清迈"
+ ],
+ "วัดพระธาตุดอยสุเทพราชวรวิหาร": [
+  "Wat Phra That Doi Suthep Ratchaworawihan",
+  "素贴山双龙寺"
+ ],
+ "วัดพระธาตุผาซ่อนแก้ว": [
+  "Wat Phra That Pha Son Kaeo",
+  "帕颂缴寺"
+ ],
+ "วัดพระธาตุผาเงา": [
+  "Wat Phra That Pha Ngao",
+  "帕高舍利塔寺"
  ],
  "วัดพระธาตุพนม · นครพนม": [
   "Wat Phra That Phanom · Nakhon Phanom",
   "帕侬佛塔寺 · 那空拍侬"
  ],
+ "วัดพระธาตุพนมวรมหาวิหาร": [
+  "Wat Phra That Phanom Woramahawihan",
+  "帕侬舍利塔寺"
+ ],
+ "วัดพระธาตุลำปางหลวง": [
+  "Wat Phra That Lampang Luang",
+  "南邦銮舍利塔寺"
+ ],
+ "วัดพระธาตุศรีสองรัก": [
+  "Wat Phra That Si Song Rak",
+  "西松叻舍利塔寺"
+ ],
+ "วัดพระธาตุหนองบัว": [
+  "Wat Phra That Nong Bua",
+  "农布舍利塔寺"
+ ],
  "วัดพระธาตุหริภุญชัย · ลำพูน": [
   "Wat Phra That Hariphunchai · Lamphun",
   "哈里奔猜寺 · 南奔"
+ ],
+ "วัดพระธาตุหริภุญชัยวรมหาวิหาร": [
+  "Wat Phra That Hariphunchai Woramahawihan",
+  "哈利班超舍利塔寺"
+ ],
+ "วัดพระธาตุเชิงชุมวรวิหาร": [
+  "Wat Phra That Choeng Chum Worawihan",
+  "呈春舍利塔寺"
+ ],
+ "วัดพระธาตุแช่แห้ง": [
+  "Wat Phra That Chae Haeng",
+  "车亨舍利塔寺"
+ ],
+ "วัดพระนอนจักรสีห์วรวิหาร": [
+  "Wat Phra Non Chaksi Worawihan",
+  "差西卧佛寺"
+ ],
+ "วัดพระบรมธาตุไชยาราชวรวิหาร": [
+  "Wat Phra Borommathat Chaiya Ratchaworawihan",
+  "猜亚佛舍利塔寺"
  ],
  "วัดพระปฐมเจดีย์ · นครปฐม": [
   "Wat Phra Pathom Chedi · Nakhon Pathom",
   "佛统大塔寺 · 佛统"
  ],
+ "วัดพระปฐมเจดีย์ราชวรมหาวิหาร": [
+  "Wat Phra Pathom Chedi Ratchaworamahawihan",
+  "佛统大塔寺"
+ ],
+ "วัดพระพุทธบาทตากผ้า": [
+  "Wat Phra Phutthabat Tak Pha",
+  "晒袈裟佛足印寺"
+ ],
+ "วัดพระมหาธาตุวรมหาวิหาร": [
+  "Wat Phra Mahathat Woramahawihan",
+  "玛哈泰大寺"
+ ],
+ "วัดพระศรีมหาอุมาเทวี หรือวัดแขก สีลม": [
+  "Wat Phra Si Maha Umathewi (Wat Khaek), Silom",
+  "是隆马哈乌玛天神庙（印度庙）"
+ ],
+ "วัดพระศรีรัตนมหาธาตุวรมหาวิหาร": [
+  "Wat Phra Si Rattana Mahathat Woramahawihan",
+  "西拉达纳玛哈泰寺"
+ ],
+ "วัดพระศรีรัตนศาสดาราม": [
+  "Wat Phra Kaew (Temple of the Emerald Buddha)",
+  "玉佛寺"
+ ],
  "วัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) · กรุงเทพฯ": [
   "Wat Phra Kaew (Temple of the Emerald Buddha) · Bangkok",
   "玉佛寺 · 曼谷"
+ ],
+ "วัดพระสิงห์วรมหาวิหาร": [
+  "Wat Phra Singh Woramahawihan",
+  "帕辛寺"
+ ],
+ "วัดพระเชตุพนวิมลมังคลาราม": [
+  "Wat Pho (Wat Phra Chetuphon Wimon Mangkhalaram)",
+  "卧佛寺"
  ],
  "วัดพระเชตุพนฯ (วัดโพธิ์) · กรุงเทพฯ": [
   "Wat Pho (Wat Phra Chetuphon) · Bangkok",
   "卧佛寺 · 曼谷"
  ],
+ "วัดพระใหญ่ เกาะสมุย": [
+  "Wat Phra Yai, Ko Samui",
+  "苏梅岛大佛寺"
+ ],
+ "วัดพราหมณีหรือวัดหลวงพ่อปากแดง": [
+  "Wat Phramani (Wat Luang Pho Pak Daeng)",
+  "帕拉玛尼寺（红唇龙婆寺）"
+ ],
+ "วัดพิกุลทอง": [
+  "Wat Phikun Thong",
+  "披昆通寺"
+ ],
+ "วัดภูมินทร์": [
+  "Wat Phumin",
+  "蓬明寺"
+ ],
+ "วัดมณีวงศ์": [
+  "Wat Maniwong",
+  "玛尼翁寺"
+ ],
+ "วัดมหาธาตุวรวิหาร": [
+  "Wat Mahathat Worawihan",
+  "玛哈泰寺"
+ ],
+ "วัดมหาวนาราม": [
+  "Wat Maha Wanaram",
+  "玛哈瓦那兰寺"
+ ],
  "วัดมังกรกมลาวาส (เล่งเน่ยยี่) · กรุงเทพฯ": [
   "Wat Mangkon Kamalawat (Leng Noei Yi) · Bangkok",
   "龙莲寺 · 曼谷"
+ ],
+ "วัดมังกรกมลาวาส หรือเล่งเน่ยยี่": [
+  "Wat Mangkon Kamalawat (Leng Noei Yi)",
+  "龙莲寺"
+ ],
+ "วัดม่วง": [
+  "Wat Muang",
+  "蒙寺"
+ ],
+ "วัดยางใหญ่": [
+  "Wat Yang Yai",
+  "央艾寺"
+ ],
+ "วัดยานนาวา": [
+  "Wat Yannawa",
+  "耶那华寺（船寺）"
+ ],
+ "วัดรอยพระพุทธบาทภูมโนรมย์": [
+  "Wat Roi Phra Phutthabat Phu Manorom",
+  "普玛诺隆佛足印寺"
+ ],
+ "วัดระฆังโฆสิตาราม": [
+  "Wat Rakhang Khositaram",
+  "钟寺（拉康寺）"
+ ],
+ "วัดร่องขุ่น": [
+  "Wat Rong Khun (White Temple)",
+  "白庙（龙坤寺）"
+ ],
+ "วัดร่องเสือเต้น": [
+  "Wat Rong Suea Ten (Blue Temple)",
+  "蓝庙（龙苏天寺）"
+ ],
+ "วัดละหารไร่": [
+  "Wat Lahan Rai",
+  "拉汉莱寺"
+ ],
+ "วัดศรีชุม": [
+  "Wat Si Chum",
+  "西春寺"
+ ],
+ "วัดศรีสุพรรณ": [
+  "Wat Si Suphan",
+  "西素攀寺（银庙）"
+ ],
+ "วัดศรีโคมคำ": [
+  "Wat Si Khom Kham",
+  "西孔堪寺"
+ ],
+ "วัดศาลาลอย": [
+  "Wat Sala Loi",
+  "萨拉洛伊寺"
+ ],
+ "วัดศาลเจ้าและจุดสักการะเซียนแปะโรงสี": [
+  "Temple shrine and worship spot of Sian Pae Rong Si",
+  "寺庙神坛与碾米坊仙伯参拜点"
+ ],
+ "วัดศิลางู": [
+  "Wat Sila Ngu",
+  "诗拉努寺"
+ ],
+ "วัดสมานรัตนาราม": [
+  "Wat Saman Rattanaram",
+  "萨曼拉达纳兰寺（粉红象神寺）"
+ ],
+ "วัดสระเกศราชวรมหาวิหาร": [
+  "Wat Saket Ratchaworamahawihan",
+  "金山寺（沙给寺）"
+ ],
+ "วัดสว่างอารมณ์": [
+  "Wat Sawang Arom",
+  "萨旺阿隆寺"
+ ],
+ "วัดสังฆทาน": [
+  "Wat Sangkhathan",
+  "僧伽丹寺"
+ ],
+ "วัดสามพราน": [
+  "Wat Sam Phran",
+  "三攀寺（龙寺）"
+ ],
+ "วัดสำคัญ": [
+  "Important temple",
+  "重要寺庙"
+ ],
+ "วัดสิรินธรวรารามภูพร้าว": [
+  "Wat Sirindhorn Wararam Phu Prao",
+  "诗琳通瓦拉兰普帕寺"
+ ],
+ "วัดสุทัศนเทพวราราม": [
+  "Wat Suthat Thepwararam",
+  "苏泰寺"
+ ],
+ "วัดสุวรรณคูหา": [
+  "Wat Suwan Khuha",
+  "素旺库哈寺（洞寺）"
+ ],
+ "วัดหงษ์ทอง": [
+  "Wat Hong Thong",
+  "洪通寺"
+ ],
+ "วัดหนองป่าพง": [
+  "Wat Nong Pa Phong",
+  "农巴蓬寺"
+ ],
+ "วัดหนองหอย": [
+  "Wat Nong Hoi",
+  "农霍寺"
+ ],
+ "วัดหนองแวง พระอารามหลวง": [
+  "Wat Nong Waeng (Royal Temple)",
+  "农旺寺（皇家寺院）"
+ ],
+ "วัดหน้าต่างนอก": [
+  "Wat Na Tang Nok",
+  "纳当诺寺"
+ ],
+ "วัดหน้าพระเมรุ": [
+  "Wat Na Phra Men",
+  "纳帕门寺"
+ ],
+ "วัดหลวงพี่แซม": [
+  "Wat Luang Phi Saem",
+  "龙披森寺"
+ ],
+ "วัดหาดใหญ่ใน": [
+  "Wat Hat Yai Nai",
+  "合艾内寺"
+ ],
+ "วัดห้วยปลากั้ง": [
+  "Wat Huai Pla Kang",
+  "怀帕干寺"
+ ],
+ "วัดห้วยมงคล": [
+  "Wat Huai Mongkhon",
+  "怀蒙空寺"
+ ],
+ "วัดอรุณราชวราราม": [
+  "Wat Arun Ratchawararam (Temple of Dawn)",
+  "黎明寺（郑王庙）"
+ ],
+ "วัดอุโมงค์ สวนพุทธธรรม": [
+  "Wat Umong Buddhist Dhamma Garden",
+  "悟孟寺（隧道寺）佛法园"
+ ],
+ "วัดเขาสุกิม": [
+  "Wat Khao Sukim",
+  "考苏金寺"
+ ],
+ "วัดเขาอังคาร": [
+  "Wat Khao Angkhan",
+  "考安康寺"
+ ],
+ "วัดเจดีย์ หรือวัดเจดีย์ไอ้ไข่": [
+  "Wat Chedi (Wat Chedi Ai Khai)",
+  "艾凯佛塔寺"
+ ],
+ "วัดเจดีย์หลวงวรวิหาร": [
+  "Wat Chedi Luang Worawihan",
+  "契迪龙寺（大佛塔寺）"
+ ],
+ "วัดเจดีย์หอย": [
+  "Wat Chedi Hoi",
+  "贝壳佛塔寺"
+ ],
+ "วัดเฉลิมพระเกียรติพระจอมเกล้าราชานุสรณ์": [
+  "Wat Chaloem Phra Kiat Phra Chom Klao Rachanusorn",
+  "帕昭格劳纪念寺"
+ ],
+ "วัดเด่นแนะนำ": [
+  "Recommended",
+  "推荐寺庙"
+ ],
+ "วัดเบญจมบพิตรดุสิตวนาราม": [
+  "Wat Benchamabophit Dusitwanaram (Marble Temple)",
+  "大理石寺（云石寺）"
+ ],
+ "วัดเพชรสมุทรวรวิหาร หรือวัดบ้านแหลม": [
+  "Wat Phet Samut Worawihan (Wat Ban Laem)",
+  "佩沙目寺（班兰寺）"
+ ],
+ "วัดแสงแก้วโพธิญาณ": [
+  "Wat Saeng Kaeo Phothiyan",
+  "盛桥菩提延寺"
+ ],
+ "วัดแสนสุขสุทธิวราราม": [
+  "Wat Saen Suk Sutthiwararam",
+  "森苏素提瓦拉兰寺"
+ ],
+ "วัดโบสถ์ สามโคก": [
+  "Wat Bot, Sam Khok",
+  "三阁博寺"
+ ],
+ "วัดโพธิสมภรณ์": [
+  "Wat Phothisomphon",
+  "菩提颂蓬寺"
+ ],
+ "วัดโพธิ์ชัย พระอารามหลวง": [
+  "Wat Pho Chai (Royal Temple)",
+  "菩猜寺（皇家寺院）"
+ ],
+ "วัดโพรงอากาศ": [
+  "Wat Phrong Akat",
+  "蓬阿卡寺"
+ ],
+ "วัดโลกโมฬี": [
+  "Wat Lok Moli",
+  "洛莫利寺"
+ ],
+ "วัดโสธรวรารามวรวิหาร": [
+  "Wat Sothon Wararam Worawihan",
+  "梭通寺"
+ ],
+ "วัดใหญ่ชัยมงคล": [
+  "Wat Yai Chai Mongkhon",
+  "大菩提寺（崖差蒙空寺）"
+ ],
+ "วัดไชยธารารามหรือวัดฉลอง": [
+  "Wat Chaiyathararam (Wat Chalong)",
+  "查龙寺"
+ ],
+ "วัดไชโยวรวิหาร": [
+  "Wat Chaiyo Worawihan",
+  "差有寺"
+ ],
+ "วัดไร่ขิง พระอารามหลวง": [
+  "Wat Rai Khing (Royal Temple)",
+  "莱京寺（皇家寺院）"
  ],
  "วัตถุมงคล": [
   "Lucky Charms",
@@ -4483,6 +5927,18 @@
   "seconds",
   "秒"
  ],
+ "วิหารสีน้ำเงิน": [
+  "Blue Temple (Wat Rong Suea Ten)",
+  "蓝庙"
+ ],
+ "วิหารเทพสถิตพระกิติเฉลิมหรือศาลเจ้าหน่าจาซาไท้จื้อ": [
+  "Wihan Thep Sathit Phra Kitti Chaloem (Nezha Shrine)",
+  "哪吒三太子庙"
+ ],
+ "วิหารแก้วและหลวงพ่อฤาษีลิงดำ": [
+  "Crystal Hall and Luang Pho Ruesi Ling Dam",
+  "水晶殿与黑猴隐士龙婆"
+ ],
  "วิเคราะห์จากรูป (แยกเป็นสองบริการ)": [
   "Photo analysis (two separate services)",
   "照片分析（分为两项服务）"
@@ -4555,13 +6011,149 @@
   "Analyze and compare phone numbers, plates, ID and house numbers",
   "分析与比较号码、车牌、证件号及门牌号"
  ],
+ "ศรัทธาชุมชนจีนและขอพรทั่วไป": [
+  "Chinese community devotion and general blessings",
+  "华人社区信仰与一般祈福"
+ ],
+ "ศรัทธาชุมชนจีนและประเพณีปากน้ำโพ": [
+  "Chinese community devotion and Pak Nam Pho traditions",
+  "华人社区信仰与北榄坡传统"
+ ],
+ "ศรัทธาต่อเนื่อง": [
+  "Long-standing devotion",
+  "长期香火"
+ ],
  "ศรี": [
   "Sri (fortune)",
   "福运"
  ],
+ "ศาลชุมชน": [
+  "Community shrine",
+  "社区神坛"
+ ],
+ "ศาลท้าวจตุโลกบาล เกษรวิลเลจ": [
+  "Four Heavenly Kings Shrine, Gaysorn Village",
+  "四大天王神坛（Gaysorn Village）"
+ ],
+ "ศาลท้าวมหาพรหมเอราวัณ": [
+  "Erawan Shrine (Thao Maha Phrom)",
+  "四面佛（爱侣湾神坛）"
+ ],
+ "ศาลปู่อือลือนาคราช": [
+  "Pu Ue Lue Nakharat Shrine",
+  "普乌卢那伽王神坛"
+ ],
+ "ศาลพระพิฆเนศ หน้าเซ็นทรัลเวิลด์": [
+  "Ganesha Shrine, in front of CentralWorld",
+  "象神神坛（CentralWorld前）"
+ ],
+ "ศาลพระพิฆเนศ ห้วยขวาง": [
+  "Ganesha Shrine, Huai Khwang",
+  "汇权象神神坛"
+ ],
+ "ศาลสมเด็จพระเจ้าตากสินมหาราช": [
+  "King Taksin the Great Shrine",
+  "郑信大帝神坛"
+ ],
+ "ศาลสำคัญ": [
+  "Major shrine",
+  "重要神坛"
+ ],
+ "ศาลหลักเมืองกรุงเทพมหานคร": [
+  "Bangkok City Pillar Shrine",
+  "曼谷城柱神庙"
+ ],
+ "ศาลเก่าแก่": [
+  "Old shrine",
+  "古老神坛"
+ ],
+ "ศาลเจ้ากะทู้": [
+  "Kathu Shrine",
+  "卡图神庙"
+ ],
+ "ศาลเจ้าจุ้ยตุ่ยเต้าโบ้เก้ง": [
+  "Jui Tui Tao Bo Keng Shrine",
+  "水碓斗母宫"
+ ],
+ "ศาลเจ้าดัง": [
+  "Famous shrine",
+  "著名神庙"
+ ],
+ "ศาลเจ้าท่ามกง": [
+  "Tham Mong Shrine",
+  "潭蒙神庙"
+ ],
+ "ศาลเจ้าบางเหนียว": [
+  "Bang Niao Shrine",
+  "挽廖神庙"
+ ],
+ "ศาลเจ้าปู่ย่า อุดรธานี": [
+  "Pu Ya Shrine, Udon Thani",
+  "乌隆他尼祖父母神庙"
+ ],
+ "ศาลเจ้าพ่อกวนอู คลองสาน": [
+  "Guan Yu Shrine, Khlong San",
+  "空讪关公庙"
+ ],
+ "ศาลเจ้าพ่อหลักเมืองตราด": [
+  "Trat City Pillar Shrine",
+  "桐艾城柱神庙"
+ ],
+ "ศาลเจ้าพ่อหลักเมืองสงขลา": [
+  "Songkhla City Pillar Shrine",
+  "宋卡城柱神庙"
+ ],
+ "ศาลเจ้าพ่อเทพารักษ์ เจ้าแม่ทับทิม": [
+  "Chao Pho Thepharak and Chao Mae Thapthim Shrine",
+  "守护神与水尾圣娘神庙"
+ ],
+ "ศาลเจ้าพ่อเสือ": [
+  "Chao Pho Suea Shrine (Tiger God Shrine)",
+  "虎爷庙"
+ ],
  "ศาลเจ้าพ่อเสือ · กรุงเทพฯ": [
   "Chao Pho Suea Shrine · Bangkok",
   "玄天上帝庙（虎神庙） · 曼谷"
+ ],
+ "ศาลเจ้าเกียนอันเกง": [
+  "Kian Un Keng Shrine",
+  "建安宫"
+ ],
+ "ศาลเจ้าเล่งจูเกียง หรือศาลเจ้าแม่ลิ้มกอเหนี่ยว": [
+  "Leng Chu Kiang Shrine (Lim Ko Niao Shrine)",
+  "灵慈宫（林姑娘庙）"
+ ],
+ "ศาลเจ้าเล่งบ๊วยเอี๊ยะ": [
+  "Leng Buai Ia Shrine",
+  "龙尾爷庙"
+ ],
+ "ศาลเจ้าแม่ทับทิม ท่าฉลอม": [
+  "Chao Mae Thapthim Shrine, Tha Chalom",
+  "塔差隆水尾圣娘庙"
+ ],
+ "ศาลเจ้าแม่ทับทิม นนทบุรี": [
+  "Chao Mae Thapthim Shrine, Nonthaburi",
+  "暖武里水尾圣娘庙"
+ ],
+ "ศาลเจ้าแม่ทับทิมท่าฬ่อ": [
+  "Chao Mae Thapthim Shrine, Tha Lo",
+  "塔洛水尾圣娘庙"
+ ],
+ "ศาลเจ้าแม่พระโพธิสัตว์กวนอิม ท่าฉลอม": [
+  "Guan Yin Bodhisattva Shrine, Tha Chalom",
+  "塔差隆观音菩萨庙"
+ ],
+ "ศาลเจ้าแม่สร้อยดอกหมาก ภายในวัดพนัญเชิง": [
+  "Chao Mae Soi Dok Mak Shrine, in Wat Phanan Choeng",
+  "帕南春寺内的槟榔花圣母庙"
+ ],
+ "ศาลเจ้าไต้ฮงกง มูลนิธิป่อเต็กตึ๊ง": [
+  "Tai Hong Kong Shrine, Poh Teck Tung Foundation",
+  "大峰祖师庙（报德善堂）"
+ ],
+ "ศาลแม่นาคพระโขนง วัดมหาบุศย์": [
+  "Mae Nak Phra Khanong Shrine, Wat Mahabut",
+  "玛哈布寺娘娜帕卡农神坛"
  ],
  "ศาสตร์": [
   "Sciences",
@@ -4615,9 +6207,21 @@
   "The science of numbers",
   "数字之学"
  ],
+ "ศาสนสถานริมทะเล": [
+  "Seaside sacred site",
+  "海边圣地"
+ ],
  "ศุกร์": [
   "Friday",
   "星期五"
+ ],
+ "สกลนคร": [
+  "Sakon Nakhon",
+  "沙功那空"
+ ],
+ "สงขลา": [
+  "Songkhla",
+  "宋卡"
  ],
  "สงสัยเรื่องไหน ถามแม่หมอ AI ต่อได้เลย": [
   "Curious about anything? Keep asking the AI Seer",
@@ -4643,6 +6247,14 @@
   "Place",
   "地点"
  ],
+ "สถานที่ทำพิธี": [
+  "Ritual places",
+  "仪式地点"
+ ],
+ "สถานที่สำคัญ": [
+  "Important site",
+  "重要地点"
+ ],
  "สถานที่เกิด": [
   "Place of birth",
   "出生地"
@@ -4654,6 +6266,10 @@
  "สถานะความรัก": [
   "Relationship status",
   "感情状况"
+ ],
+ "สถาปัตยกรรมล้านนาประยุกต์": [
+  "Applied Lanna architecture",
+  "现代兰纳建筑"
  ],
  "สมดุลระหว่างเหตุผลและอารมณ์ทำให้คุณเป็นที่พึ่งของคนรอบข้าง": [
   "Balancing reason and emotion makes you someone others can rely on",
@@ -4714,6 +6330,26 @@
  "สมาชิกหมดอายุแล้ว · ต่ออายุ": [
   "Membership expired · Renew",
   "会员已过期 · 续费"
+ ],
+ "สมุทรสงคราม": [
+  "Samut Songkhram",
+  "夜功"
+ ],
+ "สมุทรสาคร": [
+  "Samut Sakhon",
+  "龙仔厝"
+ ],
+ "สมเด็จพระพุฒาจารย์ โต": [
+  "Somdet Phra Phutthachan (To)",
+  "颂德帕普他詹（托）"
+ ],
+ "สมเด็จพระเจ้าตากสินมหาราช": [
+  "King Taksin the Great",
+  "郑信大帝"
+ ],
+ "สมเด็จโตองค์ใหญ่": [
+  "Great Somdet To statue",
+  "大尊颂德托像"
  ],
  "สรุป": [
   "Summary",
@@ -4791,6 +6427,90 @@
   "Misfortune-removal ritual, 1 time",
   "消灾仪式 1次"
  ],
+ "สักการะ ขอพรทั่วไป และทำบุญบริจาคข้าวสาร": [
+  "Worship, general blessings and donating rice",
+  "参拜、一般祈福与布施大米"
+ ],
+ "สักการะกวนอิมและขอพรทั่วไป": [
+  "Worship Guan Yin and general blessings",
+  "参拜观音与一般祈福"
+ ],
+ "สักการะกวนอิมและชมสถาปัตยกรรม": [
+  "Worship Guan Yin and admire the architecture",
+  "参拜观音与欣赏建筑"
+ ],
+ "สักการะตามประเพณีจีนและขอพรทั่วไป": [
+  "Worship in Chinese tradition and general blessings",
+  "按华人传统参拜与一般祈福"
+ ],
+ "สักการะตามศาสนาฮินดู ขอพรชีวิต ครอบครัว และความสำเร็จ": [
+  "Hindu worship, praying for life, family and success",
+  "印度教参拜，祈求生活、家庭与成功"
+ ],
+ "สักการะท้าวเวสสุวรรณ ขอความคุ้มครองและสิริมงคล": [
+  "Worship Vessavana for protection and auspiciousness",
+  "参拜毗沙门天王，祈求庇护与吉祥"
+ ],
+ "สักการะพระธาตุคู่เมืองเชียงใหม่และเสริมสิริมงคล": [
+  "Worship Chiang Mai's guardian stupa for auspiciousness",
+  "参拜清迈镇城佛塔，增添吉祥"
+ ],
+ "สักการะพระพุทธรูปสำคัญ ขอพรและสิริมงคล": [
+  "Worship an important Buddha image for blessings and auspiciousness",
+  "参拜重要佛像，祈福求吉祥"
+ ],
+ "สักการะพระพุทธรูปสำคัญของล้านนา": [
+  "Worship an important Lanna Buddha image",
+  "参拜兰纳重要佛像"
+ ],
+ "สักการะพระพุทธรูปสำคัญของเมือง": [
+  "Worship the city's important Buddha image",
+  "参拜城中重要佛像"
+ ],
+ "สักการะพระพุทธรูปสำคัญและศิลปกรรม": [
+  "Worship an important Buddha image and admire the art",
+  "参拜重要佛像与欣赏艺术"
+ ],
+ "สักการะพระเกจิและชมศิลปกรรม": [
+  "Worship a revered monk and admire the art",
+  "参拜高僧与欣赏艺术"
+ ],
+ "สักการะพระเกจิและทำบุญ": [
+  "Worship a revered monk and make merit",
+  "参拜高僧与做功德"
+ ],
+ "สักการะพระเกจิและบูชาพระธาตุ": [
+  "Worship a revered monk and the stupa relics",
+  "参拜高僧与佛塔舍利"
+ ],
+ "สักการะพระเกจิและสิริมงคล": [
+  "Worship a revered monk for auspiciousness",
+  "参拜高僧求吉祥"
+ ],
+ "สักการะหลวงปู่ทวด ขอความคุ้มครองและสิริมงคล": [
+  "Worship Luang Pu Thuat for protection and auspiciousness",
+  "参拜龙普托，祈求庇护与吉祥"
+ ],
+ "สักการะหลวงปู่ทวดและความคุ้มครองตามความเชื่อ": [
+  "Worship Luang Pu Thuat and protection as believed",
+  "参拜龙普托，按信仰祈求庇护"
+ ],
+ "สักการะหลวงพ่อรวยและทำบุญ": [
+  "Worship Luang Pho Ruay and make merit",
+  "参拜龙婆瑞与做功德"
+ ],
+ "สักการะและชมพระพุทธรูปบนภูเขา": [
+  "Worship and view the Buddha image on the mountain",
+  "参拜并观赏山上佛像"
+ ],
+ "สักการะและชมศิลปกรรมสุโขทัย": [
+  "Worship and admire Sukhothai art",
+  "参拜与欣赏素可泰艺术"
+ ],
+ "สักการะและเที่ยวริมเจ้าพระยา": [
+  "Worship and sightseeing along the Chao Phraya",
+  "参拜与湄南河畔游览"
+ ],
  "สังสรรค์มากเกินไป หรือมีมือที่สามแทรกเข้ามา": [
   "Partying too much, or a third party stepping in",
   "过度社交，或有第三者介入"
@@ -4810,6 +6530,10 @@
  "สายรุ้งหลังฝน มอบความหวังใหม่": [
   "A rainbow after the rain brings new hope",
   "雨后彩虹，带来新的希望"
+ ],
+ "สายศรัทธา": [
+  "Faith route",
+  "信仰之路"
  ],
  "สำนักงาน": [
   "Office",
@@ -4831,9 +6555,21 @@
   "Leo",
   "狮子座"
  ],
+ "สิงห์บุรี": [
+  "Sing Buri",
+  "信武里"
+ ],
  "สินค้าแนะนำ": [
   "Featured items",
   "推荐商品"
+ ],
+ "สิริมงคลและความสำเร็จตามคตินามวัด": [
+  "Auspiciousness and success, in keeping with the temple's name",
+  "按寺名寓意求吉祥与成功"
+ ],
+ "สิริมงคลและมรดกชุมชนจีน": [
+  "Auspiciousness and Chinese community heritage",
+  "吉祥与华人社区遗产"
  ],
  "สิ่งที่คุณจะได้รับ": [
   "What you'll receive",
@@ -4987,6 +6723,14 @@
   "health",
   "健康"
  ],
+ "สุราษฎร์ธานี": [
+  "Surat Thani",
+  "素叻他尼"
+ ],
+ "สุโขทัย": [
+  "Sukhothai",
+  "素可泰"
+ ],
  "สุ่มด้วยเซียมซี เหรียญ ลูกเต๋า เมล็ด หรือสัญลักษณ์": [
   "Drawn by chance with fortune sticks, coins, dice, seeds or symbols",
   "以签、硬币、骰子、种子或符号随机占卜"
@@ -5119,6 +6863,10 @@
   "Female",
   "女"
  ],
+ "หนองคาย": [
+  "Nong Khai",
+  "廊开"
+ ],
  "หนึ่งในไพ่ที่ดีที่สุด ความสำเร็จ ความสุข และความสดใสรอคุณอยู่": [
   "One of the best cards; success, happiness and brightness await you",
   "最好的牌之一，成功、幸福与光明在等待你"
@@ -5247,6 +6995,10 @@
   "One spin only. Use your prize now or save it as a coupon",
   "仅可转动1次，奖品可立即使用或存为优惠券"
  ],
+ "หมู่อาคารล้านนาและพระธาตุ": [
+  "Lanna building complex and stupa",
+  "兰纳建筑群与佛塔"
+ ],
  "หยุด": [
   "Stop",
   "停止"
@@ -5254,6 +7006,118 @@
  "หรือเข้าสู่ระบบด้วย": [
   "or log in with",
   "或使用以下方式登录"
+ ],
+ "หลวงปู่ชาและพื้นที่ปฏิบัติธรรม": [
+  "Luang Pu Cha and meditation grounds",
+  "龙普查与修行场所"
+ ],
+ "หลวงปู่ทวด": [
+  "Luang Pu Thuat",
+  "龙普托"
+ ],
+ "หลวงปู่ทวดองค์ใหญ่": [
+  "Great Luang Pu Thuat statue",
+  "大尊龙普托像"
+ ],
+ "หลวงปู่ทิม": [
+  "Luang Pu Thim",
+  "龙普添"
+ ],
+ "หลวงปู่สมชายและพิพิธภัณฑ์": [
+  "Luang Pu Somchai and museum",
+  "龙普颂猜与博物馆"
+ ],
+ "หลวงปู่ไต้ฮงกง": [
+  "Luang Pu Tai Hong Kong",
+  "大峰祖师"
+ ],
+ "หลวงพ่อ 3 ดีและอุโบสถ": [
+  "Luang Pho 3 Di and the ordination hall",
+  "三善龙婆与戒堂"
+ ],
+ "หลวงพ่อคูณและวิหารเทพวิทยาคม": [
+  "Luang Pho Khun and Wihan Thep Witthayakhom",
+  "龙婆坤与神学殿"
+ ],
+ "หลวงพ่อจง": [
+  "Luang Pho Chong",
+  "龙婆宗"
+ ],
+ "หลวงพ่อชินประทานพร": [
+  "Luang Pho Chin Prathan Phon",
+  "龙婆钦巴探蓬"
+ ],
+ "หลวงพ่อทันใจ": [
+  "Luang Pho Than Chai",
+  "龙婆坦猜（速应佛）"
+ ],
+ "หลวงพ่อปากแดง": [
+  "Luang Pho Pak Daeng",
+  "红唇龙婆"
+ ],
+ "หลวงพ่อพระใส": [
+  "Luang Pho Phra Sai",
+  "龙婆帕赛"
+ ],
+ "หลวงพ่อยิ้ม": [
+  "Luang Pho Yim",
+  "龙婆依（微笑龙婆）"
+ ],
+ "หลวงพ่อรวยและพระมหาธาตุเจดีย์ปาสาทิโก": [
+  "Luang Pho Ruay and Phra Maha That Chedi Pasathiko",
+  "龙婆瑞与帕萨提科大舍利塔"
+ ],
+ "หลวงพ่อวัดบ้านแหลม": [
+  "Luang Pho Wat Ban Laem",
+  "班兰寺龙婆"
+ ],
+ "หลวงพ่อวัดไร่ขิง": [
+  "Luang Pho Wat Rai Khing",
+  "莱京寺龙婆"
+ ],
+ "หลวงพ่อสมหวัง": [
+  "Luang Pho Somwang",
+  "龙婆颂旺（如愿龙婆）"
+ ],
+ "หลวงพ่อเงินเปิดโลกทันใจเชื่อมกับการงาน การเงินและเปิดทางชีวิต ส่วนจุดสักการะพระนางจิรประภามหาเทวีเชื่อมกับความรัก": [
+  "Luang Pho Ngoen Poet Lok Than Chai is associated with work, finances and opening life's path, while the Phra Nang Chiraprapha Maha Thewi shrine is associated with love",
+  "龙婆银开世速应佛与工作、财运及开拓人生道路相关，而吉拉帕帕大王后供奉处则与爱情相关"
+ ],
+ "หลวงพ่อเงินเปิดโลกทันใจและพระนางจิรประภามหาเทวี": [
+  "Luang Pho Ngoen Poet Lok Than Chai and Phra Nang Chiraprapha Maha Thewi",
+  "龙婆银开世速应佛与吉拉帕帕大王后"
+ ],
+ "หลวงพ่อแช่ม": [
+  "Luang Pho Chaem",
+  "龙婆参"
+ ],
+ "หลวงพ่อแพและพระพุทธรูปใหญ่": [
+  "Luang Pho Phae and the great Buddha image",
+  "龙婆佩与大佛像"
+ ],
+ "หลวงพ่อโต": [
+  "Luang Pho To",
+  "龙婆托（大佛）"
+ ],
+ "หลวงพ่อโตหรือซำปอกง": [
+  "Luang Pho To (Sam Po Kong)",
+  "龙婆托（三宝公）"
+ ],
+ "หลวงพ่อโสธร": [
+  "Luang Pho Sothon",
+  "梭通龙婆"
+ ],
+ "หลักเมืองและเทพารักษ์": [
+  "City pillar and guardian deities",
+  "城柱与守护神"
+ ],
+ "หลักเมืองและเทพในศาล": [
+  "City pillar and the shrine's deities",
+  "城柱与庙中神祇"
+ ],
+ "หลักเมืองในศาลแบบจีน": [
+  "City pillar in a Chinese-style shrine",
+  "中式神庙中的城柱"
  ],
  "หลังพายุย่อมมีดวงดาว ความหวังและการเยียวยากำลังมาหาคุณ": [
   "After the storm come the stars; hope and healing are on their way to you",
@@ -5287,6 +7151,14 @@
   "Find good dates and times for important events",
   "为重要事项择良辰吉日"
  ],
+ "หินและตำนานพญานาค": [
+  "Rock and Naga legend",
+  "岩石与那伽传说"
+ ],
+ "หินและเส้นทางธรรมชาติ": [
+  "Rock and nature trail",
+  "岩石与自然步道"
+ ],
  "หึงหวงมากไปอาจทำให้ห่างกัน": [
   "Too much jealousy may drive you apart",
   "过度嫉妒可能让彼此疏远"
@@ -5298,6 +7170,22 @@
  "หูทิพย์": [
   "Clairaudience",
   "天耳通"
+ ],
+ "องค์กวนอิมและพบโชคธรรมเจดีย์": [
+  "Guan Yin statue and Phop Chok Tham Chedi",
+  "观音像与逢运法塔"
+ ],
+ "องค์พระใหญ่และวิหารบนดอย": [
+  "Great Buddha statue and hilltop hall",
+  "大佛像与山顶佛殿"
+ ],
+ "องค์สักการะ": [
+  "Worshipped",
+  "供奉"
+ ],
+ "องค์สักการะประจำศาล": [
+  "Shrine's revered deity",
+  "庙中供奉神祇"
  ],
  "อดทน มีวินัย วางแผนเก่ง ทำอะไรจริงจังจนสำเร็จ": [
   "Patient, disciplined, a great planner, sees things through",
@@ -5322,6 +7210,10 @@
  "อนาคตของความสัมพันธ์": [
   "Future of the relationship",
   "感情的未来"
+ ],
+ "อนุสาวรีย์ท้าวสุรนารี": [
+  "Thao Suranari Monument (Ya Mo)",
+  "素拉纳里夫人纪念碑（莫奶奶）"
  ],
  "อยากรู้เรื่องไหน": [
   "What would you like to know?",
@@ -5403,6 +7295,14 @@
   "Knight",
   "骑士"
  ],
+ "อาคารพุทธศิลป์สีขาว": [
+  "White Buddhist-art building",
+  "白色佛教艺术建筑"
+ ],
+ "อาคารมังกรพันตึก": [
+  "Building with a dragon coiled around it",
+  "巨龙盘绕的建筑"
+ ],
  "อาจมีความเข้าใจผิด พูดกันตรง ๆ แล้วจะดีขึ้น": [
   "There may be a misunderstanding — speak openly and things will improve",
   "可能有误会，坦诚沟通就会好转"
@@ -5422,6 +7322,414 @@
  "อารมณ์อ่อนไหวง่าย หรือยังไม่จริงจังกับความรู้สึก": [
   "Easily moved emotionally, or not yet serious about feelings",
   "情绪容易波动，或对感情尚不认真"
+ ],
+ "อำเภอกระทุ่มแบน สมุทรสาคร": [
+  "Krathum Baen District, Samut Sakhon",
+  "龙仔厝格敦潘县"
+ ],
+ "อำเภอกะทู้ ภูเก็ต": [
+  "Kathu District, Phuket",
+  "普吉卡图县"
+ ],
+ "อำเภอคลองหลวง ปทุมธานี": [
+  "Khlong Luang District, Pathum Thani",
+  "巴吞他尼空銮县"
+ ],
+ "อำเภอคลองเขื่อน ฉะเชิงเทรา": [
+  "Khlong Khuean District, Chachoengsao",
+  "北柳空坤县"
+ ],
+ "อำเภอช้างกลาง นครศรีธรรมราช": [
+  "Chang Klang District, Nakhon Si Thammarat",
+  "洛坤章江县"
+ ],
+ "อำเภอด่านขุนทด นครราชสีมา": [
+  "Dan Khun Thot District, Nakhon Ratchasima",
+  "呵叻丹坤托县"
+ ],
+ "อำเภอด่านซ้าย เลย": [
+  "Dan Sai District, Loei",
+  "黎府丹赛县"
+ ],
+ "อำเภอตะกั่วทุ่ง พังงา": [
+  "Takua Thung District, Phang Nga",
+  "攀牙达瓜通县"
+ ],
+ "อำเภอถลาง ภูเก็ต": [
+  "Thalang District, Phuket",
+  "普吉塔朗县"
+ ],
+ "อำเภอท่าช้าง สิงห์บุรี": [
+  "Tha Chang District, Sing Buri",
+  "信武里塔昌县"
+ ],
+ "อำเภอท่าม่วง กาญจนบุรี": [
+  "Tha Muang District, Kanchanaburi",
+  "北碧塔孟县"
+ ],
+ "อำเภอท่าศาลา นครศรีธรรมราช": [
+  "Tha Sala District, Nakhon Si Thammarat",
+  "洛坤塔沙拉县"
+ ],
+ "อำเภอท่าใหม่ จันทบุรี": [
+  "Tha Mai District, Chanthaburi",
+  "尖竹汶塔迈县"
+ ],
+ "อำเภอธาตุพนม นครพนม": [
+  "That Phanom District, Nakhon Phanom",
+  "那空拍侬塔帕农县"
+ ],
+ "อำเภอนครชัยศรี นครปฐม": [
+  "Nakhon Chai Si District, Nakhon Pathom",
+  "佛统那空猜西县"
+ ],
+ "อำเภอนายูง อุดรธานี": [
+  "Na Yung District, Udon Thani",
+  "乌隆他尼那永县"
+ ],
+ "อำเภอบางกรวย นนทบุรี": [
+  "Bang Kruai District, Nonthaburi",
+  "暖武里挽桂县"
+ ],
+ "อำเภอบางคนที สมุทรสงคราม": [
+  "Bang Khonthi District, Samut Songkhram",
+  "夜功挽昆提县"
+ ],
+ "อำเภอบางน้ำเปรี้ยว ฉะเชิงเทรา": [
+  "Bang Nam Priao District, Chachoengsao",
+  "北柳挽南辟县"
+ ],
+ "อำเภอบางบัวทอง นนทบุรี": [
+  "Bang Bua Thong District, Nonthaburi",
+  "暖武里挽武通县"
+ ],
+ "อำเภอบางปะกง ฉะเชิงเทรา": [
+  "Bang Pakong District, Chachoengsao",
+  "北柳挽巴贡县"
+ ],
+ "อำเภอบางละมุง ชลบุรี": [
+  "Bang Lamung District, Chonburi",
+  "春武里挽拉蒙县"
+ ],
+ "อำเภอบางไทร พระนครศรีอยุธยา": [
+  "Bang Sai District, Phra Nakhon Si Ayutthaya",
+  "大城挽赛县"
+ ],
+ "อำเภอบึงโขงหลง บึงกาฬ": [
+  "Bueng Khong Long District, Bueng Kan",
+  "汶干汶空隆县"
+ ],
+ "อำเภอบ้านค่าย ระยอง": [
+  "Ban Khai District, Rayong",
+  "罗勇班开县"
+ ],
+ "อำเภอบ้านดุง อุดรธานี": [
+  "Ban Dung District, Udon Thani",
+  "乌隆他尼班栋县"
+ ],
+ "อำเภอบ้านนา นครนายก": [
+  "Ban Na District, Nakhon Nayok",
+  "那空那育班那县"
+ ],
+ "อำเภอบ้านแพง นครพนม": [
+  "Ban Phaeng District, Nakhon Phanom",
+  "那空拍侬班彭县"
+ ],
+ "อำเภอปากเกร็ด นนทบุรี": [
+  "Pak Kret District, Nonthaburi",
+  "暖武里巴克莱县"
+ ],
+ "อำเภอป่าซาง ลำพูน": [
+  "Pa Sang District, Lamphun",
+  "南奔巴桑县"
+ ],
+ "อำเภอพนัสนิคม ชลบุรี": [
+  "Phanat Nikhom District, Chonburi",
+  "春武里帕纳尼空县"
+ ],
+ "อำเภอพระนครศรีอยุธยา พระนครศรีอยุธยา": [
+  "Phra Nakhon Si Ayutthaya District, Phra Nakhon Si Ayutthaya",
+  "大城府大城县"
+ ],
+ "อำเภอภาชี พระนครศรีอยุธยา": [
+  "Phachi District, Phra Nakhon Si Ayutthaya",
+  "大城帕希县"
+ ],
+ "อำเภอภูเพียง น่าน": [
+  "Phu Phiang District, Nan",
+  "难府普平县"
+ ],
+ "อำเภอลาดหลุมแก้ว ปทุมธานี": [
+  "Lat Lum Kaeo District, Pathum Thani",
+  "巴吞他尼叻隆格县"
+ ],
+ "อำเภอลำลูกกา ปทุมธานี": [
+  "Lam Luk Ka District, Pathum Thani",
+  "巴吞他尼南卢卡县"
+ ],
+ "อำเภอวารินชำราบ อุบลราชธานี": [
+  "Warin Chamrap District, Ubon Ratchathani",
+  "乌汶瓦林占拉县"
+ ],
+ "อำเภอวิเศษชัยชาญ อ่างทอง": [
+  "Wiset Chai Chan District, Ang Thong",
+  "红统威塞猜参县"
+ ],
+ "อำเภอสังคม หนองคาย": [
+  "Sangkhom District, Nong Khai",
+  "廊开桑空县"
+ ],
+ "อำเภอสัตหีบ ชลบุรี": [
+  "Sattahip District, Chonburi",
+  "春武里梭桃邑县"
+ ],
+ "อำเภอสามพราน นครปฐม": [
+  "Sam Phran District, Nakhon Pathom",
+  "佛统三攀县"
+ ],
+ "อำเภอสามโคก ปทุมธานี": [
+  "Sam Khok District, Pathum Thani",
+  "巴吞他尼三阁县"
+ ],
+ "อำเภอสิชล นครศรีธรรมราช": [
+  "Sichon District, Nakhon Si Thammarat",
+  "洛坤西春县"
+ ],
+ "อำเภอสิรินธร อุบลราชธานี": [
+  "Sirindhorn District, Ubon Ratchathani",
+  "乌汶诗琳通县"
+ ],
+ "อำเภอหนองพอก ร้อยเอ็ด": [
+  "Nong Phok District, Roi Et",
+  "黎逸农博县"
+ ],
+ "อำเภอหัวหิน ประจวบคีรีขันธ์": [
+  "Hua Hin District, Prachuap Khiri Khan",
+  "巴蜀华欣县"
+ ],
+ "อำเภอหาดใหญ่ สงขลา": [
+  "Hat Yai District, Songkhla",
+  "宋卡合艾县"
+ ],
+ "อำเภออัมพวา สมุทรสงคราม": [
+  "Amphawa District, Samut Songkhram",
+  "夜功安帕瓦县"
+ ],
+ "อำเภอเกาะคา ลำปาง": [
+  "Ko Kha District, Lampang",
+  "南邦阁卡县"
+ ],
+ "อำเภอเกาะสมุย สุราษฎร์ธานี": [
+  "Ko Samui District, Surat Thani",
+  "素叻他尼苏梅岛县"
+ ],
+ "อำเภอเขาค้อ เพชรบูรณ์": [
+  "Khao Kho District, Phetchabun",
+  "碧差汶考科县"
+ ],
+ "อำเภอเฉลิมพระเกียรติ บุรีรัมย์": [
+  "Chaloem Phra Kiat District, Buriram",
+  "武里南差冷帕奇县"
+ ],
+ "อำเภอเชียงแสน เชียงราย": [
+  "Chiang Saen District, Chiang Rai",
+  "清莱清盛县"
+ ],
+ "อำเภอเมืองกระบี่ กระบี่": [
+  "Mueang Krabi District, Krabi",
+  "甲米直辖县"
+ ],
+ "อำเภอเมืองกาญจนบุรี กาญจนบุรี": [
+  "Mueang Kanchanaburi District, Kanchanaburi",
+  "北碧直辖县"
+ ],
+ "อำเภอเมืองขอนแก่น ขอนแก่น": [
+  "Mueang Khon Kaen District, Khon Kaen",
+  "孔敬直辖县"
+ ],
+ "อำเภอเมืองจันทบุรี จันทบุรี": [
+  "Mueang Chanthaburi District, Chanthaburi",
+  "尖竹汶直辖县"
+ ],
+ "อำเภอเมืองฉะเชิงเทรา ฉะเชิงเทรา": [
+  "Mueang Chachoengsao District, Chachoengsao",
+  "北柳直辖县"
+ ],
+ "อำเภอเมืองชลบุรี ชลบุรี": [
+  "Mueang Chonburi District, Chonburi",
+  "春武里直辖县"
+ ],
+ "อำเภอเมืองตรัง ตรัง": [
+  "Mueang Trang District, Trang",
+  "董里直辖县"
+ ],
+ "อำเภอเมืองตราด ตราด": [
+  "Mueang Trat District, Trat",
+  "桐艾直辖县"
+ ],
+ "อำเภอเมืองนครนายก นครนายก": [
+  "Mueang Nakhon Nayok District, Nakhon Nayok",
+  "那空那育直辖县"
+ ],
+ "อำเภอเมืองนครปฐม นครปฐม": [
+  "Mueang Nakhon Pathom District, Nakhon Pathom",
+  "佛统直辖县"
+ ],
+ "อำเภอเมืองนครพนม นครพนม": [
+  "Mueang Nakhon Phanom District, Nakhon Phanom",
+  "那空拍侬直辖县"
+ ],
+ "อำเภอเมืองนครราชสีมา นครราชสีมา": [
+  "Mueang Nakhon Ratchasima District, Nakhon Ratchasima",
+  "呵叻直辖县"
+ ],
+ "อำเภอเมืองนครศรีธรรมราช นครศรีธรรมราช": [
+  "Mueang Nakhon Si Thammarat District, Nakhon Si Thammarat",
+  "洛坤直辖县"
+ ],
+ "อำเภอเมืองนครสวรรค์ นครสวรรค์": [
+  "Mueang Nakhon Sawan District, Nakhon Sawan",
+  "那空沙旺直辖县"
+ ],
+ "อำเภอเมืองนนทบุรี นนทบุรี": [
+  "Mueang Nonthaburi District, Nonthaburi",
+  "暖武里直辖县"
+ ],
+ "อำเภอเมืองน่าน น่าน": [
+  "Mueang Nan District, Nan",
+  "难府直辖县"
+ ],
+ "อำเภอเมืองปทุมธานี ปทุมธานี": [
+  "Mueang Pathum Thani District, Pathum Thani",
+  "巴吞他尼直辖县"
+ ],
+ "อำเภอเมืองปัตตานี ปัตตานี": [
+  "Mueang Pattani District, Pattani",
+  "北大年直辖县"
+ ],
+ "อำเภอเมืองพะเยา พะเยา": [
+  "Mueang Phayao District, Phayao",
+  "帕尧直辖县"
+ ],
+ "อำเภอเมืองพิจิตร พิจิตร": [
+  "Mueang Phichit District, Phichit",
+  "披集直辖县"
+ ],
+ "อำเภอเมืองพิษณุโลก พิษณุโลก": [
+  "Mueang Phitsanulok District, Phitsanulok",
+  "彭世洛直辖县"
+ ],
+ "อำเภอเมืองภูเก็ต ภูเก็ต": [
+  "Mueang Phuket District, Phuket",
+  "普吉直辖县"
+ ],
+ "อำเภอเมืองมุกดาหาร มุกดาหาร": [
+  "Mueang Mukdahan District, Mukdahan",
+  "穆达汉直辖县"
+ ],
+ "อำเภอเมืองยะลา ยะลา": [
+  "Mueang Yala District, Yala",
+  "也拉直辖县"
+ ],
+ "อำเภอเมืองราชบุรี ราชบุรี": [
+  "Mueang Ratchaburi District, Ratchaburi",
+  "叻丕直辖县"
+ ],
+ "อำเภอเมืองลำพูน ลำพูน": [
+  "Mueang Lamphun District, Lamphun",
+  "南奔直辖县"
+ ],
+ "อำเภอเมืองสกลนคร สกลนคร": [
+  "Mueang Sakon Nakhon District, Sakon Nakhon",
+  "沙功那空直辖县"
+ ],
+ "อำเภอเมืองสงขลา สงขลา": [
+  "Mueang Songkhla District, Songkhla",
+  "宋卡直辖县"
+ ],
+ "อำเภอเมืองสมุทรสงคราม สมุทรสงคราม": [
+  "Mueang Samut Songkhram District, Samut Songkhram",
+  "夜功直辖县"
+ ],
+ "อำเภอเมืองสมุทรสาคร สมุทรสาคร": [
+  "Mueang Samut Sakhon District, Samut Sakhon",
+  "龙仔厝直辖县"
+ ],
+ "อำเภอเมืองสิงห์บุรี สิงห์บุรี": [
+  "Mueang Sing Buri District, Sing Buri",
+  "信武里直辖县"
+ ],
+ "อำเภอเมืองสุโขทัย สุโขทัย": [
+  "Mueang Sukhothai District, Sukhothai",
+  "素可泰直辖县"
+ ],
+ "อำเภอเมืองหนองคาย หนองคาย": [
+  "Mueang Nong Khai District, Nong Khai",
+  "廊开直辖县"
+ ],
+ "อำเภอเมืองอุดรธานี อุดรธานี": [
+  "Mueang Udon Thani District, Udon Thani",
+  "乌隆他尼直辖县"
+ ],
+ "อำเภอเมืองอุทัยธานี อุทัยธานี": [
+  "Mueang Uthai Thani District, Uthai Thani",
+  "乌泰他尼直辖县"
+ ],
+ "อำเภอเมืองอุบลราชธานี อุบลราชธานี": [
+  "Mueang Ubon Ratchathani District, Ubon Ratchathani",
+  "乌汶直辖县"
+ ],
+ "อำเภอเมืองเชียงราย เชียงราย": [
+  "Mueang Chiang Rai District, Chiang Rai",
+  "清莱直辖县"
+ ],
+ "อำเภอเมืองเชียงใหม่ เชียงใหม่": [
+  "Mueang Chiang Mai District, Chiang Mai",
+  "清迈直辖县"
+ ],
+ "อำเภอเมืองเพชรบุรี เพชรบุรี": [
+  "Mueang Phetchaburi District, Phetchaburi",
+  "佛丕直辖县"
+ ],
+ "อำเภอเมืองแพร่ แพร่": [
+  "Mueang Phrae District, Phrae",
+  "帕府直辖县"
+ ],
+ "อำเภอเมืองแม่ฮ่องสอน แม่ฮ่องสอน": [
+  "Mueang Mae Hong Son District, Mae Hong Son",
+  "夜丰颂直辖县"
+ ],
+ "อำเภอแจ้ห่ม ลำปาง": [
+  "Chae Hom District, Lampang",
+  "南邦介洪县"
+ ],
+ "อำเภอแม่ทะ ลำปาง": [
+  "Mae Tha District, Lampang",
+  "南邦湄塔县"
+ ],
+ "อำเภอแม่สรวย เชียงราย": [
+  "Mae Suai District, Chiang Rai",
+  "清莱湄綏县"
+ ],
+ "อำเภอแม่แตง เชียงใหม่": [
+  "Mae Taeng District, Chiang Mai",
+  "清迈湄登县"
+ ],
+ "อำเภอโคกโพธิ์ ปัตตานี": [
+  "Khok Pho District, Pattani",
+  "北大年阔坡县"
+ ],
+ "อำเภอโพธิ์ทอง อ่างทอง": [
+  "Pho Thong District, Ang Thong",
+  "红统坡通县"
+ ],
+ "อำเภอไชยา สุราษฎร์ธานี": [
+  "Chaiya District, Surat Thani",
+  "素叻他尼猜也县"
+ ],
+ "อำเภอไชโย อ่างทอง": [
+  "Chaiyo District, Ang Thong",
+  "红统差有县"
  ],
  "อิตาลี / ยุโรป": [
   "Italy / Europe",
@@ -5459,17 +7767,49 @@
   "Other",
   "其他"
  ],
+ "อุดรธานี": [
+  "Udon Thani",
+  "乌隆他尼"
+ ],
  "อุตสาหะ": [
   "Utsaha (diligence)",
   "勤奋"
+ ],
+ "อุทยานพระพิฆเนศองค์ยืน คลองเขื่อน": [
+  "Standing Ganesha Park, Khlong Khuean",
+  "空坤站立象神公园"
+ ],
+ "อุทัยธานี": [
+  "Uthai Thani",
+  "乌泰他尼"
  ],
  "อุทิศให้ผู้ล่วงลับ": [
   "Dedicate to the departed",
   "回向给逝者"
  ],
+ "อุบลราชธานี": [
+  "Ubon Ratchathani",
+  "乌汶"
+ ],
  "อุปสรรคตอนนี้เป็นเรื่องชั่วคราว รอจังหวะแล้วทุกอย่างจะชัดเจน": [
   "Present obstacles are temporary — wait for the moment and all will become clear",
   "眼前的阻碍只是暂时的，静待时机一切将会明朗"
+ ],
+ "อุโบสถหินอ่อน": [
+  "Marble ordination hall",
+  "大理石戒堂"
+ ],
+ "อุโบสถเงิน": [
+  "Silver ordination hall",
+  "银戒堂"
+ ],
+ "อุโมงค์ป่าไผ่": [
+  "Bamboo forest tunnel",
+  "竹林隧道"
+ ],
+ "อุโมงค์และพระพุทธรูป": [
+  "Tunnels and Buddha images",
+  "隧道与佛像"
  ],
  "อ่อนโยน มีจินตนาการ เข้าใจความรู้สึกคนอื่น": [
   "Gentle, imaginative, understands others' feelings",
@@ -5482,6 +7822,10 @@
  "อ่อนโยน ใส่ใจความรู้สึก": [
   "Gentle and caring about feelings",
   "温柔体贴，在意感受"
+ ],
+ "อ่างทอง": [
+  "Ang Thong",
+  "红统"
  ],
  "อ่านกากกาแฟ": [
   "Coffee-cup reading",
@@ -5699,6 +8043,58 @@
   "Saved to your Fortune File and included in your daily horoscope · for entertainment and life guidance",
   "已保存到命理档案并纳入每日运势 · 仅供娱乐与生活参考"
  ],
+ "เขตคลองสาน กรุงเทพฯ": [
+  "Khlong San District, Bangkok",
+  "曼谷空讪区"
+ ],
+ "เขตดุสิต กรุงเทพฯ": [
+  "Dusit District, Bangkok",
+  "曼谷律实区"
+ ],
+ "เขตธนบุรี กรุงเทพฯ": [
+  "Thon Buri District, Bangkok",
+  "曼谷吞武里区"
+ ],
+ "เขตบางกอกน้อย กรุงเทพฯ": [
+  "Bangkok Noi District, Bangkok",
+  "曼谷曼谷莲区"
+ ],
+ "เขตบางกอกใหญ่ กรุงเทพฯ": [
+  "Bangkok Yai District, Bangkok",
+  "曼谷曼谷艾区"
+ ],
+ "เขตบางรัก กรุงเทพฯ": [
+  "Bang Rak District, Bangkok",
+  "曼谷挽叻区"
+ ],
+ "เขตปทุมวัน กรุงเทพฯ": [
+  "Pathum Wan District, Bangkok",
+  "曼谷巴吞旺区"
+ ],
+ "เขตป้อมปราบศัตรูพ่าย กรุงเทพฯ": [
+  "Pom Prap Sattru Phai District, Bangkok",
+  "曼谷鹏布攀区"
+ ],
+ "เขตพระนคร กรุงเทพฯ": [
+  "Phra Nakhon District, Bangkok",
+  "曼谷拍那空区"
+ ],
+ "เขตภาษีเจริญ กรุงเทพฯ": [
+  "Phasi Charoen District, Bangkok",
+  "曼谷帕西乍仑区"
+ ],
+ "เขตสวนหลวง กรุงเทพฯ": [
+  "Suan Luang District, Bangkok",
+  "曼谷萱銮区"
+ ],
+ "เขตสัมพันธวงศ์ กรุงเทพฯ": [
+  "Samphanthawong District, Bangkok",
+  "曼谷三攀他旺区"
+ ],
+ "เขตสาทร กรุงเทพฯ": [
+  "Sathon District, Bangkok",
+  "曼谷沙吞区"
+ ],
  "เขย่ากระบอกเซียมซี": [
   "Shake the Siam Si cup",
   "摇动签筒"
@@ -5714,6 +8110,10 @@
  "เขย่าเซียมซีขอคำทำนายประจำเรื่อง": [
   "Shake Siam Si fortune sticks for a prediction on your matter",
   "摇签求取所问之事的签诗"
+ ],
+ "เขาชีจรรย์": [
+  "Khao Chi Chan",
+  "七珍佛山"
  ],
  "เขียว": [
   "Green",
@@ -5763,13 +8163,61 @@
   "Money comes in — a chance of small windfalls",
   "进账有望，或有小财运"
  ],
+ "เจดีย์บนยอดเขา": [
+  "Hilltop stupa",
+  "山顶佛塔"
+ ],
+ "เจดีย์พุทธคยาจำลอง": [
+  "Replica of the Bodh Gaya stupa",
+  "菩提伽耶佛塔复制品"
+ ],
+ "เจดีย์หลวงและอินทขิล": [
+  "Chedi Luang and the Inthakhin city pillar",
+  "銮佛塔与因塔金城柱"
+ ],
+ "เจดีย์เปลือกหอย": [
+  "Seashell stupa",
+  "贝壳佛塔"
+ ],
  "เจ้าตัวรู้และยินยอมให้ใช้วันเกิดเพื่อดูดวงบนหมอดู.com (ไม่ใช้รูปถ่ายของคนอื่น)": [
   "This person knows and agrees to their birth date being used for readings on Mohdoo.com (no photos of others)",
   "本人知情并同意在Mohdoo.com使用其生日算命（不使用他人照片）"
  ],
+ "เจ้าปู่เจ้าย่า": [
+  "Chao Pu Chao Ya (ancestral guardian spirits)",
+  "祖父母守护神"
+ ],
+ "เจ้าพ่อเสือและองค์สักการะภายในศาล": [
+  "Chao Pho Suea and the shrine's revered deities",
+  "虎爷与庙中供奉神祇"
+ ],
+ "เจ้าแม่จุ้ยบ๋วยเนี้ย": [
+  "Chao Mae Jui Buai Nia",
+  "水尾娘娘"
+ ],
+ "เจ้าแม่ทับทิม": [
+  "Chao Mae Thapthim",
+  "水尾圣娘"
+ ],
+ "เจ้าแม่ลิ้มกอเหนี่ยว": [
+  "Chao Mae Lim Ko Niao",
+  "林姑娘"
+ ],
+ "เจ้าแม่สร้อยดอกหมาก": [
+  "Chao Mae Soi Dok Mak",
+  "槟榔花圣母"
+ ],
  "เฉพาะไพ่ชุดใหญ่ 22 ใบ": [
   "Major Arcana only, 22 cards",
   "仅大阿卡纳 22 张"
+ ],
+ "เชียงราย": [
+  "Chiang Rai",
+  "清莱"
+ ],
+ "เชียงใหม่": [
+  "Chiang Mai",
+  "清迈"
  ],
  "เช่น 1กข 1234": [
   "e.g. 1AB 1234",
@@ -5831,6 +8279,10 @@
   "e.g. wedding, housewarming, shop opening",
   "例如 结婚、乔迁、开店"
  ],
+ "เซียนแปะโรงสี": [
+  "Sian Pae Rong Si",
+  "碾米厂仙伯"
+ ],
  "เซียมซี": [
   "Siam Si fortune sticks",
   "求签"
@@ -5882,6 +8334,22 @@
  "เถาะ (กระต่าย)": [
   "Tho (Rabbit)",
   "卯（兔）"
+ ],
+ "เทพตามประเพณีจีน": [
+  "Deities of Chinese tradition",
+  "华人传统神祇"
+ ],
+ "เทพารักษ์และเจ้าแม่ทับทิม": [
+  "Guardian deities and Chao Mae Thapthim",
+  "守护神与水尾圣娘"
+ ],
+ "เทพเจ้ากวนอู": [
+  "Guan Yu",
+  "关公"
+ ],
+ "เทวรูปที่ประชาชนรู้จักในชื่อพระตรีมูรติ": [
+  "Deity statue popularly known as Phra Trimurti",
+  "民众称为三相神的神像"
  ],
  "เทา": [
   "grey",
@@ -6059,6 +8527,14 @@
   "Page",
   "侍从"
  ],
+ "เพชรบุรี": [
+  "Phetchaburi",
+  "佛丕"
+ ],
+ "เพชรบูรณ์": [
+  "Phetchabun",
+  "碧差汶"
+ ],
  "เพศ": [
   "Sex",
   "性别"
@@ -6126,6 +8602,10 @@
  "เมฆบังจันทร์ชั่วครู่ ลมพัดผ่านจันทร์ก็ฉาย": [
   "Clouds hide the moon for a moment; the wind passes and the moon shines again",
   "乌云暂时遮月，风过月又明"
+ ],
+ "เมตตา ค้าขายตามความเชื่อ และศิลปกรรม": [
+  "Kindness and trade as believed, plus the art",
+  "按信仰祈求人缘与生意，并欣赏艺术"
  ],
  "เมตตา ใจกว้าง มองการณ์ไกล ชอบช่วยเหลือผู้อื่น": [
   "Kind, generous, far-sighted, loves helping others",
@@ -6379,6 +8859,10 @@
   "Your life path number is",
   "你的生命灵数是"
  ],
+ "เลย": [
+  "Loei",
+  "黎府"
+ ],
  "เลี่ยง": [
   "Avoid",
   "避开"
@@ -6427,6 +8911,10 @@
   "Choose by specialty",
   "按擅长领域选择"
  ],
+ "เลือกพิธีที่ให้ทีมทำแทนที่นี่": [
+  "Choose the ritual for our team to perform here",
+  "选择团队在此代办的仪式"
+ ],
  "เลือกพื้นที่ที่ต้องการดู": [
   "Choose the space to read",
   "选择要看的空间"
@@ -6434,6 +8922,10 @@
  "เลือกรูปแบบการเปิดไพ่ แล้วสับและจั่วไพ่ด้วยตัวเอง": [
   "Choose a spread, then shuffle and draw the cards yourself",
   "选择牌阵，然后亲手洗牌抽牌"
+ ],
+ "เลือกวัดหรือศาลที่อยากให้ทีมไปทำพิธีแทน แยกตามภาคและเรื่องที่อยากขอพร": [
+  "Choose a temple or shrine where our team will perform the ritual for you, by region and by what you wish for",
+  "选择希望团队代您举行仪式的寺庙或神庙，按地区和祈愿分类"
  ],
  "เลือกวิธีดู": [
   "Choose a method",
@@ -6482,6 +8974,10 @@
  "เลือกไพ่": [
   "Choose cards",
   "选牌"
+ ],
+ "เล่งบ๊วยเอี๊ยะ": [
+  "Leng Buai Ia",
+  "龙尾爷"
  ],
  "เล่าสถานการณ์สั้น ๆ แล้วถามสิ่งที่อยากรู้": [
   "Briefly describe your situation, then ask what you want to know",
@@ -6668,12 +9164,20 @@
   "亚洲"
  ],
  "แก้ปีชง": [
-  "Clash-Year Remedy",
-  "化解犯太岁"
+  "Clash-year remedy",
+  "化太岁"
  ],
  "แก้ปีชง 1 ท่าน": [
   "Clash-year remedy, 1 person",
   "化解犯太岁 1人"
+ ],
+ "แก้ปีชง ทำบุญ และเสริมสิริมงคล": [
+  "Tai Sui remedy, merit-making and auspiciousness",
+  "化解太岁、做功德与增添吉祥"
+ ],
+ "แก้ปีชงและทำบุญตามประเพณีจีน": [
+  "Tai Sui remedy and merit-making in Chinese tradition",
+  "按华人传统化解太岁与做功德"
  ],
  "แก้ไขข้อมูล": [
   "Edit details",
@@ -6739,6 +9243,10 @@
   "Plans are delayed or not going as expected; be patient a little longer",
   "计划延迟或未如预期，再耐心一点"
  ],
+ "แพร่": [
+  "Phrae",
+  "帕府"
+ ],
  "แพ็กเกจ": [
   "Package",
   "套餐"
@@ -6775,6 +9283,10 @@
   "Mother",
   "母亲"
  ],
+ "แม่นาคพระโขนง": [
+  "Mae Nak Phra Khanong",
+  "娘娜帕卡农"
+ ],
  "แม่น้ำสองสายบรรจบ เกิดเป็นสายน้ำใหญ่": [
   "Two rivers meet and become one great stream",
   "两条河流交汇，汇成大江"
@@ -6799,6 +9311,14 @@
   "Read by the AI Seer",
   "AI占卜师已解读"
  ],
+ "แม่ฮ่องสอน": [
+  "Mae Hong Son",
+  "夜丰颂"
+ ],
+ "แยกราชประสงค์ เขตปทุมวัน กรุงเทพฯ": [
+  "Ratchaprasong Intersection, Pathum Wan District, Bangkok",
+  "曼谷巴吞旺区叻差巴颂路口"
+ ],
  "แรงจูงใจหดหาย หรือเริ่มช้าเกินไป ลองหาเหตุผลที่ทำให้อยากทำอีกครั้ง": [
   "Motivation is fading, or you're starting too slowly; find a reason to want it again",
   "动力消退，或起步太慢，试着找回想做的理由"
@@ -6810,6 +9330,14 @@
  "แรงบันดาลใจใหม่ · จุดประกาย · เริ่มต้น": [
   "New inspiration · A spark · Beginnings",
   "新灵感 · 火花 · 开始"
+ ],
+ "แลนด์มาร์ก": [
+  "Landmark",
+  "地标"
+ ],
+ "แลนด์มาร์กสายมู": [
+  "Spiritual landmark",
+  "灵验地标"
  ],
  "และ": [
   "and",
@@ -6831,6 +9359,18 @@
   "Shows the approach and scope stated by the provider before the package opens",
   "开放套餐前显示服务者说明的方法与范围"
  ],
+ "แห่ง": [
+  "places",
+  "处"
+ ],
+ "แห่ง ›": [
+  "more ›",
+  "处 ›"
+ ],
+ "แห่งทั่วไทย": [
+  "places across Thailand",
+  "处，遍布泰国"
+ ],
  "แอฟริกาตะวันตก": [
   "West Africa",
   "西非"
@@ -6850,6 +9390,10 @@
  "โชคลาภ": [
   "Fortune & luck",
   "财运"
+ ],
+ "โชคลาภ ความอุดมสมบูรณ์ และประเพณีความเชื่อพญานาค": [
+  "Fortune, abundance and Naga belief traditions",
+  "财运、丰饶与那伽信仰传统"
  ],
  "โชคลาภและเสน่ห์เด่น เหมาะเรื่องเงินและความรัก": [
   "Luck and charm stand out — good for money and love",
@@ -6874,6 +9418,10 @@
  "โทรติดต่อ เจรจา ขอความช่วยเหลือได้ผล": [
   "Calls, negotiations and asking for help go well",
   "打电话联系、谈判、求助都很顺利"
+ ],
+ "โบสถ์ปรกโพธิ์และหลวงพ่อนิลมณี": [
+  "Prok Pho ordination hall and Luang Pho Nil Mani",
+  "菩提树覆盖的戒堂与龙婆尼拉玛尼"
  ],
  "โปรไฟล์ของฉัน": [
   "My profile",
@@ -7165,7 +9713,7 @@
  ],
  "ให้ทีมเลือกสถานที่ที่เหมาะกับดวง": [
   "Let the team choose a place that suits your fortune",
-  "由团队选择与你命理相合的地点"
+  "由团队按您的命理选择地点"
  ],
  "ให้พื้นที่ส่วนตัวกันบ้าง": [
   "Give each other some personal space",
@@ -7543,6 +10091,42 @@
   "Pay respect to the Buddha at 1 place",
   "礼佛 1处"
  ],
+ "ไหว้พระ บูชาพระธาตุ และชมศิลปวัฒนธรรมอีสาน": [
+  "Worship, venerate the stupa relics and enjoy Isan art and culture",
+  "拜佛、礼拜佛塔舍利与欣赏伊桑艺术文化"
+ ],
+ "ไหว้พระ พระใหญ่ และสถาปัตยกรรม": [
+  "Worship, the great Buddha and architecture",
+  "拜佛、大佛与建筑"
+ ],
+ "ไหว้พระ ภาวนา และชมสถาปัตยกรรม": [
+  "Worship, meditate and admire the architecture",
+  "拜佛、禅修与欣赏建筑"
+ ],
+ "ไหว้พระ สิริมงคล และถ่ายชุดไทย": [
+  "Worship, auspiciousness and photos in Thai costume",
+  "拜佛、求吉祥与穿泰服拍照"
+ ],
+ "ไหว้พระ เสริมกำลังใจ และสิริมงคล": [
+  "Worship, encouragement and auspiciousness",
+  "拜佛、增添信心与吉祥"
+ ],
+ "ไหว้พระขอพรทั่วไป และความรุ่งเรืองในการงานค้าขาย": [
+  "Worship, general blessings and prosperity in work and trade",
+  "拜佛、一般祈福与事业生意兴旺"
+ ],
+ "ไหว้พระขอพรทั่วไป และชมสำเภาเจดีย์อันเป็นเอกลักษณ์": [
+  "Worship, general blessings and the unique junk-ship stupa",
+  "拜佛、一般祈福与观赏独特的帆船佛塔"
+ ],
+ "ไหว้พระนอนและประวัติศาสตร์": [
+  "Worship the reclining Buddha and history",
+  "参拜卧佛与了解历史"
+ ],
+ "ไหว้พระนอนและสิริมงคล": [
+  "Worship the reclining Buddha for auspiciousness",
+  "参拜卧佛求吉祥"
+ ],
  "ไหว้พระพร้อมคำอธิษฐานของคุณ และรูป/วิดีโอยืนยัน": [
   "Paying respect to the Buddha with your prayer, plus photo/video proof",
   "礼佛并诵念您的祈愿，附照片/视频凭证"
@@ -7550,6 +10134,146 @@
  "ไหว้พระแทน": [
   "Prayers on Your Behalf",
   "代为礼佛"
+ ],
+ "ไหว้พระและคติความเชื่อท้องถิ่น": [
+  "Worship and local beliefs",
+  "拜佛与当地信仰"
+ ],
+ "ไหว้พระและความเชื่อพญานาค": [
+  "Worship and Naga beliefs",
+  "拜佛与那伽信仰"
+ ],
+ "ไหว้พระและงานช่างเงิน": [
+  "Worship and silverwork craftsmanship",
+  "拜佛与银器工艺"
+ ],
+ "ไหว้พระและชมวิว ต้องประเมินความพร้อมเดินขึ้น": [
+  "Worship and scenic views (assess your fitness for the climb)",
+  "拜佛与观景（需评估是否能步行上山）"
+ ],
+ "ไหว้พระและชมวิวลุ่มน้ำโขง": [
+  "Worship and Mekong river views",
+  "拜佛与观赏湄公河景色"
+ ],
+ "ไหว้พระและชมวิวเมือง": [
+  "Worship and city views",
+  "拜佛与观赏城市景色"
+ ],
+ "ไหว้พระและชมศิลปกรรม": [
+  "Worship and admire the art",
+  "拜佛与欣赏艺术"
+ ],
+ "ไหว้พระและชมศิลปกรรมช่วงเย็น": [
+  "Worship and admire the art in the evening",
+  "拜佛与傍晚欣赏艺术"
+ ],
+ "ไหว้พระและชมสถาปัตยกรรม": [
+  "Worship and admire the architecture",
+  "拜佛与欣赏建筑"
+ ],
+ "ไหว้พระและชมแสงธรรมชาติในถ้ำ": [
+  "Worship and see natural light in the cave",
+  "拜佛与欣赏洞中自然光"
+ ],
+ "ไหว้พระและชมโบสถ์ที่รากไม้ปกคลุม": [
+  "Worship and see the ordination hall covered by tree roots",
+  "拜佛与观赏被树根覆盖的戒堂"
+ ],
+ "ไหว้พระและตำนานท้องถิ่น": [
+  "Worship and local legends",
+  "拜佛与当地传说"
+ ],
+ "ไหว้พระและถ่ายภาพทิวทัศน์": [
+  "Worship and landscape photography",
+  "拜佛与风景摄影"
+ ],
+ "ไหว้พระและถ่ายภาพภูเขา": [
+  "Worship and mountain photography",
+  "拜佛与山景摄影"
+ ],
+ "ไหว้พระและถ่ายภาพสถาปัตยกรรม": [
+  "Worship and architecture photography",
+  "拜佛与建筑摄影"
+ ],
+ "ไหว้พระและท่องเที่ยวริมเจ้าพระยา": [
+  "Worship and travel along the Chao Phraya",
+  "拜佛与湄南河畔游览"
+ ],
+ "ไหว้พระและท่องเที่ยวริมแม่น้ำ": [
+  "Worship and riverside travel",
+  "拜佛与河畔游览"
+ ],
+ "ไหว้พระและท่องเที่ยวเชิงศรัทธา": [
+  "Worship and faith-based travel",
+  "拜佛与信仰之旅"
+ ],
+ "ไหว้พระและบูชาพระธาตุ": [
+  "Worship and venerate the stupa relics",
+  "拜佛与礼拜佛塔舍利"
+ ],
+ "ไหว้พระและประวัติศาสตร์": [
+  "Worship and history",
+  "拜佛与历史"
+ ],
+ "ไหว้พระและประเพณีเมือง": [
+  "Worship and city traditions",
+  "拜佛与城市传统"
+ ],
+ "ไหว้พระและภาพถ่ายพระใหญ่": [
+  "Worship and photos of the great Buddha",
+  "拜佛与拍摄大佛"
+ ],
+ "ไหว้พระและภาวนา": [
+  "Worship and meditation",
+  "拜佛与禅修"
+ ],
+ "ไหว้พระและมรดกวัฒนธรรม": [
+  "Worship and cultural heritage",
+  "拜佛与文化遗产"
+ ],
+ "ไหว้พระและศรัทธาชุมชนไทยจีน": [
+  "Worship and Thai-Chinese community devotion",
+  "拜佛与泰华社区信仰"
+ ],
+ "ไหว้พระและศิลปกรรมรัตนโกสินทร์": [
+  "Worship and Rattanakosin art",
+  "拜佛与拉达那哥信艺术"
+ ],
+ "ไหว้พระและศิลปกรรมล้านนา": [
+  "Worship and Lanna art",
+  "拜佛与兰纳艺术"
+ ],
+ "ไหว้พระและสักการะพระพุทธรูปสำคัญ": [
+  "Worship and venerate an important Buddha image",
+  "拜佛与参拜重要佛像"
+ ],
+ "ไหว้พระและเที่ยวชมวิว": [
+  "Worship and sightseeing",
+  "拜佛与观光"
+ ],
+ "ไหว้พระและเที่ยวถ้ำ": [
+  "Worship and cave visits",
+  "拜佛与游览洞穴"
+ ],
+ "ไหว้พระและเที่ยวสกายวอล์ก": [
+  "Worship and the skywalk",
+  "拜佛与游览空中步道"
+ ],
+ "ไหว้พระและเที่ยวเกาะสมุย": [
+  "Worship and visiting Ko Samui",
+  "拜佛与游览苏梅岛"
+ ],
+ "ไหว้พระและเรียนรู้คติธรรม": [
+  "Worship and learn Dhamma teachings",
+  "拜佛与学习佛法教义"
+ ],
+ "ไหว้พระและเรียนรู้มรดกวัฒนธรรม": [
+  "Worship and learn about cultural heritage",
+  "拜佛与了解文化遗产"
+ ],
+ "ไหว้พระใหญ่และชมภูมิทัศน์": [
+  "Worship the great Buddha and enjoy the landscape",
+  "参拜大佛与欣赏景观"
  ],
  "ไหว้แก้ปีชงที่ศาลเจ้าหรือวัดจีน ตามปีนักษัตรของคุณ ทีมเตรียมของไหว้และทำพิธีแทน": [
   "A clash-year ceremony at a Chinese shrine or temple according to your Chinese zodiac year; the team prepares the offerings and performs it for you",
@@ -7566,5 +10290,21 @@
  "ไอเดียหรือโปรเจกต์ใหม่กำลังจุดประกาย ลงมือตอนที่ไฟยังแรง": [
   "A new idea or project is sparking; act while the fire is strong",
   "新的想法或项目正在萌发，趁热打铁去行动"
+ ],
+ "ไอ้ไข่": [
+  "Ai Khai",
+  "艾凯"
+ ],
+ "✦ วัดเด่นแนะนำ": [
+  "✦ Recommended",
+  "✦ 推荐寺庙"
+ ],
+ "✦ แนะนำ": [
+  "✦ Top pick",
+  "✦ 推荐"
+ ],
+ "🙏 ขอพรทั่วไป": [
+  "🙏 General blessings",
+  "🙏 一般祈福"
  ]
 }

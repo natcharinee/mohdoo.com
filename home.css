@@ -1452,3 +1452,42 @@ body.app-ui .hello small { display: flex; align-items: center; justify-content: 
   .mk-steps b { margin-top: 0; align-self: end; }
   .mk-steps small { align-self: start; max-width: none; }
 }
+
+/* ===== สถานที่ทำพิธี (หน้ามงคล) ===== */
+.pl { margin-top: 20px; }
+.pl-lead { margin: -4px 0 10px; font-size: .8rem; color: var(--muted); }
+.pl-regions, .pl-wishes { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+.pl-regions::-webkit-scrollbar, .pl-wishes::-webkit-scrollbar { display: none; }
+.pl-wishes { margin-bottom: 10px; }
+.pl-chip { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; font-size: .84rem; white-space: nowrap;
+  color: var(--text); background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .2); cursor: pointer; transition: background .2s, border-color .2s; }
+.pl-chip em { font-style: normal; font-size: .7rem; padding: 1px 7px; border-radius: 999px; background: rgba(255, 255, 255, .1); color: var(--lilac); }
+.pl-chip:hover { border-color: rgba(240, 200, 120, .5); }
+.pl-chip.on { color: #2a1503; font-weight: 600; background: linear-gradient(135deg, var(--gold-2), var(--gold)); border-color: transparent; }
+.pl-chip.on em { background: rgba(42, 21, 3, .15); color: #2a1503; }
+.pl-wishes .pl-chip { padding: 6px 12px; font-size: .78rem; }
+.pl-wishes .pl-chip.on { background: rgba(240, 200, 120, .18); color: var(--gold-2); border-color: var(--gold); }
+.pl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.pl-card { display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 18px;
+  background: linear-gradient(160deg, rgba(76, 38, 150, .35), rgba(20, 10, 50, .6)); border: 1px solid rgba(227, 179, 255, .18); }
+.pl-card.open { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245, 201, 107, .15); }
+.pl-top { display: flex; align-items: flex-start; gap: 10px; }
+.pl-ico { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-size: 1.25rem;
+  background: radial-gradient(circle at 35% 30%, #4a2a8a, #1a0b40); border: 1px solid rgba(240, 200, 120, .45); }
+.pl-name { flex: 1; min-width: 0; }
+.pl-name b { display: block; font-size: .92rem; font-weight: 600; color: var(--gold-2); line-height: 1.35; }
+.pl-name small { display: block; margin-top: 2px; font-size: .72rem; color: var(--lilac); }
+.pl-feat { flex: none; font-size: .64rem; padding: 3px 8px; border-radius: 999px; color: #2a1503; background: linear-gradient(135deg, var(--gold-2), var(--gold)); font-weight: 600; }
+.pl-deity { margin: 0; font-size: .78rem; color: var(--text); }
+.pl-deity span { margin-right: 6px; font-size: .68rem; padding: 2px 7px; border-radius: 6px; background: rgba(255, 255, 255, .08); color: var(--lilac); }
+.pl-good { flex: 1; margin: 0; font-size: .76rem; line-height: 1.55; color: var(--muted); }
+.pl-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.pl-tags span { font-size: .66rem; padding: 2px 8px; border-radius: 999px; background: rgba(240, 200, 120, .1); color: var(--gold-2); }
+.pl-book { width: 100%; }
+.pl-pick { display: grid; gap: 6px; padding-top: 4px; }
+.pl-pick small { font-size: .72rem; color: var(--lilac); text-align: center; }
+.pl-pick > div { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.pl-pick .btn-gold { padding: 9px 6px; font-size: .8rem; }
+.pl-pick .link { justify-self: center; font-size: .74rem; color: var(--muted); }
+.pl-more { margin-top: 10px; }
+.pl .pf-note { margin-top: 10px; }
