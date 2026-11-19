@@ -378,3 +378,19 @@ body.ready .cta { opacity: 1; transform: none; }
 .page-title, .eyebrow + .page-title { padding: .5em .3em .25em; margin-top: -.15em; line-height: 1.4; }
 .eyebrow + .page-title { margin-top: .2em; }
 .page-title + .subtitle { margin-top: .35em; }
+
+/* ============ มือถือ (iOS/Android): ฟอร์มลื่นขึ้น ============ */
+html { -webkit-text-size-adjust: 100%; }
+a, button, label, summary { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+/* ช่องวันที่/เวลาของ iOS มีความกว้างในตัว ทำให้ล้นกรอบ → บังคับเต็มช่องและสูงเท่าช่องอื่น */
+.form input[type="date"], .form input[type="time"] {
+  -webkit-appearance: none; appearance: none; display: block; width: 100%; min-width: 0; min-height: 46px; line-height: 1.4; text-align: left; }
+.form input::-webkit-date-and-time-value { text-align: left; min-height: 1.4em; }
+.form input::-webkit-datetime-edit { padding: 0; }
+/* กล่องยอมรับเงื่อนไข: ช่องติ๊กชิดซ้ายกับข้อความ */
+.form .check { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px; text-align: left; line-height: 1.5; }
+.form .check input[type="checkbox"] { flex: none; width: 20px !important; height: 20px; min-width: 20px; margin: 0; }
+@media (max-width: 700px) {
+  /* ตัวอักษรในช่องกรอก ≥ 16px ไม่ให้ iPhone ซูมหน้าจอเองตอนแตะ */
+  .form input:not([type="checkbox"]), .form select, .form textarea, .ai-input textarea { font-size: 16px; }
+}

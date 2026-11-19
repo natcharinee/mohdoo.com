@@ -509,7 +509,9 @@ function fitHome() {
   scene.style.setProperty('--sz', 1);
   const h1 = scene.getBoundingClientRect().height;
   const others = app.scrollHeight - h1;
-  const z = Math.min(1, (app.clientHeight - others) / h1);
+  // มือถือจอสูง (เช่น iPhone Pro Max) ขยายฉากได้เล็กน้อยตามความกว้างจอ ไม่ให้เหลือที่ว่างด้านล่าง
+  const maxZ = innerWidth < 700 ? Math.min(1.2, innerWidth / 350) : 1;
+  const z = Math.min(maxZ, (app.clientHeight - others) / h1);
   if (z >= 0.38) {
     scene.style.setProperty('--sz', z.toFixed(3));
     app.classList.add('fit');

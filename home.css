@@ -776,7 +776,7 @@ body.logged-in .table-svg { height: 214px; bottom: auto; }
 .otp-input { text-align: center; font-size: 1.6rem !important; letter-spacing: .5em; padding-left: .5em !important; }
 .otp-error { font-size: .8rem; color: #ff8a9a; text-align: center; }
 .sheet .two > label, #editForm .two > label { min-width: 0; }
-.sheet .form input, .sheet .form select, #editForm input, #editForm select { width: 100%; min-width: 0; }
+.sheet .form input:not([type="checkbox"]), .sheet .form select, #editForm input:not([type="checkbox"]), #editForm select { width: 100%; min-width: 0; }
 
 /* ============ ฟอนต์ Charm: เว้นบรรทัดให้สระบนไม่ชน ============ */
 .app-title { line-height: 1.5; }
@@ -1306,3 +1306,19 @@ body.logged-in .hello small { display: flex; align-items: center; justify-conten
 .mk-switch button { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 8px; border-radius: 999px; font-size: .92rem; color: var(--muted); transition: background .25s, color .25s; }
 .mk-switch button[aria-selected="true"] { color: #2a1503; font-weight: 600; background: linear-gradient(135deg, var(--gold-2), var(--gold)); }
 .mk-sec[hidden] { display: none; }
+
+/* ============ มือถือจริง: เต็มจอเสมอ (แก้ช่องว่างใต้เนื้อหาบน iPhone Safari) ============ */
+.device-wrap { position: fixed; inset: 0; height: auto; }
+.phone-slot, body.ready .phone-slot { width: 100%; height: 100%; }
+.screen { height: 100%; }
+.app { -webkit-overflow-scrolling: touch; }
+.panel { -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+/* แผ่นสมัคร/เข้าสู่ระบบบนมือถือ: ไม่ล้นจอ เลื่อนได้ลื่น */
+@media (max-width: 699px) {
+  .sheet { max-height: calc(100% - env(safe-area-inset-top) - 16px); overscroll-behavior: contain; }
+  .sheet .two { gap: 10px; }
+}
+/* ภาพแม่หมอไม่ทับ “MOHDOO · TALE” */
+.app-title { margin-bottom: 14px; }
+.seer-img { top: -26px; }
+@media (max-width: 520px) { .hello small .fl { display: none; } body.logged-in .hello small { font-size: .82rem; } }
