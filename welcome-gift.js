@@ -12,12 +12,15 @@ const GIFTS = [
 const COUPON_DAYS = 30;
 
 // ---------- ข้อมูลผู้ใช้ ----------
-function saveUser(u) { persistUser(u); }
+function saveUser(u) { return persistUser(u); }
 // ประวัติการดูดวง (ล่าสุดอยู่บนสุด เก็บไม่เกิน 50 รายการ)
 function addHistory(entry) {
   const u = currentUser();
   if (!u) return;
-  u.history = [{ id: `h${Date.now().toString(36)}`, at: Date.now(), ...entry }, ...(u.history || [])].slice(0, 50);
+  // เก็บทุกประวัติการดูดวง (ไม่ตัดทิ้ง) · ยกเว้นรายงานประจำวันเก็บย้อนหลัง 120 วัน
+  let daily = 0;
+  u.history = [{ id: `h${Date.now().toString(36)}`, at: Date.now(), ...entry }, ...(u.history || [])]
+    .filter((h) => h.kind !== 'daily' || ++daily <= 120);
   saveUser(u);
 }
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -84,7 +87,11 @@ function startWelcomeGift() {
   giftEl.classList.add('open');
   setTimeout(() => $('spinBtn').focus({ preventScroll: true }), 400);
 }
-function closeGift() { giftEl.classList.remove('open'); }
+function closeGift() {
+  giftEl.classList.remove('open');
+  // ปิดวงล้อแล้ว → ทำสิ่งที่กดไว้ก่อนสมัครต่อ (ถ้าไม่ได้เปิดคำทำนายจากของขวัญ)
+  if (typeof resumeAfterAuth === 'function' && !document.querySelector('.panel.open')) resumeAfterAuth();
+}
 $('giftLater').addEventListener('click', () => {
   closeGift();
   renderCoupons();

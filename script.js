@@ -59,11 +59,9 @@ document.querySelectorAll('.tcard3').forEach((a) =>
     e.preventDefault();
     const r = a.querySelector('.card-face').getBoundingClientRect();
     burst(r.left + r.width / 2, r.top + r.height / 2, 40, 160);
-    // ยังไม่เข้าสู่ระบบ → ชวนสมัครก่อน
-    if (!currentUser()) { setTimeout(() => openSheet('register'), 300); return; }
     const href = a.getAttribute('href');
-    // ไพ่ทาโรต์ / เซียมซี → จ่ายก่อน (checkout.js) · บริการ → เปิดหน้ารวมบริการ
-    setTimeout(() => (isAppPage(href) && pageOf(href) !== 'services.html' ? startCheckout(itemFromHref(href)) : openFrame(href)), 380);
+    // ไพ่ทาโรต์ / เซียมซี → จ่ายก่อน (checkout.js ขอเข้าสู่ระบบเอง) · ศาสตร์ทั่วโลก → เปิดหน้าได้เลย
+    setTimeout(() => (isAppPage(href) && !['services.html', 'world.html'].includes(pageOf(href)) ? startCheckout(itemFromHref(href)) : openFrame(href)), 380);
   })
 );
 
@@ -142,8 +140,22 @@ function setTab(name) {
   showStep('phone');
 }
 let lastFocus = null;
-function openSheet(name) {
+let afterAuth = null;
+// เรียกก่อนเริ่มดูดวง: เข้าสู่ระบบแล้ว → ทำต่อทันที · ยังไม่เข้าสู่ระบบ → เปิดแผ่นสมัคร แล้วทำต่อให้หลังสำเร็จ
+function requireLogin(action, why = 'สมัครหรือเข้าสู่ระบบด้วยเบอร์โทร เพื่อเริ่มดูดวง') {
+  if (currentUser()) { action && action(); return true; }
+  afterAuth = action || null;
+  openSheet('register', why);
+  return false;
+}
+function resumeAfterAuth() {
+  const go = afterAuth;
+  afterAuth = null;
+  if (go && currentUser()) setTimeout(go, 350);
+}
+function openSheet(name, why) {
   setTab(name);
+  if (why) $('authSub').textContent = why;
   lastFocus = document.activeElement;
   screen.classList.add('sheet-open');
   sheet.setAttribute('aria-hidden', 'false');
@@ -151,7 +163,8 @@ function openSheet(name) {
   document.querySelector('.tabbar').inert = true;
   setTimeout(() => $('phoneForm').phone.focus({ preventScroll: true }), 450);
 }
-function closeSheet() {
+function closeSheet(keepPending) {
+  if (!keepPending) afterAuth = null;
   screen.classList.remove('sheet-open');
   sheet.setAttribute('aria-hidden', 'true');
   $('app').inert = false;
@@ -160,8 +173,8 @@ function closeSheet() {
 }
 document.querySelectorAll('[data-open]').forEach((b) => b.addEventListener('click', () => openSheet(b.dataset.open)));
 document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => setTab(t.dataset.tab)));
-$('closeAuth').addEventListener('click', closeSheet);
-$('sheetBackdrop').addEventListener('click', closeSheet);
+$('closeAuth').addEventListener('click', () => closeSheet());
+$('sheetBackdrop').addEventListener('click', () => closeSheet());
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && screen.classList.contains('sheet-open')) closeSheet(); });
 
 // ---------- สถานะผู้ใช้ (ตัวอย่าง: เก็บในเบราว์เซอร์ ยังไม่มีระบบหลังบ้าน) ----------
@@ -178,16 +191,20 @@ function persistUser(u) {
   try {
     localStorage.setItem(USER_KEY, JSON.stringify(u));
     if (u.phone) { const all = accounts(); all[u.phone] = u; localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(all)); }
-  } catch (_) {}
+    return true;
+  } catch (_) { return false; } // พื้นที่เบราว์เซอร์เต็ม (มักเกิดจากรูป) → ให้ผู้เรียกจัดการ
 }
 function applyUser() {
   const u = currentUser();
-  document.body.classList.toggle('logged-in', !!u);
+  // ทุกคนเห็นหน้าแรกแบบเดียวกัน (app-ui) · สมัคร/เข้าสู่ระบบเมื่อเริ่มดูดวงเท่านั้น (requireLogin)
+  document.body.classList.add('app-ui');
+  document.body.classList.toggle('member', !!u);
   if (u) {
     $('avatarBtn').textContent = u.name.trim().charAt(0).toUpperCase() || '✦';
     $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">สวัสดี</span> <b class="hello-name">คุณ${escapeHTML(u.name)}</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย<i class="fl r"></i></small>`;
   } else {
     $('avatarBtn').textContent = '👤';
+    $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">ยินดีต้อนรับสู่</span> <b class="hello-name">หมอดู.com</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>เลือกดูดวงที่สนใจได้เลย สมัครด้วยเบอร์โทรตอนเริ่มดูดวง<i class="fl r"></i></small>`;
   }
   $('app').scrollTop = 0;
 }
@@ -204,7 +221,7 @@ function setActiveTab(id) {
 }
 // ไอคอนมุมขวาบน / แท็บบัญชี → หน้าโปรไฟล์ (profile.js)
 function toggleAccount() {
-  if (!currentUser()) return openSheet('login');
+  if (!currentUser()) { afterAuth = openProfile; return openSheet('login', 'เข้าสู่ระบบด้วยเบอร์โทร เพื่อดูบัญชีและประวัติดูดวง'); }
   openProfile();
 }
 function logout() {
@@ -286,11 +303,12 @@ $('infoForm').addEventListener('submit', (e) => {
 
 function finishAuth(user, isNew) {
   persistUser(user);
-  closeSheet();
+  closeSheet(true);
   applyUser();
   $('phoneForm').reset();
-  // สมัครใหม่ → วงล้อของขวัญต้อนรับ (welcome-gift.js)
+  // สมัครใหม่ → วงล้อของขวัญต้อนรับ (welcome-gift.js) แล้วค่อยทำสิ่งที่กดไว้ต่อ · เข้าสู่ระบบ → ทำต่อทันที
   if (isNew && typeof startWelcomeGift === 'function') setTimeout(startWelcomeGift, 900);
+  else resumeAfterAuth();
   toast(isNew ? 'สมัครสำเร็จ! ยินดีต้อนรับสู่หมอดู.com ✦' : `ยินดีต้อนรับกลับ คุณ${user.name} ✦`);
   const r = screen.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + r.height / 2, 60, 260);
@@ -384,7 +402,7 @@ function revealSite() {
   burst(innerWidth / 2, innerHeight / 2, 70, 360);
   // เข้าเว็บแล้ว: ยังไม่ล็อกอิน → เปิดหน้าสมัคร/เข้าสู่ระบบทันที
   if (hashAuth) setTimeout(() => openSheet(location.hash.slice(1)), 600);
-  else if (!currentUser()) setTimeout(() => openSheet('register'), 700);
+
   setTimeout(() => { vRun = false; intro.classList.add('gone'); }, 1000);
 }
 
@@ -504,7 +522,7 @@ function fitHome() {
   const scene = document.querySelector('.seer-scene');
   const bar = document.querySelector('.tabbar');
   if (!app || !scene) return;
-  const member = document.body.classList.contains('logged-in');
+  const member = document.body.classList.contains('app-ui');
   app.style.paddingBottom = `${member && bar ? bar.offsetHeight + 12 : 24}px`;
   scene.style.setProperty('--sz', 1);
   const h1 = scene.getBoundingClientRect().height;

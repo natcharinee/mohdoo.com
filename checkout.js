@@ -22,10 +22,13 @@ const FORM_FIELDS = {
     { name: 'event', label: 'ประเภทงาน', required: true, placeholder: 'เช่น แต่งงาน ขึ้นบ้านใหม่ เปิดร้าน' },
     { name: 'range', label: 'ช่วงวันที่สะดวก', required: true, placeholder: 'เช่น มี.ค. – เม.ย. 2570' },
   ],
-  palm: [{ name: 'photo', label: 'ภาพฝ่ามือที่เห็นเส้นชัด', type: 'file', required: true }],
-  face: [{ name: 'photo', label: 'ภาพใบหน้าตรง ไม่สวมแว่น', type: 'file', required: true }],
+  palm: [
+    { name: 'palmL', label: 'ภาพฝ่ามือซ้ายที่เห็นเส้นชัด', type: 'file', slot: 'palmL', required: true },
+    { name: 'palmR', label: 'ภาพฝ่ามือขวา', type: 'file', slot: 'palmR' },
+  ],
+  face: [{ name: 'face', label: 'ภาพใบหน้าตรง ไม่สวมแว่น', type: 'file', slot: 'face', required: true }],
   fengshui: [
-    { name: 'photo', label: 'ภาพหรือผังพื้นที่', type: 'file', required: true },
+    { name: 'photo', label: 'ภาพหรือผังพื้นที่', type: 'file', slot: 'place', required: true },
     { name: 'direction', label: 'หน้าบ้าน/หน้าร้านหันทิศไหน', placeholder: 'เช่น ทิศตะวันออก' },
   ],
 };
@@ -36,6 +39,16 @@ const CHONG_PLACES = ['ให้ทีมเลือกสถานที่', 
 Object.assign(FORM_FIELDS, {
   idcard: [{ name: 'idnum', label: 'เลขบัตรประชาชน 13 หลัก (ระบบเก็บเฉพาะผลรวมและเลขท้าย 4 หลัก)', mask: 'idcard', required: true,
     inputmode: 'numeric', pattern: '[0-9 -]{13,17}', placeholder: 'x-xxxx-xxxxx-xx-x' }],
+  couple: [
+    { name: 'partner', label: 'ชื่อเล่นของอีกฝ่าย', required: true },
+    { name: 'partnerBirth', label: 'วันเกิดของอีกฝ่าย', type: 'date', required: true },
+    { name: 'partnerTime', label: 'เวลาเกิดของอีกฝ่าย (ถ้าทราบ)', type: 'time' },
+    { name: 'science', label: 'ศาสตร์ที่อยากใช้', type: 'select', options: ['ให้หมอดูเลือก', 'โหราศาสตร์ไทย', 'ปาจื้อ', 'ซาจู', 'โหราศาสตร์ตะวันตก'] },
+    { name: 'question', label: 'อยากรู้เรื่องไหนเป็นพิเศษ', type: 'textarea' },
+  ],
+  'name-check': [{ name: 'current', label: 'ชื่อและนามสกุลปัจจุบัน', prefill: 'fullname', required: true }],
+  'phone-compare': [{ name: 'numbers', label: 'เบอร์ที่ต้องการเทียบ (บรรทัดละเบอร์ ไม่เกิน 3)', type: 'textarea', required: true }],
+  'plate-compare': [{ name: 'plates', label: 'ทะเบียนที่ต้องการเทียบ (บรรทัดละชุด ไม่เกิน 3)', type: 'textarea', required: true }],
   house: [
     { name: 'houseno', label: 'บ้านเลขที่ที่ต้องการวิเคราะห์ (ไม่ต้องใส่ถนนหรือจังหวัด)', required: true, placeholder: 'เช่น 99/123', maxlength: 20 },
     { name: 'type', label: 'ประเภทที่อยู่', type: 'select', options: ['บ้าน', 'คอนโด / ห้องชุด', 'ร้านค้า', 'สำนักงาน', 'บ้านที่กำลังจะซื้อ / เช่า'] },
@@ -146,7 +159,7 @@ function setStep(n, title) {
 
 function startCheckout(item) {
   if (!item) return;
-  if (!currentUser()) { openSheet('register'); return; }
+  if (!currentUser()) { requireLogin(() => startCheckout(item)); return; }
   clearInterval(timer);
   order = { item, tier: item.tiers.findIndex((t) => t.price != null && !t.soon) };
   if (order.tier < 0) { toast('บริการนี้ยังไม่เปิดให้จอง จะแจ้งเตือนเมื่อเปิด ✦'); return; }
@@ -269,7 +282,11 @@ function renderIntake(fields) {
     const extra = `${f.inputmode ? `inputmode="${f.inputmode}"` : ''} ${f.pattern ? `pattern="${f.pattern}"` : ''} ${f.maxlength ? `maxlength="${f.maxlength}"` : ''}`;
     if (f.type === 'textarea') return `<textarea name="${f.name}" rows="3" ${req} placeholder="${esc(f.placeholder || '')}">${val}</textarea>`;
     if (f.type === 'select') return `<select name="${f.name}">${f.options.map((o) => `<option>${o}</option>`).join('')}</select>`;
-    if (f.type === 'file') return `<input type="file" name="${f.name}" accept="image/*" ${req}>`;
+    if (f.type === 'file') {
+      // มีรูปในแฟ้มดวงแล้ว → ใช้รูปเดิมได้เลย หรือเลือกรูปใหม่ (รูปเดิมเก็บไว้ดูย้อนหลัง)
+      const old = f.slot && (u.photos || {})[f.slot];
+      return `${old ? `<span class="in-old"><img src="${old}" alt=""><em>ใช้รูปเดิมในแฟ้มดวงได้เลย หรือเลือกรูปใหม่</em></span>` : ''}<input type="file" name="${f.name}" accept="image/*" ${old ? '' : req}>`;
+    }
     return `<input type="${f.type || 'text'}" name="${f.name}" ${req} ${extra} value="${val}" placeholder="${esc(f.placeholder || '')}" autocomplete="off">`;
   };
   $('payBody').innerHTML = `
@@ -283,21 +300,41 @@ function renderIntake(fields) {
     <form class="form" id="intakeForm">
       ${u.birthdate ? '' : '<label>วันเกิดของคุณ<input type="date" name="birthdate" required></label>'}
       ${fields.map((f) => `<label>${f.label}${f.required ? '' : ' <small>(ไม่บังคับ)</small>'}${input(f)}</label>`).join('')}
+      ${fields.some((f) => f.slot) ? '<p class="pf-note">📷 รูปจะเก็บไว้ใน “แฟ้มดวง” ของคุณ ใช้ดูดวงครั้งต่อไปและรายงานดวงประจำวัน ลบได้ทุกเมื่อในหน้าบัญชี</p>' : ''}
       <button class="btn-gold full" type="submit">${order.item.done ? 'ยืนยัน ›' : 'ส่งให้หมอดู ›'}</button>
     </form>`;
-  $('intakeForm').addEventListener('submit', (e) => {
+  $('intakeForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const form = e.target;
+    if (form.dataset.busy) return;
+    form.dataset.busy = '1';
     const data = {};
-    new FormData(e.target).forEach((v, k) => { data[k] = v instanceof File ? (v.name || '') : String(v); });
+    const shots = [];
+    for (const [k, v] of new FormData(form).entries()) {
+      if (!(v instanceof File)) { data[k] = String(v); continue; }
+      const f = fields.find((x) => x.name === k);
+      const slot = f && f.slot;
+      if (v.size && slot) {
+        try { shots.push({ slot, src: await shrinkImage(v) }); } catch (_) { toast('อ่านไฟล์รูปไม่ได้ ลองรูปอื่นนะคะ'); delete form.dataset.busy; return; }
+        data[k] = `📷 ${slotInfo(slot).name} · เก็บในแฟ้มดวงแล้ว`;
+      } else if (slot && (currentUser().photos || {})[slot]) {
+        data[k] = `📷 ${slotInfo(slot).name} · ใช้รูปเดิมในแฟ้มดวง`;
+        shots.push({ slot, reuse: true });
+      } else data[k] = v.name || '';
+    }
     // เลขบัตรประชาชน: เก็บเฉพาะผลรวมและเลขท้าย 4 หลัก ไม่เก็บเลขเต็ม
     fields.filter((f) => f.mask === 'idcard').forEach((f) => {
       const d = (data[f.name] || '').replace(/\D/g, '');
       data[f.name] = `•••••••••${d.slice(-4)} · ผลรวม ${[...d].reduce((a, b) => a + +b, 0)}`;
     });
     const done = order.item.done;
-    if (data.birthdate) { const cur = currentUser(); cur.birthdate = data.birthdate; saveUser(cur); }
-    addHistory({ kind: 'order', icon: order.item.icon, title: order.item.title, status: done ? done.status : 'รอหมอดูตอบ',
+    const cur = currentUser();
+    if (data.birthdate) cur.birthdate = data.birthdate;
+    shots.filter((s) => s.src).forEach((s) => savePhoto(cur, s.slot, s.src, order.item.title));
+    if (!saveUserWithPhotos(cur)) { delete form.dataset.busy; return; }
+    addHistory({ kind: 'order', svc: order.item.key, icon: order.item.icon, title: order.item.title, status: done ? done.status : 'รอหมอดูตอบ',
       no: order.no, amount: order.amount, label: order.label, data, fields: fields.map((f) => [f.name, f.label]),
+      photos: shots.map((s) => s.slot),
       ...(done ? { steps: done.steps, note: done.text } : {}) });
     $('payBody').innerHTML = `
       <div class="pay-ok"><span class="ok-ring">✦</span><h3>${done ? done.title : 'ส่งข้อมูลให้หมอดูแล้ว'}</h3>

@@ -73,3 +73,172 @@
 .w-cat small { font-size: .74rem; line-height: 1.45; color: var(--muted); font-weight: 300; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .w-cat em { font-style: normal; font-size: .72rem; color: var(--lilac); margin-top: 4px; }
 @media (min-width: 700px) { .w-cat-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
+
+/* ============ ดูดวงตามประเทศ: การ์ดประเทศ → ศาสตร์ของประเทศ ============ */
+.world-countries[hidden], .chips[hidden], #worldList[hidden] { display: none; }
+.wc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+.wc-card { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px 14px 12px; text-align: left; border-radius: 18px; color: var(--text);
+  background: linear-gradient(165deg, rgba(80, 36, 150, .75), rgba(22, 9, 52, .9)); border: 1px solid rgba(227, 179, 255, .25); transition: transform .2s, border-color .2s, box-shadow .2s; }
+.wc-card:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: 0 10px 30px rgba(177, 76, 255, .35); }
+.wc-flag { font-size: 2rem; line-height: 1.2; }
+.wc-card b { font-size: 1.02rem; font-weight: 500; color: var(--gold-2); }
+.wc-card small { font-size: .74rem; line-height: 1.5; color: var(--muted); font-weight: 300; min-height: 3em; }
+.wc-card em { font-style: normal; font-size: .74rem; color: var(--lilac); margin-top: 2px; }
+.wc-back { display: inline-block; margin: 0 0 10px; padding: 6px 14px; border-radius: 999px; font-size: .86rem; color: var(--lilac); border: 1px solid var(--line); background: rgba(0, 0, 0, .25); }
+.wc-hero { display: flex; align-items: center; gap: 14px; text-align: left; padding: 14px 16px; margin-bottom: 14px; border-radius: 18px;
+  background: linear-gradient(120deg, rgba(245, 201, 107, .14), rgba(177, 76, 255, .18)); border: 1px solid var(--line); }
+.wc-hero .wc-flag { font-size: 2.6rem; }
+.wc-hero h2 { font-size: 1.3rem; font-weight: 500; color: var(--gold-2); line-height: 1.4; }
+.wc-hero p { font-size: .8rem; color: var(--muted); }
+/* การ์ดศาสตร์: อธิบายสั้น + เหมาะกับ */
+.w-short { font-size: .88rem; line-height: 1.6; color: var(--text); }
+.w-good { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.w-good small { font-size: .72rem; color: var(--muted); margin-right: 2px; }
+.w-good span { padding: 3px 10px; border-radius: 999px; font-size: .76rem; color: #2a1503; font-weight: 500; background: linear-gradient(135deg, var(--gold-2), var(--gold)); }
+.w-card .w-tags span { font-size: .68rem; opacity: .85; }
+@media (min-width: 700px) { .wc-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
+/* การ์ดประเทศ: ธงและตัวอักษรใหญ่ขึ้น */
+.wc-card { position: relative; overflow: hidden; align-items: center; text-align: center; gap: 8px; padding: 18px 12px 16px; }
+.wc-card::after { content: ""; position: absolute; right: -40px; top: -40px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 122, 217, .2), transparent 70%); pointer-events: none; }
+.wc-card .wc-flag { width: 72px; height: 72px; flex: none; display: grid; place-items: center; font-size: 2.9rem; line-height: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .22), rgba(123, 77, 255, .35)); border: 1.5px solid rgba(245, 201, 107, .55);
+  box-shadow: 0 0 18px rgba(245, 201, 107, .25), inset 0 0 12px rgba(0, 0, 0, .3); }
+.wc-tx { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+.wc-card b { font-size: 1.25rem; font-weight: 600; line-height: 1.4; color: var(--gold-2); text-shadow: 0 0 12px rgba(245, 201, 107, .35); }
+.wc-card small { font-size: .84rem; line-height: 1.55; min-height: 0; color: #d9c4ff;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.wc-card em { margin-top: 4px; padding: 3px 12px; border-radius: 999px; font-size: .8rem; font-weight: 600; color: #2a1503;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold)); }
+@media (min-width: 700px) {
+  .wc-card { flex-direction: row; text-align: left; gap: 16px; padding: 20px; }
+  .wc-tx { align-items: flex-start; }
+  .wc-card .wc-flag { width: 84px; height: 84px; font-size: 3.4rem; }
+  .wc-card b { font-size: 1.45rem; }
+  .wc-card small { font-size: .9rem; }
+}
+.wc-hero .wc-flag { font-size: 3.2rem; }
+.wc-hero h2 { font-size: 1.6rem; }
+@media (min-width: 700px) and (max-width: 959px) { .wc-grid { grid-template-columns: repeat(2, 1fr); } }
+/* การ์ดประเทศ: ใช้พื้นที่ด้านขวา (ธงจาง ๆ เป็นลายพื้น · ชื่อศาสตร์เป็นป้าย · ลูกศร) */
+.wc-bg { position: absolute; right: -14px; bottom: -26px; font-size: 7.5rem; line-height: 1; opacity: .13; transform: rotate(-14deg); pointer-events: none; filter: saturate(.8); }
+.wc-tx { flex: 1; position: relative; z-index: 1; }
+.wc-sci { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+.wc-sci i { font-style: normal; padding: 2px 9px; border-radius: 999px; font-size: .76rem; color: #eadcff; background: rgba(255, 255, 255, .08); border: 1px solid rgba(227, 179, 255, .25); white-space: nowrap; }
+.wc-sci i.more { color: var(--gold-2); border-color: rgba(245, 201, 107, .45); }
+.wc-go { display: none; position: relative; z-index: 1; flex: none; width: 38px; height: 38px; border-radius: 50%; place-items: center; font-size: 1.5rem; color: var(--gold);
+  border: 1px solid rgba(245, 201, 107, .45); background: rgba(0, 0, 0, .2); transition: transform .2s, background .2s; }
+.wc-card:hover .wc-go { transform: translateX(3px); background: rgba(245, 201, 107, .15); }
+.wc-card .wc-flag { position: relative; z-index: 1; }
+@media (min-width: 700px) {
+  .wc-sci { justify-content: flex-start; }
+  .wc-sci i { font-size: .82rem; }
+  .wc-go { display: grid; }
+  .wc-bg { right: 30px; font-size: 9rem; bottom: -40px; }
+}
+/* การ์ดประเทศ: ซ้าย = ธง + ชื่อประเทศ · ขวา = ศาสตร์ + จำนวน */
+.wc-left { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; flex: none; }
+.wc-left b { text-align: center; }
+@media (min-width: 700px) {
+  .wc-card { gap: 18px; }
+  .wc-left { width: 104px; }
+  .wc-left b { font-size: 1.2rem; line-height: 1.35; }
+  .wc-tx { align-self: center; padding-left: 16px; border-left: 1px solid rgba(227, 179, 255, .18); }
+}
+/* แสดงชื่อศาสตร์ครบทุกตัว (ไม่ย่อเป็น +N) */
+.wc-sci i { white-space: normal; text-align: center; }
+
+/* ============ โซนประเทศ ============ */
+.wc-zone { margin-bottom: 22px; text-align: left; }
+.wc-zh { display: flex; align-items: center; gap: 10px; margin: 0 2px 12px; font-size: 1.05rem; font-weight: 500; color: var(--gold-2); }
+.wc-zh span { font-size: 1rem; }
+.wc-zh::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(245, 201, 107, .5), transparent); }
+.wc-zone .wc-grid { margin-bottom: 0; align-items: stretch; }
+.wc-card { height: 100%; }
+/* แนะนำ (ไทย · จีน): การ์ดใหญ่ ขอบทอง */
+.wc-zone.feature .wc-grid { grid-template-columns: 1fr; }
+.wc-zone.feature .wc-card { flex-direction: row; text-align: left; gap: 16px; padding: 18px;
+  background: linear-gradient(135deg, rgba(245, 201, 107, .16), rgba(90, 40, 170, .8) 45%, rgba(26, 10, 60, .95));
+  border: 1.5px solid rgba(245, 201, 107, .6); box-shadow: 0 12px 34px rgba(0, 0, 0, .35), 0 0 30px rgba(245, 201, 107, .12); }
+.wc-zone.feature .wc-left { width: 92px; }
+.wc-zone.feature .wc-tx { align-items: flex-start; padding-left: 14px; border-left: 1px solid rgba(245, 201, 107, .3); }
+.wc-zone.feature .wc-sci { justify-content: flex-start; }
+.wc-zone.feature .wc-sci i { background: rgba(245, 201, 107, .1); border-color: rgba(245, 201, 107, .4); color: #fff1cf; }
+.wc-zone.feature .wc-bg { font-size: 9rem; opacity: .16; right: 6px; bottom: -36px; }
+@media (min-width: 700px) {
+  .wc-zone.feature .wc-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .wc-zone.feature .wc-card { padding: 24px; }
+  .wc-zone.feature .wc-left { width: 120px; }
+  .wc-zone.feature .wc-flag { width: 100px; height: 100px; font-size: 4rem; }
+  .wc-zone.feature .wc-left b { font-size: 1.6rem; }
+  .wc-zone.feature .wc-sci i { font-size: .88rem; padding: 4px 12px; }
+  .wc-zh { font-size: 1.2rem; }
+}
+/* โซนที่มี 4 ประเทศ (เอเชีย · ทั่วโลก) แสดงเป็น 2:2 */
+@media (min-width: 700px) { .wc-zone.quad .wc-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+
+/* ============ ตามหมวดหมู่: การ์ดหมวดใหญ่ขึ้น พร้อมตัวอย่างประเภท ============ */
+.world-cats { margin-top: 4px; }
+.w-cat { gap: 8px; padding: 18px 16px; }
+.w-cat .cat-ico { width: 56px; height: 56px; font-size: 1.9rem; border-radius: 16px; flex: none; }
+.w-cat-tx { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.w-cat b { font-size: 1.15rem; font-weight: 600; margin-top: 0; text-shadow: 0 0 10px rgba(245, 201, 107, .3); }
+.w-cat small { font-size: .82rem; color: #d9c4ff; -webkit-line-clamp: 2; }
+.w-cat-types { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.w-cat-types i { font-style: normal; padding: 2px 9px; border-radius: 999px; font-size: .72rem; color: #eadcff; background: rgba(255, 255, 255, .08); border: 1px solid rgba(227, 179, 255, .25); }
+.w-cat-types i.more { color: var(--gold-2); border-color: rgba(245, 201, 107, .45); }
+@media (min-width: 700px) {
+  .w-cat-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .w-cat { flex-direction: row; align-items: flex-start; gap: 16px; padding: 22px; }
+  .w-cat .cat-ico { width: 68px; height: 68px; font-size: 2.3rem; }
+  .w-cat b { font-size: 1.3rem; }
+  .w-cat-types i { font-size: .78rem; }
+}
+
+/* ============ ตามประเภท: หัวข้อกลุ่มวิธีดู ============ */
+.wl-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin: 14px 2px 2px; text-align: left; }
+.wl-head:first-child { margin-top: 0; }
+.wl-head > span { flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 1.5rem;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .22), rgba(123, 77, 255, .4)); border: 1px solid rgba(245, 201, 107, .5); }
+.wl-head h3 { font-size: 1.2rem; font-weight: 600; color: var(--gold-2); line-height: 1.4; }
+.wl-head p { font-size: .8rem; color: var(--muted); }
+.wl-head::after { content: ""; flex: 1; height: 1px; margin-left: 6px; background: linear-gradient(90deg, rgba(245, 201, 107, .45), transparent); }
+
+/* ============ ดูดวงตามประเภท ============ */
+.wt-card .wc-tx { align-items: center; text-align: center; }
+.wt-card .wc-tx b { font-size: 1.15rem; }
+.wt-card .wc-tx small { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .8rem; color: #d9c4ff; line-height: 1.55; }
+.wl-full { grid-column: 1 / -1; }
+@media (min-width: 700px) {
+  .wt-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px; }
+  .wt-card { flex-direction: row; text-align: left; }
+  .wt-card .wc-tx { align-items: flex-start; text-align: left; padding-left: 0; border-left: 0; }
+  .wt-card .wc-left { width: auto; }
+  .wl-full { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1000px) { .wt-grid { grid-template-columns: repeat(3, 1fr) !important; } }
+.world-mode[hidden] { display: none; }
+
+/* ============ ตามข้อกำหนดเมนู: ตัวกรองเรื่องที่อยากถาม · หมวดย่อย · หมวดที่เกี่ยวข้อง ============ */
+.wt-topics { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 16px; text-align: left; }
+.wt-topics small { width: 100%; font-size: .78rem; color: var(--muted); }
+.wt-topic { padding: 6px 12px; border-radius: 999px; font-size: .82rem; color: var(--text); background: rgba(255, 255, 255, .06); border: 1px solid rgba(227, 179, 255, .25); transition: background .2s, color .2s; }
+.wt-topic[aria-selected="true"] { color: #2a1503; font-weight: 600; background: linear-gradient(135deg, var(--gold-2), var(--gold)); border-color: transparent; }
+.ws-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.ws-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; text-align: left; padding: 16px; border-radius: 18px; color: var(--text);
+  background: linear-gradient(165deg, rgba(80, 36, 150, .7), rgba(22, 9, 52, .9)); border: 1px solid rgba(227, 179, 255, .25); transition: transform .2s, border-color .2s; }
+.ws-card:hover { transform: translateY(-2px); border-color: var(--gold); }
+.ws-card > b { font-size: 1.1rem; font-weight: 600; color: var(--gold-2); }
+.ws-sci { display: flex; flex-wrap: wrap; gap: 5px; }
+.ws-sci i { font-style: normal; padding: 2px 9px; border-radius: 999px; font-size: .74rem; color: #eadcff; background: rgba(255, 255, 255, .08); border: 1px solid rgba(227, 179, 255, .25); }
+.ws-foot { width: 100%; display: flex; align-items: center; gap: 6px; font-size: .82rem; color: var(--muted); }
+.ws-foot strong { color: var(--gold); }
+.ws-foot em { margin-left: auto; font-style: normal; font-size: 1.3rem; color: var(--gold); }
+.wc-crumb { font-size: .76rem !important; color: var(--lilac) !important; }
+.wc-cats { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: -4px 0 14px; text-align: left; }
+.wc-cats small { width: 100%; font-size: .78rem; color: var(--muted); }
+.wc-cats button { padding: 6px 12px; border-radius: 999px; font-size: .82rem; color: var(--gold-2); border: 1px solid rgba(245, 201, 107, .45); background: rgba(245, 201, 107, .08); }
+.wc-note { margin: 4px 0 18px; font-size: .76rem; color: var(--muted); text-align: center; }
+.w-pkg-get { font-size: .8rem; color: var(--muted); line-height: 1.5; margin: -2px 0 6px; }
+.w-tiers b.tbd { color: #ffcf8a; font-weight: 500; }
+.world-dlg .wc-back { margin-bottom: 4px; }
+@media (min-width: 700px) { .ws-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } }

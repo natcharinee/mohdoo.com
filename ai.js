@@ -10,7 +10,7 @@ const aiBody = aiPanel.querySelector('.panel-body');
 const aiActive = (u) => u && u.aiUntil && u.aiUntil > Date.now();
 
 function openAI() {
-  if (!currentUser()) { openSheet('register'); return; }
+  if (!currentUser()) { requireLogin(openAI, 'สมัครหรือเข้าสู่ระบบด้วยเบอร์โทร เพื่อดูดวงประจำวัน'); return; }
   closeAllPanels();
   setActiveTab('ai');
   renderAI();
@@ -98,7 +98,9 @@ function computeDaily(u, now = new Date()) {
   const [numTitle, numText] = NUM_MEANING[personal];
   const card = pick(DAILY_TAROT, 3);
   const taksa = TAKSA[(now.getDay() - birthParts(u).date.getDay() + 8) % 8];
-  const parts = AREAS.slice(1).map(([label, k]) => [label, stars(k)]);
+  // แฟ้มดวง: ชื่อ เบอร์ บ้าน ทะเบียน เลขบัตร ไพ่ เซียมซี รูป → ปรับดาวแต่ละด้าน ±1
+  const file = typeof dailyFromFile === 'function' ? dailyFromFile(u, personal, now.getTime()) : { lines: [], used: [], adjust: {} };
+  const parts = AREAS.slice(1).map(([label, k]) => [label, Math.max(1, Math.min(5, stars(k) + Math.sign(file.adjust[label] || 0)))]);
   const scores = [['ภาพรวม', Math.round(parts.reduce((a, [, n]) => a + n, 0) / parts.length)], ...parts]; // ภาพรวม = เฉลี่ย 4 ด้าน
   const lucky = [...new Set([personal, reduce(personal + 3), reduce(now.getDate() + lifeNumber(u))])];
 
@@ -111,7 +113,8 @@ function computeDaily(u, now = new Date()) {
   const summary = `${mood} ${best[0]}เด่นที่สุด (${AREA_TIP[best[0]][0]})` +
     (worst[1] < best[1] ? ` ส่วน${worst[0]}ต้องระวัง ${AREA_TIP[worst[0]][1]}` : '') +
     ` · ไพ่ ${card[0]} บอกว่า${card[2]} ทักษาวันนี้ตกเป็น${taksa} ${TAKSA_TIP[taksa]}` +
-    ` · ใส่สี${today.money}เสริมการเงิน สี${today.love}เสริมความรัก เลขนำโชค ${lucky.join(' ')}`;
+    ` · ใส่สี${today.money}เสริมการเงิน สี${today.love}เสริมความรัก เลขนำโชค ${lucky.join(' ')}`+
+    (file.used.length ? ` · รวมข้อมูลจากแฟ้มดวงของคุณ ${file.used.length} เรื่อง` : '');
 
   return {
     key, date: now.getTime(), scores, summary, mood,
@@ -119,6 +122,7 @@ function computeDaily(u, now = new Date()) {
     number: { n: personal, title: numTitle, text: numText },
     color: { day: today.day, work: today.work, money: today.money, love: today.love, avoid: today.avoid },
     card, taksa: { name: taksa, tip: TAKSA_TIP[taksa] }, lucky,
+    file: { lines: file.lines, used: file.used },
   };
 }
 
@@ -138,6 +142,9 @@ function dailyHTML(r, note = '') {
       <div class="dg"><small>🪷 ทักษา · วันนี้ตกเป็น</small><b>${r.taksa.name}</b><p>${r.taksa.tip}</p></div>
       <div class="dg"><small>🍀 เลขนำโชควันนี้</small><b class="dg-nums">${r.lucky.map((n) => `<span>${n}</span>`).join('')}</b><p>ใช้เป็นเลขโปรดของวัน</p></div>
     </div>
+    ${r.file && r.file.lines.length ? `<div class="daily-file"><b>📂 จากแฟ้มดวงของคุณ</b><ul>${r.file.lines.map((l) =>
+      `<li><span>${l.icon}</span><div><small>${esc(l.label)}</small><p>${esc(l.text)}</p></div></li>`).join('')}</ul></div>` : ''}
+    ${r.file && r.file.used.length ? `<p class="daily-used">ข้อมูลที่ใช้วันนี้: ${r.file.used.map(esc).join(' · ')}</p>` : ''}
     ${note ? `<p class="daily-note">${note}</p>` : ''}
   </article>`;
 }
@@ -301,7 +308,8 @@ async function ask(text) {
       body: JSON.stringify({
         messages: u.aiChat.slice(-20),
         profile: { first: u.first, last: u.last, birthdate: u.birthdate, birthtime: u.birthtime, birthplace: u.birthplace,
-          gender: u.gender, relation: u.relation, interests: u.interests, today: new Date().toISOString().slice(0, 10) },
+          gender: u.gender, relation: u.relation, interests: u.interests, today: new Date().toISOString().slice(0, 10),
+          file: typeof fortuneFileText === 'function' ? fortuneFileText(u) : '' },
       }),
     });
     if (r.ok) reply = (await r.json()).reply;

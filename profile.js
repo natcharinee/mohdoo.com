@@ -99,6 +99,7 @@ function renderProfile() {
       <div class="pf-interest"><small>เรื่องที่อยากรู้</small><div>${(u.interests || []).length ? u.interests.map((i) => `<span>${esc(i)}</span>`).join('') : '<em>ยังไม่ได้เลือก</em>'}</div></div>
     </section>
 
+    ${typeof fileSection === 'function' ? fileSection(u) : ''}
     ${bodySection(u)}
     ${typeof circleCard === 'function' ? circleCard(u) : ''}
 
@@ -185,9 +186,10 @@ profileBody.addEventListener('change', async (e) => {
   if (t.matches('[data-photo]') && t.files[0]) {
     try {
       const data = await shrinkImage(t.files[0]);
-      const u = currentUser(); u.photos = { ...(u.photos || {}), [t.dataset.photo]: data };
-      saveUser(u); renderProfile();
-      toast('บันทึกรูปแล้ว ✦');
+      const u = currentUser(); savePhoto(u, t.dataset.photo, data, 'หน้าบัญชี');
+      if (!saveUserWithPhotos(u)) return;
+      renderProfile();
+      toast('บันทึกรูปลงแฟ้มดวงแล้ว ✦');
     } catch (_) { toast('อ่านไฟล์รูปไม่ได้ ลองรูปอื่นนะคะ'); }
   }
 });
@@ -215,10 +217,16 @@ profileBody.addEventListener('click', (e) => {
   if (t.closest('#pfEdit, [data-edit]')) return openEdit();
   if (t.closest('#pfLogout')) return logout();
   const del = t.closest('[data-photo-del]');
-  if (del) { const u = currentUser(); delete (u.photos || {})[del.dataset.photoDel]; saveUser(u); renderProfile(); return; }
+  if (del) {
+    const u = currentUser(); const slot = del.dataset.photoDel;
+    if (!confirm('ลบรูปนี้และรูปเก่าของช่องนี้ออกจากแฟ้มดวง?')) return;
+    delete (u.photos || {})[slot]; delete (u.photoAt || {})[slot];
+    u.photoLog = (u.photoLog || []).filter((p) => p.slot !== slot);
+    saveUser(u); renderProfile(); return;
+  }
   if (t.closest('[data-photo-revoke]')) {
     if (!confirm('ลบรูปทั้งหมดและถอนความยินยอม?')) return;
-    const u = currentUser(); delete u.photos; delete u.photoConsent; saveUser(u); renderProfile(); toast('ลบรูปทั้งหมดแล้ว'); return;
+    const u = currentUser(); delete u.photos; delete u.photoConsent; delete u.photoLog; delete u.photoAt; delete u.photoFrom; saveUser(u); renderProfile(); toast('ลบรูปทั้งหมดแล้ว'); return;
   }
   if (t.closest('[data-spin]')) return startWelcomeGift();
   if (t.closest('[data-claim]')) return claimPending();

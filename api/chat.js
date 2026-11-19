@@ -44,6 +44,7 @@ function profileText(p = {}) {
     p.relation && `สถานะความรัก: ${p.relation}`,
     p.interests?.length && `เรื่องที่สนใจ: ${p.interests.join(', ')}`,
     p.today && `วันที่วันนี้: ${p.today}`,
+    typeof p.file === 'string' && p.file.trim() && `แฟ้มดวง (ข้อมูลที่เคยให้ไว้กับการดูดวงครั้งก่อน ๆ):\n${p.file.slice(0, 1500)}`,
   ].filter(Boolean);
   return lines.length ? lines.join('\n') : 'ผู้ถามยังไม่ได้กรอกข้อมูลเกิด';
 }

@@ -29,15 +29,16 @@
     <div class="page-head">
       <p class="eyebrow">✦ WORLD DIVINATION ✦</p>
       <h1 class="page-title">ศาสตร์ดูดวงทั่วโลก</h1>
-      <p class="subtitle">เลือกดูตามประเทศ หรือตามวิธีดู แล้วกดอ่านรายละเอียดแต่ละศาสตร์</p>
+      <p class="subtitle">เลือกดูตามประเทศ หรือตามประเภท แล้วกดอ่านรายละเอียด</p>
     </div>
 
     <!-- เลือกวิธีกรอง -->
     <div class="world-mode" role="tablist" aria-label="เลือกวิธีดู">
       <button role="tab" class="wm" data-mode="region" aria-selected="true">🌏 ตามประเทศ / ภูมิภาค</button>
-      <button role="tab" class="wm" data-mode="method" aria-selected="false">🔮 ตามวิธีดู</button>
+      <button role="tab" class="wm" data-mode="method" aria-selected="false">🗂️ ตามประเภท</button>
     </div>
     <div class="chips" id="worldChips" role="tablist"></div>
+    <section class="world-countries" id="worldCountries" hidden></section>
     <p class="world-filter-note" id="worldNote"></p>
 
     <section class="world-cats" id="worldCats" hidden></section>

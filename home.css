@@ -352,10 +352,10 @@ body.ready .phone-slot { opacity: 1; transform: none; }
 }
 
 /* ============ ก่อน/หลังเข้าสู่ระบบ ============ */
-body:not(.logged-in) .member-only { display: none !important; }
-body.logged-in .guest-only { display: none !important; }
-body:not(.logged-in) .app { padding-bottom: 30px; display: flex; flex-direction: column; }
-body:not(.logged-in) .app-cta { margin-top: auto; padding-top: 16px; }
+body:not(.app-ui) .member-only { display: none !important; }
+body.app-ui .guest-only { display: none !important; }
+body:not(.app-ui) .app { padding-bottom: 30px; display: flex; flex-direction: column; }
+body:not(.app-ui) .app-cta { margin-top: auto; padding-top: 16px; }
 .hello { margin: 18px 2px 0; font-size: 1.05rem; color: var(--gold-2); }
 .hello small { display: block; font-size: .85rem; color: var(--muted); font-weight: 300; }
 
@@ -369,22 +369,22 @@ body:not(.logged-in) .app-cta { margin-top: auto; padding-top: 16px; }
 .ap-name { font-size: .9rem; color: var(--gold-2); padding: 2px 6px 8px; border-bottom: 1px solid rgba(227, 179, 255, .2); margin-bottom: 6px; }
 .ap-item { width: 100%; text-align: left; padding: 8px 6px; border-radius: 10px; color: var(--text); font-size: .92rem; }
 .ap-item:hover { background: rgba(255, 255, 255, .08); }
-body.logged-in .avatar { background: linear-gradient(135deg, var(--gold-2), var(--gold)); color: #2a1503; font-weight: 600; border-color: transparent; }
+body.app-ui .avatar { background: linear-gradient(135deg, var(--gold-2), var(--gold)); color: #2a1503; font-weight: 600; border-color: transparent; }
 @media all {
-  body:not(.logged-in) .app { padding-bottom: calc(env(safe-area-inset-bottom) + 24px); }
+  body:not(.app-ui) .app { padding-bottom: calc(env(safe-area-inset-bottom) + 24px); }
 }
 
 /* ============ หลังเข้าสู่ระบบ: แม่หมอครึ่งบน บริการครึ่งล่าง ============ */
-body.logged-in .seer-scene {
+body.app-ui .seer-scene {
   zoom: .5;                        /* ย่อฉากแม่หมอให้เหลือราวหนึ่งในสามของจอ */
   margin: 0 calc(-18px / .5); padding: 0 calc(18px / .5);
 }
-body.logged-in .app-title, body.logged-in .bolts { display: none; }
-body.logged-in .seer { margin-top: 24px; }
-body.logged-in .hello { margin-top: 10px; }
-body.logged-in .app-section { margin-top: 16px; }
+body.app-ui .app-title, body.app-ui .bolts { display: none; }
+body.app-ui .seer { margin-top: 24px; }
+body.app-ui .hello { margin-top: 10px; }
+body.app-ui .app-section { margin-top: 16px; }
 @media all {
-  body.logged-in .seer-scene { margin: 0 calc(-16px / .5); padding: 0 calc(16px / .5); }
+  body.app-ui .seer-scene { margin: 0 calc(-16px / .5); padding: 0 calc(16px / .5); }
 }
 
 /* ============ หมวดหมู่ (6 หมวด) ============ */
@@ -458,14 +458,14 @@ body.logged-in .app-section { margin-top: 16px; }
 .frame-panel { z-index: 21; padding: 0; display: flex; flex-direction: column; overflow: hidden; background: #0d0724; }
 .frame-panel .panel-bar { position: relative; top: 0; margin: 0; padding: 50px 12px 8px; flex: none; }
 .frame-panel iframe { flex: 1; width: 100%; border: 0; display: block; background: #0d0724; }
-body:not(.logged-in) .panel { bottom: 0; }
+body:not(.app-ui) .panel { bottom: 0; }
 @media all {
   .frame-panel .panel-bar { padding-top: calc(env(safe-area-inset-top) + 10px); margin: 0; top: 0; }
-  body:not(.logged-in) .panel { bottom: 0; }
+  body:not(.app-ui) .panel { bottom: 0; }
 }
 /* หลังเข้าสู่ระบบ: ตัดชายผ้าปูโต๊ะให้สั้นลง เหลือแค่ไพ่กับชื่อใต้ไพ่ */
-body.logged-in .table { height: 168px; overflow: hidden; }
-body.logged-in .table-svg { height: 214px; bottom: auto; }
+body.app-ui .table { height: 168px; overflow: hidden; }
+body.app-ui .table-svg { height: 214px; bottom: auto; }
 
 /* ============ วงล้อของขวัญต้อนรับ ============ */
 .gift {
@@ -868,7 +868,7 @@ body.logged-in .table-svg { height: 214px; bottom: auto; }
 @media (min-width: 700px) {
   :root { --gut: max(28px, calc((100vw - 1120px) / 2)); --pgut: max(28px, calc((100vw - 820px) / 2)); }
   .app { padding: 0 var(--gut) 120px; }
-  body:not(.logged-in) .app { padding-bottom: 40px; }
+  body:not(.app-ui) .app { padding-bottom: 40px; }
   .app-bar { position: sticky; top: 0; z-index: 16; height: 68px; margin: 0 calc(-1 * var(--gut)); padding: 0 var(--gut);
     background: rgba(13, 7, 36, .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(227, 179, 255, .14); }
   .app-logo { font-size: 1.7rem; }
@@ -876,7 +876,7 @@ body.logged-in .table-svg { height: 214px; bottom: auto; }
 
   /* ฉากหมอดูอยู่กลางจอ */
   .seer-scene { max-width: 480px; margin: 12px auto 0; }
-  body.logged-in .seer-scene { zoom: .6; max-width: 800px; margin: 0 auto; padding: 0; }
+  body.app-ui .seer-scene { zoom: .6; max-width: 800px; margin: 0 auto; padding: 0; }
   .app-cta { width: min(420px, 100%); margin-inline: auto; }
   .hello { text-align: center; font-size: 1.2rem; }
 
@@ -967,23 +967,23 @@ body.logged-in .table-svg { height: 214px; bottom: auto; }
 }
 
 /* ============ หลังเข้าสู่ระบบ: ฉากแม่หมอใหญ่ขึ้น (hero) ============ */
-body.logged-in .seer-scene { zoom: .66; margin: 0 calc(-16px / .66); padding: 0 calc(16px / .66); }
-body.logged-in .hello { font-size: 1.15rem; text-align: center; }
-body.logged-in .hello small { font-size: .85rem; }
+body.app-ui .seer-scene { zoom: .66; margin: 0 calc(-16px / .66); padding: 0 calc(16px / .66); }
+body.app-ui .hello { font-size: 1.15rem; text-align: center; }
+body.app-ui .hello small { font-size: .85rem; }
 @media (min-width: 700px) {
   /* แถบเรืองแสงเต็มความกว้างจอด้านหลังฉาก */
-  body.logged-in .seer-scene { zoom: 1; max-width: 560px; margin: 0 auto; padding: 6px 18px 0; }
-  body.logged-in .seer-scene::before { content: ""; position: absolute; z-index: -2; top: -68px; bottom: -40px; left: calc(50% - 50vw); right: calc(50% - 50vw);
+  body.app-ui .seer-scene { zoom: 1; max-width: 560px; margin: 0 auto; padding: 6px 18px 0; }
+  body.app-ui .seer-scene::before { content: ""; position: absolute; z-index: -2; top: -68px; bottom: -40px; left: calc(50% - 50vw); right: calc(50% - 50vw);
     background:
       radial-gradient(40% 55% at 50% 45%, rgba(177, 76, 255, .45), transparent 70%),
       radial-gradient(25% 35% at 20% 80%, rgba(255, 122, 217, .18), transparent 70%),
       radial-gradient(25% 35% at 80% 80%, rgba(122, 216, 255, .16), transparent 70%);
     pointer-events: none; }
-  body.logged-in .app-title, body.logged-in .bolts { display: block; }
-  body.logged-in .seer { margin-top: -10px; }
-  body.logged-in .table { height: 186px; }
-  body.logged-in .hello { margin-top: 14px; font-size: 1.5rem; }
-  body.logged-in .hello small { font-size: .95rem; margin-top: 2px; }
+  body.app-ui .app-title, body.app-ui .bolts { display: block; }
+  body.app-ui .seer { margin-top: -10px; }
+  body.app-ui .table { height: 186px; }
+  body.app-ui .hello { margin-top: 14px; font-size: 1.5rem; }
+  body.app-ui .hello small { font-size: .95rem; margin-top: 2px; }
 }
 
 /* แถบบน: แสดงเฉพาะโลโก้ (บัญชีอยู่ที่เมนูล่าง) */
@@ -1047,12 +1047,12 @@ body.logged-in .hello small { font-size: .85rem; }
 /* ============ หน้าแรกพอดี 1 หน้าจอ: ขนาดฉากคำนวณจาก JS (--sz) ============ */
 .app.fit { overflow: hidden; }
 .app-foot { display: none; }
-.seer-scene, body.logged-in .seer-scene { zoom: var(--sz, 1); margin-inline: calc(-16px / var(--sz, 1)); padding-inline: calc(16px / var(--sz, 1)); }
+.seer-scene, body.app-ui .seer-scene { zoom: var(--sz, 1); margin-inline: calc(-16px / var(--sz, 1)); padding-inline: calc(16px / var(--sz, 1)); }
 @media (min-width: 700px) {
-  .seer-scene, body.logged-in .seer-scene { margin-inline: auto; padding-inline: 18px; }
+  .seer-scene, body.app-ui .seer-scene { margin-inline: auto; padding-inline: 18px; }
 }
-body.logged-in .hello { margin-top: 8px; }
-body.logged-in .pick-grid { margin-top: 12px; }
+body.app-ui .hello { margin-top: 8px; }
+body.app-ui .pick-grid { margin-top: 12px; }
 @media (max-width: 699px) {
   /* มือถือ: ปุ่มเลือกดูดวงแบบกะทัดรัด ให้ฉากได้พื้นที่มากขึ้น */
   .pick { flex-direction: row; align-items: center; gap: 10px; padding: 12px; }
@@ -1061,11 +1061,11 @@ body.logged-in .pick-grid { margin-top: 12px; }
   .pick-txt small { font-size: .66rem; }
 }
 @media (min-width: 700px) {
-  body.logged-in .pick { padding: 12px 20px; }
-  body.logged-in .pick-ico { width: 48px; height: 48px; font-size: 1.7rem; }
-  body.logged-in .hello { margin-top: 4px; font-size: 1.3rem; }
-  body.logged-in .hello small { font-size: .88rem; }
-  body.logged-in .pick-grid { margin-top: 10px; }
+  body.app-ui .pick { padding: 12px 20px; }
+  body.app-ui .pick-ico { width: 48px; height: 48px; font-size: 1.7rem; }
+  body.app-ui .hello { margin-top: 4px; font-size: 1.3rem; }
+  body.app-ui .hello small { font-size: .88rem; }
+  body.app-ui .pick-grid { margin-top: 10px; }
   .app-bar { height: 56px; }
 }
 @media (max-width: 699px) {
@@ -1080,7 +1080,7 @@ body.logged-in .pick-grid { margin-top: 12px; }
 /* ฉากถูกย่อด้วย zoom (--sz) → ขยายโถงกว้างและแสงพื้นหลังกลับให้เต็มความกว้างจอจริง */
 @media (min-width: 700px) {
   .hall-wide { width: calc(100vw / var(--sz, 1)); left: calc(50% - 50vw / var(--sz, 1)); }
-  body.logged-in .seer-scene::before { left: calc(50% - 50vw / var(--sz, 1)); right: calc(50% - 50vw / var(--sz, 1)); }
+  body.app-ui .seer-scene::before { left: calc(50% - 50vw / var(--sz, 1)); right: calc(50% - 50vw / var(--sz, 1)); }
 }
 @media (min-width: 700px) {
   .hw-flame:not([opacity]) { animation: lampGlow2 2.4s ease-in-out infinite; }   /* เปลวเทียนกะพริบ (ไม่แตะแสงเรืองที่ตั้ง opacity ไว้) */
@@ -1098,8 +1098,8 @@ body.logged-in .pick-grid { margin-top: 12px; }
 
 /* ============ โลโก้หลัก “หมอดู” (แทนแถบโลโก้ด้านบน) ============ */
 .app-bar { display: none !important; }
-.app-title, body.logged-in .app-title { display: block; position: relative; z-index: 4; margin: 6px 0 0; line-height: 1.5; }
-body.logged-in .bolts { display: block; }
+.app-title, body.app-ui .app-title { display: block; position: relative; z-index: 4; margin: 6px 0 0; line-height: 1.5; }
+body.app-ui .bolts { display: block; }
 /* วงเวทหมุนช้า ๆ และแสงเรืองด้านหลังโลโก้ */
 .app-title::before { content: ""; position: absolute; left: 50%; top: 46%; width: 250px; height: 250px; margin: -125px; z-index: -1; border-radius: 50%;
   border: 1.5px dashed rgba(245, 201, 107, .45); box-shadow: inset 0 0 0 10px rgba(245, 201, 107, .05), 0 0 0 14px rgba(227, 179, 255, .06);
@@ -1125,7 +1125,7 @@ body.logged-in .bolts { display: block; }
 .app-title .fl { position: relative; width: 46px; height: 1.5px; background: linear-gradient(90deg, transparent, #f5c96b); }
 .app-title .fl.r { transform: scaleX(-1); }
 .app-title .fl::after { content: ""; position: absolute; right: -4px; top: -3.5px; width: 8px; height: 8px; transform: rotate(45deg); background: #ffe7a8; box-shadow: 0 0 8px #f5c96b; }
-.app-title, body.logged-in .app-title { margin-top: 30px; }
+.app-title, body.app-ui .app-title { margin-top: 30px; }
 .app-title span { font-size: 5.2rem; }
 .logo-crown { width: 104px; height: 48px; margin-bottom: -22px; }
 .bolts { top: 20px; }
@@ -1156,7 +1156,7 @@ body.logged-in .bolts { display: block; }
   background: linear-gradient(160deg, #5a5368, #2a2433); box-shadow: 0 2px 3px rgba(0, 0, 0, .5); }
 .runes i:nth-child(2) { transform: translateY(4px) rotate(-12deg); } .runes i:nth-child(3) { transform: translateY(-2px) rotate(8deg); }
 /* ตัดเฉพาะชายผ้าด้านล่าง ไม่ตัดของที่วางบนโต๊ะ */
-body.logged-in .table { overflow: visible; clip-path: inset(-140px -60px 0 -60px); }
+body.app-ui .table { overflow: visible; clip-path: inset(-140px -60px 0 -60px); }
 .orb-set { filter: drop-shadow(0 0 10px rgba(167, 123, 255, .8)); }
 .orb-halo { opacity: .95; }
 /* แม่หมอการ์ตูน: กะพริบตา */
@@ -1179,10 +1179,10 @@ body.logged-in .table { overflow: visible; clip-path: inset(-140px -60px 0 -60px
 
 /* ============ รอยต่อฉาก ↔ คำทักทาย: ค่อย ๆ จาง ไม่ตัดเป็นขอบแข็ง ============ */
 /* ชายผ้าปูโต๊ะจางลงด้านล่าง (แทนการตัดตรง) */
-body.logged-in .table, .table { -webkit-mask: none; mask: none; }
+body.app-ui .table, .table { -webkit-mask: none; mask: none; }
 .table .table-svg { -webkit-mask: linear-gradient(180deg, #000 0, #000 55%, transparent 92%); mask: linear-gradient(180deg, #000 0, #000 55%, transparent 92%); }
-body.logged-in .table .table-svg { height: 200px; }
-body.logged-in .table { clip-path: none; height: 200px; }
+body.app-ui .table .table-svg { height: 200px; }
+body.app-ui .table { clip-path: none; height: 200px; }
 /* โถง ประตูโค้ง และเสา จางทั้งด้านบนและด้านล่าง */
 @media (min-width: 700px) {
   .hall-wide { -webkit-mask: linear-gradient(180deg, transparent 0, #000 12%, #000 68%, transparent 100%); mask: linear-gradient(180deg, transparent 0, #000 12%, #000 68%, transparent 100%); }
@@ -1198,20 +1198,20 @@ body.logged-in .table { clip-path: none; height: 200px; }
 .runes { right: 24%; top: 4px; }
 
 /* ============ คำทักทาย: เด่นขึ้น ============ */
-body.logged-in .hello { text-align: center; margin-top: 6px; line-height: 1.5; }
+body.app-ui .hello { text-align: center; margin-top: 6px; line-height: 1.5; }
 .hello-line { display: inline-flex; align-items: center; gap: .35em; font-size: 1.45rem; }
 .hello-hi { color: #f3dcff; font-weight: 300; }
 .hello-name { font-weight: 600; font-size: 1.12em; padding: .1em .05em;
   background: linear-gradient(180deg, #fffaf0 0%, #ffe7a8 35%, #f5c96b 65%, #d9a24a 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
   filter: drop-shadow(0 0 8px rgba(245, 201, 107, .55)) drop-shadow(0 0 22px rgba(177, 76, 255, .55)); }
 .hello-spark { font-style: normal; color: #ffe7a8; text-shadow: 0 0 10px #f5c96b, 0 0 20px #b14cff; animation: twinkle 2.4s ease-in-out infinite; }
-body.logged-in .hello small { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 2px; font-size: .9rem; color: #d9c4ff; font-weight: 300; }
+body.app-ui .hello small { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 2px; font-size: .9rem; color: #d9c4ff; font-weight: 300; }
 .hello small .fl { flex: none; position: relative; width: 34px; height: 1.5px; background: linear-gradient(90deg, transparent, #f5c96b); }
 .hello small .fl.r { transform: scaleX(-1); }
 .hello small .fl::after { content: ""; position: absolute; right: -3px; top: -2.5px; width: 6px; height: 6px; transform: rotate(45deg); background: #ffe7a8; box-shadow: 0 0 6px #f5c96b; }
 @media (min-width: 700px) {
   .hello-line { font-size: 1.85rem; }
-  body.logged-in .hello small { font-size: 1rem; }
+  body.app-ui .hello small { font-size: 1rem; }
   .hello small .fl { width: 60px; }
 }
 @media (max-width: 380px) { .hello small .fl { display: none; } .hello-line { font-size: 1.3rem; } }
@@ -1321,4 +1321,29 @@ body.logged-in .hello small { display: flex; align-items: center; justify-conten
 /* ภาพแม่หมอไม่ทับ “MOHDOO · TALE” */
 .app-title { margin-bottom: 14px; }
 .seer-img { top: -26px; }
-@media (max-width: 520px) { .hello small .fl { display: none; } body.logged-in .hello small { font-size: .82rem; } }
+@media (max-width: 520px) { .hello small .fl { display: none; } body.app-ui .hello small { font-size: .82rem; } }
+
+/* ===== แฟ้มดวง (fortune-file.js) ===== */
+.ff-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.ff-row { display: flex; gap: 10px; padding: 10px; border-radius: 14px; background: rgba(0, 0, 0, .25); border: 1px solid rgba(227, 179, 255, .14); }
+.ff-ico { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 1.05rem; background: radial-gradient(circle at 35% 30%, #fff3, #4a2486); }
+.ff-txt { flex: 1; min-width: 0; }
+.ff-txt b { display: block; font-size: .86rem; font-weight: 500; color: var(--gold-2); }
+.ff-txt p { margin: 2px 0 0; font-size: .78rem; color: var(--text); line-height: 1.5; overflow-wrap: anywhere; }
+.ff-txt small { display: block; margin-top: 4px; font-size: .68rem; color: var(--lilac); }
+.ff-photos { display: flex; gap: 6px; margin-top: 6px; overflow-x: auto; }
+.ff-photos figure { margin: 0; flex: none; width: 64px; }
+.ff-photos img { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(227, 179, 255, .3); display: block; }
+.ff-photos figure:first-child img { border-color: var(--gold); }
+.ff-photos figcaption { font-size: .58rem; color: var(--muted); text-align: center; margin-top: 2px; }
+.daily-file { margin-top: 12px; padding: 12px; border-radius: 14px; background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .18); }
+.daily-file > b { font-size: .82rem; color: var(--gold-2); font-weight: 500; }
+.daily-file ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+.daily-file li { display: flex; gap: 8px; align-items: flex-start; }
+.daily-file li > span { flex: none; font-size: 1rem; }
+.daily-file small { font-size: .68rem; color: var(--lilac); }
+.daily-file p { margin: 1px 0 0; font-size: .76rem; line-height: 1.5; color: var(--text); }
+.daily-used { margin-top: 8px; font-size: .66rem; color: var(--muted); text-align: center; }
+.in-old { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+.in-old img { width: 48px; height: 48px; object-fit: cover; border-radius: 10px; border: 1px solid var(--gold); }
+.in-old em { font-style: normal; font-size: .72rem; color: var(--lilac); }

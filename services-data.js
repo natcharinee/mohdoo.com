@@ -124,9 +124,9 @@ const SERVICES = [
     prices: [{ label: '1 หัวข้อ', price: SERVICE_PRICE }],
   },
   {
-    id: 'fengshui', icon: '🏯', name: 'ดูฮวงจุ้ย', open: false, phase: 3,
-    about: 'ส่งภาพ ผัง และทิศทางของพื้นที่ เช่น ห้องทำงาน ร้านค้า หรือบ้าน',
-    get: 'วิเคราะห์ 1 จุดพร้อมคำแนะนำ',
+    id: 'fengshui', icon: '🏡', name: 'ฮวงจุ้ยบ้าน 1 จุด', open: false, phase: 3,
+    about: 'ส่งรูปและทิศของจุดในบ้านที่ต้องการดู เช่น ประตู ห้องนอน หรือมุมทำงาน',
+    get: 'คำอ่านและคำแนะนำ 1 จุด',
     prices: [{ label: '1 จุด', price: SERVICE_PRICE }],
     note: 'หมอดูแต่ละท่านจะแจ้งหลักที่ใช้และขอบเขตคำแนะนำไว้ก่อนจอง',
   },
@@ -135,7 +135,7 @@ const SERVICES = [
 const SCIENCES = [
   { id: 'tarot', icon: '🃏', name: 'ไพ่ทาโรต์ / ไพ่ยิปซี',
     how: 'อ่านสัญลักษณ์และตำแหน่งของไพ่ตามคำถาม',
-    uses: 'ถาม 1 เรื่อง · เปิดไพ่รายวัน · นัดคุย', services: ['daily-free', 'love-free', 'fortune'] },
+    uses: 'ถาม 1 เรื่อง · เปิดไพ่รายวัน · นัดคุย', services: ['tarot-ask', 'daily-free', 'love-free', 'fortune'] },
   { id: 'oracle', icon: '🌙', name: 'ไพ่ออราเคิล / ไพ่พรหมญาณ',
     how: 'ใช้ความหมายตามชุดไพ่หรือแนวทางของผู้พยากรณ์',
     uses: 'ถาม 1 เรื่อง · อ่านภาพรวม', services: ['fortune'] },
@@ -144,7 +144,7 @@ const SCIENCES = [
     uses: 'ถาม 1 เรื่อง · อ่านภาพรวม', services: ['fortune'] },
   { id: 'thai-astro', icon: '🪷', name: 'โหราศาสตร์ไทย',
     how: 'ใช้ข้อมูลเกิดผูกดวงและอ่านตำแหน่งดาว ลัคนา หรือดาวจรตามสำนัก',
-    uses: 'ดูพื้นดวง · ดูช่วงชีวิต · หาฤกษ์', services: ['fortune', 'auspicious'] },
+    uses: 'ดูพื้นดวง · ดูช่วงชีวิต · หาฤกษ์', services: ['thai-30', 'couple', 'fortune', 'auspicious'] },
   { id: 'seven-nine', icon: '📿', name: 'เลข 7 ตัว 9 ฐาน',
     how: 'นำข้อมูลเกิดมาจัดตารางฐานและอ่านตามหลักที่ผู้ให้บริการใช้',
     uses: 'ดูพื้นดวง · ดูช่วงวัย', services: ['fortune'] },
@@ -168,8 +168,75 @@ const SCIENCES = [
     uses: 'วิเคราะห์จากรูป (แยกเป็นสองบริการ)', services: ['palm', 'face'] },
   { id: 'fengshui', icon: '🧭', name: 'ฮวงจุ้ย / วาสตุ',
     how: 'พิจารณาทิศและการจัดพื้นที่ตามประเพณีจีนและอินเดียตามลำดับ',
-    uses: 'วิเคราะห์บ้าน ห้อง ร้าน หรือสำนักงาน', services: ['fengshui'] },
+    uses: 'วิเคราะห์บ้าน ห้อง ร้าน หรือสำนักงาน', services: ['fengshui', 'fs-condo', 'fs-house', 'fs-shop', 'fs-office', 'fs-land', 'fs-placement', 'fs-onsite'] },
   { id: 'psychic', icon: '👁', name: 'จิตสัมผัส',
     how: 'ผู้ให้บริการอธิบายแนวทางการตีความตามความเชื่อของตน',
     uses: 'ปรึกษาเฉพาะหัวข้อ', services: ['fortune'], soon: true },
 ];
+
+// =====================================================================
+// แพ็กเกจเพิ่มตามข้อกำหนดเมนู (Mohdoo-Navigation-Claude-Spec) · ราคาใช้ SERVICE_PRICE เดียวกันทุกแพ็กเกจ
+// open:false = ยังไม่เปิดจอง (draft) → แสดง “เร็ว ๆ นี้” และใช้หน้ารู้จักศาสตร์เป็นทางเข้า
+// =====================================================================
+SERVICES.push(
+  { id: 'tarot-ask', icon: '🃏', name: 'ถามไพ่ 1 เรื่อง', open: true, phase: 1,
+    about: 'ถามคำถาม 1 เรื่อง หมอดูเปิดไพ่ตามสำรับที่ระบุ แล้วตอบเป็นข้อความ', get: 'คำตอบแบบข้อความตามขอบเขตที่แจ้ง',
+    prices: [{ label: '1 เรื่อง', price: SERVICE_PRICE }] },
+  { id: 'thai-30', icon: '🪷', name: 'อ่านดวงไทย 30 นาที', open: false, phase: 2,
+    about: 'นัดปรึกษาส่วนตัวกับหมอดูโหราศาสตร์ไทย ใช้วัน เวลา และสถานที่เกิด', get: 'นัดปรึกษาส่วนตัว 30 นาที',
+    prices: [{ label: '30 นาที', price: SERVICE_PRICE }], duration: '30 นาที' },
+  { id: 'chart-30', icon: '🪐', name: 'อ่านผังดวงจีนหรือตะวันตก 30 นาที', open: false, phase: 2,
+    about: 'นัดอ่านผังดวงปาจื้อ จื่อเวย หรือโหราศาสตร์ตะวันตกกับผู้เชี่ยวชาญ', get: 'นัดอ่านผังดวง 30 นาที',
+    prices: [{ label: '30 นาที', price: SERVICE_PRICE }], duration: '30 นาที' },
+  { id: 'couple', icon: '💞', name: 'เทียบดวงคู่', open: true, phase: 1,
+    about: 'อ่านผังดวงสองคนตามศาสตร์ที่เลือก ดูความเข้ากันและสิ่งที่ควรระวัง', get: 'ผลเทียบดวงสองคนแบบข้อความ',
+    prices: [{ label: '1 คู่', price: SERVICE_PRICE }] },
+  { id: 'name-check', icon: '🔍', name: 'วิเคราะห์ชื่อเดิม', open: true, phase: 1,
+    about: 'ดูว่าชื่อและนามสกุลปัจจุบันเสริมหรือขัดกับวันเกิดอย่างไร', get: 'ผลวิเคราะห์ชื่อพร้อมคำแนะนำ',
+    prices: [{ label: '1 ชื่อ', price: SERVICE_PRICE }] },
+  { id: 'phone-compare', icon: '📱', name: 'เทียบเบอร์โทรศัพท์', open: true, phase: 1,
+    about: 'เทียบเบอร์ที่กำลังเลือก ไม่เกิน 3 ตัวเลือก', get: 'ผลเทียบพร้อมเบอร์ที่แนะนำ',
+    prices: [{ label: 'ไม่เกิน 3 เบอร์', price: SERVICE_PRICE }] },
+  { id: 'plate-compare', icon: '🚗', name: 'เทียบป้ายทะเบียนรถ', open: true, phase: 1,
+    about: 'เทียบทะเบียนที่กำลังเลือก ไม่เกิน 3 ชุด', get: 'ผลเทียบพร้อมชุดที่แนะนำ',
+    prices: [{ label: 'ไม่เกิน 3 ชุด', price: SERVICE_PRICE }] },
+  { id: 'fs-condo', icon: '🏢', name: 'ฮวงจุ้ยคอนโด 1 ห้อง', open: false, phase: 3,
+    about: 'ส่งผัง รูป และทิศของห้อง', get: 'สรุปพร้อมทำเครื่องหมายบนผัง', prices: [{ label: '1 ห้อง', price: SERVICE_PRICE }] },
+  { id: 'fs-house', icon: '🏠', name: 'ฮวงจุ้ยบ้านทั้งหลัง (ออนไลน์)', open: false, phase: 3,
+    about: 'ส่งผังแต่ละชั้น รูปมุมหลัก และทิศ', get: 'สรุปพร้อมผังและคุยออนไลน์ 30 นาที', prices: [{ label: 'ทั้งหลัง', price: SERVICE_PRICE }], duration: '30 นาที' },
+  { id: 'fs-shop', icon: '🏪', name: 'ฮวงจุ้ยร้านค้า', open: false, phase: 3,
+    about: 'ส่งผัง ทางเข้า เคาน์เตอร์ และพื้นที่รับลูกค้า', get: 'คำแนะนำการจัดวางตามขอบเขต', prices: [{ label: '1 ร้าน', price: SERVICE_PRICE }] },
+  { id: 'fs-office', icon: '🏬', name: 'ฮวงจุ้ยสำนักงาน', open: false, phase: 3,
+    about: 'ส่งผังและรูป 1 พื้นที่ทำงาน', get: 'คำอ่านพร้อมผังประกอบ', prices: [{ label: '1 พื้นที่', price: SERVICE_PRICE }] },
+  { id: 'fs-land', icon: '🌾', name: 'ฮวงจุ้ยที่ดินหรือทำเล', open: false, phase: 3,
+    about: 'ส่งผัง ทิศ ทางเข้า และรูปโดยรอบ', get: 'สรุปทำเล 1 แปลงตามศาสตร์', prices: [{ label: '1 แปลง', price: SERVICE_PRICE }] },
+  { id: 'fs-placement', icon: '🐉', name: 'จุดวางของหรือสัตว์มงคล', open: false, phase: 3,
+    about: 'ส่งรูปพื้นที่ ทิศ และของที่มี', get: 'คำแนะนำการวาง 1 จุด', prices: [{ label: '1 จุด', price: SERVICE_PRICE }] },
+  { id: 'fs-onsite', icon: '🚐', name: 'ฮวงจุ้ยลงพื้นที่', open: false, phase: 3,
+    about: 'แจ้งประเภทสถานที่ ขนาด และจังหวัด', get: 'ใบเสนอราคาก่อนยืนยัน', prices: [{ label: 'ตามขอบเขตและค่าเดินทาง', price: null }] },
+);
+
+// เรื่องที่รับปรึกษา (ใช้กับตัวกรอง) และเวลาส่งงาน (null = รอระบุ)
+const TOPICS = [
+  { id: 'love', icon: '💞', name: 'ความรัก' }, { id: 'work', icon: '💼', name: 'การงาน' },
+  { id: 'money', icon: '💰', name: 'การเงิน' }, { id: 'family', icon: '👨‍👩‍👧', name: 'ครอบครัว' },
+  { id: 'life', icon: '✨', name: 'ภาพรวมชีวิต' },
+];
+const ALL_TOPICS = TOPICS.map((t) => t.id);
+const PKG_META = {
+  'love-free': { topics: ['love'], delivery: 'ทันที' }, 'daily-free': { topics: ['life'], delivery: 'ทันที' },
+  'siamsi': { topics: ['life'], delivery: 'ทันที' }, 'fortune': { topics: ALL_TOPICS }, 'tarot-ask': { topics: ALL_TOPICS },
+  'thai-30': { topics: ALL_TOPICS }, 'chart-30': { topics: ALL_TOPICS }, 'couple': { topics: ['love', 'family'] },
+  'babyname': { topics: ['family'] }, 'rename': { topics: ['life', 'work'] }, 'surname': { topics: ['family', 'life'] },
+  'name-check': { topics: ['life', 'work'] },
+  'phone': { topics: ['money', 'work', 'life'] }, 'phone-compare': { topics: ['money', 'work', 'life'] },
+  'plate': { topics: ['money', 'work', 'life'] }, 'plate-compare': { topics: ['money', 'work', 'life'] },
+  'idcard': { topics: ['money', 'work', 'life'] }, 'house': { topics: ['money', 'family', 'life'] },
+  'palm': { topics: ['life', 'work', 'love'] }, 'face': { topics: ['life', 'work', 'love'] },
+  'auspicious': { topics: ['love', 'work', 'family'] },
+};
+SERVICES.forEach((s) => {
+  const m = PKG_META[s.id] || {};
+  s.topics = m.topics || (s.id.startsWith('fs-') || s.id === 'fengshui' ? ['money', 'family', 'life'] : (s.group === 'merit' ? ['life', 'family'] : ALL_TOPICS));
+  s.delivery = m.delivery || null;
+});

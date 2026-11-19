@@ -172,7 +172,7 @@ circleBody.addEventListener('click', (e) => {
 });
 
 function openCircle() {
-  if (!currentUser()) { openSheet('register'); return; }
+  if (!currentUser()) { requireLogin(openCircle); return; }
   renderCircle();
   openPanel('circlePanel');
 }
