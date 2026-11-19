@@ -1,0 +1,7346 @@
+{
+ "(กลับหัว)": [
+  "(reversed)",
+  "（逆位）"
+ ],
+ "(ตัวอย่าง": [
+  "(demo",
+  "（演示"
+ ],
+ "(ถ้าทราบ)": [
+  "(if known)",
+  "（如知道）"
+ ],
+ "(ทดลอง)": [
+  "(test)",
+  "（测试）"
+ ],
+ "(ธาตุ": [
+  "(element",
+  "（元素"
+ ],
+ "(ผลรวม": [
+  "(sum",
+  "（总和"
+ ],
+ "(โหมดตัวอย่าง": [
+  "(sample mode",
+  "（示例模式"
+ ],
+ "(ไม่บังคับ)": [
+  "(optional)",
+  "（选填）"
+ ],
+ "1 ครั้ง": [
+  "1 session",
+  "1次"
+ ],
+ "1 คู่": [
+  "1 pair",
+  "1对"
+ ],
+ "1 จุด": [
+  "1 spot",
+  "1处"
+ ],
+ "1 ชิ้น": [
+  "1 piece",
+  "1件"
+ ],
+ "1 ชื่อ": [
+  "1 name",
+  "1个名字"
+ ],
+ "1 บัตร": [
+  "1 card",
+  "1张卡"
+ ],
+ "1 ป้าย": [
+  "1 sign",
+  "1块招牌"
+ ],
+ "1 พื้นที่": [
+  "1 area",
+  "1个区域"
+ ],
+ "1 ร้าน": [
+  "1 shop",
+  "1家店"
+ ],
+ "1 หัวข้อ": [
+  "1 topic",
+  "1个主题"
+ ],
+ "1 ห้อง": [
+  "1 room",
+  "1个房间"
+ ],
+ "1 เบอร์": [
+  "1 number",
+  "1个号码"
+ ],
+ "1 เรื่อง": [
+  "1 question",
+  "1个问题"
+ ],
+ "1 เรื่อง (ข้อความ)": [
+  "1 question (text)",
+  "1个问题（文字）"
+ ],
+ "1 เลขที่": [
+  "1 house number",
+  "1个门牌号"
+ ],
+ "1 แปลง": [
+  "1 plot",
+  "1块地"
+ ],
+ "3 ตัวเลือก": [
+  "3 options",
+  "3个选项"
+ ],
+ "30 นาที": [
+  "30 minutes",
+  "30分钟"
+ ],
+ "QR หมดอายุแล้ว กรุณาสร้างคำสั่งซื้อใหม่": [
+  "QR expired — please create a new order",
+  "二维码已过期，请重新下单"
+ ],
+ "QR หมดอายุใน": [
+  "QR expires in",
+  "二维码有效期剩余"
+ ],
+ "data.idnum).match(/ผลรวม": [
+  "data.idnum).match(/ผลรวม",
+  "data.idnum).match(/ผลรวม"
+ ],
+ "n(โหมดตัวอย่าง": [
+  "n(sample mode",
+  "n（示例模式"
+ ],
+ "nเพิ่มวันเกิดในหน้าบัญชี จะได้วิเคราะห์ได้แม่นขึ้นค่ะ": [
+  "nAdd your birthday on the account page for a more accurate reading.",
+  "n在账户页面添加生日，分析会更准确哦。"
+ ],
+ "xFE0E; ธาตุ": [
+  "xFE0E; Element",
+  "xFE0E; 元素"
+ ],
+ "xFE0E; โหราศาสตร์ · ราศี": [
+  "xFE0E; Astrology · Zodiac sign",
+  "xFE0E; 占星 · 星座"
+ ],
+ "กงล้อกำลังหมุนมาทางคุณ โอกาสและจุดเปลี่ยนที่ดีกำลังมาถึง": [
+  "The wheel is turning your way — good opportunities and turning points are coming",
+  "命运之轮正转向你，良机与好的转折即将到来"
+ ],
+ "กงล้อแห่งโชคชะตา": [
+  "Wheel of Fortune",
+  "命运之轮"
+ ],
+ "กดถทภฤุ่ำา": [
+  "กดถทภฤุ่ำา",
+  "กดถทภฤุ่ำา"
+ ],
+ "กดพูดถาม": [
+  "Tap to ask by voice",
+  "按住说话提问"
+ ],
+ "กรกฎ": [
+  "Cancer",
+  "巨蟹座"
+ ],
+ "กรงที่ขังคุณอยู่ส่วนใหญ่มาจากความคิดของตัวเอง": [
+  "The cage that holds you is mostly made by your own thoughts",
+  "困住你的牢笼，大多源自自己的想法"
+ ],
+ "กรอกข้อมูลสำหรับการทำนาย": [
+  "Enter details for your reading",
+  "填写占卜所需资料"
+ ],
+ "กรอกข้อมูลเพื่อใช้ทำนายดวงของคุณ": [
+  "Fill in your details to read your fortune",
+  "填写资料以算命"
+ ],
+ "กรองตามศาสตร์": [
+  "Filter by science",
+  "按学说筛选"
+ ],
+ "กระตือรือร้น กล้าลุย": [
+  "Enthusiastic and bold",
+  "热情积极，敢闯敢拼"
+ ],
+ "กรุณากรอกเบอร์มือถือ 10 หลัก": [
+  "Please enter a 10-digit mobile number",
+  "请输入10位手机号码"
+ ],
+ "กรุณาอนุญาตให้ใช้ไมโครโฟนในเบราว์เซอร์ก่อนนะคะ": [
+  "Please allow microphone access in your browser first.",
+  "请先在浏览器中允许使用麦克风。"
+ ],
+ "กลยุทธ์ · ความไม่ซื่อตรง · ทำคนเดียว": [
+  "Strategy · Dishonesty · Going it alone",
+  "策略 · 不诚实 · 单独行动"
+ ],
+ "กลับ": [
+  "Back",
+  "返回"
+ ],
+ "กลับมากด “ฉันชำระเงินแล้ว”": [
+  "Come back and tap “I've paid”",
+  "回来点击“我已付款”"
+ ],
+ "กลับมาพร้อมลุยต่อ หรือฝืนตัวเองจนหมดไฟ": [
+  "Back and ready to push on — or forcing yourself until you burn out",
+  "重整旗鼓继续前进，或勉强自己直到精疲力竭"
+ ],
+ "กลับหน้าแรก": [
+  "Back to home",
+  "返回首页"
+ ],
+ "กลัวการเปลี่ยนแปลงจนไม่กล้าออกจากที่เดิม": [
+  "Fear of change keeps you from leaving where you are",
+  "害怕改变，不敢离开原地"
+ ],
+ "กลาง": [
+  "Fair",
+  "中"
+ ],
+ "กลาง ๆ": [
+  "Neutral",
+  "一般"
+ ],
+ "กลุ่มนี้มี": [
+  "This group has",
+  "这个群组有"
+ ],
+ "กล้าตัดสินใจ": [
+  "Decisive",
+  "果断"
+ ],
+ "กล้าหาญ กระตือรือร้น ชอบเป็นผู้นำ": [
+  "Brave, enthusiastic, a natural leader",
+  "勇敢、热情、喜欢当领导者"
+ ],
+ "กันย์": [
+  "Virgo",
+  "处女座"
+ ],
+ "กับ ปี": [
+  "with year",
+  "与年份"
+ ],
+ "กับ ราศี": [
+  "with sign",
+  "与星座"
+ ],
+ "กับ วัน": [
+  "with day",
+  "与日子"
+ ],
+ "กับ เลข": [
+  "with number",
+  "与数字"
+ ],
+ "กับเลขประจำวัน": [
+  "with today's number",
+  "与今日数字"
+ ],
+ "กัมพูชา": [
+  "Cambodia",
+  "柬埔寨"
+ ],
+ "กัมพูชา (เขมร)": [
+  "Cambodia (Khmer)",
+  "柬埔寨（高棉）"
+ ],
+ "การขยาย · โอกาสไกลตัว · รอผล": [
+  "Expansion · Distant opportunities · Awaiting results",
+  "扩张 · 远方机遇 · 等待结果"
+ ],
+ "การงาน": [
+  "career",
+  "事业"
+ ],
+ "การจากไป · แสวงหาสิ่งที่ลึกซึ้งกว่า": [
+  "Leaving · Seeking something deeper",
+  "离开 · 追寻更深层的意义"
+ ],
+ "การตื่นรู้ · การให้อภัย · โอกาสครั้งใหม่": [
+  "Awakening · Forgiveness · A new chance",
+  "觉醒 · 宽恕 · 新的机会"
+ ],
+ "การทบทวน · ความสงบ · ปัญญา": [
+  "Reflection · Calm · Wisdom",
+  "反思 · 平静 · 智慧"
+ ],
+ "การพักผ่อน · ฟื้นฟู · สมาธิ": [
+  "Rest · Recovery · Meditation",
+  "休息 · 恢复 · 冥想"
+ ],
+ "การพังทลาย · การตื่นรู้ · เหตุไม่คาดฝัน": [
+  "Collapse · Awakening · The unexpected",
+  "崩塌 · 觉醒 · 意外之事"
+ ],
+ "การพิพากษา": [
+  "Judgement",
+  "审判"
+ ],
+ "การยืนหยัด · ปกป้องจุดยืน · ความกล้า": [
+  "Standing firm · Defending your ground · Courage",
+  "坚守 · 捍卫立场 · 勇气"
+ ],
+ "การรอคอย · มุมมองใหม่ · การปล่อยวาง": [
+  "Waiting · New perspective · Letting go",
+  "等待 · 新视角 · 放下"
+ ],
+ "การร่วมมือ · ทักษะ · ทีมเวิร์ก": [
+  "Collaboration · Skill · Teamwork",
+  "合作 · 技能 · 团队精神"
+ ],
+ "การร่วมมือจะทำให้สำเร็จมากกว่าทำคนเดียว": [
+  "Working together will achieve more than working alone",
+  "合作比单打独斗更能成功"
+ ],
+ "การวางแผน · มองไกล · ตัดสินใจ": [
+  "Planning · Foresight · Decision",
+  "规划 · 远见 · 决断"
+ ],
+ "การวิเคราะห์จากรูปด้วย AI จะเปิดในระยะถัดไป ตอนนี้เก็บรูปไว้ก่อน (ตัวอย่าง: เก็บในเบราว์เซอร์นี้)": [
+  "AI photo analysis will open in a later phase; for now your photos are stored (demo: kept in this browser)",
+  "AI照片分析将在后续开放，目前先保存照片（演示：保存在此浏览器中）"
+ ],
+ "การอ่านดวงตามแนวทางและความเชื่อของผู้ให้บริการแต่ละราย ระบบจะแสดงแนวทางและขอบเขตที่ผู้ให้บริการระบุก่อนเปิดแพ็กเกจ": [
+  "Readings follow each provider's own approach and beliefs. The approach and scope stated by the provider are shown before the package opens.",
+  "按各服务者自身的方法与信仰进行解读。开放套餐前，系统会显示服务者说明的方法与范围。"
+ ],
+ "การอ่านตัวเลขตามระบบที่ผู้ให้บริการระบุ": [
+  "Number reading according to the system the provider specifies",
+  "按服务者指定的体系解读数字"
+ ],
+ "การเก็บออม · ความมั่นคง · การยึดติด": [
+  "Saving · Security · Holding on",
+  "储蓄 · 稳定 · 执着"
+ ],
+ "การเก็บออมดี แต่อย่ายึดติดกับเงินหรือสิ่งของจนเกินไป": [
+  "Saving is good, but don't cling too tightly to money or possessions",
+  "储蓄很好，但别过于执着金钱或物质"
+ ],
+ "การเข้าสู่ระบบผ่านโซเชียลจะเปิดให้ใช้เร็ว ๆ นี้": [
+  "Social login coming soon",
+  "社交账号登录即将推出"
+ ],
+ "การเงิน": [
+  "money",
+  "财运"
+ ],
+ "การเงิน การงาน และความมั่นคง": [
+  "Money, work and stability",
+  "财运、工作与稳定"
+ ],
+ "การเงินพอดี ไม่ขาดไม่เกิน": [
+  "Money is just enough, neither short nor excess",
+  "财运平稳，不缺也不余"
+ ],
+ "การเงินเริ่มฟื้นตัว": [
+  "Finances begin to recover",
+  "财运开始回升"
+ ],
+ "การเงินในบ้านมั่นคง": [
+  "Household finances are stable",
+  "家中财务稳定"
+ ],
+ "การเฉลิมฉลอง · บ้าน · ความมั่นคง": [
+  "Celebration · Home · Stability",
+  "庆祝 · 家庭 · 稳定"
+ ],
+ "การเปลี่ยนผ่าน · ย้ายไปสู่สิ่งที่ดีกว่า": [
+  "Transition · Moving toward something better",
+  "过渡 · 迈向更好的地方"
+ ],
+ "การเปลี่ยนแปลง · การจบเพื่อเริ่ม · การเกิดใหม่": [
+  "Change · Endings that bring beginnings · Rebirth",
+  "转变 · 结束即开始 · 重生"
+ ],
+ "การเปลี่ยนแปลงกะทันหันอาจเขย่าชีวิต แต่จะเผยความจริงที่จำเป็นต้องรู้": [
+  "Sudden change may shake your life, but it will reveal truths you need to know",
+  "突如其来的变化可能动摇生活，却会揭示你必须知道的真相"
+ ],
+ "การเปิดใจทำให้ได้พบคนที่ใช่": [
+  "Opening your heart will lead you to the right person",
+  "敞开心扉，会遇到对的人"
+ ],
+ "การเริ่มต้นครั้งใหม่ที่เต็มไปด้วยความหวัง ลองก้าวออกจากพื้นที่ปลอดภัย จักรวาลกำลังเปิดทางให้คุณ": [
+  "A hopeful new beginning — step out of your comfort zone, the universe is opening the way for you",
+  "充满希望的新开始，勇敢走出舒适区，宇宙正为你开路"
+ ],
+ "การเริ่มต้นใหม่ · อิสระ · กล้าเสี่ยง": [
+  "New beginnings · Freedom · Daring",
+  "新的开始 · 自由 · 勇于冒险"
+ ],
+ "การเรียน": [
+  "studies",
+  "学业"
+ ],
+ "การแข่งขัน · ความเห็นต่าง · ความวุ่นวาย": [
+  "Competition · Disagreement · Chaos",
+  "竞争 · 意见分歧 · 混乱"
+ ],
+ "การแบ่งปันความรู้ทำให้ได้รับการยอมรับ": [
+  "Sharing knowledge earns you recognition",
+  "分享知识将赢得认可"
+ ],
+ "การแยกตัวมากเกินไปอาจทำให้เหงา ลองเปิดใจให้คนรอบข้างบ้าง": [
+  "Isolating yourself too much may bring loneliness — open up to those around you",
+  "过度孤立可能带来孤独，试着向身边人敞开心扉"
+ ],
+ "การให้ · ความเอื้อเฟื้อ · การแบ่งปัน": [
+  "Giving · Generosity · Sharing",
+  "给予 · 慷慨 · 分享"
+ ],
+ "การให้ที่มีเงื่อนไข หรือหนี้สินที่ต้องระวัง": [
+  "Giving with strings attached, or debts to watch out for",
+  "附带条件的给予，或需留意的债务"
+ ],
+ "การให้และรับที่สมดุล คุณอาจได้รับความช่วยเหลือหรือได้เป็นผู้ให้": [
+  "Balanced giving and receiving — you may receive help or be the one who gives",
+  "施与受保持平衡，你可能得到帮助或成为给予者"
+ ],
+ "กาลกิณี": [
+  "Kalakini (misfortune)",
+  "灾星"
+ ],
+ "กาลโยคพม่า": [
+  "Burmese Kalayoga",
+  "缅甸时运占卜"
+ ],
+ "กำลังตรวจสอบการชำระเงิน…": [
+  "Checking payment…",
+  "正在核实付款…"
+ ],
+ "กำลังฟัง… พูดคำถามได้เลย": [
+  "Listening… go ahead and ask",
+  "正在聆听…请说出你的问题"
+ ],
+ "กำลังฟื้นตัวจากความเจ็บปวด สิ่งที่แย่ที่สุดผ่านไปแล้ว": [
+  "Recovering from pain — the worst is over",
+  "正从伤痛中恢复，最糟糕的已经过去"
+ ],
+ "กำลังสับไพ่…": [
+  "Shuffling…",
+  "正在洗牌…"
+ ],
+ "กำลังเขย่า… ตั้งจิตให้มั่น": [
+  "Shaking… keep your mind focused",
+  "正在摇签…请诚心专注"
+ ],
+ "กำไลหินอเมทิสต์": [
+  "Amethyst bracelet",
+  "紫水晶手链"
+ ],
+ "กุน (หมู)": [
+  "Kun (Pig)",
+  "亥（猪）"
+ ],
+ "กุมภ์": [
+  "Aquarius",
+  "水瓶座"
+ ],
+ "ก้อนหินกลางทางเดิน มองให้เห็นก่อนก้าว": [
+  "A stone in the middle of the path—see it before you step",
+  "路中有石，先看清再迈步"
+ ],
+ "ขชงบปแเู้": [
+  "ขชงบปแเู้",
+  "ขชงบปแเู้"
+ ],
+ "ขยัน มั่นคง เชื่อถือได้ ทำอะไรเป็นขั้นเป็นตอน": [
+  "Diligent, steady, reliable, methodical",
+  "勤奋、稳重、可靠、做事有条不紊"
+ ],
+ "ขยันแล้วได้ผล งานค้างให้รีบเคลียร์": [
+  "Hard work pays off — clear any pending tasks",
+  "努力就有回报，积压的工作尽快处理"
+ ],
+ "ของขวัญต้อนรับสมาชิกใหม่": [
+  "Welcome gift for new members",
+  "新会员欢迎礼"
+ ],
+ "ของคุณ": [
+  "yours",
+  "你的"
+ ],
+ "ของคุณ: สี": [
+  "yours: colour",
+  "你的：颜色"
+ ],
+ "ขอรหัส OTP": [
+  "Request OTP",
+  "获取验证码"
+ ],
+ "ขอรหัส OTP ใหม่": [
+  "Request a new OTP",
+  "重新获取验证码"
+ ],
+ "ขอรหัสใหม่ได้ใน": [
+  "Request a new code in",
+  "重新获取验证码："
+ ],
+ "ขอเพิ่มเติม (ถ้ามี)": [
+  "Extra requests (if any)",
+  "其他要求（如有）"
+ ],
+ "ขอให้ช้าลงและฟังใจตัวเอง": [
+  "asking you to slow down and listen to your heart",
+  "提醒你放慢脚步，倾听内心"
+ ],
+ "ขับรถช้า ๆ เผื่อเวลาเดินทาง": [
+  "Drive slowly and allow extra travel time",
+  "慢慢开车，预留出行时间"
+ ],
+ "ขั้นตอน": [
+  "Step",
+  "步骤"
+ ],
+ "ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย": [
+  "Next: enter details for your reading",
+  "下一步：填写占卜资料"
+ ],
+ "ขั้นต่อไปเริ่มดูดวงได้ทันที": [
+  "Next: start your reading right away",
+  "下一步：立即开始算命"
+ ],
+ "ขาดสมาธิ หรือผัดวันประกันพรุ่ง": [
+  "Lack of focus, or procrastination",
+  "注意力不集中，或拖延"
+ ],
+ "ขาล (เสือ)": [
+  "Khan (Tiger)",
+  "寅（虎）"
+ ],
+ "ขาว": [
+  "white",
+  "白"
+ ],
+ "ขีดจุดหรือเส้นบนทรายแบบสุ่ม แล้วแปลงเป็นรูปสัญลักษณ์ 16 แบบ นำมาจัดเป็นผังเพื่อตอบคำถาม": [
+  "Random dots or lines are marked in sand, turned into 16 symbolic figures, and arranged into a chart to answer a question",
+  "在沙上随机画点或线，转换成16种符号图形，排成图阵来回答问题"
+ ],
+ "ข่าวดีหรือความสนใจใหม่ที่ทำให้ตื่นเต้น ลองเรียนรู้สิ่งใหม่": [
+  "Exciting good news or a new interest — try learning something new",
+  "令人兴奋的好消息或新兴趣，尝试学习新事物"
+ ],
+ "ข่าวดีเรื่องหัวใจ · ความอ่อนโยน · จินตนาการ": [
+  "Good news of the heart · Tenderness · Imagination",
+  "感情好消息 · 温柔 · 想象力"
+ ],
+ "ข้อความหวาน ๆ หรือความรู้สึกดี ๆ ที่ไม่คาดคิดกำลังมา": [
+  "A sweet message or unexpected good feelings are coming",
+  "甜蜜的讯息或意想不到的美好感受即将到来"
+ ],
+ "ข้อจำกัด · รู้สึกติดกับ · ความกลัว": [
+  "Restriction · Feeling trapped · Fear",
+  "束缚 · 被困之感 · 恐惧"
+ ],
+ "ข้อมือ": [
+  "Wrist",
+  "手腕"
+ ],
+ "ข้อมูลของคุณใช้เพื่อการทำนายเท่านั้น (ตัวอย่าง: เก็บไว้ในเบราว์เซอร์นี้)": [
+  "Your data is used only for predictions (demo: stored in this browser)",
+  "你的资料仅用于占卜（演示：保存在此浏览器中）"
+ ],
+ "ข้อมูลคนใกล้ตัวใช้เพื่อการดูดวงของคุณเท่านั้น ลบได้ทุกเมื่อ (ตัวอย่าง: เก็บไว้ในเบราว์เซอร์นี้)": [
+  "Loved ones' details are used only for your readings and can be deleted anytime (demo: stored in this browser)",
+  "亲友信息仅用于你的算命，可随时删除（演示：保存在此浏览器中）"
+ ],
+ "ข้อมูลดวงชะตา": [
+  "Fortune details",
+  "命理资料"
+ ],
+ "ข้อมูลที่ต้องใช้": [
+  "Information needed",
+  "所需信息"
+ ],
+ "ข้อมูลที่ใช้": [
+  "Information used",
+  "所用资料"
+ ],
+ "ข้อมูลที่ใช้วันนี้": [
+  "Data used today",
+  "今日所用资料"
+ ],
+ "ข้อมูลยังไม่ชัดเจน อย่าเพิ่งเชื่ออะไรง่าย ๆ ตรวจสอบให้รอบด้าน": [
+  "The information isn't clear yet; don't believe things easily, check from every angle",
+  "信息尚不明朗，切勿轻信，要全面核实"
+ ],
+ "ข้อมูลสำหรับหมอดูประจำตัว": [
+  "Details for your personal fortune teller",
+  "专属占卜师参考资料"
+ ],
+ "ข้อมูลใหม่ช่วยให้ตัดสินใจได้ หรือความกดดันถึงขีดสุด": [
+  "New information helps you decide, or pressure reaches its peak",
+  "新信息助你做决定，或压力达到顶点"
+ ],
+ "ข้อเสนอหรือคำชวนที่โรแมนติก ทำตามหัวใจได้เลย": [
+  "A romantic offer or invitation — follow your heart",
+  "浪漫的提议或邀约，跟随你的心"
+ ],
+ "ข้าม": [
+  "Skip",
+  "跳过"
+ ],
+ "คธญรษะโัิ": [
+  "คธญรษะโัิ",
+  "คธญรษะโัิ"
+ ],
+ "คน": [
+  "people",
+  "人"
+ ],
+ "คนที่คุณคิดถึง": [
+  "The one you're thinking of",
+  "你思念的人"
+ ],
+ "คนที่ใช่อาจอยู่ใกล้ตัว": [
+  "The right person may be close by",
+  "对的人也许就在身边"
+ ],
+ "คนรอบตัวช่วยหนุน งานที่ต้องพึ่งทีมจะไปได้ดี": [
+  "People around you lend support; teamwork goes well",
+  "身边的人给予支持，团队合作顺利"
+ ],
+ "คนแขวน": [
+  "The Hanged Man",
+  "倒吊人"
+ ],
+ "คนโง่": [
+  "The Fool",
+  "愚者"
+ ],
+ "คนโสดมีโอกาสพบคนถูกใจ คนมีคู่หวานขึ้น": [
+  "Singles may meet someone they like; couples grow sweeter",
+  "单身者有望遇到心仪之人，有伴者感情更甜蜜"
+ ],
+ "คนใกล้ตัว": [
+  "Loved ones",
+  "亲友"
+ ],
+ "คนใกล้ตัวของฉัน": [
+  "My loved ones",
+  "我的亲友"
+ ],
+ "คนในครอบครัว": [
+  "Family member",
+  "家人"
+ ],
+ "คนในครอบครัวเห็นดีกับความรักของคุณ": [
+  "Your family approves of your love",
+  "家人赞同您的恋情"
+ ],
+ "คนไกลส่งข่าวมา หรือรักทางไกลราบรื่น": [
+  "News comes from afar, or a long-distance love goes smoothly",
+  "远方传来消息，或异地恋顺利"
+ ],
+ "คบกันสบายใจ ไปไหนด้วยกันสนุก": [
+  "Easy company, fun to go places together",
+  "相处舒心，一起出游很开心"
+ ],
+ "ครอบครัว": [
+  "Family",
+  "家庭"
+ ],
+ "ครอบครัวอบอุ่น · ความสุขสมบูรณ์": [
+  "Warm family · Complete happiness",
+  "温馨家庭 · 圆满幸福"
+ ],
+ "ครอบครัวอบอุ่น ช่วยเหลือกันได้ดี": [
+  "A warm family that supports each other well",
+  "家庭温暖，互相扶持"
+ ],
+ "ครอบครัวและบ้านเป็นที่พึ่งใจ กลับไปหาคนที่รักแล้วจะมีแรง": [
+  "Family and home are your refuge; return to your loved ones and you'll regain strength",
+  "家庭是心灵依靠，回到所爱之人身边便会重获力量"
+ ],
+ "ครั้ง": [
+  "times",
+  "次"
+ ],
+ "ควรระวัง": [
+  "Be careful",
+  "需注意"
+ ],
+ "ควรเปลี่ยนงานช่วงนี้ไหม": [
+  "Should I change jobs now?",
+  "现在该换工作吗？"
+ ],
+ "ความกระตือรือร้น · การค้นพบ · ข่าวดี": [
+  "Enthusiasm · Discovery · Good news",
+  "热情 · 发现 · 好消息"
+ ],
+ "ความกล้า · การผจญภัย · ความหุนหัน": [
+  "Courage · Adventure · Impulsiveness",
+  "勇气 · 冒险 · 冲动"
+ ],
+ "ความกล้าหาญ · ความอดทน · ความอ่อนโยน": [
+  "Courage · Patience · Gentleness",
+  "勇气 · 耐心 · 温柔"
+ ],
+ "ความกังวลบางอย่างเกิดจากการคิดมาก มองตามความจริงแล้วจะสบายใจขึ้น": [
+  "Some worries come from overthinking; look at things as they truly are and you'll feel at ease",
+  "有些忧虑源于想太多，实事求是地看待便会安心"
+ ],
+ "ความกังวลอาจใหญ่กว่าความเป็นจริง ลองระบายกับคนที่ไว้ใจ": [
+  "Your worries may be bigger than reality — try talking to someone you trust",
+  "担忧可能比现实更大，试着向信任的人倾诉"
+ ],
+ "ความกังวลเริ่มคลี่คลาย หรือถึงเวลาขอความช่วยเหลืออย่างจริงจัง": [
+  "Worries begin to ease, or it's time to seriously ask for help",
+  "忧虑开始缓解，或是时候认真寻求帮助了"
+ ],
+ "ความขยัน · การฝึกฝน · ความเชี่ยวชาญ": [
+  "Diligence · Practice · Mastery",
+  "勤奋 · 练习 · 精通"
+ ],
+ "ความขยัน · ความรับผิดชอบ · ช้าแต่มั่นคง": [
+  "Diligence · Responsibility · Slow but steady",
+  "勤奋 · 责任 · 稳扎稳打"
+ ],
+ "ความขัดสน · ความยากลำบาก · รู้สึกถูกทิ้ง": [
+  "Hardship · Difficulty · Feeling abandoned",
+  "匮乏 · 困苦 · 被遗弃之感"
+ ],
+ "ความขัดแย้งในบ้าน หรือภาพฝันที่ไม่ตรงกับความจริง": [
+  "Conflict at home, or a dream that doesn't match reality",
+  "家庭矛盾，或理想与现实不符"
+ ],
+ "ความคิด การตัดสินใจ และความจริง": [
+  "Thoughts, decisions and truth",
+  "思想、决断与真相"
+ ],
+ "ความคิดสร้างสรรค์ รักอิสระ เป็นมิตรกับทุกคน": [
+  "Creative, free-spirited, friendly to everyone",
+  "富有创造力、热爱自由、与人友善"
+ ],
+ "ความคิดแจ่มชัด เห็นความจริง ตัดสินใจได้เด็ดขาด": [
+  "Clear thinking — you see the truth and decide decisively",
+  "思路清晰，看清真相，果断决策"
+ ],
+ "ความคิดใหม่และความอยากรู้อยากเห็น ตั้งคำถามและเรียนรู้": [
+  "New ideas and curiosity — ask questions and learn",
+  "新想法与好奇心，多提问多学习"
+ ],
+ "ความจริงใจของคุณจะชนะใจคนที่ชอบ": [
+  "Your sincerity will win the heart of the one you like",
+  "您的真诚会赢得心仪之人的心"
+ ],
+ "ความชัดเจน · ความจริง · ความคิดใหม่": [
+  "Clarity · Truth · New ideas",
+  "清晰 · 真相 · 新想法"
+ ],
+ "ความชัดเจนกำลังมา คุณรู้แล้วว่าต้องการอะไรจริง ๆ": [
+  "Clarity is coming — you now know what you truly want",
+  "清晰即将到来，你已知道自己真正想要什么"
+ ],
+ "ความตั้งใจและการฝึกฝนจะทำให้คุณเก่งขึ้นเรื่อย ๆ": [
+  "Determination and practice will make you better and better",
+  "决心与练习会让你越来越出色"
+ ],
+ "ความตาย": [
+  "Death",
+  "死神"
+ ],
+ "ความทรงจำ · วัยเด็ก · ความไร้เดียงสา": [
+  "Memories · Childhood · Innocence",
+  "回忆 · 童年 · 纯真"
+ ],
+ "ความทรงจำดี ๆ หรือคนจากอดีตกำลังกลับมา": [
+  "Good memories or someone from the past is returning",
+  "美好回忆或故人即将回来"
+ ],
+ "ความท้าทายทำให้คุณเติบโต อย่าถอยเมื่อเจอเรื่องยาก": [
+  "Challenges help you grow; don't retreat when things get hard",
+  "挑战使您成长，遇到困难不要退缩"
+ ],
+ "ความปรารถนาสมหวัง · ความพอใจ": [
+  "Wishes fulfilled · Contentment",
+  "心愿达成 · 满足"
+ ],
+ "ความพยายามอย่างสม่ำเสมอจะพาไปถึงเป้าหมาย อย่าใจร้อน": [
+  "Steady effort will take you to your goal; don't be impatient",
+  "持之以恒必达目标，切莫心急"
+ ],
+ "ความพอดี": [
+  "Temperance",
+  "节制"
+ ],
+ "ความพอดีและความสมดุลจะพาคุณไปได้ไกล ค่อยเป็นค่อยไป": [
+  "Moderation and balance will take you far — step by step",
+  "适度与平衡会带你走得更远，循序渐进"
+ ],
+ "ความมั่งคั่ง · อิสรภาพ · พึ่งพาตนเอง": [
+  "Wealth · Independence · Self-reliance",
+  "财富 · 自由 · 自立"
+ ],
+ "ความมั่นคง · อำนาจ · โครงสร้าง": [
+  "Stability · Authority · Structure",
+  "稳定 · 权威 · 秩序"
+ ],
+ "ความมั่นคงที่ยั่งยืน ทั้งการเงินและครอบครัว": [
+  "Lasting stability in both finances and family",
+  "财务与家庭皆长久稳定"
+ ],
+ "ความมั่นคงมาจากวินัยและแผนที่ชัดเจน คุณพร้อมจะเป็นผู้นำ": [
+  "Stability comes from discipline and a clear plan — you're ready to lead",
+  "稳定来自自律与清晰的计划，你已准备好领导"
+ ],
+ "ความมั่นใจ · เสน่ห์ · ความมุ่งมั่น": [
+  "Confidence · Charm · Determination",
+  "自信 · 魅力 · 决心"
+ ],
+ "ความมุ่งมั่นจะพาคุณไปสู่ชัยชนะ จับบังเหียนชีวิตไว้ให้มั่น": [
+  "Determination will lead you to victory — hold the reins of your life firmly",
+  "决心将带你走向胜利，牢牢掌握人生的缰绳"
+ ],
+ "ความยุติธรรม": [
+  "Justice",
+  "正义"
+ ],
+ "ความยุติธรรม · ความจริง · ผลของการกระทำ": [
+  "Justice · Truth · Consequences",
+  "正义 · 真相 · 因果"
+ ],
+ "ความรวดเร็ว · ข่าวสาร · การเดินทาง": [
+  "Speed · News · Travel",
+  "迅速 · 消息 · 旅行"
+ ],
+ "ความรัก": [
+  "love",
+  "爱情"
+ ],
+ "ความรัก · การเลือก · ความกลมกลืน": [
+  "Love · Choice · Harmony",
+  "爱情 · 选择 · 和谐"
+ ],
+ "ความรัก ความรู้สึก และความสัมพันธ์": [
+  "Love, feelings and relationships",
+  "爱情、情感与关系"
+ ],
+ "ความรักต้องใช้เวลาให้เติบโต": [
+  "Love needs time to grow",
+  "爱情需要时间成长"
+ ],
+ "ความรักอบอุ่น มีเรื่องน่ายินดีในครอบครัว": [
+  "Warm love and happy news in the family",
+  "爱情温暖，家中有喜事"
+ ],
+ "ความรักใหม่ · ความรู้สึกล้นใจ · การเยียวยา": [
+  "New love · Overflowing feelings · Healing",
+  "新恋情 · 情感满溢 · 疗愈"
+ ],
+ "ความรักไปได้ไกล หมั่นบอกความรู้สึกกันบ่อย ๆ": [
+  "Love can go far — share your feelings often",
+  "感情可以长久，记得常常表达心意"
+ ],
+ "ความร่ำรวย · ความสำเร็จทางธุรกิจ · รากฐานมั่นคง": [
+  "Wealth · Business success · Solid foundations",
+  "富足 · 事业成功 · 稳固根基"
+ ],
+ "ความลับถูกเปิดเผย ถึงเวลาซื่อตรงกับตัวเอง": [
+  "Secrets are revealed — time to be honest with yourself",
+  "秘密被揭开，是时候对自己诚实了"
+ ],
+ "ความล่าช้าหรือการสื่อสารผิดพลาด ใจเย็น ๆ": [
+  "Delays or miscommunication — stay calm",
+  "延误或沟通失误，保持冷静"
+ ],
+ "ความวิตกกังวล · นอนไม่หลับ · คิดมาก": [
+  "Anxiety · Sleeplessness · Overthinking",
+  "焦虑 · 失眠 · 想太多"
+ ],
+ "ความสมดุล · ความพอดี · ความอดทน": [
+  "Balance · Moderation · Patience",
+  "平衡 · 适度 · 耐心"
+ ],
+ "ความสมดุล · จัดการหลายอย่าง · ยืดหยุ่น": [
+  "Balance · Juggling many things · Flexibility",
+  "平衡 · 兼顾多事 · 灵活"
+ ],
+ "ความสมบูรณ์ · ความสำเร็จ · การเดินทาง": [
+  "Completion · Achievement · Travel",
+  "圆满 · 成就 · 旅行"
+ ],
+ "ความสับสน หรือใช้คำพูดทำร้ายผู้อื่น": [
+  "Confusion, or using words to hurt others",
+  "困惑，或用言语伤害他人"
+ ],
+ "ความสับสนกำลังคลี่คลาย ความจริงค่อย ๆ ปรากฏ": [
+  "Confusion is clearing — the truth gradually emerges",
+  "困惑正在消散，真相逐渐显现"
+ ],
+ "ความสัมพันธ์": [
+  "Relationship",
+  "关系"
+ ],
+ "ความสัมพันธ์ก้าวหน้า อาจมีเรื่องน่ายินดี": [
+  "The relationship moves forward; there may be happy news",
+  "感情进展顺利，或有喜讯"
+ ],
+ "ความสัมพันธ์ต้องใช้ความอดทนและความเข้าใจ": [
+  "The relationship needs patience and understanding",
+  "感情需要耐心与理解"
+ ],
+ "ความสัมพันธ์ที่ลงตัว ทั้งความรัก มิตรภาพ หรือหุ้นส่วน": [
+  "A harmonious relationship — in love, friendship or partnership",
+  "关系融洽，无论爱情、友情或合作"
+ ],
+ "ความสัมพันธ์ที่ลงตัว หรือการตัดสินใจครั้งสำคัญที่ต้องเลือกจากใจ": [
+  "A harmonious relationship, or an important decision you must make from the heart",
+  "关系融洽，或需用心做出的重要抉择"
+ ],
+ "ความสัมพันธ์มั่นคงขึ้นจากการใส่ใจเรื่องเล็ก ๆ": [
+  "The relationship grows stronger through attention to small things",
+  "用心于小事，感情更加稳固"
+ ],
+ "ความสำเร็จ · ความสุข · พลังบวก": [
+  "Success · Happiness · Positive energy",
+  "成功 · 快乐 · 正能量"
+ ],
+ "ความสำเร็จทางการเงินและธุรกิจ คุณคือคนที่สร้างรากฐานได้มั่นคง": [
+  "Financial and business success — you build solid foundations",
+  "财务与事业成功，你善于打下稳固根基"
+ ],
+ "ความสำเร็จและความสุข": [
+  "Success and happiness",
+  "成功与幸福"
+ ],
+ "ความสำเร็จและคำชื่นชมกำลังมา คุณสมควรได้รับมัน": [
+  "Success and praise are coming — you deserve them",
+  "成功与赞誉即将到来，这是你应得的"
+ ],
+ "ความสุขยังอยู่ แค่ถูกเมฆบังชั่วคราว ลองมองหาแง่ดีในวันนี้": [
+  "Happiness is still here, just hidden by clouds for now — look for the bright side today",
+  "幸福仍在，只是暂时被云遮住，今天试着寻找好的一面"
+ ],
+ "ความสุขุม · ควบคุมอารมณ์ · เป็นที่พึ่ง": [
+  "Composure · Emotional control · Someone to rely on",
+  "沉稳 · 控制情绪 · 可依靠之人"
+ ],
+ "ความสุขแบบผิวเผิน หรือคาดหวังมากเกินไป": [
+  "Superficial happiness, or expecting too much",
+  "表面的快乐，或期望过高"
+ ],
+ "ความสุขในครอบครัวและความสัมพันธ์ที่กลมเกลียว": [
+  "Family happiness and harmonious relationships",
+  "家庭幸福，关系和睦"
+ ],
+ "ความหมายของผลรวมเลขบัตร จุดเด่น จุดที่ควรระวัง และเลขเสริมดวง": [
+  "Meaning of your ID number sum, strengths, cautions and lucky numbers",
+  "身份证号码总和的含义、优点、注意事项及增运数字"
+ ],
+ "ความหมายของเลขที่และผลรวม ผลต่อผู้อยู่อาศัย และคำแนะนำเสริมมงคลให้บ้าน": [
+  "Meaning of the house number and its sum, effects on residents, and tips to boost your home's luck",
+  "门牌号及其总和的含义、对居住者的影响，以及为家宅增运的建议"
+ ],
+ "ความหมายหรือเสียงที่ชอบ": [
+  "Meaning or sound you like",
+  "喜欢的含义或读音"
+ ],
+ "ความหมายหรือแนวเสียงที่ต้องการ": [
+  "Desired meaning or sound",
+  "想要的含义或读音风格"
+ ],
+ "ความหวัง · การเยียวยา · แรงบันดาลใจ": [
+  "Hope · Healing · Inspiration",
+  "希望 · 疗愈 · 灵感"
+ ],
+ "ความหวังกลับมา มีคนพร้อมช่วยเหลือ": [
+  "Hope returns; someone is ready to help",
+  "希望重现，有人愿意相助"
+ ],
+ "ความหวังกำลังกลับมา": [
+  "Hope is returning",
+  "希望正在回来"
+ ],
+ "ความอดทน · ด่านสุดท้าย · ความระวัง": [
+  "Endurance · The last hurdle · Caution",
+  "坚韧 · 最后关卡 · 谨慎"
+ ],
+ "ความอดทน · ลงทุนระยะยาว · รอผล": [
+  "Patience · Long-term investment · Awaiting results",
+  "耐心 · 长期投资 · 等待结果"
+ ],
+ "ความอยากรู้ · ช่างสังเกต · ข่าวสาร": [
+  "Curiosity · Observant · News",
+  "好奇 · 善于观察 · 消息"
+ ],
+ "ความอุดมสมบูรณ์": [
+  "Abundance",
+  "丰盛"
+ ],
+ "ความอุดมสมบูรณ์ · การดูแล · ชีวิตมีคุณภาพ": [
+  "Abundance · Nurturing · Quality of life",
+  "富足 · 照顾 · 优质生活"
+ ],
+ "ความอุดมสมบูรณ์ · ความรัก · การเติบโต": [
+  "Abundance · Love · Growth",
+  "丰盛 · 爱 · 成长"
+ ],
+ "ความอุดมสมบูรณ์ เงินและความรักงอกงาม": [
+  "Abundance — money and love flourish",
+  "丰盛富足，财运与爱情兴旺"
+ ],
+ "ความเจ็บปวดทางใจที่ต้องยอมรับ เพื่อจะได้เยียวยา": [
+  "Heartache you must accept in order to heal",
+  "需要接受的心痛，才能得到疗愈"
+ ],
+ "ความเจ็บปวดใจ · ความเศร้า · ความจริงที่เจ็บ": [
+  "Heartbreak · Sorrow · Painful truth",
+  "心碎 · 悲伤 · 痛苦的真相"
+ ],
+ "ความเฉียบแหลม · ความเป็นอิสระ · ตรงไปตรงมา": [
+  "Sharpness · Independence · Directness",
+  "敏锐 · 独立 · 直率"
+ ],
+ "ความเบื่อหน่าย · การไตร่ตรอง · มองข้ามโอกาส": [
+  "Boredom · Contemplation · Overlooking opportunities",
+  "厌倦 · 沉思 · 忽视机会"
+ ],
+ "ความเมตตา · ความเข้าใจ · ญาณหยั่งรู้": [
+  "Compassion · Understanding · Intuition",
+  "慈悲 · 理解 · 直觉"
+ ],
+ "ความเร็ว · ความมุ่งมั่น · ใจร้อน": [
+  "Speed · Determination · Impatience",
+  "迅速 · 决心 · 急躁"
+ ],
+ "ความเสียใจ · การสูญเสีย · ความผิดหวัง": [
+  "Regret · Loss · Disappointment",
+  "悲伤 · 失去 · 失望"
+ ],
+ "ความเสียใจเป็นเรื่องธรรมดา แต่ยังมีถ้วยที่ไม่หกเหลืออยู่ข้างหลังคุณ": [
+  "Sorrow is natural, but there are still cups unspilled behind you",
+  "悲伤是人之常情，但你身后仍有未倒的圣杯"
+ ],
+ "ความเหนื่อยล้าสะสม อย่าลืมพักและขอความช่วยเหลือ": [
+  "Accumulated exhaustion — don't forget to rest and ask for help",
+  "疲惫不断累积，别忘了休息并寻求帮助"
+ ],
+ "ความโรแมนติก · ข้อเสนอ · ทำตามหัวใจ": [
+  "Romance · Offers · Following your heart",
+  "浪漫 · 提议 · 跟随内心"
+ ],
+ "ความใจร้อนอาจทำให้พลาด ช้าลงสักนิด": [
+  "Impatience may lead to mistakes — slow down a little",
+  "急躁可能导致失误，放慢一点"
+ ],
+ "ความใฝ่รู้ · โอกาสการเรียน · ตั้งใจเริ่มต้น": [
+  "Love of learning · Study opportunities · Eager beginnings",
+  "求知欲 · 学习机会 · 用心开始"
+ ],
+ "ความไม่มั่นใจหรือความอิจฉากำลังบั่นทอนพลังของคุณ": [
+  "Insecurity or jealousy is draining your energy",
+  "不自信或嫉妒正在消耗你的能量"
+ ],
+ "ความไม่มั่นใจในตัวเองกำลังรั้งคุณไว้ เชื่อในพลังของตัวเองอีกครั้ง": [
+  "Self-doubt is holding you back — believe in your own power again",
+  "自我怀疑正在拖住你，再次相信自己的力量"
+ ],
+ "ความไม่ลงรอยในความสัมพันธ์ หรือความลังเลระหว่างสองทาง": [
+  "Discord in a relationship, or hesitation between two paths",
+  "关系不和，或在两条路之间犹豫"
+ ],
+ "ความไม่ลงรอยในบ้านหรือในทีม ต้องหันหน้ามาคุยกัน": [
+  "Discord at home or in the team — you need to talk it through",
+  "家庭或团队不和，需要坐下来好好沟通"
+ ],
+ "ความไม่สมดุลในความสัมพันธ์ ต้องสื่อสารกันมากขึ้น": [
+  "Imbalance in the relationship — communicate more",
+  "关系失衡，需要多沟通"
+ ],
+ "คอนโด": [
+  "Condo",
+  "公寓"
+ ],
+ "คอนโด / ห้องชุด": [
+  "Condo / apartment",
+  "公寓"
+ ],
+ "คำตอบ 1 เรื่องแบบข้อความ": [
+  "A written answer to 1 question",
+  "1个问题的文字解答"
+ ],
+ "คำตอบของจักรวาล": [
+  "The universe's answer",
+  "宇宙的答案"
+ ],
+ "คำตอบสั้น ๆ สำหรับวันนี้": [
+  "A short answer for today",
+  "今日简短答案"
+ ],
+ "คำตอบแบบข้อความตามขอบเขตที่แจ้ง": [
+  "A written answer within the stated scope",
+  "按所述范围提供文字解答"
+ ],
+ "คำถาม 1 เรื่อง": [
+  "1 question",
+  "1个问题"
+ ],
+ "คำถามของคุณ": [
+  "Your question",
+  "你的问题"
+ ],
+ "คำถามหรือคำอธิษฐาน (ไม่บังคับ)": [
+  "Question or prayer (optional)",
+  "问题或祈愿（可选）"
+ ],
+ "คำถามหรืองานที่ต้องการหาฤกษ์": [
+  "Question or event you need an auspicious time for",
+  "需要择吉时的问题或事项"
+ ],
+ "คำถามหรือเรื่องที่ต้องการปรึกษา": [
+  "Question or matter you'd like to consult on",
+  "想咨询的问题或事情"
+ ],
+ "คำทำนายของคุณ": [
+  "Your prediction",
+  "你的签文"
+ ],
+ "คำทำนายความรักจากไพ่ 3 ใบ พร้อมสรุปภาพรวม อ่านได้ทันที": [
+  "A 3-card love reading with an overall summary, ready instantly",
+  "3张牌爱情占卜，附整体总结，即刻可读"
+ ],
+ "คำทำนายประจำวันจากไพ่ 1 ใบ อ่านได้ทันที": [
+  "A daily reading from 1 card, ready instantly",
+  "单张牌每日占卜，即刻可读"
+ ],
+ "คำทำนายมีไว้เพื่อความบันเทิงและเป็นแนวทางสะท้อนตัวเอง ไม่ควรใช้แทนคำปรึกษาจากผู้เชี่ยวชาญ": [
+  "Readings are for entertainment and self-reflection, and should not replace professional advice",
+  "占卜仅供娱乐与自我反思参考，不能替代专业人士的建议"
+ ],
+ "คำทำนายอ่านทันที พร้อมคำอธิบายภาษาไทยร่วมสมัย": [
+  "Instant reading with a modern Thai explanation",
+  "即刻解读，附现代泰语说明"
+ ],
+ "คำทำนายเซียมซีมีไว้เพื่อความบันเทิงและเป็นกำลังใจ ไม่ควรใช้แทนคำปรึกษาจากผู้เชี่ยวชาญ": [
+  "Siam Si predictions are for entertainment and encouragement, not a substitute for professional advice",
+  "求签结果仅供娱乐与鼓励，不能替代专业人士的建议"
+ ],
+ "คำทำนายเพื่อความบันเทิงและเป็นกำลังใจ · อยากรู้ลึกกว่านี้ ปรึกษาหมอดูได้ที่หมวดหมู่": [
+  "Readings for entertainment and encouragement · Want to go deeper? Consult a fortune teller in the category",
+  "预言仅供娱乐与鼓励 · 想了解更深入？请到分类中咨询占卜师"
+ ],
+ "คำนวณจากวันเกิดของคนใกล้ตัว · เพื่อความบันเทิงและเป็นแนวทางชีวิต": [
+  "Calculated from your loved ones' birth dates · for entertainment and life guidance",
+  "根据亲友生日计算 · 仅供娱乐及生活参考"
+ ],
+ "คำนวณผังจากวัน เวลา หรือสถานที่เกิด": [
+  "Charts calculated from birth date, time or place",
+  "根据出生日期、时间或地点排盘"
+ ],
+ "คำอธิษฐาน / ข้อความถึงผู้ล่วงลับ": [
+  "Prayer / message to the departed",
+  "祈愿 / 给逝者的话"
+ ],
+ "คำอธิษฐานของคุณ": [
+  "Your prayer",
+  "你的祈愿"
+ ],
+ "คำอ่านพร้อมผังประกอบ": [
+  "Reading with an accompanying chart",
+  "解读附图示"
+ ],
+ "คำอ่านลายมือแบบข้อความสำหรับ 1 หัวข้อ เช่น งานหรือความสัมพันธ์": [
+  "A written palm reading on 1 topic, such as work or relationships",
+  "针对1个主题的文字手相解读，如事业或感情"
+ ],
+ "คำอ่านและคำแนะนำ 1 จุด": [
+  "Reading and advice for 1 spot",
+  "1处位置的解读与建议"
+ ],
+ "คำแนะนำการจัดวางตามขอบเขต": [
+  "Layout advice within scope",
+  "按范围提供布局建议"
+ ],
+ "คำแนะนำการวาง 1 จุด": [
+  "Placement advice for 1 spot",
+  "1处摆放建议"
+ ],
+ "คำแนะนำจากผู้ใหญ่หรือผู้มีประสบการณ์จะช่วยคุณได้มาก": [
+  "Advice from elders or experienced people will help you greatly",
+  "长辈或有经验者的建议会对你大有帮助"
+ ],
+ "คำแนะนำวิธีสะเดาะเคราะห์ที่เหมาะกับดวง และทีมทำพิธีให้ พร้อมหลักฐาน": [
+  "Advice on the misfortune-removal ritual that suits your chart, performed by our team with proof",
+  "建议适合您命盘的消灾仪式，由团队代为举行并提供凭证"
+ ],
+ "คิดนามสกุลใหม่": [
+  "Create a new surname",
+  "新拟姓氏"
+ ],
+ "คืนดีหรือเริ่มต้นใหม่ได้": [
+  "Reconciliation or a fresh start is possible",
+  "可以和好或重新开始"
+ ],
+ "คุณ": [
+  "you",
+  "你"
+ ],
+ "คุณ · เขา · ความสัมพันธ์": [
+  "You · Them · The relationship",
+  "你 · 对方 · 关系"
+ ],
+ "คุณกำลังจัดการหลายเรื่องพร้อมกัน ความยืดหยุ่นคือกุญแจ": [
+  "You're juggling many things at once — flexibility is key",
+  "你正同时处理多件事，灵活是关键"
+ ],
+ "คุณกำลังต่อต้านการเปลี่ยนแปลงที่จำเป็น ลองปล่อยสิ่งเก่าไป": [
+  "You're resisting a necessary change — try letting go of the old",
+  "你在抗拒必要的改变，试着放下旧事物"
+ ],
+ "คุณกำลังลังเลระหว่างสองทาง ลองเปิดใจรับข้อมูลทั้งหมด": [
+  "You're torn between two paths — open your mind to all the information",
+  "你在两条路之间犹豫，试着接纳所有信息"
+ ],
+ "คุณกำลังหลุดพ้นจากพันธนาการ อิสรภาพอยู่ใกล้แค่เอื้อม": [
+  "You're breaking free from your chains — freedom is within reach",
+  "你正挣脱束缚，自由近在咫尺"
+ ],
+ "คุณกำลังออกจากช่วงยากลำบากไปสู่น่านน้ำที่สงบกว่า": [
+  "You're leaving hard times for calmer waters",
+  "你正走出困境，驶向更平静的水域"
+ ],
+ "คุณดูแลทั้งงาน บ้าน และคนรอบข้างได้อย่างดีเยี่ยม": [
+  "You take excellent care of work, home and the people around you",
+  "你把工作、家庭与身边的人都照顾得很好"
+ ],
+ "คุณผ่านมาไกลแล้ว อดทนอีกนิดก่อนถึงเส้นชัย": [
+  "You've come a long way — hold on a little longer before the finish line",
+  "你已走了很远，到终点前再坚持一下"
+ ],
+ "คุณมีทุกอย่างที่ต้องใช้อยู่ในมือแล้ว ถึงเวลาเปลี่ยนความคิดให้เป็นการกระทำ": [
+  "You already have everything you need in hand — time to turn ideas into action",
+  "你已拥有所需的一切，是时候把想法付诸行动"
+ ],
+ "คุณมีหัวใจที่อ่อนโยนและเข้าใจผู้อื่น ใช้ความรู้สึกนำทาง": [
+  "You have a gentle heart that understands others — let your feelings guide you",
+  "你有一颗温柔、善解人意的心，让感受为你引路"
+ ],
+ "คุณยืนอยู่บนทางแยกพร้อมโลกทั้งใบ วางแผนให้ชัดแล้วออกเดิน": [
+  "You stand at a crossroads with the whole world before you — plan clearly and set off",
+  "你站在十字路口，整个世界在你面前，规划清楚后出发"
+ ],
+ "คุณสร้างความมั่นคงได้ด้วยตัวเอง ถึงเวลาเพลิดเพลินกับผลลัพธ์": [
+  "You've built stability on your own — time to enjoy the results",
+  "你凭自己建立了稳定，是时候享受成果了"
+ ],
+ "คุณหลีกเลี่ยงวิกฤตได้ หรือกำลังฟื้นตัวจากเรื่องหนัก ๆ": [
+  "You've avoided a crisis, or are recovering from something heavy",
+  "你避开了危机，或正从沉重的事情中恢复"
+ ],
+ "คุณอยู่ระหว่างทางเลือก ให้เวลาตัวเองคิดและถามคนที่ไว้ใจ": [
+  "You're between choices; give yourself time to think and ask someone you trust",
+  "您正面临抉择，给自己时间思考，并请教信任的人"
+ ],
+ "คุณอาจกำลังตัดสินตัวเองรุนแรงเกินไป ลองใจดีกับตัวเองบ้าง": [
+  "You may be judging yourself too harshly — be kinder to yourself",
+  "你可能对自己评判过严，试着善待自己"
+ ],
+ "คุณอาจกำลังมองข้ามโอกาสดี ๆ ที่ยื่นมาตรงหน้า": [
+  "You may be overlooking good opportunities right in front of you",
+  "你可能忽视了眼前的好机会"
+ ],
+ "คุณอาจกำลังเสียการควบคุม หรือพยายามไปหลายทิศทางพร้อมกัน": [
+  "You may be losing control, or trying to go in too many directions at once",
+  "你可能正在失控，或试图同时朝多个方向前进"
+ ],
+ "คุณอาจติดอยู่กับที่นานเกินไป ถึงเวลาตัดสินใจแล้ว": [
+  "You may have been stuck too long — it's time to decide",
+  "你可能停滞太久了，是时候做决定了"
+ ],
+ "คุณอาจหมดกำลังใจชั่วคราว อย่าเพิ่งหมดศรัทธาในตัวเอง": [
+  "You may be temporarily discouraged — don't lose faith in yourself",
+  "你可能暂时灰心，但别对自己失去信心"
+ ],
+ "คุณอาจเพิกเฉยต่อสัญชาตญาณของตัวเอง หรือมีเรื่องที่ยังถูกปิดบังอยู่": [
+  "You may be ignoring your intuition, or something is still being hidden",
+  "你可能忽视了自己的直觉，或仍有事情被隐瞒"
+ ],
+ "คุณเกิดวัน": [
+  "You were born on",
+  "你出生于"
+ ],
+ "คุณเป็นแสงสว่างให้คนอื่น การช่วยเหลือผู้อื่นจะย้อนกลับมาเป็นสิ่งดี": [
+  "You are a light for others; helping people will come back to you as good things",
+  "您是他人的光，帮助别人终会回报于己"
+ ],
+ "คุณแบกภาระมากเกินไป ลองแบ่งงานหรือวางบางอย่างลง": [
+  "You're carrying too much — try sharing the load or setting some things down",
+  "你背负太多，试着分担或放下一些"
+ ],
+ "คุณได้รับ": [
+  "You received",
+  "你获得了"
+ ],
+ "คูปอง": [
+  "Coupon",
+  "优惠券"
+ ],
+ "คูปองของฉัน": [
+  "My coupons",
+  "我的优惠券"
+ ],
+ "คู่รัก": [
+  "The Lovers",
+  "恋人"
+ ],
+ "คู่แท้ · ความผูกพัน · การร่วมมือ": [
+  "Soulmate · Bond · Partnership",
+  "灵魂伴侣 · 羁绊 · 合作"
+ ],
+ "ค่อนข้างดี": [
+  "Fairly good",
+  "还不错"
+ ],
+ "ค่อย ๆ ก้าวอย่างมั่นคง ความสม่ำเสมอจะพาไปถึงเป้า": [
+  "Step forward steadily; consistency will carry you to your goal",
+  "稳步前行，坚持终将带你抵达目标"
+ ],
+ "ค่อย ๆ ดีขึ้นจากความพยายาม": [
+  "Gradually improving through effort",
+  "努力之下逐渐好转"
+ ],
+ "ค่อยเป็นค่อยไป หาจุดสมดุลแล้วทุกอย่างลงตัว": [
+  "Take it step by step; find balance and all falls into place",
+  "循序渐进，找到平衡，一切自会顺遂"
+ ],
+ "ค่าบริการ": [
+  "Service fee",
+  "服务费"
+ ],
+ "ค้นหาหมอดู หรือศาสตร์ เช่น ไพ่ทาโรต์": [
+  "Search fortune tellers or sciences, e.g. Tarot",
+  "搜索占卜师或占卜术，例如塔罗牌"
+ ],
+ "ฆตฑฒ๋": [
+  "ฆตฑฒ๋",
+  "ฆตฑฒ๋"
+ ],
+ "งาน": [
+  "work",
+  "工作"
+ ],
+ "งานคืบหน้าทีละขั้น ได้ผลดีในระยะยาว": [
+  "Work progresses step by step, with good long-term results",
+  "工作逐步推进，长远见成效"
+ ],
+ "งานที่ทุ่มเทได้ผลเกินคาด": [
+  "Your dedicated work pays off beyond expectations",
+  "全心投入的工作成果超出预期"
+ ],
+ "งานที่เกี่ยวกับการติดต่อหรือเดินทางไปได้ดี": [
+  "Work involving communication or travel goes well",
+  "与联络或出行相关的工作顺利"
+ ],
+ "งานมีจุดสะดุดเล็กน้อย ตรวจรายละเอียดก่อนส่ง": [
+  "Small hiccups at work — check details before submitting",
+  "工作略有波折，提交前请检查细节"
+ ],
+ "งานยากแต่จะทำให้คุณเก่งขึ้นมาก": [
+  "The work is hard but will make you much more skilled",
+  "工作虽难，却会让您大有长进"
+ ],
+ "งานราบรื่นและได้ผลตอบแทนคุ้มค่า": [
+  "Work goes smoothly and pays off well",
+  "工作顺利，回报丰厚"
+ ],
+ "งานหนักแต่ไปได้ ถ้าวางแผนดี": [
+  "Work is heavy but manageable with good planning",
+  "工作繁重，但规划得当便能顺利"
+ ],
+ "งานเดินหน้าได้ดี เหมาะเสนอไอเดียหรือเริ่มโปรเจกต์ใหม่": [
+  "Work moves forward well — good for pitching ideas or new projects",
+  "工作进展顺利，适合提出想法或启动新项目"
+ ],
+ "จลวอใ็": [
+  "จลวอใ็",
+  "จลวอใ็"
+ ],
+ "จอ (สุนัข)": [
+  "Cho (Dog)",
+  "戌（狗）"
+ ],
+ "จองบริการ": [
+  "Book a service",
+  "预约服务"
+ ],
+ "จองพิธี": [
+  "Book a ritual",
+  "预约仪式"
+ ],
+ "จองและชำระเงิน": [
+  "Book and pay",
+  "预约并付款"
+ ],
+ "จองและแจ้งชื่อ-คำอธิษฐาน": [
+  "Book and submit names & prayers",
+  "预约并提交姓名和祈愿"
+ ],
+ "จองได้": [
+  "Available",
+  "可预约"
+ ],
+ "จะมีคนช่วยเหลือในเวลาที่ต้องการ อย่าอายที่จะขอความช่วยเหลือ": [
+  "Help will come when you need it; don't be shy to ask",
+  "需要时会有人相助，不要羞于求助"
+ ],
+ "จะได้ข่าวดีหรือการติดต่อที่รอคอย": [
+  "Good news or a long-awaited contact will arrive",
+  "将收到好消息或期待已久的联络"
+ ],
+ "จักรพรรดิ": [
+  "The Emperor",
+  "皇帝"
+ ],
+ "จักรพรรดินี": [
+  "The Empress",
+  "皇后"
+ ],
+ "จักรวาลกำลังสนับสนุนเส้นทางที่คุณเลือก เดินหน้าอย่างมั่นใจได้เลย": [
+  "The universe supports the path you've chosen; move forward with confidence",
+  "宇宙正在支持你选择的道路，放心地前进吧"
+ ],
+ "จังหวะชีวิตเปลี่ยนเป็นทางดี มีโชคเข้ามา": [
+  "Life turns for the better; luck is coming",
+  "人生节奏好转，好运降临"
+ ],
+ "จัดกลุ่มตัวอักษรตามวันเกิดเป็น บริวาร อายุ เดช ศรี มูละ อุตสาหะ มนตรี และกาลกิณี แล้วเลือกอักษรมงคลมาตั้งชื่อ": [
+  "Letters are grouped by your day of birth into Boriwan, Ayu, Det, Si, Mula, Utsaha, Montri and Kalakini, then auspicious letters are chosen for the name",
+  "按出生星期将字母分为随从、寿命、权威、吉祥、根基、勤奋、贵人与凶煞八组，再选吉祥字母取名"
+ ],
+ "จัดทิศ ที่ตั้ง และการวางพื้นที่ให้เสริมดวง": [
+  "Arrange direction, location and layout to enhance your fortune",
+  "调整朝向、位置与空间布局以助运"
+ ],
+ "จัดทิศและพื้นที่ให้เสริมดวงคนในบ้านหรือกิจการ": [
+  "Arrange directions and spaces to boost the fortune of a household or business",
+  "调整朝向与空间，为家人或生意助运"
+ ],
+ "จัดที่ตั้งและพื้นที่ให้เป็นมงคล เสริมดวงในด้านต่าง ๆ": [
+  "Arrange locations and spaces auspiciously to boost every area of life",
+  "布置方位与空间，使之吉祥，提升各方面运势"
+ ],
+ "จัดลำดับงานใหม่ แล้วจะทำงานได้คล่องขึ้น": [
+  "Reprioritise your tasks and work will flow more easily",
+  "重新安排工作顺序，便会更加顺手"
+ ],
+ "จัดส่งพร้อมเลขพัสดุ": [
+  "Shipped with tracking number",
+  "附快递单号寄出"
+ ],
+ "จัดเมล็ดเป็นตารางสัญลักษณ์ หาสาเหตุปัญหาและวันดี": [
+  "Seeds arranged into a symbol grid to find the cause of problems and good days",
+  "将种子排成符号阵，找出问题根源与吉日"
+ ],
+ "จัดโต๊ะทำงานและพื้นที่ให้เสริมการงานและการเงิน": [
+  "Arrange your desk and workspace to boost career and money",
+  "布置办公桌与工作空间，提升事业与财运"
+ ],
+ "จันทร์": [
+  "Monday",
+  "星期一"
+ ],
+ "จันทร์ข้างแรมค่อยลับ แล้วกลับเต็มดวงอีกครา": [
+  "The waning moon slowly fades, then returns full once more",
+  "残月渐隐，终将再度圆满"
+ ],
+ "จากแฟ้มดวงของคุณ": [
+  "From your Fortune File",
+  "来自你的命理档案"
+ ],
+ "จำนวนธูปและสีเทียนตามวันเกิด": [
+  "Number of incense sticks and candle colours by birth day",
+  "依出生日决定香支数量与蜡烛颜色"
+ ],
+ "จิตสัมผัส": [
+  "Psychic reading",
+  "通灵感应"
+ ],
+ "จีน": [
+  "China",
+  "中国"
+ ],
+ "จื่อเวย": [
+  "Zi Wei",
+  "紫微"
+ ],
+ "จื่อเวยโต่วซู่": [
+  "Zi Wei Dou Shu",
+  "紫微斗数"
+ ],
+ "จุดจบ · ถึงที่สุด · เริ่มใหม่": [
+  "Ending · Culmination · New beginning",
+  "终结 · 极致 · 重新开始"
+ ],
+ "จุดวางของหรือสัตว์มงคล": [
+  "Placement of items or auspicious animals",
+  "物品或吉祥动物的摆放位置"
+ ],
+ "จุดวางสัตว์มงคล": [
+  "Placement of auspicious animals",
+  "吉祥物摆放位置"
+ ],
+ "จุดเปลี่ยนที่ดี": [
+  "A good turning point",
+  "良好的转折点"
+ ],
+ "ฉณฌนมหฮฎึฬ": [
+  "ฉณฌนมหฮฎึฬ",
+  "ฉณฌนมหฮฎึฬ"
+ ],
+ "ฉลู (วัว)": [
+  "Chalu (Ox)",
+  "丑（牛）"
+ ],
+ "ฉันกับเขาเข้ากันได้ไหม": [
+  "Are we compatible?",
+  "我和TA合得来吗？"
+ ],
+ "ฉันชำระเงินแล้ว": [
+  "I've paid",
+  "我已付款"
+ ],
+ "ฉันยินยอมให้หมอดู.com เก็บรูปใบหน้า รูปร่าง ลายมือ ข้อมือ และลายเท้าของฉัน เพื่อใช้ทำนายดวงของฉันเท่านั้น และลบได้ทุกเมื่อ": [
+  "I consent to Mohdoo.com storing photos of my face, body, palms, wrists and soles, used only for my own readings and deletable anytime",
+  "我同意Mohdoo.com保存我的面部、身形、手掌、手腕和脚掌照片，仅用于我本人的算命，并可随时删除"
+ ],
+ "ชนะแต่เสียมากกว่าได้ · ความขัดแย้ง": [
+  "A win that costs more than it gains · Conflict",
+  "得不偿失的胜利 · 冲突"
+ ],
+ "ชมพู": [
+  "Pink",
+  "粉色"
+ ],
+ "ชวด (หนู)": [
+  "Chuat (Rat)",
+  "子（鼠）"
+ ],
+ "ชวนให้ทบทวน": [
+  "Calls for reflection",
+  "值得反思"
+ ],
+ "ชะลอการใช้จ่ายก้อนใหญ่ไว้ก่อน": [
+  "Hold off on big spending for now",
+  "暂缓大额开支"
+ ],
+ "ชัยชนะ · การยอมรับ · ความภาคภูมิ": [
+  "Victory · Recognition · Pride",
+  "胜利 · 认可 · 自豪"
+ ],
+ "ชัยชนะ · ความมุ่งมั่น · การควบคุม": [
+  "Victory · Determination · Control",
+  "胜利 · 决心 · 掌控"
+ ],
+ "ชาย": [
+  "Male",
+  "男"
+ ],
+ "ชำระด้วย QR แล้วเริ่มคุยได้ทันที · คำทำนายเพื่อความบันเทิงและเป็นแนวทางชีวิต": [
+  "Pay by QR and start chatting right away · Readings are for entertainment and life guidance",
+  "扫码付款即可立即开聊 · 预测仅供娱乐及人生参考"
+ ],
+ "ชำระเงิน": [
+  "Payment",
+  "付款"
+ ],
+ "ชำระเงินด้วย QR": [
+  "Pay by QR",
+  "扫码付款"
+ ],
+ "ชำระเงินด้วย QR ก่อน แล้วกรอกคำถามให้หมอดู": [
+  "Pay by QR first, then fill in your question for the fortune teller",
+  "先扫码付款，再填写给占卜师的问题"
+ ],
+ "ชำระเงินสำเร็จ": [
+  "Payment successful",
+  "付款成功"
+ ],
+ "ชำระแล้วจึงเริ่มบริการ": [
+  "Service starts after payment",
+  "付款后开始服务"
+ ],
+ "ชีวิตกำลังเสียสมดุล บางเรื่องมากเกินไป บางเรื่องน้อยเกินไป": [
+  "Life is out of balance; some things are too much, others too little",
+  "生活正在失衡，有些事过多，有些事过少"
+ ],
+ "ชื่อ": [
+  "Name",
+  "姓名"
+ ],
+ "ชื่อ 5 ตัวเลือก": [
+  "5 name options",
+  "5个名字选项"
+ ],
+ "ชื่อ 5 ตัวเลือก พร้อมคำอ่าน ความหมาย และเหตุผล แก้ได้ 1 รอบตามโจทย์เดิม": [
+  "5 name options with pronunciation, meaning and reasoning; 1 revision based on the original brief",
+  "5个名字选项，附读音、含义及理由；可按原需求修改1次"
+ ],
+ "ชื่อ สกุล": [
+  "Name & surname",
+  "姓名"
+ ],
+ "ชื่อ เบอร์ หรือทะเบียนที่ต้องการวิเคราะห์": [
+  "Name, phone number or license plate to analyze",
+  "需分析的姓名、号码或车牌"
+ ],
+ "ชื่อ-นามสกุล": [
+  "Full name",
+  "姓名"
+ ],
+ "ชื่อ-นามสกุลผู้รับบุญ": [
+  "Full name of merit recipient",
+  "功德受益人姓名"
+ ],
+ "ชื่อของคุณมีพลังของ": [
+  "Your name carries the energy of",
+  "你的名字蕴含着这种能量："
+ ],
+ "ชื่อจริง": [
+  "First name",
+  "名字"
+ ],
+ "ชื่อประเทศสื่อถึงสายประเพณีที่ใช้ในพื้นที่นั้น หลายศาสตร์มีประวัติถ่ายทอดข้ามประเทศ": [
+  "Country names refer to the traditions practiced in that area; many arts have been passed across borders",
+  "国家名称代表当地使用的传统流派，许多命理术曾跨国传承"
+ ],
+ "ชื่อปัจจุบัน": [
+  "Current name",
+  "现用名"
+ ],
+ "ชื่อผู้รับ": [
+  "Recipient name",
+  "收件人姓名"
+ ],
+ "ชื่อมงคล": [
+  "Auspicious name",
+  "吉祥名字"
+ ],
+ "ชื่อเล่น": [
+  "Nickname",
+  "昵称"
+ ],
+ "ชื่อเล่นของอีกฝ่าย": [
+  "The other person's nickname",
+  "对方的昵称"
+ ],
+ "ชื่อและนามสกุลปัจจุบัน": [
+  "Current name and surname",
+  "现用姓名"
+ ],
+ "ชื่อใหม่ 5 ตัวเลือก": [
+  "5 new name options",
+  "5个新名字选项"
+ ],
+ "ชื่อใหม่ 5 ตัวเลือก พร้อมเทียบเสียงกับนามสกุลและอธิบายหลักที่ใช้ แก้ได้ 1 รอบ": [
+  "5 new name options, checked for sound with your surname and with the principles explained; 1 revision",
+  "5个新名字选项，对照姓氏读音并说明所用原则；可修改1次"
+ ],
+ "ชื่อ–นามสกุลที่ต้องการวิเคราะห์": [
+  "First name–surname to analyze",
+  "需分析的姓名"
+ ],
+ "ชุด": [
+  "Suit",
+  "牌组"
+ ],
+ "ชุดธูปเทียนไหว้พระประจำวันเกิด": [
+  "Birth-day incense & candle set for temple prayer",
+  "出生日拜佛香烛套装"
+ ],
+ "ช่วงขาลงเป็นเรื่องชั่วคราว อย่าฝืนกระแส รอจังหวะที่เหมาะสม": [
+  "A downturn is only temporary; don't fight the current, wait for the right moment",
+  "低谷只是暂时的，不要逆流而行，等待合适的时机"
+ ],
+ "ช่วงนี้ต้องใช้ความอดทน เลี่ยงการตัดสินใจเรื่องใหญ่ตอนอารมณ์ไม่นิ่ง": [
+  "Patience is needed now; avoid big decisions when your emotions are unsettled",
+  "此时需要耐心，情绪不稳时避免做重大决定"
+ ],
+ "ช่วงนี้พลังของธาตุ": [
+  "Lately the energy of the element",
+  "近期元素"
+ ],
+ "ช่วงนี้อาจดูเงียบเหงา แต่เป็นเวลาดีในการวางรากฐาน": [
+  "This period may feel quiet, but it's a good time to lay foundations",
+  "这段时间或许冷清，却是打基础的好时机"
+ ],
+ "ช่วงนี้เป็นจังหวะเริ่มต้นที่ดี สิ่งที่ตั้งใจมีโอกาสสำเร็จสูง": [
+  "This is a good time to begin; what you intend has a high chance of success",
+  "此时是开始的好时机，心中所愿极有可能成功"
+ ],
+ "ช่วงนี้ไพ่": [
+  "Right now the cards",
+  "近期牌面"
+ ],
+ "ช่วงลำบากทางการเงินหรือทางใจ ความช่วยเหลืออยู่ใกล้กว่าที่คิด": [
+  "A hard time financially or emotionally; help is closer than you think",
+  "经济或心灵上的艰难时期，帮助比你想象的更近"
+ ],
+ "ช่วงวันที่สะดวก": [
+  "Preferred dates",
+  "方便的日期"
+ ],
+ "ช่วงเวลาสนุกกับเพื่อนฝูง มีงานเลี้ยงหรือข่าวน่ายินดี": [
+  "A fun time with friends, with parties or happy news",
+  "与朋友欢聚的时光，有聚会或喜讯"
+ ],
+ "ช่วงเวลาแห่งความสุข งานฉลอง หรือความสำเร็จที่ควรภูมิใจ": [
+  "A time of happiness, celebration, or achievements to be proud of",
+  "幸福的时刻、庆典，或值得骄傲的成就"
+ ],
+ "ช่วงเวลาแห่งความอุดมสมบูรณ์ ความรักและความคิดสร้างสรรค์กำลังผลิบาน": [
+  "A time of abundance; love and creativity are blossoming",
+  "丰盛的时期，爱与创造力正在绽放"
+ ],
+ "ช่วงเวลาแห่งความอุดมสมบูรณ์ ความสุขมาจากหลายทาง": [
+  "A time of abundance, with happiness coming from many directions",
+  "丰盛之时，幸福从四方而来"
+ ],
+ "ช่วงไหนอยากให้งานราบรื่น ลองใส่หรือพกของ": [
+  "When you want work to go smoothly, try wearing or carrying something",
+  "想让工作顺利时，试着穿戴或携带"
+ ],
+ "ช่วยให้คุณ": [
+  "helps you",
+  "助你"
+ ],
+ "ช่างคุย มีไอเดีย": [
+  "Chatty and full of ideas",
+  "健谈，点子多"
+ ],
+ "ช่างพูด ฉลาด ปรับตัวเก่ง อยากรู้อยากเห็น": [
+  "Talkative, clever, adaptable, curious",
+  "健谈、聪明、适应力强、好奇心旺盛"
+ ],
+ "ซศสีื๊": [
+  "ซศสีื๊",
+  "ซศสีื๊"
+ ],
+ "ซาจู": [
+  "Saju",
+  "四柱八字（韩国）"
+ ],
+ "ซาจูเกาหลี": [
+  "Korean Saju",
+  "韩国四柱"
+ ],
+ "ซิกิดี": [
+  "Sikidy",
+  "西基迪（Sikidy）"
+ ],
+ "ญาณหยั่งรู้ · ความลับ · จิตใต้สำนึก": [
+  "Intuition · Secrets · The subconscious",
+  "直觉 · 秘密 · 潜意识"
+ ],
+ "ญี่ปุ่น": [
+  "Japan",
+  "日本"
+ ],
+ "ฏฐไ์": [
+  "ฏฐไ์",
+  "ฏฐไ์"
+ ],
+ "ดวงการเงินปีนี้": [
+  "My finances this year",
+  "今年财运"
+ ],
+ "ดวงของ": [
+  "Fortune of",
+  "运势："
+ ],
+ "ดวงของคุณวันนี้": [
+  "Your fortune today",
+  "你的今日运势"
+ ],
+ "ดวงคนใกล้ตัว": [
+  "Loved Ones' Fortunes",
+  "亲友运势"
+ ],
+ "ดวงคนใกล้ตัววันนี้": [
+  "Loved Ones' Fortunes today",
+  "今日亲友运势"
+ ],
+ "ดวงความรัก": [
+  "Love Reading",
+  "爱情运势"
+ ],
+ "ดวงความรักเดือนนี้เป็นอย่างไร": [
+  "How is my love life this month?",
+  "这个月爱情运如何？"
+ ],
+ "ดวงจันทร์": [
+  "The Moon",
+  "月亮"
+ ],
+ "ดวงจีน ปาจื้อ / จื่อเวยโต่วซู่": [
+  "Chinese astrology: BaZi / Zi Wei Dou Shu",
+  "中国命理：八字 / 紫微斗数"
+ ],
+ "ดวงดาว": [
+  "The Star",
+  "星星"
+ ],
+ "ดวงดาวรอคุณอยู่": [
+  "The stars await you",
+  "星辰在等你"
+ ],
+ "ดวงทั้งครอบครัว / กลุ่ม": [
+  "Family / group fortune",
+  "全家 / 群组运势"
+ ],
+ "ดวงพม่าจากวันเกิด 8 วัน ดูนิสัยและพระประจำวันเกิด": [
+  "Burmese astrology from the 8-day birth week: personality and your birth-day Buddha",
+  "基于八日星期的缅甸命理，看性格与出生日守护佛"
+ ],
+ "ดวงฟรี · ต้อนรับสมาชิกใหม่": [
+  "Free reading · welcome gift for new members",
+  "免费算命 · 新会员见面礼"
+ ],
+ "ดวงวันนี้": [
+  "Today's fortune",
+  "今日运势"
+ ],
+ "ดวงวันนี้ของ": [
+  "Today's fortune for",
+  "今日运势："
+ ],
+ "ดวงสมพงษ์": [
+  "Compatibility",
+  "合婚配对"
+ ],
+ "ดวงสี่เสาแบบเกาหลี ดูนิสัย คู่ครอง และเส้นทางอาชีพ": [
+  "Korean Four Pillars: personality, partner and career path",
+  "韩国四柱：看性格、伴侣与事业方向"
+ ],
+ "ดวงสี่เสาแบบเกาหลี ใช้ปี เดือน วัน และเวลาเกิดอ่านนิสัย จังหวะชีวิต และความเข้ากันของสองคน": [
+  "Korean Four Pillars, using birth year, month, day and hour to read personality, life rhythms and compatibility between two people",
+  "韩国四柱，以出生年、月、日、时解读性格、人生节奏与两人的契合度"
+ ],
+ "ดวงอาทิตย์": [
+  "The Sun",
+  "太阳"
+ ],
+ "ดอกบัวยังตูม รอแสงอรุณ": [
+  "The lotus is still in bud, waiting for the dawn",
+  "莲花含苞，静待晨曦"
+ ],
+ "ดาบ": [
+  "Swords",
+  "宝剑"
+ ],
+ "ดาวเหนือนิ่งกลางฟ้า ชี้ทางผู้เดินทาง": [
+  "The North Star stands still in the sky, guiding the traveller",
+  "北极星静悬天际，为行人指路"
+ ],
+ "ดำ": [
+  "Black",
+  "黑色"
+ ],
+ "ดิน": [
+  "earth",
+  "土"
+ ],
+ "ดิน-น้ำ": [
+  "Earth-Water",
+  "土-水"
+ ],
+ "ดี": [
+  "Good",
+  "吉"
+ ],
+ "ดีมาก": [
+  "Very good",
+  "大吉"
+ ],
+ "ดื่มกาแฟตุรกีแล้วคว่ำถ้วยลงบนจานรอง ผู้อ่านดูรูปทรงที่กากกาแฟทิ้งไว้ในถ้วย แล้วตีความเป็นเรื่องราว": [
+  "After drinking Turkish coffee, the cup is turned over onto its saucer; the reader studies the shapes left by the grounds and interprets them as a story",
+  "喝完土耳其咖啡后将杯子倒扣在碟上，占卜者观察咖啡渣留下的形状，解读成故事"
+ ],
+ "ดูดวง": [
+  "Readings",
+  "算命"
+ ],
+ "ดูดวงกับ": [
+  "Reading with",
+  "占卜师："
+ ],
+ "ดูดวงข้อมือ": [
+  "Wrist reading",
+  "腕纹占卜"
+ ],
+ "ดูดวงความรัก": [
+  "Love Reading",
+  "爱情算命"
+ ],
+ "ดูดวงจากศาสตร์ต่าง ๆ": [
+  "Fortune readings from many sciences",
+  "多种命理算命"
+ ],
+ "ดูดวงตามประเทศ": [
+  "Readings by Country",
+  "按国家算命"
+ ],
+ "ดูดวงตามประเภท": [
+  "Readings by Type",
+  "按类型算命"
+ ],
+ "ดูดวงประจำวัน": [
+  "Daily Horoscope",
+  "每日运势"
+ ],
+ "ดูดวงประจำวัน รายเดือน": [
+  "Daily Horoscope monthly",
+  "每日运势 月度"
+ ],
+ "ดูดวงประเภทนี้": [
+  "Readings of this type",
+  "此类算命"
+ ],
+ "ดูดวงฝ่าเท้า": [
+  "Sole reading",
+  "脚掌纹占卜"
+ ],
+ "ดูดวงลายมือ": [
+  "Palm reading",
+  "手相"
+ ],
+ "ดูดวงวันนี้": [
+  "Today's Reading",
+  "今日运势"
+ ],
+ "ดูดวงและหาฤกษ์มงคลตามปฏิทินเขมร": [
+  "Fortune reading and auspicious timing by the Khmer calendar",
+  "按高棉历算命与择吉时"
+ ],
+ "ดูดวงแล้ว": [
+  "Readings done",
+  "已算命"
+ ],
+ "ดูทำเลและทิศทางของสุสานบรรพบุรุษ": [
+  "Assess the site and orientation of ancestral graves",
+  "勘察祖坟的位置与朝向"
+ ],
+ "ดูทิศ ที่ตั้ง และการจัดวางพื้นที่": [
+  "Reads direction, location and spatial layout",
+  "看朝向、位置与空间布局"
+ ],
+ "ดูทิศ ที่ตั้ง และการจัดวางพื้นที่ให้พลังไหลเวียนดี เสริมความเป็นมงคลด้านการงาน การเงิน และความสัมพันธ์": [
+  "Reads direction, location and layout so energy flows well, enhancing good fortune in career, money and relationships",
+  "看朝向、位置与空间布局，使气场流通顺畅，助旺事业、财运与人际关系"
+ ],
+ "ดูทิศและที่ตั้งก่อนซื้อหรือสร้างบนที่ดิน": [
+  "Check orientation and site before buying or building on land",
+  "购买或建造前勘察土地方位与位置"
+ ],
+ "ดูบริการดูดวงทั้งหมด": [
+  "See all readings",
+  "查看全部算命服务"
+ ],
+ "ดูบ้านเลขที่": [
+  "House Number Reading",
+  "门牌号解读"
+ ],
+ "ดูบ้านเลขที่มงคลและผลต่อผู้อยู่อาศัย": [
+  "Find an auspicious house number and its effect on residents",
+  "查看吉祥门牌号及其对居住者的影响"
+ ],
+ "ดูป้ายทะเบียนรถ": [
+  "License Plate Reading",
+  "车牌号解读"
+ ],
+ "ดูผลรวมทะเบียนรถตามหลักเลขศาสตร์": [
+  "Numerology total of your licence plate",
+  "按数字命理计算车牌号总和"
+ ],
+ "ดูผลรวมเลขบัตรประชาชนตามหลักเลขศาสตร์": [
+  "Numerology total of your ID card number",
+  "按数字命理计算身份证号总和"
+ ],
+ "ดูพื้นดวง · ดูความสัมพันธ์": [
+  "Natal chart · Relationships",
+  "本命盘 · 感情关系"
+ ],
+ "ดูพื้นดวง · ดูช่วงชีวิต": [
+  "Natal chart · Life periods",
+  "本命盘 · 人生阶段"
+ ],
+ "ดูพื้นดวง · ดูช่วงชีวิต · หาฤกษ์": [
+  "Natal chart · Life periods · Auspicious times",
+  "本命盘 · 人生阶段 · 择吉时"
+ ],
+ "ดูพื้นดวง · ดูช่วงวัย": [
+  "Natal chart · Life stages",
+  "本命盘 · 人生年龄段"
+ ],
+ "ดูพื้นดวง · ดูดวงคู่": [
+  "Natal chart · Couple reading",
+  "本命盘 · 双人合盘"
+ ],
+ "ดูพื้นดวงและจังหวะชีวิตจากวันเวลาเกิด แม่นเรื่องช่วงขึ้นลงของแต่ละปี": [
+  "Reads your core destiny and life rhythms from birth date and time; precise on each year's ups and downs",
+  "根据出生日期时间看命格与人生节奏，精准把握每年起伏"
+ ],
+ "ดูพื้นดวงและหาฤกษ์งานบุญแบบลาว": [
+  "Lao-style destiny reading and auspicious timing for merit ceremonies",
+  "老挝式看命格，并为功德仪式择吉时"
+ ],
+ "ดูภาพรวมเส้นทางชีวิต": [
+  "See the big picture of your life path",
+  "纵观人生道路的全貌"
+ ],
+ "ดูรายละเอียด": [
+  "View details",
+  "查看详情"
+ ],
+ "ดูลายมือ": [
+  "Palm Reading",
+  "手相"
+ ],
+ "ดูว่าชื่อและนามสกุลปัจจุบันเสริมหรือขัดกับวันเกิดอย่างไร": [
+  "See how your current first name and surname support or clash with your birth date",
+  "看看您现在的姓名与生日是相辅还是相冲"
+ ],
+ "ดูสถานะและคำตอบได้ที่ “ประวัติการดูดวง” ในหน้าบัญชี": [
+  "See status and answers in “reading history” on your account page",
+  "可在账户页面的“算命记录”查看进度和回复"
+ ],
+ "ดูเบอร์โทรศัพท์": [
+  "Phone Number Reading",
+  "手机号解读"
+ ],
+ "ดูเมื่อ": [
+  "Viewed on",
+  "查看时间"
+ ],
+ "ดูเลขบัตรประชาชน": [
+  "ID Card Number Reading",
+  "身份证号解读"
+ ],
+ "ดูเลย": [
+  "View now",
+  "立即查看"
+ ],
+ "ดูแพ็กเกจ": [
+  "View package",
+  "查看套餐"
+ ],
+ "ดูแลความสัมพันธ์ที่มีอยู่ให้แน่นแฟ้น": [
+  "Nurture the relationships you already have",
+  "用心维系现有的感情"
+ ],
+ "ดูแลสุขภาพ พักผ่อนให้พอ": [
+  "Take care of your health and rest well",
+  "注意健康，充分休息"
+ ],
+ "ดูโหงวเฮ้ง": [
+  "Face Reading",
+  "面相"
+ ],
+ "ดูไพ่ทาโรต์": [
+  "Tarot Reading",
+  "塔罗牌占卜"
+ ],
+ "ตรวจดวงด้วยญาณทิพย์ ตรวจกรรม และสิ่งศักดิ์สิทธิ์": [
+  "Psychic insight into karma and sacred influences",
+  "以天眼通查看运势、业力与神灵"
+ ],
+ "ตรวจยอดเงินให้ตรง แล้วยืนยันการโอน": [
+  "Check the amount carefully, then confirm the transfer",
+  "核对金额无误后确认转账"
+ ],
+ "ตรวจสอบรายจ่ายประจำ": [
+  "Review your regular expenses",
+  "检查日常固定开支"
+ ],
+ "ตอนนี้มีคนถามเยอะมาก รอสักครู่แล้วลองใหม่นะคะ": [
+  "Lots of people are asking right now — please wait a moment and try again.",
+  "现在提问的人很多，请稍后再试。"
+ ],
+ "ตอบทันที": [
+  "Instant answers",
+  "即时回答"
+ ],
+ "ตะวันตก ตะวันออกกลาง และแอฟริกา": [
+  "The West, Middle East and Africa",
+  "西方、中东与非洲"
+ ],
+ "ตะวันส่องทั่วทุ่ง ข้าวออกรวงเต็มนา": [
+  "The sun shines over the fields; the rice is full in ear",
+  "阳光普照田野，稻穗饱满满田"
+ ],
+ "ตะเกียงดวงน้อยในคืนมืด ส่องทางให้ผู้หลง": [
+  "A small lamp in the dark night lights the way for the lost",
+  "暗夜小灯，为迷途者照路"
+ ],
+ "ตัดสินใจ": [
+  "Decisions",
+  "抉择"
+ ],
+ "ตัดสินใจด้วยเหตุผลและความยุติธรรม คำแนะนำจากผู้เชี่ยวชาญมีค่า": [
+  "Decide with reason and fairness; expert advice is valuable",
+  "以理性与公正做决定，专家的建议很宝贵"
+ ],
+ "ตัดสินใจเรื่องเงินอย่างมีเหตุผลและได้ผลดี": [
+  "Make money decisions rationally and they'll turn out well",
+  "理性做财务决定，结果良好"
+ ],
+ "ตัวกรอง": [
+  "Filter",
+  "筛选"
+ ],
+ "ตัวคุณ": [
+  "You",
+  "你自己"
+ ],
+ "ตัวเลือก 3 วันหรือช่วงเวลา พร้อมเหตุผลและเงื่อนไขของแต่ละช่วง": [
+  "3 date or time options, with the reasons and conditions for each",
+  "3个日期或时段选项，附各自理由与条件"
+ ],
+ "ตัวเอง": [
+  "Myself",
+  "本人"
+ ],
+ "ตั้งคำถามแล้วเสี่ยงทายเพื่อได้ “กว้า” 1 ใน 64 แบบ จากนั้นอ่านคำอธิบายตามคัมภีร์อี้จิงเพื่อหาแนวทางของเรื่องนั้น": [
+  "Ask a question and cast to receive one of the 64 “hexagrams”, then read its explanation in the I Ching to find guidance on the matter",
+  "提出问题后起卦，得到64“卦”之一，再依《易经》释义寻找该事的方向"
+ ],
+ "ตั้งคำถามในใจ แล้วเลือกรูปแบบการเปิดไพ่": [
+  "Hold a question in your mind, then choose a spread",
+  "在心中默念问题，然后选择牌阵"
+ ],
+ "ตั้งจิตอธิษฐาน เขย่า แล้วอ่านคำทำนายได้ทันที": [
+  "Make a wish, shake, and read your prediction instantly",
+  "默念祈愿，摇签，即刻阅读签文"
+ ],
+ "ตั้งจิตอธิษฐานถึงเรื่องที่อยากรู้ แล้วกดเขย่ากระบอก": [
+  "Focus your mind on what you wish to know, then tap to shake the cup",
+  "心中默念想问之事，然后点击摇动签筒"
+ ],
+ "ตั้งจิตแล้วเปิดไพ่ทาโรต์ 1 ใบ รับคำแนะนำสำหรับวันนี้": [
+  "Focus your mind and draw 1 Tarot card for today's guidance",
+  "静心抽1张塔罗牌，获得今日指引"
+ ],
+ "ตั้งจิตให้สงบ นึกถึงคำถาม แล้วกดสับไพ่": [
+  "Calm your mind, think of your question, then press Shuffle",
+  "静下心来，默想你的问题，然后点击洗牌"
+ ],
+ "ตั้งชื่อ": [
+  "Naming",
+  "取名"
+ ],
+ "ตั้งชื่อ · เปลี่ยนชื่อ · วิเคราะห์เบอร์และทะเบียน": [
+  "Naming · Name change · Number and plate analysis",
+  "起名 · 改名 · 号码与车牌分析"
+ ],
+ "ตั้งชื่อลูก": [
+  "Baby Naming",
+  "宝宝起名"
+ ],
+ "ตั้งชื่อลูก เปลี่ยนชื่อ นามสกุล หรือวิเคราะห์ชื่อเดิม": [
+  "Naming a baby, changing a first name or surname, or analyzing an existing name",
+  "为宝宝取名、改名改姓或分析现有名字"
+ ],
+ "ตั้งดวงจากเวลาที่ถาม ตอบคำถามเฉพาะเรื่องตรงจุด": [
+  "A chart cast from the moment of asking, answering a specific question to the point",
+  "以提问时刻起盘，精准回答具体问题"
+ ],
+ "ตั้งหรือเปลี่ยนชื่อตามทักษาให้เข้ากับวันเกิด": [
+  "Choose or change a name by Taksa to suit your day of birth",
+  "依泰式八宫取名或改名，与出生星期相合"
+ ],
+ "ตาทิพย์": [
+  "Clairvoyance",
+  "天眼通"
+ ],
+ "ตามขอบเขตและค่าเดินทาง": [
+  "Depends on scope and travel costs",
+  "视范围及差旅费用而定"
+ ],
+ "ตามประเทศ / ภูมิภาค": [
+  "By country / region",
+  "按国家 / 地区"
+ ],
+ "ตามประเภท": [
+  "By type",
+  "按类型"
+ ],
+ "ตามใบเสนอราคา": [
+  "Per quotation",
+  "按报价"
+ ],
+ "ตีความความฝันและลางบอกเหตุ ดี-ร้าย": [
+  "Interpret dreams and omens, good or bad",
+  "解读梦境与吉凶预兆"
+ ],
+ "ตุรกี": [
+  "Türkiye",
+  "土耳其"
+ ],
+ "ตุลย์": [
+  "Libra",
+  "天秤座"
+ ],
+ "ต่ออายุ": [
+  "Renew",
+  "续费"
+ ],
+ "ต่างกันแต่เรียนรู้จากกันได้มาก": [
+  "Different, but you can learn a lot from each other",
+  "彼此不同，却能互相学习很多"
+ ],
+ "ต้นไม้ผลิดอกออกผล ผู้คนแวะมาชื่นชม": [
+  "The tree blossoms and bears fruit; people stop by to admire it",
+  "树木开花结果，众人驻足欣赏"
+ ],
+ "ต้องระวัง": [
+  "Watch out for",
+  "需注意"
+ ],
+ "ต้องใช้ความเข้าใจ คุยกันตรง ๆ ด้วยความอ่อนโยน": [
+  "Needs understanding — talk openly and gently",
+  "需要理解，坦诚而温柔地沟通"
+ ],
+ "ถวายภัตตาหาร": [
+  "Offer food to monks",
+  "供僧斋饭"
+ ],
+ "ถวายสังฆทาน": [
+  "Offer Sangkhathan (offerings to monks)",
+  "供养僧众用品"
+ ],
+ "ถอดพลังตัวเลขจากชื่อและนามสกุลที่คุณลงทะเบียน": [
+  "Decode the numeric energy of the first and last name you registered",
+  "解读你注册的姓名中的数字能量"
+ ],
+ "ถอนความยินยอมและลบรูปทั้งหมด": [
+  "Withdraw consent and delete all photos",
+  "撤回同意并删除所有照片"
+ ],
+ "ถอยมาทบทวนสักนิด": [
+  "Step back and reflect a little",
+  "退一步，稍作反思"
+ ],
+ "ถอยออกมาสักก้าวเพื่อทบทวนตัวเอง ความสงบจะนำคำตอบมาให้": [
+  "Step back to reflect on yourself; stillness will bring the answer",
+  "退后一步反思自己，平静会带来答案"
+ ],
+ "ถาม 1 เรื่อง (ตอบเป็นข้อความ)": [
+  "Ask 1 question (text answer)",
+  "提问1个问题（文字回复）"
+ ],
+ "ถาม 1 เรื่อง · อ่านภาพรวม": [
+  "Ask 1 question · Overall reading",
+  "问1个问题 · 整体解读"
+ ],
+ "ถาม 1 เรื่อง · เปิดไพ่รายวัน · นัดคุย": [
+  "Ask 1 question · Daily card · Book a chat",
+  "问1个问题 · 每日抽牌 · 预约交谈"
+ ],
+ "ถามคำถาม 1 เรื่อง หมอดูเปิดไพ่ตามสำรับที่ระบุ แล้วตอบเป็นข้อความ": [
+  "Ask 1 question; the fortune teller draws from the chosen deck and replies in writing",
+  "问1个问题，占卜师用指定牌组抽牌并以文字回复"
+ ],
+ "ถามตัวเองว่าการชนะครั้งนี้คุ้มกับสิ่งที่เสียไปไหม": [
+  "Ask yourself whether this win is worth what you've lost",
+  "问问自己，这场胜利是否值得所付出的代价"
+ ],
+ "ถามต่อได้ไม่จำกัด": [
+  "Unlimited follow-up questions",
+  "无限次追问"
+ ],
+ "ถามใจตัวเองให้ชัดว่าต้องการอะไร": [
+  "Ask your heart clearly what you really want",
+  "清楚问问自己真正想要什么"
+ ],
+ "ถามไพ่ 1 เรื่อง": [
+  "Ask the cards 1 question",
+  "向牌提问1个问题"
+ ],
+ "ถึงเวลาคืนดีกันและปล่อยวางความขุ่นเคือง": [
+  "It's time to reconcile and let go of resentment",
+  "是时候和解并放下怨恨了"
+ ],
+ "ถึงเวลาตั้งคำถามกับกรอบเดิม ๆ และหาเส้นทางในแบบของคุณเอง": [
+  "It's time to question old frameworks and find your own path",
+  "是时候质疑旧有框架，走出属于自己的道路了"
+ ],
+ "ถึงเวลาทบทวนอดีต ให้อภัยตัวเอง และรับโอกาสครั้งใหม่": [
+  "It's time to review the past, forgive yourself, and embrace a new chance",
+  "是时候回顾过去、原谅自己，迎接新的机会了"
+ ],
+ "ถึงเวลานำทางด้วยวิสัยทัศน์ คุณมีพลังทำความฝันให้เป็นจริง": [
+  "It's time to lead with vision; you have the power to make dreams come true",
+  "是时候以远见引领，你有能力让梦想成真"
+ ],
+ "ถึงเวลาพักผ่อนและดูแลตัวเอง เมื่อใจสบายความคิดจะแจ่มใส": [
+  "Time to rest and care for yourself; with a calm heart, your mind will be clear",
+  "是时候休息、照顾自己，心安则思路清明"
+ ],
+ "ถึงเวลาเดินจากสิ่งที่ไม่เติมเต็มใจอีกต่อไป": [
+  "It's time to walk away from what no longer fulfils you",
+  "是时候离开那些无法再满足你内心的事物了"
+ ],
+ "ถ้วย": [
+  "Cups",
+  "圣杯"
+ ],
+ "ถ้าลูกยังไม่คลอด เริ่มจากความหมายและเสียงได้ก่อน ถ้าต้องการอิงวันเกิด จะยืนยันรายชื่ออีกครั้งหลังคลอด": [
+  "If your baby isn't born yet, we can start with meaning and sound; if you want to use the birth date, the list will be confirmed after birth",
+  "如宝宝尚未出生，可先从含义与读音入手；如需依据生日，出生后再确认名单"
+ ],
+ "ทรงตัว": [
+  "Steady",
+  "平稳"
+ ],
+ "ทอง": [
+  "Gold",
+  "金色"
+ ],
+ "ทองคำในทรายส่องประกาย ผู้ขยันย่อมพบเจอ": [
+  "Gold glitters in the sand; the diligent will find it",
+  "沙中黄金闪耀，勤奋者必能寻得"
+ ],
+ "ทอยลูกเต๋าแบบทิเบต ขอแนวทางก่อนเรื่องสำคัญ": [
+  "Tibetan dice casting for guidance before important matters",
+  "藏式掷骰，在大事之前求指引"
+ ],
+ "ทอยลูกเต๋าแล้วอ่านผลรวมตามตำรา มักทำโดยพระลามะหรือผู้รู้ เพื่อถามแนวทางก่อนตัดสินใจเรื่องสำคัญ": [
+  "Dice are cast and the total read according to the texts, usually by a lama or learned person, to seek guidance before an important decision",
+  "掷骰后依典籍解读点数之和，通常由喇嘛或智者进行，在重大决定前求取指引"
+ ],
+ "ทะเบียนที่ต้องการเทียบ (บรรทัดละชุด ไม่เกิน 3)": [
+  "Plates to compare (one per line, up to 3)",
+  "要比较的车牌（每行一个，最多3个）"
+ ],
+ "ทะเบียนรถ": [
+  "Licence plate",
+  "车牌"
+ ],
+ "ทะเบียนรถ (ถ้าเทียบ 3 ชุด ใส่บรรทัดละชุด)": [
+  "Licence plate (for 3 plates, one per line)",
+  "车牌号（比较3个时每行一个）"
+ ],
+ "ทักษา · วันนี้ตกเป็น": [
+  "Taksa · today falls on",
+  "泰式八宫 · 今日落在"
+ ],
+ "ทักษาตั้งชื่อ": [
+  "Taksa naming",
+  "泰式八宫取名"
+ ],
+ "ทักษาวันนี้ตกเป็น": [
+  "Taksa today falls on",
+  "泰式八宫今日落在"
+ ],
+ "ทันที": [
+  "Instant",
+  "即时"
+ ],
+ "ทั่วไป": [
+  "General",
+  "综合"
+ ],
+ "ทั้งหมด": [
+  "All",
+  "全部"
+ ],
+ "ทั้งหลัง": [
+  "Whole house",
+  "整栋房屋"
+ ],
+ "ทางตัน · ลังเล · ไม่ยอมมองความจริง": [
+  "Deadlock · Indecision · Refusing to see the truth",
+  "僵局 · 犹豫 · 不愿面对真相"
+ ],
+ "ทางสองแพร่งรออยู่ เลือกด้วยใจที่สงบ": [
+  "A crossroads awaits; choose with a calm heart",
+  "岔路在前，以平静之心抉择"
+ ],
+ "ทางเลือกมากมาย · ความฝัน · ภาพลวงตา": [
+  "Many choices · Dreams · Illusions",
+  "众多选择 · 梦想 · 幻象"
+ ],
+ "ทำงานจนจำเจ หรือติดอยู่กับที่": [
+  "Monotonous work, or feeling stuck",
+  "工作单调乏味，或停滞不前"
+ ],
+ "ทำงานซ้ำซากจนหมดไฟ หรือขาดความใส่ใจในรายละเอียด": [
+  "Repetitive work leading to burnout, or lack of attention to detail",
+  "重复工作导致倦怠，或缺乏对细节的关注"
+ ],
+ "ทำงานที่ค้างให้เสร็จก่อนรับงานใหม่": [
+  "Finish pending work before taking on new tasks",
+  "先完成手头工作，再接新任务"
+ ],
+ "ทำนายชื่อ": [
+  "Name Reading",
+  "姓名占卜"
+ ],
+ "ทำนายชื่อ-นามสกุล": [
+  "Full Name Reading",
+  "姓名全称占卜"
+ ],
+ "ทำนายฝัน": [
+  "Dream interpretation",
+  "解梦"
+ ],
+ "ทำนายแบบยามอัฏฐกาล คำนวณจากวันและเวลาที่ถาม": [
+  "Yam Atthakan prediction, calculated from the day and time you ask",
+  "泰式八时占卜，依据提问的日期和时间推算"
+ ],
+ "ทำบุญ 1 รายการ": [
+  "Make merit: 1 offering",
+  "做功德 1项"
+ ],
+ "ทำบุญ · แก้ดวงออนไลน์": [
+  "Make merit · online fortune remedies",
+  "做功德 · 在线改运"
+ ],
+ "ทำบุญ ไหว้พระ สะเดาะเคราะห์ และแก้ปีชงแทนคุณ ทีมงานทำพิธีที่สถานที่จริง แล้วส่งรูปและวิดีโอยืนยัน": [
+  "We make merit, pray at temples, perform misfortune-removal rituals and clash-year remedies on your behalf at real sites, then send photos and videos as confirmation",
+  "我们代你做功德、拜佛、举行消灾仪式及化太岁，在实地完成后发送照片和视频确认"
+ ],
+ "ทำบุญตามรายการที่เลือก พร้อมรูปถ่ายและวิดีโอยืนยันภายใน 3 วัน": [
+  "We make merit with your chosen offerings, with photo and video proof within 3 days",
+  "按您选择的项目做功德，3天内提供照片和视频凭证"
+ ],
+ "ทำบุญแทน": [
+  "Merit on Your Behalf",
+  "代做功德"
+ ],
+ "ทำบุญโลงศพ": [
+  "Donate coffins",
+  "捐棺材做功德"
+ ],
+ "ทำบุญให้ใคร": [
+  "Who is the merit for?",
+  "为谁做功德？"
+ ],
+ "ทำพิธีสะเดาะเคราะห์ตามดวง เช่น ปล่อยปลา ถวายสังฆทาน หรือทำบุญโลงศพ ตามที่หมอดูแนะนำจากวันเดือนปีเกิด": [
+  "A misfortune-removal ritual suited to your chart, such as releasing fish, offering Sangkhathan, or the coffin merit ritual, as advised by the fortune teller from your birth date",
+  "根据您的命盘举行消灾仪式，如放生鱼、供僧礼包或躺棺功德，由占卜师依您的出生日期建议"
+ ],
+ "ทิศของอาคาร": [
+  "Building orientation",
+  "建筑朝向"
+ ],
+ "ทิศหน้าบ้าน/หน้าร้าน": [
+  "Facing direction of the house/shop",
+  "房屋/店面朝向"
+ ],
+ "ทิเบต": [
+  "Tibet",
+  "西藏"
+ ],
+ "ทีมงานสนับสนุนดี งานสำเร็จด้วยความร่วมมือ": [
+  "Strong team support; success through cooperation",
+  "团队支持有力，合作成就事业"
+ ],
+ "ทีมงานไปทำบุญแทนคุณที่วัดสำคัญ เช่น ถวายสังฆทาน ถวายภัตตาหาร หรือบริจาคค่าน้ำค่าไฟวัด ในชื่อของคุณหรือคนที่คุณรัก": [
+  "Our team makes merit for you at major temples, such as offering Sangkhathan, offering meals to monks, or donating to temple utilities, in your name or a loved one's",
+  "团队代您在重要寺庙做功德，如供僧礼包、供斋或捐助寺庙水电费，以您或您所爱之人的名义"
+ ],
+ "ทีมงานไหว้พระและกล่าวคำอธิษฐานในชื่อของคุณ ที่วัดหรือพระธาตุที่คุณเลือก": [
+  "Our team pays respect to the Buddha and says prayers in your name at the temple or stupa you choose",
+  "团队以您的名义在您选择的寺庙或佛塔礼佛并诵念祈愿"
+ ],
+ "ทีมจะทำพิธีให้ภายใน 3 วัน และส่งรูปถ่ายกับวิดีโอยืนยันมาที่ “ประวัติการดูดวง”": [
+  "Our team will perform the ritual within 3 days and send photo and video confirmation to “reading history”",
+  "团队将在3天内完成仪式，并将照片和视频确认发送到“算命记录”"
+ ],
+ "ทีมจะส่งไฟล์ให้ภายใน 24 ชั่วโมงใน “ประวัติการดูดวง”": [
+  "The team will send the file within 24 hours in “Reading history”",
+  "团队将在24小时内把文件发送到“算命记录”"
+ ],
+ "ทีมทำพิธีที่สถานที่จริง": [
+  "Our team performs the ritual on site",
+  "团队在实地举行仪式"
+ ],
+ "ทีมไม่ประสานกัน หรืองานยังขาดคุณภาพ": [
+  "The team isn't in sync, or the work still lacks quality",
+  "团队配合不佳，或工作质量仍有欠缺"
+ ],
+ "ที่ดิน": [
+  "Land",
+  "土地"
+ ],
+ "ที่อยู่จัดส่ง": [
+  "Shipping address",
+  "收货地址"
+ ],
+ "ทุกครั้งที่ดูดวง ระบบเก็บข้อมูลและรูปไว้ที่นี่ แล้วนำมารวมเป็นรายงานดวงประจำวันให้อัตโนมัติ": [
+  "Every time you get a reading, your details and photos are saved here and automatically combined into your daily horoscope report",
+  "每次算命，系统都会将资料和照片保存在这里，并自动汇总成每日运势报告"
+ ],
+ "ทุกประเทศ": [
+  "All countries",
+  "所有国家"
+ ],
+ "ทุกประเภท": [
+  "All types",
+  "所有类型"
+ ],
+ "ทุกอย่างจะได้รับการตัดสินอย่างเป็นธรรม ความซื่อสัตย์คือกุญแจ": [
+  "Everything will be judged fairly; honesty is the key",
+  "一切都将得到公正的裁决，诚实是关键"
+ ],
+ "ทุ่มให้งานหรือคนอื่นจนละเลยตัวเอง": [
+  "Giving so much to work or others that you neglect yourself",
+  "为工作或他人付出太多而忽略了自己"
+ ],
+ "ท่าน": [
+  "fortune tellers",
+  "位"
+ ],
+ "ธนู": [
+  "Sagittarius",
+  "射手座"
+ ],
+ "ธาตุ": [
+  "Element",
+  "元素"
+ ],
+ "ธาตุครบทั้ง 4 สมดุลดี": [
+  "All 4 elements present — well balanced",
+  "四元素齐全，十分平衡"
+ ],
+ "ธาตุดิน": [
+  "Earth element",
+  "土元素"
+ ],
+ "ธาตุต่างกัน ต้องปรับจังหวะเข้าหากัน": [
+  "Different elements — adjust to each other's rhythm",
+  "元素不同，需要互相调整节奏"
+ ],
+ "ธาตุน้ำ": [
+  "Water element",
+  "水元素"
+ ],
+ "ธาตุลม": [
+  "Air element",
+  "风元素"
+ ],
+ "ธาตุส่งเสริมกัน เติมเต็มสิ่งที่อีกฝ่ายขาด": [
+  "Complementary elements — each fills what the other lacks",
+  "元素相生，互补对方所缺"
+ ],
+ "ธาตุเดียวกัน เข้าใจกันง่าย คิดคล้ายกัน": [
+  "Same element — easy to understand each other, similar thinking",
+  "元素相同，容易理解，想法相近"
+ ],
+ "ธาตุไฟ": [
+  "Fire element",
+  "火元素"
+ ],
+ "น.": [
+  "",
+  ""
+ ],
+ "นกบินคืนรัง พบพาความอบอุ่น": [
+  "The bird flies home to its nest and finds warmth",
+  "鸟儿归巢，寻得温暖"
+ ],
+ "นักคิด": [
+  "The Thinker",
+  "思想者"
+ ],
+ "นักบริหาร": [
+  "The Executive",
+  "管理者"
+ ],
+ "นักบวชหญิง": [
+  "The High Priestess",
+  "女祭司"
+ ],
+ "นักผจญภัย": [
+  "The Adventurer",
+  "冒险家"
+ ],
+ "นักมายากล": [
+  "The Magician",
+  "魔术师"
+ ],
+ "นักสร้างรากฐาน": [
+  "The Builder",
+  "奠基者"
+ ],
+ "นักสร้างสรรค์": [
+  "The Creator",
+  "创造者"
+ ],
+ "นัดปรึกษาส่วนตัว 30 นาที": [
+  "Private consultation, 30 minutes",
+  "私人咨询 30分钟"
+ ],
+ "นัดปรึกษาส่วนตัวกับหมอดูโหราศาสตร์ไทย ใช้วัน เวลา และสถานที่เกิด": [
+  "A private consultation with a Thai astrologer, using your birth date, time and place",
+  "与泰国占星师私人咨询，使用您的出生日期、时间及地点"
+ ],
+ "นัดอ่านผังดวง 30 นาที": [
+  "Chart reading session, 30 minutes",
+  "命盘解读预约 30分钟"
+ ],
+ "นัดอ่านผังดวงปาจื้อ จื่อเวย หรือโหราศาสตร์ตะวันตกกับผู้เชี่ยวชาญ": [
+  "Book a BaZi, Zi Wei or Western astrology chart reading with an expert",
+  "预约专家解读八字、紫微或西洋占星命盘"
+ ],
+ "นาที": [
+  "minutes",
+  "分钟"
+ ],
+ "นามสกุล": [
+  "Last name",
+  "姓氏"
+ ],
+ "นามสกุล 5 ตัวเลือก": [
+  "5 surname options",
+  "5个姓氏选项"
+ ],
+ "นามสกุล 5 ตัวเลือก พร้อมคำอ่าน ความหมาย และเสียงเมื่ออ่านคู่กับชื่อจริง แก้ได้ 1 รอบ": [
+  "5 surname options with pronunciation, meaning and how they sound with your first name; 1 revision",
+  "5个姓氏选项，附读音、含义及与名字连读的效果；可修改1次"
+ ],
+ "นามสกุลของลูก": [
+  "Child's surname",
+  "孩子的姓氏"
+ ],
+ "นำข้อมูลเกิดมาจัดตารางฐานและอ่านตามหลักที่ผู้ให้บริการใช้": [
+  "Your birth data is set into a base chart and read according to the provider's method",
+  "将出生资料排成基础命盘，按服务者所用方法解读"
+ ],
+ "นำวันเดือนปีเกิดมาจัดเป็นตารางตัวเลข 9 ฐาน แล้วอ่านความหมายตามหลักที่ผู้ให้บริการใช้ ดูพื้นดวงและช่วงวัย": [
+  "Your date of birth is arranged into a 9-base number grid, then read by the principles the provider uses to see your core destiny and life stages",
+  "将出生年月日排成九宫数字表，按服务者所用的原则解读，看命格与人生各阶段"
+ ],
+ "นิสัยตัวตน": [
+  "Personality",
+  "性格本质"
+ ],
+ "นิสัยเด่นของคุณ": [
+  "Your standout traits",
+  "你的突出性格"
+ ],
+ "น้ำ": [
+  "Water",
+  "水"
+ ],
+ "น้ำ-ดิน": [
+  "Water-Earth",
+  "水-土"
+ ],
+ "น้ำตาล": [
+  "brown",
+  "棕"
+ ],
+ "น้ำเงิน": [
+  "navy blue",
+  "深蓝"
+ ],
+ "น้ำไหลรินสู่ทะเล ค่อยเป็นค่อยไปถึงปลายทาง": [
+  "Water trickles to the sea, reaching its destination step by step",
+  "细水流向大海，循序渐进终达彼岸"
+ ],
+ "บริการ": [
+  "Services",
+  "服务"
+ ],
+ "บริการของเรา": [
+  "Our Services",
+  "我们的服务"
+ ],
+ "บริการดูดวง ตั้งชื่อ เปลี่ยนชื่อ ดูเบอร์ ดูทะเบียน หาฤกษ์ ลายมือ โหงวเฮ้ง ฮวงจุ้ย และเสี่ยงเซียมซี": [
+  "Fortune reading, baby naming, name changes, phone and plate readings, auspicious times, palm reading, face reading, Feng Shui and Siam Si fortune sticks",
+  "算命、起名、改名、手机号与车牌解读、择吉时、手相、面相、风水及求签"
+ ],
+ "บริการนี้ยังไม่เปิดให้จอง จะแจ้งเตือนเมื่อเปิด": [
+  "This service isn't open for booking yet — we'll notify you when it opens",
+  "此服务尚未开放预约，开放时将通知你"
+ ],
+ "บริการมงคล": [
+  "Blessing Services",
+  "祈福服务"
+ ],
+ "บริการและราคา": [
+  "Services & prices",
+  "服务与价格"
+ ],
+ "บริจาคค่าน้ำค่าไฟวัด": [
+  "Donate to temple utility bills",
+  "捐助寺庙水电费"
+ ],
+ "บริวาร": [
+  "Boriwan (dependants)",
+  "眷属"
+ ],
+ "บวงสรวง": [
+  "Offering ceremony",
+  "祭祀仪式"
+ ],
+ "บอกว่า": [
+  "says",
+  "说"
+ ],
+ "บัญชี": [
+  "Account",
+  "账户"
+ ],
+ "บันทึก": [
+  "Save",
+  "保存"
+ ],
+ "บันทึกข้อมูลแล้ว": [
+  "Details saved",
+  "资料已保存"
+ ],
+ "บันทึกรหัสแล้ว ลองถามแม่หมอ AI ได้เลย": [
+  "Code saved — go ahead and ask the AI Seer",
+  "代码已保存，快去问AI占卜师吧"
+ ],
+ "บันทึกรูปลงแฟ้มดวงแล้ว": [
+  "Photo saved to your Fortune File",
+  "照片已保存到命理档案"
+ ],
+ "บาดแผลกำลังสมานตัว ค่อย ๆ ปล่อยความเจ็บปวดไป": [
+  "Wounds are healing; slowly let the pain go",
+  "伤口正在愈合，慢慢放下痛苦"
+ ],
+ "บ้าน": [
+  "House",
+  "住宅"
+ ],
+ "บ้าน / ที่ทำงาน": [
+  "Home / workplace",
+  "住宅 / 工作场所"
+ ],
+ "บ้านที่กำลังจะซื้อ / เช่า": [
+  "Home you're about to buy / rent",
+  "即将购买 / 租住的房屋"
+ ],
+ "บ้านเลขที่": [
+  "House number",
+  "门牌号"
+ ],
+ "บ้านเลขที่ ถนน แขวง/ตำบล เขต/อำเภอ จังหวัด รหัสไปรษณีย์": [
+  "House no., street, subdistrict, district, province, postcode",
+  "门牌号、街道、街区/乡、区/县、府、邮编"
+ ],
+ "บ้านเลขที่ที่ต้องการวิเคราะห์ (ไม่ต้องใส่ถนนหรือจังหวัด)": [
+  "House number to analyse (no street or province needed)",
+  "要分析的门牌号（无需填写街道或府）"
+ ],
+ "ประตูบานใหม่เปิดรอ ก้าวเข้าไปอย่าหวั่นกลัว": [
+  "A new door opens and waits; step through without fear",
+  "新门已开，勇敢迈入勿惧"
+ ],
+ "ประตูแห่งโชคชะตา": [
+  "The Gateway of Destiny",
+  "命运之门"
+ ],
+ "ประวัติการดูดวง": [
+  "Reading history",
+  "算命记录"
+ ],
+ "ประเพณี · ครูบาอาจารย์ · ความเชื่อ": [
+  "Tradition · Teachers · Belief",
+  "传统 · 导师 · 信仰"
+ ],
+ "ประเภท": [
+  "Type",
+  "类型"
+ ],
+ "ประเภทงาน": [
+  "Type of work",
+  "工作类型"
+ ],
+ "ประเภทที่อยู่": [
+  "Type of residence",
+  "住所类型"
+ ],
+ "ปรับสมดุลบ้านและสิ่งแวดล้อม เสริมความเป็นสิริมงคล": [
+  "Balance home and surroundings for greater auspiciousness",
+  "调和住宅与环境，增添吉祥"
+ ],
+ "ปรัศนะ": [
+  "Prashna",
+  "问事占星（Prashna）"
+ ],
+ "ปรึกษาหมอดูเพิ่มเติม": [
+  "Consult a fortune teller further",
+  "进一步咨询占卜师"
+ ],
+ "ปรึกษาเฉพาะหัวข้อ": [
+  "Topic-specific consultation",
+  "专题咨询"
+ ],
+ "ปลาว่ายทวนน้ำ แข็งแรงขึ้นทุกวัน": [
+  "The fish swims upstream, growing stronger every day",
+  "鱼儿逆流而上，日益强壮"
+ ],
+ "ปล่อยปลา": [
+  "Release fish",
+  "放生鱼"
+ ],
+ "ปล่อยปลา / ปล่อยนก": [
+  "Release fish / birds",
+  "放生鱼 / 鸟"
+ ],
+ "ปัจจุบัน": [
+  "Present",
+  "现在"
+ ],
+ "ปัญญา · ความยุติธรรม · ผู้เชี่ยวชาญ": [
+  "Wisdom · Justice · Expertise",
+  "智慧 · 公正 · 专家"
+ ],
+ "ปัญหาเรื่องมรดก หรือความมั่นคงที่เริ่มสั่นคลอน": [
+  "Inheritance issues, or security that is starting to waver",
+  "遗产问题，或开始动摇的稳定"
+ ],
+ "ปาจื้อ": [
+  "Bazi (Four Pillars)",
+  "八字"
+ ],
+ "ปาจื้ออ่านปี เดือน วัน และยามเกิดเป็นสี่เสา ส่วนจื่อเวยใช้ผังและดาวเชิงสัญลักษณ์": [
+  "BaZi reads the year, month, day and hour of birth as Four Pillars; Zi Wei uses a chart and symbolic stars",
+  "八字以出生年、月、日、时为四柱解读；紫微则使用命盘与象征性星曜"
+ ],
+ "ปิด": [
+  "Close",
+  "关闭"
+ ],
+ "ปี": [
+  "Year",
+  "年"
+ ],
+ "ปีกุน (หมู)": [
+  "Year of the Pig",
+  "猪年"
+ ],
+ "ปีขาล (เสือ)": [
+  "Year of the Tiger",
+  "虎年"
+ ],
+ "ปีจอ (สุนัข)": [
+  "Year of the Dog",
+  "狗年"
+ ],
+ "ปีฉลู (วัว)": [
+  "Year of the Ox",
+  "牛年"
+ ],
+ "ปีชวด (หนู)": [
+  "Year of the Rat",
+  "鼠年"
+ ],
+ "ปีนักษัตร": [
+  "Chinese zodiac year",
+  "生肖"
+ ],
+ "ปีมะเมีย (ม้า)": [
+  "Year of the Horse",
+  "马年"
+ ],
+ "ปีมะเส็ง (งู)": [
+  "Year of the Snake",
+  "蛇年"
+ ],
+ "ปีมะแม (แพะ)": [
+  "Year of the Goat",
+  "羊年"
+ ],
+ "ปีมะโรง (มังกร)": [
+  "Year of the Dragon",
+  "龙年"
+ ],
+ "ปีระกา (ไก่)": [
+  "Year of the Rooster",
+  "鸡年"
+ ],
+ "ปีวอก (ลิง)": [
+  "Year of the Monkey",
+  "猴年"
+ ],
+ "ปีศาจ": [
+  "The Devil",
+  "恶魔"
+ ],
+ "ปีเดียวกัน นิสัยคล้ายกันมาก": [
+  "Same year — very similar personalities",
+  "同年出生，性格非常相似"
+ ],
+ "ปีเถาะ (กระต่าย)": [
+  "Year of the Rabbit",
+  "兔年"
+ ],
+ "ผลคำทำนายจากข้อมูลส่วนตัวของคุณ": [
+  "Predictions based on your personal details",
+  "根据你的个人资料得出的占卜结果"
+ ],
+ "ผลจากราศี ปีนักษัตร เลขชีวิต และวันเกิด · เพื่อความบันเทิงและเป็นแนวทาง อยากรู้ลึกปรึกษาหมอดูได้ที่หมวดหมู่": [
+  "Based on zodiac sign, Chinese zodiac year, life path number and birth day · for entertainment and guidance. For deeper insight, consult a fortune teller in Categories",
+  "依据星座、生肖、生命数字和出生日 · 仅供娱乐及参考，想深入了解可在分类中咨询占卜师"
+ ],
+ "ผลรวม": [
+  "Total",
+  "总和"
+ ],
+ "ผลรวมที่ได้สะท้อนพลังชื่อในภาพรวม ถ้าอยากวิเคราะห์ละเอียดหรือเปลี่ยนชื่อ ดูแพ็กเกจได้ในหมวดศาสตร์แห่งเลข": [
+  "The total reflects your name's overall energy. For detailed analysis or a name change, see packages in the Numerology category",
+  "总数反映了名字的整体能量。如需详细分析或改名，请在数字命理分类中查看套餐"
+ ],
+ "ผลวิเคราะห์ชื่อพร้อมคำแนะนำ": [
+  "Name analysis with advice",
+  "姓名分析及建议"
+ ],
+ "ผลวิเคราะห์เบอร์ 1 เบอร์ พร้อมคำอธิบาย": [
+  "Analysis of 1 number with explanation",
+  "1个号码的分析及说明"
+ ],
+ "ผลเทียบดวงสองคนแบบข้อความ": [
+  "Written compatibility comparison of two people",
+  "两人命盘比较的文字结果"
+ ],
+ "ผลเทียบพร้อมชุดที่แนะนำ": [
+  "Comparison with a recommended set",
+  "比较结果及推荐组合"
+ ],
+ "ผลเทียบพร้อมเบอร์ที่แนะนำ": [
+  "Comparison with a recommended number",
+  "比较结果及推荐号码"
+ ],
+ "ผังดวง": [
+  "Birth chart",
+  "命盘"
+ ],
+ "ผังดวงกำเนิดแบบสายนะ ใช้ราศีทั้ง 12 ดาวเคราะห์ และเรือนชะตา อ่านนิสัย จังหวะชีวิต และเทียบดวงคู่": [
+  "A tropical (Sayana) natal chart using the 12 zodiac signs, planets and houses to read personality, life rhythms and couple compatibility",
+  "回归黄道（Sayana）本命盘，以12星座、行星与宫位解读性格、人生节奏及双人合盘"
+ ],
+ "ผังดาว 12 ตำแหน่ง อ่านละเอียดทีละด้านของชีวิต": [
+  "A 12-palace star chart, read in detail one area of life at a time",
+  "十二宫星盘，逐一细看人生各方面"
+ ],
+ "ผังพื้นที่": [
+  "Floor plan",
+  "平面图"
+ ],
+ "ผูกดวงจากวัน เดือน ปี และเวลาเกิด": [
+  "Chart cast from your day, month, year and time of birth",
+  "依据出生年月日时排盘"
+ ],
+ "ผูกดวงจากเวลาที่ถามคำถามแทนเวลาเกิด เหมาะกับคนที่ไม่ทราบเวลาเกิด และต้องการคำตอบเฉพาะเรื่อง": [
+  "A chart cast from the time the question is asked instead of birth time; good for those who don't know their birth time and want an answer on a specific matter",
+  "以提问时间代替出生时间起盘，适合不知道出生时间、想得到具体问题答案的人"
+ ],
+ "ผูกดวงตามตำราไทย ดูพื้นดวงและดวงจรประจำปี": [
+  "A chart cast by Thai tradition: core destiny and yearly transits",
+  "按泰国典籍排盘，看命格与流年运势"
+ ],
+ "ผูกดวงตามหลักสากล ดูพื้นดวง ดวงจร และช่วงอายุ": [
+  "Chart cast by universal principles — base chart, transits and life periods",
+  "依国际通用原理排盘，看本命盘、流年和年龄阶段"
+ ],
+ "ผูกดวงวางลัคนาตามปฏิทินสุริยยาตร์ ดูพื้นดวงและดวงจร": [
+  "Chart with ascendant by the solar calendar — base chart and transits",
+  "依太阳历排盘定上升点，看本命盘与流年"
+ ],
+ "ผูกดวงวางลัคนาตามปฏิทินสุริยยาตร์ อ่านดาวในดวงกำเนิดและดาวจร ดูพื้นดวง ช่วงชีวิต และหาฤกษ์มงคล": [
+  "Casts the chart and ascendant by the Suriyayat calendar, reading natal and transiting planets for core destiny, life periods and auspicious timing",
+  "依泰国太阳历（Suriyayat）排盘定上升点，解读本命星与流年星，看命格、人生阶段并择吉时"
+ ],
+ "ผู้ดูแล": [
+  "The Caretaker",
+  "守护者"
+ ],
+ "ผู้นำ": [
+  "The Leader",
+  "领导者"
+ ],
+ "ผู้นำ · วิสัยทัศน์ · ผู้ประกอบการ": [
+  "Leader · Vision · Entrepreneur",
+  "领袖 · 远见 · 创业者"
+ ],
+ "ผู้ประสานใจ": [
+  "The Harmoniser",
+  "协调者"
+ ],
+ "ผู้รู้ (ออมเบียซี) จัดเมล็ดพืชเป็นตารางสัญลักษณ์ 16 แบบ แล้วอ่านเพื่อหาสาเหตุของปัญหาและวันมงคล": [
+  "A diviner (ombiasy) arranges seeds into a grid of 16 symbols, then reads it to find the cause of problems and auspicious days",
+  "智者（ombiasy）将种子排成16种符号的方阵，解读以找出问题根源与吉日"
+ ],
+ "ผู้ใหญ่เห็นฝีมือ มีโอกาสก้าวหน้าชัดเจน": [
+  "Seniors see your skill; clear chances for advancement",
+  "上级赏识您的能力，晋升机会明显"
+ ],
+ "ผู้ให้": [
+  "The Giver",
+  "给予者"
+ ],
+ "ผู้ให้บริการ ขอบเขต เวลาส่ง และราคาจริงรอทีมยืนยัน · โหมดทดลอง ยังไม่มีการเก็บเงินจริง": [
+  "Provider, scope, delivery time and final price pending team confirmation · Trial mode, no real charges yet",
+  "服务者、范围、交付时间与实际价格待团队确认 · 试用模式，尚未实际收费"
+ ],
+ "ผู้ให้บริการระบุสำรับที่ใช้บนแพ็กเกจ": [
+  "The provider states the deck used on the package",
+  "服务者在套餐上注明所用牌组"
+ ],
+ "ผู้ให้บริการอธิบายแนวทางการตีความตามความเชื่อของตน": [
+  "The provider explains their interpretation according to their own beliefs",
+  "服务者按其自身信仰说明解读方式"
+ ],
+ "ผ่านปัญหาไปด้วยกันแล้วจะรักกันมากขึ้น": [
+  "Getting through problems together will deepen your love",
+  "共渡难关，感情更深"
+ ],
+ "ผ้ามงคลลายยันต์": [
+  "Yantra amulet cloth",
+  "符咒吉祥布"
+ ],
+ "ผ้าแขวนหรือพกติดตัว ลายยันต์และดาวนพเคราะห์": [
+  "A cloth to hang or carry, with yantra patterns and the nine planets",
+  "可悬挂或随身携带，绘有符咒和九曜星"
+ ],
+ "ฝนตกพรำทั้งวัน ปลูกต้นกล้ารอวันงาม": [
+  "Drizzle falls all day; plant seedlings and await their beauty",
+  "细雨终日，栽下幼苗静待美景"
+ ],
+ "ฝีมือของคุณเป็นที่ยอมรับ การทำงานเป็นทีมจะได้ผลดี": [
+  "Your skills are recognised; teamwork will pay off",
+  "你的能力得到认可，团队合作会带来好结果"
+ ],
+ "ฝ่าเท้าทั้งฝ่า": [
+  "Whole sole of the foot",
+  "整个脚掌"
+ ],
+ "พยากรณ์ชีวิตผ่านลูกแก้ว": [
+  "Life predictions through a crystal ball",
+  "通过水晶球预测人生"
+ ],
+ "พยากรณ์ดวงตั้งแต่พื้นฐานชีวิตไปจนถึงอนาคต": [
+  "Predictions from life's foundations to the future",
+  "从人生根基到未来的运势预测"
+ ],
+ "พระสังฆราช": [
+  "The Hierophant",
+  "教皇"
+ ],
+ "พฤษภ": [
+  "Taurus",
+  "金牛座"
+ ],
+ "พฤหัสบดี": [
+  "Thursday",
+  "星期四"
+ ],
+ "พลัง": [
+  "Strength",
+  "力量"
+ ],
+ "พลังของ": [
+  "The power of",
+  "力量："
+ ],
+ "พลังของตัวเลขและตัวอักษรที่ส่งผลต่อชีวิต": [
+  "The power of numbers and letters that shape your life",
+  "影响人生的数字与字母能量"
+ ],
+ "พลังงานของไพ่โดยรวม": [
+  "Overall energy of the cards",
+  "牌面整体能量"
+ ],
+ "พลังงานโดยรวม": [
+  "Overall energy",
+  "整体能量"
+ ],
+ "พลังที่มีอาจถูกใช้ผิดทาง หรือมีคนรอบตัวที่ไม่จริงใจ ตรวจสอบให้ดี": [
+  "Your power may be misused, or someone around you is insincere; check carefully",
+  "你的力量可能被用错方向，或身边有不真诚的人，要仔细查看"
+ ],
+ "พลังที่แท้จริงคือความอ่อนโยนและความอดทน คุณผ่านเรื่องนี้ไปได้แน่": [
+  "True strength is gentleness and patience; you will surely get through this",
+  "真正的力量是温柔与耐心，你一定能渡过难关"
+ ],
+ "พลังบวกเต็มที่ เหมาะเริ่มเรื่องใหม่และเปิดตัว": [
+  "Full positive energy — good for new starts and launches",
+  "正能量满满，适合开启新事物和发布"
+ ],
+ "พลังลดลงเล็กน้อย พักและเติมพลังก่อนเริ่มใหม่": [
+  "Energy dips a little; rest and recharge before starting again",
+  "精力略有下降，休息充电后再出发"
+ ],
+ "พลังสร้างสรรค์ · ทักษะ · ลงมือทำ": [
+  "Creative power · Skill · Taking action",
+  "创造力 · 技能 · 付诸行动"
+ ],
+ "พลังเต็มเปี่ยมพร้อมลุย การเดินทางหรือเรื่องตื่นเต้นกำลังมา": [
+  "Full of energy and ready to go; travel or excitement is coming",
+  "精力充沛，蓄势待发，旅行或令人兴奋的事即将到来"
+ ],
+ "พลังเลข": [
+  "Number energy",
+  "数字能量"
+ ],
+ "พลังและโอกาสอยู่ข้างคุณ เป็นช่วงที่เหมาะจะทำเรื่องใหญ่": [
+  "Energy and opportunity are on your side — a good time for big undertakings",
+  "能量与机遇站在你这边，正适合成就大事"
+ ],
+ "พักผ่อนให้พอ ดื่มน้ำเยอะ ๆ ระวังเหนื่อยสะสม": [
+  "Get enough rest, drink plenty of water, beware of building fatigue",
+  "充分休息，多喝水，小心疲劳累积"
+ ],
+ "พันธนาการ · กิเลส · การยึดติด": [
+  "Bondage · Desire · Attachment",
+  "束缚 · 欲望 · 执着"
+ ],
+ "พิจารณาทิศและการจัดพื้นที่ตามประเพณีจีนและอินเดียตามลำดับ": [
+  "Considers direction and space arrangement according to Chinese and Indian traditions respectively",
+  "分别按中国与印度传统考量方位与空间布局"
+ ],
+ "พิจิก": [
+  "Scorpio",
+  "天蝎座"
+ ],
+ "พิธีบูชาครูบาอาจารย์ตามประเพณี": [
+  "Traditional ceremony honouring teachers",
+  "传统拜师仪式"
+ ],
+ "พิธีสักการะเพื่อความเป็นสิริมงคล": [
+  "Worship ceremony for auspiciousness",
+  "祈求吉祥的祭拜仪式"
+ ],
+ "พิธีแก้ปีชงในชื่อของคุณ พร้อมรูป/วิดีโอยืนยัน": [
+  "A clash-year ritual in your name, with photo/video proof",
+  "以您的名义举行化解犯太岁仪式，附照片/视频凭证"
+ ],
+ "พิมพ์หรือกดไมค์เพื่อพูด…": [
+  "Type or tap the mic to speak…",
+  "输入文字或点麦克风说话…"
+ ],
+ "พี่น้อง": [
+  "Sibling",
+  "兄弟姐妹"
+ ],
+ "พึ่งพาคนอื่นมากเกินไป หรือใช้จ่ายฟุ่มเฟือย": [
+  "Relying too much on others, or overspending",
+  "过度依赖他人，或挥霍无度"
+ ],
+ "พื้นที่เก็บรูปในเบราว์เซอร์เต็ม ลองลบรูปเก่าในหน้าบัญชีนะคะ": [
+  "Browser photo storage is full — try deleting old photos on the account page",
+  "浏览器照片存储空间已满，请在账户页删除旧照片"
+ ],
+ "พุธ": [
+  "Wednesday",
+  "星期三"
+ ],
+ "พุ่งไปข้างหน้าด้วยความคิดที่ชัดเจนและเด็ดเดี่ยว": [
+  "Charge ahead with clear and decisive thinking",
+  "以清晰果断的思路勇往直前"
+ ],
+ "พูดก่อนคิด หรือมีเรื่องนินทา ระวังคำพูด": [
+  "Speaking before thinking, or gossip; mind your words",
+  "说话不经思考，或有闲言碎语，注意言辞"
+ ],
+ "พูดน้อยลง ฟังมากขึ้น": [
+  "Talk less, listen more",
+  "少说多听"
+ ],
+ "พ่อ": [
+  "Father",
+  "父亲"
+ ],
+ "ฟรี": [
+  "Free",
+  "免费"
+ ],
+ "ฟัง": [
+  "Listen",
+  "收听"
+ ],
+ "ฟังเสียงอ่าน": [
+  "Listen to reading",
+  "收听朗读"
+ ],
+ "ฟังเสียงในใจให้มากขึ้น คำตอบที่คุณตามหาอยู่ข้างในตัวคุณเอง": [
+  "Listen more to your inner voice; the answer you seek is within you",
+  "多倾听内心的声音，你寻找的答案就在你心中"
+ ],
+ "ฟ้า": [
+  "Sky blue",
+  "天蓝色"
+ ],
+ "ฟ้าเปิดทางสว่าง ดาวนำทางกลางนภา": [
+  "The heavens open a bright path, stars guide across the sky",
+  "天开明路，星辰引路于苍穹"
+ ],
+ "ภาพถ้วยกาแฟหลังคว่ำ (ถ้าเปิดบริการ)": [
+  "Photo of the overturned coffee cup (if the service is open)",
+  "倒扣后的咖啡杯照片（如服务开放）"
+ ],
+ "ภาพฝ่ามือขวา": [
+  "Right palm photo",
+  "右手掌照片"
+ ],
+ "ภาพฝ่ามือซ้ายที่เห็นเส้นชัด": [
+  "Left palm photo with clear lines",
+  "纹路清晰的左手掌照片"
+ ],
+ "ภาพฝ่ามือที่เห็นเส้นชัด": [
+  "Photo of your palm with clearly visible lines",
+  "掌纹清晰的手掌照片"
+ ],
+ "ภาพรวม": [
+  "overall",
+  "整体"
+ ],
+ "ภาพรวมชีวิต": [
+  "Life overview",
+  "人生整体"
+ ],
+ "ภาพลวง · ความกังวล · จิตใต้สำนึก": [
+  "Illusion · Anxiety · The subconscious",
+  "幻象 · 焦虑 · 潜意识"
+ ],
+ "ภาพหรือผังพื้นที่": [
+  "Photo or floor plan",
+  "照片或平面图"
+ ],
+ "ภาพใบหน้าตรง ไม่สวมแว่น": [
+  "Front-facing face photo, no glasses",
+  "正面照，不戴眼镜"
+ ],
+ "ภาพใบหน้าตรงตามมุมที่ผู้เชี่ยวชาญกำหนด": [
+  "Front-facing photo at the angle the expert specifies",
+  "按专家要求角度拍摄的正面照"
+ ],
+ "ภาระหนัก · ความรับผิดชอบ · ความเครียด": [
+  "Heavy burden · Responsibility · Stress",
+  "重担 · 责任 · 压力"
+ ],
+ "ภูเขาสูงชัน ปีนขึ้นทีละก้าว": [
+  "A steep, high mountain — climb it one step at a time",
+  "高山陡峭，一步一步向上攀登"
+ ],
+ "มงคล": [
+  "Blessings",
+  "吉祥"
+ ],
+ "มนตรี": [
+  "Montri (patron)",
+  "贵人"
+ ],
+ "มรดก · ความมั่งคั่งระยะยาว · ครอบครัว": [
+  "Legacy · Long-term wealth · Family",
+  "传承 · 长久财富 · 家庭"
+ ],
+ "มหาสัตตเลข": [
+  "Maha Sattalek (great seven numbers)",
+  "七数大法"
+ ],
+ "มหาโบตะ": [
+  "Mahabote",
+  "缅甸命理（Mahabote）"
+ ],
+ "มองเห็นเรื่องราวชีวิตด้วยญาณทิพย์": [
+  "See your life story through psychic insight",
+  "以天眼通洞见你的人生故事"
+ ],
+ "มะเมีย (ม้า)": [
+  "Mamia (Horse)",
+  "午（马）"
+ ],
+ "มะเส็ง (งู)": [
+  "Maseng (Snake)",
+  "巳（蛇）"
+ ],
+ "มะแม (แพะ)": [
+  "Mamae (Goat)",
+  "未（羊）"
+ ],
+ "มะโรง (มังกร)": [
+  "Marong (Dragon)",
+  "辰（龙）"
+ ],
+ "มังกร": [
+  "Capricorn",
+  "摩羯座"
+ ],
+ "มังกรทะยานฟ้า เมฆหมอกหลีกทางให้": [
+  "The dragon soars to the sky, clouds and mist part before it",
+  "飞龙腾空，云雾为之让路"
+ ],
+ "มั่นคง ขยัน จริงจัง": [
+  "Steady, diligent, serious",
+  "稳重、勤奋、认真"
+ ],
+ "มั่นคง ใจเย็น รักความสบายและความสวยงาม": [
+  "Steady, calm, loves comfort and beauty",
+  "稳重、冷静、热爱舒适与美"
+ ],
+ "มั่นคงและวางแผนได้ดี": [
+  "Stable and good at planning",
+  "稳定且善于规划"
+ ],
+ "มั่นใจ มีเสน่ห์ ใจกว้าง ชอบเป็นจุดสนใจ": [
+  "Confident, charming, generous, loves the spotlight",
+  "自信、有魅力、大方、喜欢成为焦点"
+ ],
+ "มั่นใจในตัวเอง กล้าเริ่มต้นสิ่งใหม่ และมักเป็นคนแรกที่ลงมือทำ": [
+  "Self-confident, bold in starting new things, often the first to take action",
+  "自信，勇于开创新事物，常常是第一个行动的人"
+ ],
+ "มากที่สุด จึงเด่นเรื่อง": [
+  "the most, so it stands out in",
+  "最多，因此突出于"
+ ],
+ "มาดากัสการ์": [
+  "Madagascar",
+  "马达加斯加"
+ ],
+ "มิตรภาพ · การเฉลิมฉลอง · ชุมชน": [
+  "Friendship · Celebration · Community",
+  "友谊 · 庆祝 · 社群"
+ ],
+ "มิตรแท้ยื่นมือมา ภาระหนักกลับเบา": [
+  "A true friend reaches out, and heavy burdens grow light",
+  "真友伸出援手，重担变得轻松"
+ ],
+ "มี": [
+  "has",
+  "有"
+ ],
+ "มีการแข่งขันหรือความเห็นไม่ตรงกัน ใช้มันเป็นแรงผลักให้เก่งขึ้น": [
+  "There is competition or disagreement; use it as a push to grow stronger",
+  "存在竞争或意见分歧，把它当作变得更强的动力"
+ ],
+ "มีคนคุย": [
+  "Seeing someone",
+  "有暧昧对象"
+ ],
+ "มีคนแนะนำเรื่องเงินที่เป็นประโยชน์": [
+  "Someone gives you useful financial advice",
+  "有人给你有益的理财建议"
+ ],
+ "มีความชัดเจนในเส้นทางอาชีพ": [
+  "Clarity in your career path",
+  "职业方向清晰明确"
+ ],
+ "มีช่วงคิดต่างบ้าง ทำกิจกรรมร่วมกันจะช่วยให้ใกล้กันขึ้น": [
+  "You'll sometimes see things differently; doing activities together brings you closer",
+  "有时想法不同，一起做活动能拉近距离"
+ ],
+ "มีช่องทางรายได้ใหม่": [
+  "A new source of income appears",
+  "出现新的收入来源"
+ ],
+ "มีตัวเลือกมากมาย แต่บางอย่างเป็นเพียงภาพลวง เลือกอย่างมีสติ": [
+  "There are many options, but some are only illusions; choose mindfully",
+  "选择很多，但有些只是幻象，要理智选择"
+ ],
+ "มีน": [
+  "Pisces",
+  "双鱼座"
+ ],
+ "มีบางอย่างไม่เป็นธรรม หรือคุณยังไม่ยอมรับผลของการกระทำบางอย่าง": [
+  "Something is unfair, or you haven't yet accepted the consequences of your actions",
+  "有些事不公平，或你尚未接受某些行为的后果"
+ ],
+ "มีผู้ใหญ่ให้คำปรึกษา ขอความช่วยเหลือได้": [
+  "Elders offer advice — don't hesitate to ask for help",
+  "有长辈指点，可寻求帮助"
+ ],
+ "มีพลัง มุ่งมั่นสู่ความสำเร็จ เก่งเรื่องเงินและการจัดการ": [
+  "Energetic, driven to succeed, good with money and management",
+  "精力充沛、追求成功、擅长理财与管理"
+ ],
+ "มีรูปล่าสุด": [
+  "Latest photo available",
+  "有最新照片"
+ ],
+ "มีรูปเก่า": [
+  "Older photo available",
+  "有旧照片"
+ ],
+ "มีอำนาจและความน่าเชื่อถือ เจรจาได้ผล": [
+  "Authority and credibility — negotiations succeed",
+  "有威望有信誉，谈判顺利"
+ ],
+ "มีอุปสรรคที่หลีกเลี่ยงได้ถ้ารอบคอบ ตรวจรายละเอียดทุกอย่าง": [
+  "Obstacles can be avoided with care — check every detail",
+  "谨慎即可避开阻碍，务必检查每个细节"
+ ],
+ "มีเงินเข้าจากการติดต่องาน": [
+  "Money comes in through work contacts",
+  "通过工作往来进账"
+ ],
+ "มีเฉพาะข้อมูล": [
+  "Info only",
+  "仅有资料"
+ ],
+ "มีเฉพาะหน้ารู้จักศาสตร์": [
+  "Intro page only",
+  "仅有介绍页"
+ ],
+ "มีเรื่องติดขัดเล็กน้อย ตรวจงานให้รอบคอบ": [
+  "Minor hitches — review your work carefully",
+  "有些小阻滞，仔细检查工作"
+ ],
+ "มีเรื่องมงคลและความสำเร็จที่น่าภาคภูมิใจ": [
+  "Auspicious events and achievements to be proud of",
+  "有喜事临门，成就令人自豪"
+ ],
+ "มีแฟน": [
+  "In a relationship",
+  "有恋人"
+ ],
+ "มีโชคจากผลงานของตัวเอง": [
+  "Luck comes from your own work",
+  "好运来自自己的努力成果"
+ ],
+ "มีโชคด้านการเงินและการติดต่อธุรกิจ": [
+  "Luck with money and business dealings",
+  "财运与商务往来皆顺"
+ ],
+ "มีโชคลาภจากงานที่ทำ": [
+  "Fortune comes from the work you do",
+  "从工作中获得财运"
+ ],
+ "มีโชคลาภและของขวัญ": [
+  "Good fortune and gifts come your way",
+  "有财运也有礼物"
+ ],
+ "มีโอกาสใหม่เข้ามา ถ้ากล้าลองจะได้ประสบการณ์ที่มีค่า": [
+  "New opportunities arrive — dare to try and you'll gain valuable experience",
+  "新机会到来，敢于尝试将收获宝贵经验"
+ ],
+ "มีโอกาสได้เลื่อนตำแหน่งหรือได้รับคำชม": [
+  "A chance of promotion or praise",
+  "有机会升职或获得称赞"
+ ],
+ "มุ่งมั่นไปข้างหน้า ชนะอุปสรรคได้": [
+  "Press forward and overcome obstacles",
+  "勇往直前，战胜阻碍"
+ ],
+ "มูละ": [
+  "Mula (foundation)",
+  "根基"
+ ],
+ "ม่วง": [
+  "Purple",
+  "紫色"
+ ],
+ "ยกเลิกคำสั่งซื้อ": [
+  "Cancel order",
+  "取消订单"
+ ],
+ "ยผฝพฟๆ": [
+  "ยผฝพฟๆ",
+  "ยผฝพฟๆ"
+ ],
+ "ยอดชำระ": [
+  "Amount due",
+  "应付金额"
+ ],
+ "ยอมรับเงื่อนไขการใช้งาน": [
+  "Accept the terms of use",
+  "接受使用条款"
+ ],
+ "ยังขาด": [
+  "Still missing",
+  "尚缺"
+ ],
+ "ยังติดค้างเรื่องเก่า หรือการเปลี่ยนผ่านไม่ราบรื่น": [
+  "Still stuck on the past, or the transition isn't going smoothly",
+  "仍困于旧事，或转变并不顺利"
+ ],
+ "ยังมีสิทธิ์หมุนวงล้อรับดวงฟรี 1 ครั้ง": [
+  "You still have 1 free spin of the wheel for a free reading",
+  "你还有1次免费转盘机会领取免费算命"
+ ],
+ "ยังมีอุปสรรคบางอย่าง แต่ไพ่ตั้งที่ปรากฏคือแสงนำทางของคุณ": [
+  "There are still some obstacles, but the upright cards are your guiding light",
+  "仍有一些阻碍，但出现的正位牌就是你的指路明灯"
+ ],
+ "ยังเป็นพลังหลักของช่วงนี้": [
+  "remains the main energy of this period",
+  "仍是这段时间的主要能量"
+ ],
+ "ยังไม่ถึงเวลาเปลี่ยนงาน สะสมประสบการณ์ไปก่อน": [
+  "Not yet the time to change jobs — keep building experience",
+  "还不是换工作的时候，先积累经验"
+ ],
+ "ยังไม่ทราบ": [
+  "Not sure yet",
+  "尚不清楚"
+ ],
+ "ยังไม่มีข้อมูล เริ่มดูดวงครั้งแรกแล้วแฟ้มจะค่อย ๆ เติมเต็ม": [
+  "No data yet — start your first reading and your file will gradually fill up",
+  "暂无资料，开始第一次算命后档案会逐渐充实"
+ ],
+ "ยังไม่มีคนใกล้ตัว เพิ่มคนแรกได้เลย": [
+  "No loved ones yet — add your first one",
+  "还没有亲友，快添加第一位吧"
+ ],
+ "ยังไม่มีคูปอง": [
+  "No coupons yet",
+  "还没有优惠券"
+ ],
+ "ยังไม่มีบริการสำหรับศาสตร์นี้": [
+  "No services for this science yet",
+  "此学说暂无服务"
+ ],
+ "ยังไม่มีบัญชีสำหรับเบอร์นี้ กรอกข้อมูลเพื่อสมัครได้เลย": [
+  "No account for this number yet — fill in your details to sign up",
+  "此号码尚未注册，填写资料即可注册"
+ ],
+ "ยังไม่มีรายการสำหรับเรื่องนี้": [
+  "No items for this topic yet",
+  "此主题暂无项目"
+ ],
+ "ยังไม่มีหมอดูในประเภทนี้": [
+  "No fortune tellers in this type yet",
+  "此类型暂无占卜师"
+ ],
+ "ยังไม่มีแพ็กเกจที่เปิดรับ อ่านหน้ารู้จักศาสตร์ด้านล่างได้": [
+  "No packages open yet. You can read the intro page below.",
+  "暂无开放的套餐，可阅读下方的介绍页"
+ ],
+ "ยังไม่ระบุ": [
+  "Not specified",
+  "未填写"
+ ],
+ "ยังไม่เคยดูดวง ผลการดูดวงครั้งต่อไปจะถูกเก็บไว้ที่นี่ให้ย้อนอ่านได้": [
+  "No readings yet. Your next reading results will be saved here to read again",
+  "还没有算命记录，之后的算命结果会保存在这里供随时回看"
+ ],
+ "ยังไม่เชื่อมระบบหลังบ้าน)": [
+  "backend not yet connected)",
+  "尚未连接后台）"
+ ],
+ "ยังไม่เปิดรับ": [
+  "Not taking bookings",
+  "暂不接受预约"
+ ],
+ "ยังไม่ได้กรอกรหัสทดลองใช้ AI": [
+  "No AI trial code entered yet",
+  "尚未输入AI试用码"
+ ],
+ "ยังไม่ได้เชื่อม AI จริงบนเซิร์ฟเวอร์": [
+  "Real AI isn't connected on the server yet",
+  "服务器尚未接入真实AI"
+ ],
+ "ยังไม่ได้เลือก": [
+  "Not selected",
+  "未选择"
+ ],
+ "ยังไม่ได้เลือกใช้": [
+  "Not applied",
+  "未使用"
+ ],
+ "ยินดีด้วย! เลือกได้เลยว่าจะใช้ตอนนี้หรือเก็บไว้ก่อน": [
+  "Congratulations! Choose to use it now or save it for later",
+  "恭喜！你可以选择现在使用或先保存起来"
+ ],
+ "ยินดีต้อนรับกลับ": [
+  "Welcome back",
+  "欢迎回来"
+ ],
+ "ยินดีต้อนรับกลับ คุณ": [
+  "Welcome back,",
+  "欢迎回来，"
+ ],
+ "ยินดีต้อนรับสู่": [
+  "Welcome to",
+  "欢迎来到"
+ ],
+ "ยิ่งข้อมูลครบ หมอดูประจำตัวยิ่งรู้จักคุณ ใช้อ่านโหงวเฮ้ง ลายมือ และลักษณะร่างกาย ประกอบกับวันเดือนปีเกิด": [
+  "The more complete your details, the better your personal fortune teller knows you — used for face reading, palm reading and body features alongside your date of birth",
+  "资料越完整，专属占卜师越了解你，用于面相、手相和体态解读，并结合出生日期"
+ ],
+ "ยึดติดกับวัตถุ หรือตัดสินคนด้วยเงิน": [
+  "Attached to material things, or judging people by money",
+  "执着于物质，或以金钱评判他人"
+ ],
+ "ยึดติดกับอดีตมากเกินไป ถึงเวลามองไปข้างหน้า": [
+  "Holding on to the past too much; it's time to look ahead",
+  "过于执着过去，是时候向前看了"
+ ],
+ "ยึดมั่นในเป้าหมายและหลักการของตน แล้วจะไม่หลงทาง": [
+  "Hold firm to your goals and principles and you won't lose your way",
+  "坚守目标与原则，便不会迷失方向"
+ ],
+ "ยืนตรงเต็มตัว": [
+  "Stand straight, full body",
+  "站直，全身入镜"
+ ],
+ "ยืนยัน": [
+  "Confirm",
+  "确认"
+ ],
+ "ยืนยันรหัส": [
+  "Verify code",
+  "验证"
+ ],
+ "ยืนหยัดในสิ่งที่เชื่อ แม้จะมีแรงกดดันรอบด้าน": [
+  "Stand firm in what you believe, despite pressure from all sides",
+  "即使四面受压，也要坚守信念"
+ ],
+ "ยุโรป": [
+  "Europe",
+  "欧洲"
+ ],
+ "ยุโรปและสายตะวันตก": [
+  "Europe and Western traditions",
+  "欧洲及西方流派"
+ ],
+ "ย้ายบ้าน": [
+  "Moving house",
+  "搬家"
+ ],
+ "รถศึก": [
+  "The Chariot",
+  "战车"
+ ],
+ "รวมข้อมูลจากแฟ้มดวงของคุณ": [
+  "Compiled from your Fortune File",
+  "汇总自你的命理档案"
+ ],
+ "รวมทุกศาสตร์": [
+  "All sciences combined",
+  "综合各门命理"
+ ],
+ "รวมศาสตร์ดูดวงจากทั่วโลก เลือกดูตามประเทศหรือภูมิภาค และตามวิธีดู พร้อมแพ็กเกจที่เกี่ยวข้อง": [
+  "Divination arts from around the world: browse by country or region and by method, with related packages",
+  "汇集全球命理术，可按国家或地区及占卜方式浏览，并附相关套餐"
+ ],
+ "รวมศาสตร์ทำนายจากทั่วโลก": [
+  "Fortune sciences from around the world",
+  "汇聚全球占卜术"
+ ],
+ "รหัส OTP 6 หลัก": [
+  "6-digit OTP code",
+  "6位验证码"
+ ],
+ "รหัสทดลองใช้ AI (ถ้ามี)": [
+  "AI trial code (if any)",
+  "AI试用码（如有）"
+ ],
+ "รหัสทดลองใช้ AI ไม่ถูกต้อง": [
+  "Invalid AI trial code",
+  "AI试用码无效"
+ ],
+ "รหัสไม่ถูกต้อง ลองอีกครั้ง": [
+  "Incorrect code, please try again",
+  "验证码错误，请重试"
+ ],
+ "รอระบุ": [
+  "To be specified",
+  "待定"
+ ],
+ "รอหมอดูตอบ": [
+  "Awaiting fortune teller's reply",
+  "等待占卜师回复"
+ ],
+ "รอเปิดจอง": [
+  "Booking soon",
+  "即将开放预约"
+ ],
+ "ระกา (ไก่)": [
+  "Raka (Rooster)",
+  "酉（鸡）"
+ ],
+ "ระฆังดังกังวาน ข่าวดีจากแดนไกล": [
+  "The bell rings clear — good news from afar",
+  "钟声悠扬，远方传来好消息"
+ ],
+ "ระบบทดสอบ: ใช้รหัส": [
+  "Test system: use code",
+  "测试系统：使用验证码"
+ ],
+ "ระบบพยากรณ์ทางศาสนาของชาวโยรูบา (ข้อมูลเพื่อการเรียนรู้)": [
+  "The Yoruba religious divination system (for learning only)",
+  "约鲁巴人的宗教占卜体系（仅供了解）"
+ ],
+ "ระบบพยากรณ์ทางศาสนาของชาวโยรูบา ทำโดยนักบวช (บาบาลาโว) ด้วยเมล็ดปาล์มหรือโซ่โอเปเล เพื่อหาบท “โอดู” 1 ใน 256 บท": [
+  "The Yoruba religious divination system, performed by a priest (babalawo) with palm nuts or the opele chain to find one of the 256 “Odu” verses",
+  "约鲁巴人的宗教占卜体系，由祭司（巴巴拉沃）使用棕榈果或奥佩莱链进行，以求得256篇“奥杜”之一"
+ ],
+ "ระบุประเภทงาน ช่วงวันที่สะดวก และข้อมูลเกิดเมื่อผู้ให้บริการจำเป็นต้องใช้": [
+  "Specify the type of event, convenient dates, and birth data if the provider needs it",
+  "说明事项类型、方便的日期范围，以及服务者需要时的出生资料"
+ ],
+ "ระยะเวลา": [
+  "Duration",
+  "时长"
+ ],
+ "ระวัง": [
+  "Caution",
+  "注意"
+ ],
+ "ระวังการลงทุนที่ดูดีเกินจริง": [
+  "Beware of investments that look too good to be true",
+  "小心好得令人难以置信的投资"
+ ],
+ "ระวังการหลอกลวง หรือคุณเองกำลังหลบเลี่ยงบางอย่าง": [
+  "Beware of deception, or you yourself may be avoiding something",
+  "小心欺骗，或者你自己正在逃避某些事"
+ ],
+ "ระวังของหายหรือถูกหลอก": [
+  "Beware of losing things or being deceived",
+  "小心失物或受骗"
+ ],
+ "ระวังความขัดแย้งในที่ทำงาน ใจเย็นไว้": [
+  "Beware of conflict at work — stay calm",
+  "小心职场冲突，保持冷静"
+ ],
+ "ระวังความประมาทหรือการตัดสินใจที่หุนหันพลันแล่น ลองคิดให้รอบคอบก่อนกระโดด": [
+  "Beware of carelessness or rash decisions; think it through before you leap",
+  "小心粗心或冲动的决定，跳之前先想清楚"
+ ],
+ "ระวังความผิดพลาดจากความประมาท": [
+  "Beware of mistakes from carelessness",
+  "小心因粗心而犯错"
+ ],
+ "ระวังความหยิ่ง หรือรู้สึกว่าความพยายามไม่มีใครเห็น": [
+  "Beware of arrogance, or feeling that your efforts go unseen",
+  "小心骄傲，或觉得自己的努力无人看见"
+ ],
+ "ระวังความเผด็จการ หรือคาดหวังจากคนอื่นสูงเกินไป": [
+  "Beware of being domineering, or expecting too much from others",
+  "小心专横，或对他人期望过高"
+ ],
+ "ระวังความเผด็จการหรือการยึดติดกับกฎจนเกินไป ลองยืดหยุ่นบ้าง": [
+  "Beware of being too authoritarian or rigid about rules; try to be more flexible",
+  "小心过于专制或死守规则，试着灵活一些"
+ ],
+ "ระวังคำพูดที่อาจทำร้ายใจกัน": [
+  "Beware of words that may hurt each other",
+  "小心言语伤害彼此"
+ ],
+ "ระวังคำพูดและการตัดสินใจเร่งด่วน": [
+  "Beware of hasty words and decisions",
+  "小心言语和仓促决定"
+ ],
+ "ระวังคำหวานที่ไม่จริงใจ หรือความเพ้อฝันเกินจริง": [
+  "Beware of insincere sweet talk, or unrealistic daydreams",
+  "小心虚情假意的甜言蜜语，或不切实际的幻想"
+ ],
+ "ระวังสิ่งที่ผูกมัดคุณไว้ ไม่ว่าจะเป็นนิสัย ความสัมพันธ์ หรือความโลภ": [
+  "Beware of what binds you, whether habits, relationships or greed",
+  "警惕束缚你的东西，无论是习惯、关系还是贪婪"
+ ],
+ "ระวังเอกสารและสัญญา อ่านให้ละเอียด": [
+  "Be careful with documents and contracts — read them closely",
+  "注意文件与合同，务必仔细阅读"
+ ],
+ "ระวังใช้จ่ายตามอารมณ์": [
+  "Beware of emotional spending",
+  "小心冲动消费"
+ ],
+ "รัก": [
+  "love",
+  "爱"
+ ],
+ "รักครอบครัว มีความรับผิดชอบ เป็นที่พึ่งของคนรอบข้าง": [
+  "Family-oriented, responsible, someone others rely on",
+  "热爱家庭、有责任感、是身边人的依靠"
+ ],
+ "รักครอบครัว อบอุ่น ใส่ใจคนรอบข้าง": [
+  "Family-loving, warm, caring for those around you",
+  "热爱家庭、温暖、关心身边的人"
+ ],
+ "รักความยุติธรรม มีรสนิยม ชอบความสมดุล": [
+  "Loves justice, has good taste, seeks balance",
+  "热爱公正、有品味、追求平衡"
+ ],
+ "รักอิสระ ปรับตัวเร็ว ชอบการเดินทางและเรื่องใหม่ ๆ": [
+  "Free-spirited, adapts quickly, loves travel and new things",
+  "热爱自由、适应力快、喜欢旅行和新鲜事物"
+ ],
+ "รักอิสระ มองโลกในแง่ดี ชอบผจญภัย": [
+  "Free-spirited, optimistic, adventurous",
+  "热爱自由、乐观、喜欢冒险"
+ ],
+ "รับขันครู": [
+  "Rap Khan Khru (teacher initiation)",
+  "拜师入门仪式"
+ ],
+ "รับคำสั่งซื้อ": [
+  "Order received",
+  "已接单"
+ ],
+ "รับคำสั่งซื้อ · เตรียมจัดส่ง": [
+  "Order received · Preparing shipment",
+  "已接单 · 准备发货"
+ ],
+ "รับงานมากเกินตัว การเงินเริ่มสะดุด": [
+  "Taking on more than you can handle; finances start to stumble",
+  "承担超出能力的工作，财务开始受阻"
+ ],
+ "รับรู้คำบอกกล่าวเพื่อชี้ทางให้ชีวิต": [
+  "Receive messages that guide your life",
+  "接收指引人生的讯息"
+ ],
+ "รับเรื่องเรียบร้อย": [
+  "Request received",
+  "已收到请求"
+ ],
+ "รับเรื่องและตรวจข้อมูล": [
+  "Request received and details checked",
+  "受理并核对资料"
+ ],
+ "รับเรื่องแล้ว · เตรียมทำพิธี": [
+  "Received · Preparing the ritual",
+  "已受理 · 准备仪式"
+ ],
+ "รับเลย": [
+  "Claim now",
+  "立即领取"
+ ],
+ "ราคา": [
+  "Price",
+  "价格"
+ ],
+ "ราคาตัวอย่าง": [
+  "Sample price",
+  "参考价格"
+ ],
+ "ราคานี้เป็นค่าคิดชื่อ ส่วนการตรวจว่านามสกุลใช้ได้หรือไม่และการจดทะเบียน ลูกค้าดำเนินการเอง": [
+  "This price covers creating the name; checking whether the surname is available and registering it are done by the customer",
+  "此价格为起名费用；姓氏是否可用的查核及登记由客户自行办理"
+ ],
+ "ราคานี้เป็นค่าบริการ หากต้องการเพิ่มปัจจัยทำบุญ ทีมจะแจ้งยอดก่อนดำเนินการ": [
+  "This price is the service fee; if you want to add merit offerings, the team will tell you the amount first",
+  "此价格为服务费；如需增加功德款，团队会先告知金额"
+ ],
+ "ราคาเดียวกันทุกเส้นทาง": [
+  "Same price on every route",
+  "所有途径同价"
+ ],
+ "ราคาเปิดตัว · ชำระเงินหลังเลือกหมอดูและยืนยันรายละเอียด": [
+  "Launch price · Pay after choosing a fortune teller and confirming details",
+  "开业优惠价 · 选好占卜师并确认详情后付款"
+ ],
+ "ราคาเริ่มต้น": [
+  "Starting from",
+  "起价"
+ ],
+ "ราคาเสนอทดลอง · โหมดทดลอง ยังไม่มีการเก็บเงินจริง": [
+  "Trial price · Trial mode, no real charges yet",
+  "试用报价 · 试用模式，尚未实际收费"
+ ],
+ "ราชา": [
+  "King",
+  "国王"
+ ],
+ "ราชินี": [
+  "Queen",
+  "王后"
+ ],
+ "รายการ": [
+  "items",
+  "项"
+ ],
+ "รายการ)": [
+  "items)",
+  "项）"
+ ],
+ "รายการทำบุญ": [
+  "Merit-making items",
+  "功德项目"
+ ],
+ "รายงานดวงของคุณทุกวัน ดึงจากทุกศาสตร์ด้วยข้อมูลเกิดของคุณ พร้อมถามแม่หมอ AI ได้ตลอด 24 ชั่วโมง": [
+  "Your fortune report every day, drawn from every science using your birth data, plus 24-hour access to the AI Seer",
+  "每日为你生成运势报告，依据你的出生资料综合各门命理，并可24小时咨询AI占卜师"
+ ],
+ "รายงานดวงทุกวัน": [
+  "Daily fortune report",
+  "每日运势报告"
+ ],
+ "รายงานดวงทุกวันจากทุกศาสตร์ + ถามแม่หมอ AI": [
+  "Daily reports from every science + ask the AI Seer",
+  "每日综合运势报告 + 咨询AI占卜师"
+ ],
+ "รายงานดวงประจำวัน": [
+  "Daily fortune report",
+  "每日运势报告"
+ ],
+ "รายงานที่บันทึกไว้ · เพื่อความบันเทิงและเป็นแนวทางชีวิต": [
+  "Saved reports · for entertainment and life guidance",
+  "已保存的报告 · 仅供娱乐及生活参考"
+ ],
+ "รายงานย้อนหลัง": [
+  "Past reports",
+  "往期报告"
+ ],
+ "รายชื่อ ราคา และเวลาคิวจะแสดงที่นี่": [
+  "Names, prices and queue times will appear here",
+  "名单、价格和排队时间将显示在这里"
+ ],
+ "รายชื่อหมอดู": [
+  "Fortune tellers",
+  "占卜师名单"
+ ],
+ "รายรับดี มีเหลือเก็บ": [
+  "Good income, with some left to save",
+  "收入不错，还有余钱可存"
+ ],
+ "รายละเอียด": [
+  "Details",
+  "详情"
+ ],
+ "รายได้เข้ามาสม่ำเสมอ": [
+  "Steady income flows in",
+  "收入稳定进账"
+ ],
+ "ราศี": [
+  "zodiac sign",
+  "星座"
+ ],
+ "ราศี เลขศาสตร์ สีมงคลตามวัน ไพ่ทาโรต์ และทักษา": [
+  "zodiac sign, numerology, daily lucky colours, Tarot and Taksa",
+  "星座、数字命理、每日幸运色、塔罗牌和泰式八宫"
+ ],
+ "ราศีกรกฎ": [
+  "Cancer",
+  "巨蟹座"
+ ],
+ "ราศีกันย์": [
+  "Virgo",
+  "处女座"
+ ],
+ "ราศีกุมภ์": [
+  "Aquarius",
+  "水瓶座"
+ ],
+ "ราศีของคุณ": [
+  "Your zodiac sign",
+  "你的星座"
+ ],
+ "ราศีตุลย์": [
+  "Libra",
+  "天秤座"
+ ],
+ "ราศีธนู": [
+  "Sagittarius",
+  "射手座"
+ ],
+ "ราศีพฤษภ": [
+  "Taurus",
+  "金牛座"
+ ],
+ "ราศีพิจิก": [
+  "Scorpio",
+  "天蝎座"
+ ],
+ "ราศีมังกร": [
+  "Capricorn",
+  "摩羯座"
+ ],
+ "ราศีมีน": [
+  "Pisces",
+  "双鱼座"
+ ],
+ "ราศีสิงห์": [
+  "Leo",
+  "狮子座"
+ ],
+ "ราศีเกิด": [
+  "Birth sign",
+  "出生星座"
+ ],
+ "ราศีเกิด ธาตุประจำตัว และนิสัยเด่น": [
+  "Birth sign, personal element and standout traits",
+  "出生星座、本命元素与突出性格"
+ ],
+ "ราศีเมถุน": [
+  "Gemini",
+  "双子座"
+ ],
+ "ราศีเมษ": [
+  "Aries",
+  "白羊座"
+ ],
+ "ราศีและดาวเคราะห์ตะวันตก ดูนิสัยและความเข้ากัน": [
+  "Western zodiac signs and planets: personality and compatibility",
+  "西方星座与行星，看性格与契合度"
+ ],
+ "ราศีและธาตุ": [
+  "Zodiac sign & element",
+  "星座与元素"
+ ],
+ "ราศีและนิสัยของคุณ": [
+  "Your zodiac sign and personality",
+  "你的星座与性格"
+ ],
+ "รูป": [
+  "Photo",
+  "照片"
+ ],
+ "รูปจะเก็บไว้ใน “แฟ้มดวง” ของคุณ ใช้ดูดวงครั้งต่อไปและรายงานดวงประจำวัน ลบได้ทุกเมื่อในหน้าบัญชี": [
+  "Photos are kept in your “Fortune File” for future readings and daily reports — delete anytime on your account page",
+  "照片将保存在你的“命理档案”中，用于之后的算命和每日运势报告，可随时在账户页面删除"
+ ],
+ "รูปพื้นที่ / ผังบ้าน": [
+  "Space photo / floor plan",
+  "空间照片 / 户型图"
+ ],
+ "รูปร่าง": [
+  "Body shape",
+  "身形"
+ ],
+ "รูปล่าสุด": [
+  "Latest photo",
+  "最新照片"
+ ],
+ "รูปเก่า": [
+  "Older photo",
+  "旧照片"
+ ],
+ "รูปแบบ: ขีดจุดบนทรายหรือกระดาษ": [
+  "Format: dots marked on sand or paper",
+  "形式：在沙或纸上画点"
+ ],
+ "รูปแบบ: จัดเมล็ดเป็นตาราง": [
+  "Format: seeds arranged in a grid",
+  "形式：将种子排成方阵"
+ ],
+ "รูปแบบ: ทอยลูกเต๋า 2–3 ลูก แล้วเปิดตำราตามแต้ม": [
+  "Format: cast 2–3 dice, then consult the text by the points",
+  "形式：掷2–3颗骰子，再按点数查阅典籍"
+ ],
+ "รูปแบบ: อ่านจากรูปทรงในถ้วยและจานรอง": [
+  "Format: read from shapes in the cup and saucer",
+  "形式：解读杯中与碟上的形状"
+ ],
+ "รูปแบบ: เขย่ากระบอกหรือหยิบสลากตามหมายเลข · ใบที่ไม่ดีนิยมผูกทิ้งไว้ที่ศาลเจ้า": [
+  "Format: shake a cylinder or draw a numbered slip · unlucky slips are traditionally tied and left at the shrine",
+  "形式：摇签筒或按号码抽签 · 不吉的签习惯系留在神社"
+ ],
+ "รูปแบบ: เขย่ากระบอกเซียมซี · หมอดู.com ใช้ชุดคำทำนายภาษาไทย 28 ใบ": [
+  "Format: shake the Siam Si cylinder · Mohdoo.com uses a Thai set of 28 fortune slips",
+  "形式：摇签筒 · Mohdoo.com 使用28支泰文签诗"
+ ],
+ "รูปแบบการเสี่ยง: โยนเหรียญ 3 เหรียญ หรือก้านยาร์โรว์ · หากผู้ให้บริการใช้สำรับไพ่จริงจะแสดงชื่อว่า “ไพ่อี้จิง”": [
+  "Casting method: toss 3 coins or yarrow stalks · if the provider uses an actual card deck, it will be shown as “I Ching cards”",
+  "起卦方式：掷3枚硬币或蓍草 · 若服务者使用实体牌组，将显示为“易经牌”"
+ ],
+ "รูปใช้เพื่อการทำนายของคุณเท่านั้น ลบได้ทุกเมื่อ": [
+  "Photos are used only for your readings and can be deleted anytime",
+  "照片仅用于你的算命，可随时删除"
+ ],
+ "รูปในแฟ้มดวง": [
+  "Photos in your Fortune File",
+  "命理档案中的照片"
+ ],
+ "รู้จักคุณ": [
+  "knows you",
+  "了解你"
+ ],
+ "รู้จักศาสตร์นี้": [
+  "About this art",
+  "了解此命理术"
+ ],
+ "รู้ว่าคนไหนเหมาะกับคุณ": [
+  "You'll know who is right for you",
+  "你会知道谁适合你"
+ ],
+ "ร่วมลงทุนกับคนที่ไว้ใจได้ผลดี": [
+  "Investing with someone trustworthy brings good results",
+  "与可信之人合作投资，收获良好"
+ ],
+ "ร่างกายสดชื่น เหมาะออกกำลังกาย": [
+  "Body feels refreshed — good for exercise",
+  "身体清爽，适合运动"
+ ],
+ "ร่างกายและใจต้องการพัก หยุดสักครู่เพื่อชาร์จพลัง": [
+  "Body and mind need rest; pause for a while to recharge",
+  "身心都需要休息，暂停一下来充电"
+ ],
+ "ร่างทรงสื่อสารคำแนะนำจากองค์เทพ": [
+  "A medium conveys guidance from the deities",
+  "灵媒传达神明的指引"
+ ],
+ "ร่าเริง สื่อสารเก่ง มีเสน่ห์ทางคำพูดและไอเดีย": [
+  "Cheerful, a great communicator, charming with words and ideas",
+  "开朗、善于沟通、言语和想法富有魅力"
+ ],
+ "ร้านค้า": [
+  "Shop",
+  "店铺"
+ ],
+ "ร้านจะจัดส่งภายใน 3–5 วันทำการ และแจ้งเลขพัสดุใน “ประวัติการดูดวง”": [
+  "The shop ships within 3–5 business days and posts the tracking number in “reading history”",
+  "店铺将在3–5个工作日内发货，并在“算命记录”中提供快递单号"
+ ],
+ "ฤกษ์มงคล": [
+  "Auspicious time",
+  "吉时"
+ ],
+ "ฤๅษี": [
+  "The Hermit",
+  "隐士"
+ ],
+ "ลงแรงแต่ผลไม่คุ้ม ลองทบทวนทิศทาง": [
+  "Effort without worthwhile results; reconsider your direction",
+  "付出与回报不成正比，重新审视方向"
+ ],
+ "ลบ": [
+  "Delete",
+  "删除"
+ ],
+ "ลบคนนี้ออกจากรายชื่อ?": [
+  "Remove this person from the list?",
+  "将此人从名单中删除？"
+ ],
+ "ลบรูป": [
+  "Delete photo",
+  "删除照片"
+ ],
+ "ลบรูปทั้งหมดและถอนความยินยอม?": [
+  "Delete all photos and withdraw consent?",
+  "删除所有照片并撤回同意？"
+ ],
+ "ลบรูปทั้งหมดแล้ว": [
+  "All photos deleted",
+  "已删除所有照片"
+ ],
+ "ลบรูปนี้และรูปเก่าของช่องนี้ออกจากแฟ้มดวง?": [
+  "Delete this photo and older photos in this slot from your Fortune File?",
+  "从命理档案中删除此照片及该栏的旧照片？"
+ ],
+ "ลม": [
+  "air",
+  "风"
+ ],
+ "ลม-ไฟ": [
+  "Air-Fire",
+  "风-火"
+ ],
+ "ลมโชยเย็นใต้ร่มไม้ พักใจให้สบาย": [
+  "A cool breeze under the shade of a tree — let your heart rest",
+  "树荫下凉风轻拂，让心安然休憩"
+ ],
+ "ลองมองเรื่องเดิมจากมุมใหม่ การหยุดรอชั่วคราวไม่ใช่ความล้มเหลว": [
+  "Look at an old matter from a new angle; pausing is not failure",
+  "换个角度看待旧事，暂时停下并不是失败"
+ ],
+ "ลองเติมด้วยกิจกรรมที่ช่วยให้": [
+  "Try adding activities that help",
+  "试试加入有助于"
+ ],
+ "ละเอียด รอบคอบ ช่างสังเกต ทำงานเนี้ยบ": [
+  "Detail-oriented, careful, observant, meticulous at work",
+  "细致、周到、善于观察、做事一丝不苟"
+ ],
+ "ลักษณะรูปร่าง": [
+  "Body features",
+  "体态特征"
+ ],
+ "ลังเลที่จะจากไป หรือกลัวการเปลี่ยนแปลง": [
+  "Hesitant to leave, or afraid of change",
+  "犹豫是否离开，或害怕改变"
+ ],
+ "ลายพระจันทร์ ดาว และอักขระมงคล": [
+  "Moon, star and sacred script patterns",
+  "月亮、星星与吉祥符文图案"
+ ],
+ "ลายมือ": [
+  "Palm reading",
+  "手相"
+ ],
+ "ลายมือ / โหงวเฮ้ง": [
+  "Palm Reading / Face Reading",
+  "手相 / 面相"
+ ],
+ "ลายมือ โหงวเฮ้ง": [
+  "Palm & face reading",
+  "手相 面相"
+ ],
+ "ลายมือขวา": [
+  "Right palm",
+  "右手掌纹"
+ ],
+ "ลายมือซ้าย": [
+  "Left palm",
+  "左手掌纹"
+ ],
+ "ลายมืออ่านรูปมือและเส้นฝ่ามือ โหงวเฮ้งอ่านลักษณะใบหน้าตามตำรา": [
+  "Palm reading reads the hand shape and palm lines; face reading reads facial features according to classic texts",
+  "手相解读手型与掌纹；面相按典籍解读面部特征"
+ ],
+ "ลายมือและโหงวเฮ้ง": [
+  "Palm and face reading",
+  "手相与面相"
+ ],
+ "ลายเซ็น": [
+  "Signature",
+  "签名"
+ ],
+ "ลายเท้า": [
+  "Sole lines",
+  "脚纹"
+ ],
+ "ลาว": [
+  "Laos",
+  "老挝"
+ ],
+ "ลึกซึ้ง ช่างสังเกต ชอบค้นหาความจริงและความรู้": [
+  "Profound, observant, seeks truth and knowledge",
+  "深刻、善于观察、喜欢探寻真理与知识"
+ ],
+ "ลึกซึ้ง มุ่งมั่น มีพลังดึงดูดในตัว": [
+  "Deep, determined, naturally magnetic",
+  "深沉、坚定、天生具有吸引力"
+ ],
+ "ลูก": [
+  "Child",
+  "孩子"
+ ],
+ "ลูกเต๋าพยากรณ์": [
+  "Dice divination",
+  "骰子占卜"
+ ],
+ "ลูกแก้ว": [
+  "Crystal ball",
+  "水晶球"
+ ],
+ "ล่าสุด": [
+  "Latest",
+  "最新"
+ ],
+ "วงจรหนึ่งกำลังจบลงอย่างสมบูรณ์ คุณมาถึงเป้าหมายแล้ว": [
+  "A cycle is coming to a complete close; you have reached your goal",
+  "一个循环正圆满结束，你已抵达目标"
+ ],
+ "วอก (ลิง)": [
+  "Wok (Monkey)",
+  "申（猴）"
+ ],
+ "วอลเปเปอร์มงคลประจำเดือน": [
+  "Monthly lucky wallpaper",
+  "每月开运壁纸"
+ ],
+ "วัดพระธาตุดอยสุเทพ · เชียงใหม่": [
+  "Wat Phra That Doi Suthep · Chiang Mai",
+  "素贴山双龙寺 · 清迈"
+ ],
+ "วัดพระธาตุพนม · นครพนม": [
+  "Wat Phra That Phanom · Nakhon Phanom",
+  "帕侬佛塔寺 · 那空拍侬"
+ ],
+ "วัดพระธาตุหริภุญชัย · ลำพูน": [
+  "Wat Phra That Hariphunchai · Lamphun",
+  "哈里奔猜寺 · 南奔"
+ ],
+ "วัดพระปฐมเจดีย์ · นครปฐม": [
+  "Wat Phra Pathom Chedi · Nakhon Pathom",
+  "佛统大塔寺 · 佛统"
+ ],
+ "วัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) · กรุงเทพฯ": [
+  "Wat Phra Kaew (Temple of the Emerald Buddha) · Bangkok",
+  "玉佛寺 · 曼谷"
+ ],
+ "วัดพระเชตุพนฯ (วัดโพธิ์) · กรุงเทพฯ": [
+  "Wat Pho (Wat Phra Chetuphon) · Bangkok",
+  "卧佛寺 · 曼谷"
+ ],
+ "วัดมังกรกมลาวาส (เล่งเน่ยยี่) · กรุงเทพฯ": [
+  "Wat Mangkon Kamalawat (Leng Noei Yi) · Bangkok",
+  "龙莲寺 · 曼谷"
+ ],
+ "วัตถุมงคล": [
+  "Lucky Charms",
+  "开运吉物"
+ ],
+ "วัน": [
+  "day",
+  "天"
+ ],
+ "วัน · รายงานทุกวัน": [
+  "days · daily reports",
+  "天 · 每日报告"
+ ],
+ "วัน)": [
+  "days)",
+  "天）"
+ ],
+ "วันจันทร์": [
+  "Monday",
+  "星期一"
+ ],
+ "วันดีสำหรับทบทวนตัวเอง ตัดสินใจอย่างรอบคอบ": [
+  "A good day for self-reflection and careful decisions",
+  "适合自我反省、谨慎决策的一天"
+ ],
+ "วันนี้": [
+  "Today",
+  "今天"
+ ],
+ "วันนี้ควรระวังตัว": [
+  "Be careful today",
+  "今天需多加小心"
+ ],
+ "วันนี้ดวงกลาง ๆ": [
+  "An average day",
+  "今日运势平平"
+ ],
+ "วันนี้ดวงดี": [
+  "A good day",
+  "今日运势佳"
+ ],
+ "วันนี้ดวงเด่นมาก": [
+  "An outstanding day",
+  "今日运势极佳"
+ ],
+ "วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย": [
+  "What would you like to know today? Choose a service or science below",
+  "今天想了解什么？请在下方选择服务或占卜术"
+ ],
+ "วันพฤหัสบดี": [
+  "Thursday",
+  "星期四"
+ ],
+ "วันพุธ": [
+  "Wednesday",
+  "星期三"
+ ],
+ "วันศุกร์": [
+  "Friday",
+  "星期五"
+ ],
+ "วันอังคาร": [
+  "Tuesday",
+  "星期二"
+ ],
+ "วันอาทิตย์": [
+  "Sunday",
+  "星期日"
+ ],
+ "วันเกิด": [
+  "Birthday",
+  "生日"
+ ],
+ "วันเกิด (วันในสัปดาห์)": [
+  "Day of birth (weekday)",
+  "出生星期"
+ ],
+ "วันเกิดของคุณ": [
+  "Your birthday",
+  "你的生日"
+ ],
+ "วันเกิดของอีกฝ่าย": [
+  "The other person's birthday",
+  "对方的生日"
+ ],
+ "วันเกิดลูก (ถ้าคลอดแล้ว)": [
+  "Child's birthday (if born)",
+  "孩子的生日（如已出生）"
+ ],
+ "วันเดือนปีเกิด": [
+  "Date of birth",
+  "出生日期"
+ ],
+ "วันเสาร์": [
+  "Saturday",
+  "星期六"
+ ],
+ "วางดาวลงในผัง 12 ตำแหน่งตามวันและเวลาเกิดแบบจันทรคติ อ่านเรื่องงาน การเงิน ความสัมพันธ์ จากดาวที่ตกในแต่ละตำแหน่ง": [
+  "Stars are placed in a 12-palace chart by lunar birth date and time; career, money and relationships are read from the stars in each palace",
+  "按农历出生日期时间将星曜排入十二宫，依各宫星曜解读事业、财运与感情"
+ ],
+ "วางแผนการเงินระยะยาว": [
+  "Plan your finances for the long term",
+  "做好长期理财规划"
+ ],
+ "วาสตุ": [
+  "Vastu",
+  "瓦斯图"
+ ],
+ "วิชาโหรชั้นสูงที่ใช้ตัวเลขในการพยากรณ์": [
+  "Advanced astrology that predicts using numbers",
+  "以数字推算的高阶占星术"
+ ],
+ "วิธีดู": [
+  "Method",
+  "占卜方式"
+ ],
+ "วิธีสะเดาะเคราะห์": [
+  "Misfortune-removal method",
+  "消灾方式"
+ ],
+ "วินาที": [
+  "seconds",
+  "秒"
+ ],
+ "วิเคราะห์จากรูป (แยกเป็นสองบริการ)": [
+  "Photo analysis (two separate services)",
+  "照片分析（分为两项服务）"
+ ],
+ "วิเคราะห์ชื่อเดิม": [
+  "Current Name Analysis",
+  "现有姓名分析"
+ ],
+ "วิเคราะห์ชื่อเดิมและตั้งชื่อใหม่ตามความหมาย เสียง ทักษา หรือเลขศาสตร์ ขอข้อมูลเกิดเท่าที่ศาสตร์นั้นใช้": [
+  "Analyse your current name and create a new one by meaning, sound, Taksa or numerology, asking only the birth data that science uses",
+  "分析现有姓名，并按含义、读音、泰式八宫或数字命理起新名，仅索取该学说所需的出生资料"
+ ],
+ "วิเคราะห์ชื่อและนามสกุล แนะนำการตั้งหรือเปลี่ยนชื่อ": [
+  "Analyse your name and surname; advice on choosing or changing a name",
+  "分析姓名，提供取名或改名建议"
+ ],
+ "วิเคราะห์ชุดตัวเลขตามระบบเลขศาสตร์ที่ผู้ให้บริการระบุ ลูกค้าส่งเฉพาะตัวเลขที่ต้องการวิเคราะห์": [
+  "Analyses number sets using the provider's numerology system; you send only the numbers to analyse",
+  "按服务者指定的数字命理体系分析号码组合；客户只需提供要分析的数字"
+ ],
+ "วิเคราะห์ตัวเลขและอักษรตามวิธีของหมอดู ลูกค้าพิมพ์ชุดทะเบียน ไม่ต้องแนบเอกสารรถ": [
+  "Analyses numbers and letters by the fortune teller's method; just type the plate, no vehicle documents needed",
+  "按占卜师的方法分析数字和字母；只需输入车牌号，无需附车辆文件"
+ ],
+ "วิเคราะห์ตามตำรา 1 หัวข้อ พร้อมคำอธิบายว่าพิจารณาจากส่วนใด": [
+  "Analysis of 1 topic by classic texts, explaining which features were considered",
+  "按典籍分析1个主题，并说明依据哪些部位判断"
+ ],
+ "วิเคราะห์ทะเบียน": [
+  "License plate analysis",
+  "车牌分析"
+ ],
+ "วิเคราะห์ทะเบียน 1 ป้าย พร้อมเหตุผลที่แนะนำ": [
+  "Analysis of 1 plate with reasons for the recommendation",
+  "1个车牌的分析及推荐理由"
+ ],
+ "วิเคราะห์บ้าน ห้อง ร้าน หรือสำนักงาน": [
+  "Analysis of homes, rooms, shops or offices",
+  "分析住宅、房间、店铺或办公室"
+ ],
+ "วิเคราะห์บ้านเลขที่ตามหลักเลขศาสตร์ ใช้ได้ทั้งบ้าน คอนโด ร้านค้า และสำนักงาน ลูกค้าพิมพ์เฉพาะเลขที่ ไม่ต้องใส่ที่อยู่เต็ม": [
+  "Numerology analysis of house numbers for houses, condos, shops and offices; type only the number, not the full address",
+  "按数字命理分析门牌号，适用于住宅、公寓、店铺及办公室；只需输入门牌号，无需完整地址"
+ ],
+ "วิเคราะห์ผลรวมเลขบัตรประชาชนตามหลักเลขศาสตร์ ระบบเก็บเฉพาะผลรวมและเลขท้าย 4 หลัก ไม่เก็บเลขเต็ม": [
+  "Numerology analysis of your ID card number sum; we store only the sum and last 4 digits, never the full number",
+  "按数字命理分析身份证号总和；系统只保存总和及末4位，不保存完整号码"
+ ],
+ "วิเคราะห์พื้นที่": [
+  "Space analysis",
+  "空间分析"
+ ],
+ "วิเคราะห์ลายเซ็นที่สะท้อนนิสัยและส่งผลต่อดวง": [
+  "Analyse your signature, which reflects character and affects fortune",
+  "分析反映性格、影响运势的签名"
+ ],
+ "วิเคราะห์เบอร์": [
+  "Number analysis",
+  "号码分析"
+ ],
+ "วิเคราะห์เบอร์ เสริมการงาน การเงิน และความรัก": [
+  "Phone number analysis to boost career, money and love",
+  "手机号码分析，提升事业、财运与爱情"
+ ],
+ "วิเคราะห์เบอร์โทรศัพท์ ป้ายทะเบียนรถ เลขบัตรประชาชน และบ้านเลขที่ หมอดูแต่ละท่านแจ้งหลักที่ใช้และขอบเขตคำแนะนำก่อนจอง": [
+  "Analyzes phone numbers, license plates, ID card numbers and house numbers. Each fortune teller states their principles and scope of advice before booking.",
+  "分析电话号码、车牌、身份证号与门牌号。每位占卜师会在预约前说明所用原则与建议范围。"
+ ],
+ "วิเคราะห์และเทียบเบอร์ ทะเบียน รวมถึงเลขบัตรและบ้านเลขที่": [
+  "Analyze and compare phone numbers, plates, ID and house numbers",
+  "分析与比较号码、车牌、证件号及门牌号"
+ ],
+ "ศรี": [
+  "Sri (fortune)",
+  "福运"
+ ],
+ "ศาลเจ้าพ่อเสือ · กรุงเทพฯ": [
+  "Chao Pho Suea Shrine · Bangkok",
+  "玄天上帝庙（虎神庙） · 曼谷"
+ ],
+ "ศาสตร์": [
+  "Sciences",
+  "占卜术"
+ ],
+ "ศาสตร์การวางผังอาคารแบบอินเดีย ดูทิศ ตำแหน่งห้อง และธาตุทั้งห้า ให้พื้นที่สมดุลและเป็นมงคล": [
+  "The Indian art of building layout, reading directions, room placement and the five elements for a balanced, auspicious space",
+  "印度建筑布局之术，看朝向、房间位置与五大元素，使空间平衡吉祥"
+ ],
+ "ศาสตร์จัดบ้านแบบอินเดีย ดูทิศและการวางห้อง": [
+  "The Indian art of home arrangement: directions and room placement",
+  "印度居家布局之术，看朝向与房间配置"
+ ],
+ "ศาสตร์จีนโบราณ อ่านชะตาจากใบหน้าและลักษณะท่าทาง": [
+  "Ancient Chinese art of reading fate from the face and bearing",
+  "中国古代从面相与举止看命运的学问"
+ ],
+ "ศาสตร์ดูดวงทั่วโลก": [
+  "Fortune sciences from around the world",
+  "全球占卜术"
+ ],
+ "ศาสตร์ตามสายประเพณีของแต่ละพื้นที่ เลือกประเทศแล้วดูว่าเหมาะกับเรื่องอะไร": [
+  "Arts from each region's traditions. Choose a country to see what each is good for.",
+  "各地传统流派的命理术，选择国家查看适合哪些主题"
+ ],
+ "ศาสตร์ทั่วโลก": [
+  "World Sciences",
+  "全球占卜术"
+ ],
+ "ศาสตร์ที่อยากใช้": [
+  "Preferred science",
+  "想用的命理学"
+ ],
+ "ศาสตร์ที่ใช้": [
+  "Art used",
+  "所用命理术"
+ ],
+ "ศาสตร์ที่ให้บริการ": [
+  "Sciences offered",
+  "提供的占卜术"
+ ],
+ "ศาสตร์นี้คืออะไร": [
+  "What is this art?",
+  "这是什么命理术？"
+ ],
+ "ศาสตร์นี้มีเฉพาะหน้ารู้จักศาสตร์ ยังไม่เปิดเป็นแพ็กเกจบนหมอดู.com": [
+  "This art has an intro page only and is not yet offered as a package on Mohdoo.com",
+  "此命理术仅有介绍页，尚未在 Mohdoo.com 开放套餐"
+ ],
+ "ศาสตร์แห่งเลข": [
+  "The science of numbers",
+  "数字之学"
+ ],
+ "ศุกร์": [
+  "Friday",
+  "星期五"
+ ],
+ "สงสัยเรื่องไหน ถามแม่หมอ AI ต่อได้เลย": [
+  "Curious about anything? Keep asking the AI Seer",
+  "有任何疑问，继续问AI占卜师吧"
+ ],
+ "สงสัยเรื่องไหนถามแม่หมอ AI ได้เลย ไม่จ่ายเพิ่ม": [
+  "Ask the AI Seer anything — no extra charge",
+  "有任何疑问都可问AI占卜师，无需额外付费"
+ ],
+ "สดใสมาก": [
+  "Very bright",
+  "非常光明"
+ ],
+ "สถานการณ์ในที่ทำงานกลับมาดีขึ้น": [
+  "Things at work take a turn for the better",
+  "工作状况好转"
+ ],
+ "สถานการณ์ไม่แย่อย่างที่กลัว": [
+  "The situation isn't as bad as you feared",
+  "情况没有你担心的那么糟"
+ ],
+ "สถานที่": [
+  "Place",
+  "地点"
+ ],
+ "สถานที่เกิด": [
+  "Place of birth",
+  "出生地"
+ ],
+ "สถานที่เกิด (จังหวัด / ประเทศ)": [
+  "Place of birth (province / country)",
+  "出生地（府 / 国家）"
+ ],
+ "สถานะความรัก": [
+  "Relationship status",
+  "感情状况"
+ ],
+ "สมดุลระหว่างเหตุผลและอารมณ์ทำให้คุณเป็นที่พึ่งของคนรอบข้าง": [
+  "Balancing reason and emotion makes you someone others can rely on",
+  "理性与感性的平衡让你成为身边人的依靠"
+ ],
+ "สมหวังในความรัก เหมาะกับการเริ่มต้นชีวิตคู่": [
+  "Love is fulfilled — a good time to start a life together",
+  "爱情如愿，适合携手共度人生"
+ ],
+ "สมัครด้วยเบอร์โทรศัพท์ รับรหัส OTP ทาง SMS": [
+  "Sign up with your phone number and receive an OTP by SMS",
+  "使用手机号注册，通过短信接收验证码"
+ ],
+ "สมัครบัญชี": [
+  "Create account",
+  "注册账户"
+ ],
+ "สมัครสมาชิก": [
+  "Sign up",
+  "注册"
+ ],
+ "สมัครสมาชิก เริ่มดูดวง": [
+  "Sign up and start your reading",
+  "注册会员，开始算命"
+ ],
+ "สมัครสำเร็จ! ยินดีต้อนรับสู่หมอดู.com": [
+  "Signed up! Welcome to Mohdoo.com",
+  "注册成功！欢迎来到Mohdoo.com"
+ ],
+ "สมัครหรือเข้าสู่ระบบด้วยเบอร์โทร เพื่อดูดวงประจำวัน": [
+  "Sign up or log in with your phone number to see your Daily Horoscope",
+  "用手机号注册或登录，查看每日运势"
+ ],
+ "สมัครหรือเข้าสู่ระบบด้วยเบอร์โทร เพื่อเริ่มดูดวง": [
+  "Sign up or log in with your phone number to start your reading",
+  "使用手机号注册或登录，开始算命"
+ ],
+ "สมัครเลย": [
+  "Sign up now",
+  "立即注册"
+ ],
+ "สมัครและเปิดดวง": [
+  "Sign up and reveal your fortune",
+  "注册并揭晓运势"
+ ],
+ "สมาชิกตั้งแต่": [
+  "Member since",
+  "注册时间"
+ ],
+ "สมาชิกถึง": [
+  "Member until",
+  "会员有效期至"
+ ],
+ "สมาชิกรายเดือน": [
+  "Monthly membership",
+  "月度会员"
+ ],
+ "สมาชิกหมดอายุแล้ว · ต่ออายุ": [
+  "Membership expired · Renew",
+  "会员已过期 · 续费"
+ ],
+ "สรุป: ค่อย ๆ ไปทีละก้าว ฟังใจตัวเอง แล้วเรื่องที่ถามจะคลี่คลายในทางที่ดีค่ะ": [
+  "In short: take it one step at a time, listen to your heart, and your question will resolve for the better.",
+  "总结：一步一步来，倾听内心，你所问之事自会往好的方向化解。"
+ ],
+ "สรุปทำเล 1 แปลงตามศาสตร์": [
+  "Summary of 1 plot of land by the science",
+  "按学说总结1块地的风水"
+ ],
+ "สรุปพร้อมทำเครื่องหมายบนผัง": [
+  "Summary with marks on the floor plan",
+  "总结并在平面图上标注"
+ ],
+ "สรุปพร้อมผังและคุยออนไลน์ 30 นาที": [
+  "Summary with floor plan and a 30-minute online chat",
+  "总结附平面图及30分钟线上交谈"
+ ],
+ "สรุปภาพรวม": [
+  "Summary",
+  "总结"
+ ],
+ "สรุปรวมจากทุกศาสตร์": [
+  "Summary from every science",
+  "综合各门命理总结"
+ ],
+ "สรุปรายการ": [
+  "Order summary",
+  "订单摘要"
+ ],
+ "สร้อยข้อมือหินสีประจำวันเกิด": [
+  "Birth-day gemstone bracelet",
+  "出生日宝石手链"
+ ],
+ "สร้างผังดวงจากวัน เวลา และสถานที่เกิด": [
+  "Create a birth chart from your date, time and place of birth",
+  "依据出生日期、时间和地点绘制星盘"
+ ],
+ "สลากเสี่ยงทายที่ศาลเจ้าและวัดในญี่ปุ่น จับฉลากตามหมายเลขแล้วอ่านคำทำนาย มีระดับตั้งแต่โชคดีมาก (ไดคิจิ) จนถึงโชคไม่ดี (เคียว)": [
+  "Fortune slips at Japanese shrines and temples: draw a numbered slip and read the prediction, ranging from great blessing (daikichi) to bad luck (kyō)",
+  "日本神社与寺庙的签，按号码抽签后阅读签文，从大吉到凶分为多个等级"
+ ],
+ "สวัสดี": [
+  "Hello",
+  "你好"
+ ],
+ "สวัสดีค่ะ คุณ": [
+  "Hello,",
+  "你好，"
+ ],
+ "สอบถาม": [
+  "Ask",
+  "咨询"
+ ],
+ "สอบถามราคา": [
+  "Ask for a price",
+  "询问价格"
+ ],
+ "สะเดาะเคราะห์": [
+  "Misfortune-Removal Ritual",
+  "消灾仪式"
+ ],
+ "สะเดาะเคราะห์ 1 ครั้ง": [
+  "Misfortune-removal ritual, 1 time",
+  "消灾仪式 1次"
+ ],
+ "สังสรรค์มากเกินไป หรือมีมือที่สามแทรกเข้ามา": [
+  "Partying too much, or a third party stepping in",
+  "过度社交，或有第三者介入"
+ ],
+ "สับไพ่": [
+  "Shuffle",
+  "洗牌"
+ ],
+ "สั่งซื้อ": [
+  "Order",
+  "购买"
+ ],
+ "สั่งซื้อเรียบร้อย": [
+  "Order placed",
+  "下单成功"
+ ],
+ "สายรุ้งหลังฝน มอบความหวังใหม่": [
+  "A rainbow after the rain brings new hope",
+  "雨后彩虹，带来新的希望"
+ ],
+ "สำนักงาน": [
+  "Office",
+  "办公室"
+ ],
+ "สำรับไพ่": [
+  "Deck",
+  "牌组"
+ ],
+ "สำเร็จตามเป้าหมาย มีชื่อเสียงดี": [
+  "Goals achieved, with a fine reputation",
+  "达成目标，名声良好"
+ ],
+ "สิงห์": [
+  "Leo",
+  "狮子座"
+ ],
+ "สินค้าแนะนำ": [
+  "Featured items",
+  "推荐商品"
+ ],
+ "สิ่งที่คุณจะได้รับ": [
+  "What you'll receive",
+  "您将获得"
+ ],
+ "สิ่งที่ติดขัดเป็นเพียงช่วงหนึ่ง ทุกอย่างจะคลี่คลายเมื่อถึงเวลา": [
+  "What's stuck is only a phase; everything will resolve in time",
+  "受阻只是一时，时机到了一切都会化解"
+ ],
+ "สิ่งที่ลงแรงไว้กำลังเติบโต อดทนรอผลอีกนิด": [
+  "What you've invested in is growing; be patient a little longer for results",
+  "你付出的努力正在成长，再耐心等待一下成果"
+ ],
+ "สิ่งที่ลงแรงไว้ถึงเวลาเก็บเกี่ยว มีคนเห็นคุณค่าในตัวคุณ": [
+  "What you've worked for is ready to harvest — people see your worth",
+  "付出终有收获，有人看见你的价值"
+ ],
+ "สิ่งที่ลงแรงไว้เริ่มเห็นผล โอกาสจากที่ไกลกำลังมา": [
+  "Your efforts are starting to pay off; opportunities from afar are coming",
+  "付出开始见到成效，远方的机会即将到来"
+ ],
+ "สิ่งที่หวังยังไม่ถึงเวลา เตรียมตัวให้พร้อมแล้วรอจังหวะ": [
+  "What you hope for hasn't arrived yet — prepare well and wait for the moment",
+  "所盼之事时机未到，做好准备静待时机"
+ ],
+ "สิ่งที่ได้รับ": [
+  "What you get",
+  "您将获得"
+ ],
+ "สี": [
+  "colour",
+  "颜色"
+ ],
+ "สีของคุณ: สี": [
+  "Your colour: colour",
+  "你的颜色：颜色"
+ ],
+ "สีขาว": [
+  "white",
+  "白色"
+ ],
+ "สีชมพู": [
+  "pink",
+  "粉色"
+ ],
+ "สีดำ": [
+  "black",
+  "黑色"
+ ],
+ "สีทอง": [
+  "gold",
+  "金色"
+ ],
+ "สีที่ควรเลี่ยงในวันสำคัญ": [
+  "Colours to avoid on important days",
+  "重要日子应避免的颜色"
+ ],
+ "สีน้ำตาล": [
+  "brown",
+  "棕色"
+ ],
+ "สีน้ำเงิน": [
+  "navy blue",
+  "深蓝色"
+ ],
+ "สีประจำวันเกิด": [
+  "Birth-day colour",
+  "出生日颜色"
+ ],
+ "สีประจำวันเกิดคือ": [
+  "Your birth-day colour is",
+  "你的出生日颜色是"
+ ],
+ "สีฟ้า": [
+  "light blue",
+  "浅蓝色"
+ ],
+ "สีมงคล": [
+  "Lucky colour",
+  "幸运色"
+ ],
+ "สีมงคล (เกิดวัน": [
+  "Lucky colours (born on",
+  "幸运色（出生于"
+ ],
+ "สีมงคลต่างกัน ใช้เสริมดวงให้กันได้": [
+  "Different lucky colours — you can boost each other's fortune",
+  "幸运色不同，可互相增运"
+ ],
+ "สีมงคลประจำตัว": [
+  "Personal lucky colours",
+  "个人幸运色"
+ ],
+ "สีมงคลวัน": [
+  "Lucky colours for",
+  "幸运色 "
+ ],
+ "สีมงคลและเลขนำโชคของฉัน": [
+  "My lucky colours and lucky numbers",
+  "我的幸运色和幸运数字"
+ ],
+ "สีม่วง": [
+  "purple",
+  "紫色"
+ ],
+ "สีส้ม": [
+  "orange",
+  "橙色"
+ ],
+ "สีเขียว": [
+  "green",
+  "绿色"
+ ],
+ "สีเทา": [
+  "grey",
+  "灰色"
+ ],
+ "สีเสริมการงาน การเงิน ความรัก จากวันเกิดของคุณ": [
+  "Colours to boost career, money and love from your birthday",
+  "根据你的生日提升事业、财运与爱情的颜色"
+ ],
+ "สีเสริมการเงิน": [
+  "Colour for wealth",
+  "招财色"
+ ],
+ "สีเหลือง": [
+  "yellow",
+  "黄色"
+ ],
+ "สีแดง": [
+  "red",
+  "红色"
+ ],
+ "สื่อวิญญาณ": [
+  "Spirit medium",
+  "通灵"
+ ],
+ "สื่อสารกับดวงวิญญาณเพื่อชี้แนะอนาคต": [
+  "Communicate with spirits for guidance on the future",
+  "与灵魂沟通，指引未来"
+ ],
+ "สื่อสารเก่ง มีไอเดียใหม่": [
+  "Great communicator with fresh ideas",
+  "善于沟通，新点子多"
+ ],
+ "สื่อองค์เทพ": [
+  "Deity medium",
+  "神明附体"
+ ],
+ "สุขภาพ": [
+  "health",
+  "健康"
+ ],
+ "สุ่มด้วยเซียมซี เหรียญ ลูกเต๋า เมล็ด หรือสัญลักษณ์": [
+  "Drawn by chance with fortune sticks, coins, dice, seeds or symbols",
+  "以签、硬币、骰子、种子或符号随机占卜"
+ ],
+ "สุ่มหมายเลขแล้วเปิดข้อความคำทำนายตามชุดเซียมซี": [
+  "Draw a random number and reveal the prediction from the Siam Si set",
+  "随机抽号，揭示求签签文"
+ ],
+ "สแกนจ่ายผ่านแอปธนาคาร": [
+  "Scan to pay with your banking app",
+  "用银行App扫码支付"
+ ],
+ "สแกนเพื่อชำระเงิน": [
+  "Scan to pay",
+  "扫码支付"
+ ],
+ "ส่ง": [
+  "Send",
+  "发送"
+ ],
+ "ส่งข้อมูลให้หมอดูแล้ว": [
+  "Details sent to the fortune teller",
+  "资料已发送给占卜师"
+ ],
+ "ส่งผัง ทางเข้า เคาน์เตอร์ และพื้นที่รับลูกค้า": [
+  "Send the floor plan, entrance, counter and customer area",
+  "提供平面图、入口、柜台及接待区"
+ ],
+ "ส่งผัง ทิศ ทางเข้า และรูปโดยรอบ": [
+  "Send the floor plan, direction, entrance and photos of the surroundings",
+  "提供平面图、朝向、入口及周边照片"
+ ],
+ "ส่งผัง รูป และทิศของห้อง": [
+  "Send the floor plan, photos and direction of the room",
+  "提供房间平面图、照片及朝向"
+ ],
+ "ส่งผังแต่ละชั้น รูปมุมหลัก และทิศ": [
+  "Send the plan of each floor, photos of main corners and directions",
+  "提供各层平面图、主要角落照片及朝向"
+ ],
+ "ส่งผังและรูป 1 พื้นที่ทำงาน": [
+  "Send the plan and photos of 1 workspace",
+  "提供1个工作区的平面图及照片"
+ ],
+ "ส่งภาพฝ่ามือที่เห็นเส้นชัด ตามเงื่อนไขของหมอดู": [
+  "Send clear photos of your palms, as the fortune teller requires",
+  "按占卜师要求提供掌纹清晰的手掌照片"
+ ],
+ "ส่งภาพใบหน้าตามมุมที่ผู้เชี่ยวชาญกำหนด อ่านตามตำราที่แจ้งไว้": [
+  "Send face photos at the angles the expert specifies; read by the stated texts",
+  "按专家指定角度提供面部照片，依所述典籍解读"
+ ],
+ "ส่งรหัส OTP ไปที่": [
+  "OTP sent to",
+  "验证码已发送至"
+ ],
+ "ส่งรหัสใหม่แล้ว (ทดสอบ": [
+  "New code sent (test",
+  "新验证码已发送（测试"
+ ],
+ "ส่งรหัสไปที่": [
+  "Code sent to",
+  "验证码已发送至"
+ ],
+ "ส่งรูป + วิดีโอยืนยันใน 3 วัน": [
+  "Photos + video confirmation within 3 days",
+  "3天内发送照片+视频确认"
+ ],
+ "ส่งรูปถ่าย + วิดีโอยืนยัน": [
+  "Send photos + video confirmation",
+  "发送照片 + 视频确认"
+ ],
+ "ส่งรูปพื้นที่ ทิศ และของที่มี": [
+  "Send photos of the area, direction and existing items",
+  "提供区域照片、朝向及现有物品"
+ ],
+ "ส่งรูปและทิศของจุดในบ้านที่ต้องการดู เช่น ประตู ห้องนอน หรือมุมทำงาน": [
+  "Send photos and directions of the spot you want checked, such as a door, bedroom or work corner",
+  "提供要看的位置照片及朝向，如大门、卧室或工作角"
+ ],
+ "ส่งให้หมอดู": [
+  "Send to fortune teller",
+  "发送给占卜师"
+ ],
+ "ส่งไฟล์ให้ดาวน์โหลด": [
+  "File sent for download",
+  "提供文件下载"
+ ],
+ "ส่วน": [
+  "part",
+  "部分"
+ ],
+ "ส่วนวันที่มีนัดสำคัญเรื่องหัวใจ เลือก": [
+  "For days with important matters of the heart, choose",
+  "若有重要的感情约会，请选择"
+ ],
+ "ส้ม": [
+  "Orange",
+  "橙色"
+ ],
+ "หงส์ทองร่อนลงสระ น้ำใสเป็นประกาย": [
+  "A golden swan glides down to the pond, the clear water sparkles",
+  "金鹅落池，清水闪耀"
+ ],
+ "หญิง": [
+  "Female",
+  "女"
+ ],
+ "หนึ่งในไพ่ที่ดีที่สุด ความสำเร็จ ความสุข และความสดใสรอคุณอยู่": [
+  "One of the best cards; success, happiness and brightness await you",
+  "最好的牌之一，成功、幸福与光明在等待你"
+ ],
+ "หนุนกันเต็มที่": [
+  "Fully supportive",
+  "全力相助"
+ ],
+ "หน้าตรง เห็นหน้าผากถึงคาง": [
+  "Face forward, forehead to chin visible",
+  "正脸，露出额头至下巴"
+ ],
+ "หน้าบริการ": [
+  "Services page",
+  "服务页"
+ ],
+ "หน้าบัญชี": [
+  "Account page",
+  "账户页"
+ ],
+ "หน้าบ้าน/หน้าร้านหันทิศไหน": [
+  "Which way does the front of the house/shop face?",
+  "房屋/店铺正门朝向哪个方向？"
+ ],
+ "หมดอายุแล้ว": [
+  "Expired",
+  "已过期"
+ ],
+ "หมวดที่เกี่ยวข้อง": [
+  "Related categories",
+  "相关类别"
+ ],
+ "หมวดหมู่ย่อย": [
+  "Subcategories",
+  "子分类"
+ ],
+ "หมอกหนาปกคลุมทาง เดินช้าจึงปลอดภัย": [
+  "Thick fog covers the road — go slowly to stay safe",
+  "浓雾笼罩前路，慢行方能平安"
+ ],
+ "หมอดู": [
+  "Fortune teller",
+  "占卜师"
+ ],
+ "หมอดู.com": [
+  "Mohdoo.com",
+  "Mohdoo.com"
+ ],
+ "หมอดู.com · คำทำนายเพื่อความบันเทิงและเป็นแนวทางชีวิต": [
+  "Mohdoo.com · predictions for entertainment and life guidance",
+  "Mohdoo.com · 占卜仅供娱乐及生活参考"
+ ],
+ "หมอดู.com รวมศาสตร์การทำนายดวงจากทั่วโลก ไพ่ทาโรต์ โหราศาสตร์ไทย ดวงจีน เลขศาสตร์ ตั้งชื่อ ดูเบอร์ และเสี่ยงเซียมซี": [
+  "Mohdoo.com brings together fortune sciences from around the world: Tarot, Thai astrology, Chinese astrology, numerology, naming, phone number analysis and Siam Si fortune sticks",
+  "Mohdoo.com 汇聚全球占卜术：塔罗牌、泰国占星、中国命理、数字命理、取名、号码分析和求签"
+ ],
+ "หมอดูจะตอบกลับภายใน 24 ชั่วโมง": [
+  "The fortune teller will reply within 24 hours",
+  "占卜师将在24小时内回复"
+ ],
+ "หมอดูทั้งหมด": [
+  "All fortune tellers",
+  "全部占卜师"
+ ],
+ "หมอดูบนแพลตฟอร์ม หมอดู.com": [
+  "Fortune tellers on the Mohdoo.com platform",
+  "Mohdoo.com平台上的占卜师"
+ ],
+ "หมอดูบนแอป": [
+  "Fortune tellers on the app",
+  "App上的占卜师"
+ ],
+ "หมอดูประจำตัวใช้ประกอบการดูดวงของคุณ (การอ่านรูปด้วย AI เปิดในระยะถัดไป)": [
+  "Your personal fortune teller uses these in your readings (AI photo reading coming in a later phase)",
+  "专属占卜师会参考这些内容为你算命（AI照片解读将在后续开放）"
+ ],
+ "หมอดูแต่ละท่านจะแจ้งระบบเลขศาสตร์ที่ใช้และขอบเขตคำแนะนำไว้ก่อนจอง": [
+  "Each fortune teller states their numerology system and scope of advice before booking",
+  "每位占卜师会在预约前说明所用数字命理体系及建议范围"
+ ],
+ "หมอดูแต่ละท่านจะแจ้งหลักที่ใช้และขอบเขตคำแนะนำไว้ก่อนจอง": [
+  "Each fortune teller states their principles and scope of advice before booking",
+  "每位占卜师会在预约前说明所用原则及建议范围"
+ ],
+ "หมอดูแต่ละท่านจะแจ้งหลักเลขศาสตร์ที่ใช้และขอบเขตคำแนะนำไว้ก่อนจอง": [
+  "Each fortune teller states their numerology principles and scope of advice before booking",
+  "每位占卜师会在预约前说明所用数字命理原则及建议范围"
+ ],
+ "หมายเลขโทรศัพท์": [
+  "Phone number",
+  "手机号码"
+ ],
+ "หมายเหตุ": [
+  "Note",
+  "备注"
+ ],
+ "หมุน!": [
+  "Spin!",
+  "转！"
+ ],
+ "หมุนวงล้อรับดวงฟรี 1 อย่าง": [
+  "Spin the wheel for 1 free reading",
+  "转动转盘，免费获得 1 次运势"
+ ],
+ "หมุนวงล้อได้ภายหลังที่หน้าบัญชี": [
+  "You can spin the wheel later from your account page",
+  "之后可在账户页面转动转盘"
+ ],
+ "หมุนเลย": [
+  "Spin now",
+  "立即转盘"
+ ],
+ "หมุนได้ 1 ครั้ง ผลที่ได้จะใช้ทันทีหรือเก็บเป็นคูปองก็ได้": [
+  "1 spin only; use the result right away or save it as a coupon",
+  "仅可转 1 次，结果可立即使用或保存为优惠券"
+ ],
+ "หยุด": [
+  "Stop",
+  "停止"
+ ],
+ "หรือเข้าสู่ระบบด้วย": [
+  "or log in with",
+  "或使用以下方式登录"
+ ],
+ "หลังพายุย่อมมีดวงดาว ความหวังและการเยียวยากำลังมาหาคุณ": [
+  "After the storm come the stars; hope and healing are on their way to you",
+  "风雨过后见星辰，希望与疗愈正向你走来"
+ ],
+ "หลายภูมิภาค": [
+  "Multiple regions",
+  "多个地区"
+ ],
+ "หลายภูมิภาค / รอข้อมูลยืนยัน": [
+  "Multiple regions / pending confirmation",
+  "多个地区 / 待确认"
+ ],
+ "หลีกเลี่ยงความขัดแย้งได้ หรือถึงเวลาหาข้อตกลงร่วมกัน": [
+  "Conflict can be avoided, or it's time to find common ground",
+  "冲突可以避免，或是时候达成共识了"
+ ],
+ "หอคอย": [
+  "The Tower",
+  "高塔"
+ ],
+ "หัวใจกำลังเปิดรับความรักและความสุขครั้งใหม่": [
+  "Your heart is opening to new love and happiness",
+  "你的心正敞开迎接新的爱与幸福"
+ ],
+ "หาฤกษ์มงคล": [
+  "Find an Auspicious Time",
+  "择吉时"
+ ],
+ "หาวันเวลาดีสำหรับงานสำคัญ": [
+  "Find good dates and times for important events",
+  "为重要事项择良辰吉日"
+ ],
+ "หึงหวงมากไปอาจทำให้ห่างกัน": [
+  "Too much jealousy may drive you apart",
+  "过度嫉妒可能让彼此疏远"
+ ],
+ "หุนหันพลันแล่น พูดแรงหรือตัดสินใจเร็วเกินไป": [
+  "Impulsive; speaking harshly or deciding too quickly",
+  "冲动行事，说话过重或决定太快"
+ ],
+ "หูทิพย์": [
+  "Clairaudience",
+  "天耳通"
+ ],
+ "อดทน มีวินัย วางแผนเก่ง ทำอะไรจริงจังจนสำเร็จ": [
+  "Patient, disciplined, a great planner, sees things through",
+  "有耐心、有纪律、善于规划、做事认真直到成功"
+ ],
+ "อดทนรอผลตอบแทนระยะยาว": [
+  "Be patient for long-term rewards",
+  "耐心等待长期回报"
+ ],
+ "อดีต": [
+  "Past",
+  "过去"
+ ],
+ "อดีต · ปัจจุบัน · อนาคต": [
+  "Past · Present · Future",
+  "过去 · 现在 · 未来"
+ ],
+ "อนาคต": [
+  "Future",
+  "未来"
+ ],
+ "อนาคตของความสัมพันธ์": [
+  "Future of the relationship",
+  "感情的未来"
+ ],
+ "อยากรู้เรื่องไหนเป็นพิเศษ": [
+  "Anything in particular you want to know?",
+  "特别想了解哪方面？"
+ ],
+ "อยากให้ช่วยดูเรื่องไหนเป็นพิเศษ": [
+  "Anything in particular you'd like us to look at?",
+  "希望特别看哪方面？"
+ ],
+ "อยากได้ชื่อแนวไหน": [
+  "What style of name would you like?",
+  "想要什么风格的名字？"
+ ],
+ "อยู่ในหมวด": [
+  "In category",
+  "所属类别"
+ ],
+ "อย่ารีบตอบรับข้อเสนอ ศึกษารายละเอียดก่อน": [
+  "Don't rush to accept offers — study the details first",
+  "不要急于接受提议，先研究细节"
+ ],
+ "อย่าลืมดูแลตัวเอง คุณอาจให้คนอื่นมากเกินไปจนหมดแรง": [
+  "Don't forget to take care of yourself; you may be giving others so much that you're drained",
+  "别忘了照顾自己，你可能为他人付出太多而精疲力尽"
+ ],
+ "อย่าเก็บคำพูดคนอื่นมาคิดมาก": [
+  "Don't take others' words too much to heart",
+  "别把别人的话放在心上反复思量"
+ ],
+ "อย่าเพิ่งตัดสินใจจากคำพูดของคนอื่น": [
+  "Don't decide based on what others say just yet",
+  "先别凭别人的话做决定"
+ ],
+ "อย่าใช้อารมณ์คุยเรื่องสำคัญ": [
+  "Don't discuss important matters in anger",
+  "不要带着情绪谈重要的事"
+ ],
+ "ออกจากระบบ": [
+  "Log out",
+  "退出登录"
+ ],
+ "ออกจากระบบแล้ว แล้วพบกันใหม่": [
+  "Logged out — see you again soon",
+  "已退出登录，期待再见"
+ ],
+ "ออกรถ": [
+  "New car",
+  "提新车"
+ ],
+ "ออกแบบจากชื่อจริง ความหมายที่ต้องการ และแนวเสียงที่ชอบ": [
+  "Designed from your real name, desired meaning and preferred sound",
+  "依据本名、期望含义及喜欢的读音设计"
+ ],
+ "ออกแบบตามสีมงคลของคุณ": [
+  "Designed in your lucky colours",
+  "依你的幸运色设计"
+ ],
+ "อังคาร": [
+  "Tuesday",
+  "星期二"
+ ],
+ "อัปเดต": [
+  "Updated",
+  "更新"
+ ],
+ "อัปเดตใหม่ทุกวันตอนเที่ยงคืน": [
+  "Updated daily at midnight",
+  "每天午夜更新"
+ ],
+ "อัศวิน": [
+  "Knight",
+  "骑士"
+ ],
+ "อาจมีความเข้าใจผิด พูดกันตรง ๆ แล้วจะดีขึ้น": [
+  "There may be a misunderstanding — speak openly and things will improve",
+  "可能有误会，坦诚沟通就会好转"
+ ],
+ "อาทิตย์": [
+  "Sunday",
+  "星期日"
+ ],
+ "อายุ": [
+  "Age",
+  "年龄"
+ ],
+ "อารมณ์ร้อนอาจทำให้เสียโอกาส คิดก่อนพูดและทำ": [
+  "A hot temper may cost you opportunities — think before you speak and act",
+  "脾气急躁可能错失良机，三思而后言行"
+ ],
+ "อารมณ์อ่อนไหวง่าย หรือยังไม่จริงจังกับความรู้สึก": [
+  "Easily moved emotionally, or not yet serious about feelings",
+  "情绪容易波动，或对感情尚不认真"
+ ],
+ "อิตาลี / ยุโรป": [
+  "Italy / Europe",
+  "意大利 / 欧洲"
+ ],
+ "อินเดีย": [
+  "India",
+  "印度"
+ ],
+ "อิลม์ อัลรอมล์": [
+  "ʿIlm al-Raml",
+  "沙占（ʿIlm al-Raml）"
+ ],
+ "อีก": [
+  "more",
+  "更多"
+ ],
+ "อีกนิดเดียว": [
+  "Almost there",
+  "就差一点"
+ ],
+ "อีฟา": [
+  "Ifá",
+  "伊法（Ifá）"
+ ],
+ "อี้จิง": [
+  "I Ching",
+  "易经"
+ ],
+ "อื่น ๆ": [
+  "Other",
+  "其他"
+ ],
+ "อุตสาหะ": [
+  "Utsaha (diligence)",
+  "勤奋"
+ ],
+ "อุทิศให้ผู้ล่วงลับ": [
+  "Dedicate to the departed",
+  "回向给逝者"
+ ],
+ "อุปสรรคตอนนี้เป็นเรื่องชั่วคราว รอจังหวะแล้วทุกอย่างจะชัดเจน": [
+  "Present obstacles are temporary — wait for the moment and all will become clear",
+  "眼前的阻碍只是暂时的，静待时机一切将会明朗"
+ ],
+ "อ่อนโยน มีจินตนาการ เข้าใจความรู้สึกคนอื่น": [
+  "Gentle, imaginative, understands others' feelings",
+  "温柔、富有想象力、善解人意"
+ ],
+ "อ่อนโยน เข้าใจผู้อื่น ทำงานร่วมกับคนอื่นได้ดีเยี่ยม": [
+  "Gentle, understanding, works superbly with others",
+  "温柔、善解人意、与他人合作极佳"
+ ],
+ "อ่อนโยน ใส่ใจความรู้สึก": [
+  "Gentle and caring about feelings",
+  "温柔体贴，在意感受"
+ ],
+ "อ่านกากกาแฟ": [
+  "Coffee-cup reading",
+  "咖啡占卜"
+ ],
+ "อ่านข้อมูลปี เดือน วัน และเวลาเกิดตามประเพณีสี่เสาของเกาหลี": [
+  "Reads birth year, month, day and time by the Korean Four Pillars tradition",
+  "按韩国四柱传统解读出生年、月、日、时"
+ ],
+ "อ่านค่าของตัวเลขและตัวอักษร": [
+  "Reads the values of numbers and letters",
+  "解读数字与字母的数值"
+ ],
+ "อ่านจากลายมือและใบหน้า บอกนิสัยและแนวโน้มชีวิต": [
+  "Read from palms and faces, revealing personality and life trends",
+  "从手相与面相解读性格与人生走向"
+ ],
+ "อ่านชะตาจากลักษณะร่างกาย ลายเส้น และลายมือชื่อ": [
+  "Read fate from body features, lines and signatures",
+  "从身体特征、纹路和签名解读命运"
+ ],
+ "อ่านดวงจากธาตุประจำตัว และปรับธาตุเพื่อเสริมดวง": [
+  "Read your personal element and balance it to boost fortune",
+  "解读本命元素，调和元素以增运"
+ ],
+ "อ่านดวงชะตาจากตำแหน่งดวงดาวบนจักรราศี ณ เวลาเกิด": [
+  "Read your destiny from planetary positions in the zodiac at birth",
+  "根据出生时行星在黄道上的位置解读命运"
+ ],
+ "อ่านดวงไทย 30 นาที": [
+  "Thai astrology reading, 30 minutes",
+  "泰国占星解读 30分钟"
+ ],
+ "อ่านตามแนวทางของผู้ให้บริการ (แสดงขอบเขตก่อนเปิดแพ็กเกจ)": [
+  "Read by the provider's own approach (scope shown before the package opens)",
+  "按服务者的方法解读（开放套餐前显示范围）"
+ ],
+ "อ่านผังดวงกำเนิดแบบ Kundli และอาจเทียบผังดวงคู่": [
+  "Reads a Kundli birth chart and may compare a couple's charts",
+  "解读印度Kundli本命盘，并可比较双人合盘"
+ ],
+ "อ่านผังดวงจีนหรือตะวันตก 30 นาที": [
+  "Chinese or Western chart reading, 30 minutes",
+  "中式或西洋命盘解读 30分钟"
+ ],
+ "อ่านผังดวงสองคนตามศาสตร์ที่เลือก ดูความเข้ากันและสิ่งที่ควรระวัง": [
+  "Reads two people's charts by the chosen science, showing compatibility and what to watch out for",
+  "按所选学说解读两人命盘，看契合度及需注意之处"
+ ],
+ "อ่านพลังตัวเลขของชื่อ เบอร์ ทะเบียน และบ้านเลขที่": [
+  "Reads the number energy of names, phone numbers, plates and house numbers",
+  "解读姓名、号码、车牌与门牌号的数字能量"
+ ],
+ "อ่านพลังตัวเลขตามระบบที่ผู้ให้บริการระบุ": [
+  "Reads number energy by the system the provider specifies",
+  "按服务者指定的体系解读数字能量"
+ ],
+ "อ่านรูปทรงกากกาแฟในถ้วย เล่าเรื่องที่กำลังจะมา": [
+  "Reads the shapes of coffee grounds in the cup to tell what's coming",
+  "解读杯中咖啡渣的形状，讲述即将到来的事"
+ ],
+ "อ่านรูปมือ นิ้ว และเส้นสำคัญบนฝ่ามือ พบได้ทั้งในอินเดีย จีน และยุโรป แต่ละสายมีตำราต่างกัน": [
+  "Reads the shape of the hand, fingers and main palm lines; found in India, China and Europe, each tradition with its own texts",
+  "解读手形、手指与掌中主要纹路，见于印度、中国与欧洲，各流派典籍不同"
+ ],
+ "อ่านรูปมือและเส้นฝ่ามือ": [
+  "Reads hand shape and palm lines",
+  "解读手形与掌纹"
+ ],
+ "อ่านลักษณะใบหน้า บอกนิสัยและแนวโน้มชีวิต": [
+  "Reads facial features to reveal personality and life trends",
+  "解读面部特征，揭示性格与人生走向"
+ ],
+ "อ่านลักษณะใบหน้า เช่น หน้าผาก คิ้ว ตา จมูก ปาก ตามตำราจีน เพื่อบอกนิสัยและแนวโน้มชีวิต": [
+  "Reads facial features such as forehead, eyebrows, eyes, nose and mouth by Chinese texts to reveal personality and life trends",
+  "依中国相书解读额头、眉、眼、鼻、口等面部特征，揭示性格与人生走向"
+ ],
+ "อ่านลักษณะใบหน้าตามตำรา": [
+  "Reads facial features by traditional texts",
+  "依相书解读面部特征"
+ ],
+ "อ่านลายเส้นฝ่าเท้า ดูอดีต ปัจจุบัน และอนาคต": [
+  "Read sole lines — past, present and future",
+  "解读脚掌纹，看过去、现在和未来"
+ ],
+ "อ่านสัญลักษณ์และตำแหน่งของไพ่ตามคำถาม": [
+  "Reads the symbols and positions of the cards according to your question",
+  "按您的问题解读牌的象征与位置"
+ ],
+ "อ่านเส้นข้อมือเพื่อดูเส้นทางชีวิต": [
+  "Read wrist lines to see your life path",
+  "解读腕纹，看人生道路"
+ ],
+ "อ่านเส้นฝ่ามือ บอกนิสัยและแนวโน้มชีวิต": [
+  "Read palm lines for character and life trends",
+  "解读掌纹，看性格与人生走向"
+ ],
+ "อ่านเส้นลายมือ ดูนิสัย สุขภาพ และจังหวะชีวิต": [
+  "Reads palm lines for personality, health and life rhythms",
+  "解读掌纹，看性格、健康与人生节奏"
+ ],
+ "อ่านเอกสารให้ละเอียดก่อนเซ็น": [
+  "Read documents carefully before signing",
+  "签字前仔细阅读文件"
+ ],
+ "อ่านไฟล์รูปไม่ได้ ลองรูปอื่นนะคะ": [
+  "Couldn't read the image — please try another one.",
+  "无法读取图片，请换一张试试。"
+ ],
+ "ฮวงจุ้ย": [
+  "Feng Shui",
+  "风水"
+ ],
+ "ฮวงจุ้ย / วาสตุ": [
+  "Feng Shui / Vastu",
+  "风水 / 瓦斯图"
+ ],
+ "ฮวงจุ้ยคอนโด 1 ห้อง": [
+  "Condo Feng Shui, 1 room",
+  "公寓风水 1间"
+ ],
+ "ฮวงจุ้ยที่ดินหรือทำเล": [
+  "Land or Location Feng Shui",
+  "土地或地段风水"
+ ],
+ "ฮวงจุ้ยที่ดินเปล่า": [
+  "Feng Shui for vacant land",
+  "空地风水"
+ ],
+ "ฮวงจุ้ยบ้าน": [
+  "Home Feng Shui",
+  "住宅风水"
+ ],
+ "ฮวงจุ้ยบ้าน 1 จุด": [
+  "Home Feng Shui, 1 spot",
+  "住宅风水 1处"
+ ],
+ "ฮวงจุ้ยบ้านทั้งหลัง (ออนไลน์)": [
+  "Whole-House Feng Shui (online)",
+  "整栋住宅风水（线上）"
+ ],
+ "ฮวงจุ้ยร้านค้า": [
+  "Shop Feng Shui",
+  "店铺风水"
+ ],
+ "ฮวงจุ้ยลงพื้นที่": [
+  "On-Site Feng Shui",
+  "上门风水勘察"
+ ],
+ "ฮวงจุ้ยสำนักงาน": [
+  "Office Feng Shui",
+  "办公室风水"
+ ],
+ "ฮวงจุ้ยออฟฟิศ": [
+  "Office Feng Shui",
+  "办公室风水"
+ ],
+ "ฮวงจุ้ยและที่อยู่อาศัย": [
+  "Feng Shui and homes",
+  "风水与居所"
+ ],
+ "ฮวงซุ้ย": [
+  "Grave Feng Shui",
+  "阴宅风水"
+ ],
+ "เกาหลี": [
+  "Korea",
+  "韩国"
+ ],
+ "เกิด": [
+  "Born",
+  "出生"
+ ],
+ "เกิดวัน": [
+  "Born on",
+  "出生于"
+ ],
+ "เกิดวันเดียวกัน จังหวะชีวิตคล้ายกัน": [
+  "Born on the same weekday — similar life rhythm",
+  "同一天出生，人生节奏相似"
+ ],
+ "เก็บกดความรู้สึก หรือยังรักตัวเองไม่มากพอ": [
+  "Suppressing feelings, or not loving yourself enough",
+  "压抑感情，或还不够爱自己"
+ ],
+ "เก็บกดอารมณ์ หรือใช้อารมณ์ควบคุมผู้อื่น": [
+  "Suppressing emotions, or using emotions to control others",
+  "压抑情绪，或用情绪控制他人"
+ ],
+ "เก็บคูปอง": [
+  "Save coupon",
+  "保存优惠券"
+ ],
+ "เก็บออมทีละนิดแล้วจะเห็นผล": [
+  "Save little by little and you'll see results",
+  "一点一滴储蓄，终会见到成果"
+ ],
+ "เก็บเป็นคูปอง (ใช้ได้": [
+  "Save as a coupon (valid for",
+  "保存为优惠券（有效期"
+ ],
+ "เก็บในแฟ้มดวงแล้ว": [
+  "Saved to your Fortune File",
+  "已保存到命理档案"
+ ],
+ "เขย่ากระบอกเซียมซี": [
+  "Shake the Siam Si cup",
+  "摇动签筒"
+ ],
+ "เขย่ากระบอกไม้เซียมซีจนไม้หล่นออกมา 1 ไม้ แล้วอ่านใบคำทำนายตามหมายเลข นิยมในวัดไทยและศาลเจ้าจีน": [
+  "Shake the cylinder of fortune sticks until one falls out, then read the slip matching its number; popular at Thai temples and Chinese shrines",
+  "摇动签筒直到掉出一支签，再按号码阅读签文，盛行于泰国寺庙与华人庙宇"
+ ],
+ "เขย่าเซียมซี": [
+  "Shake the sticks",
+  "摇签"
+ ],
+ "เขย่าเซียมซีขอคำทำนายประจำเรื่อง": [
+  "Shake Siam Si fortune sticks for a prediction on your matter",
+  "摇签求取所问之事的签诗"
+ ],
+ "เขียว": [
+  "Green",
+  "绿色"
+ ],
+ "เข้ากันดี": [
+  "Good match",
+  "很合得来"
+ ],
+ "เข้ากันได้ดี ถ้าเปิดใจรับฟังความเห็นต่าง": [
+  "A good match, if you stay open to different opinions",
+  "很合得来，只要愿意倾听不同意见"
+ ],
+ "เข้าสู่ระบบ": [
+  "Log in",
+  "登录"
+ ],
+ "เข้าสู่ระบบด้วยเบอร์โทร เพื่อดูบัญชีและประวัติดูดวง": [
+  "Log in with your phone number to see your account and reading history",
+  "使用手机号登录，查看账户和算命记录"
+ ],
+ "เข้าสู่ระบบด้วยเบอร์โทรศัพท์": [
+  "Log in with phone number",
+  "使用手机号登录"
+ ],
+ "เข้าสู่ระบบเพื่อจอง": [
+  "Log in to book",
+  "登录后预约"
+ ],
+ "เข้าใจความรู้สึกคนรอบข้าง": [
+  "Understand the feelings of those around you",
+  "体谅身边人的感受"
+ ],
+ "เครื่องราง หินมงคล และของเสริมดวง เลือกสีและแบบตามวันเกิดของคุณ": [
+  "Talismans, lucky stones and fortune boosters — colours and styles chosen by your birth day",
+  "护身符、开运石与增运小物，依出生日选择颜色和款式"
+ ],
+ "เงาไม้ไหวตามลม อย่าตกใจเงาของตน": [
+  "Tree shadows sway in the wind — don't be startled by your own shadow",
+  "树影随风摇曳，莫被自己的影子吓到"
+ ],
+ "เงิน": [
+  "money",
+  "钱"
+ ],
+ "เงินเข้ามือ มีโอกาสได้โชคเล็ก ๆ": [
+  "Money comes in — a chance of small windfalls",
+  "进账有望，或有小财运"
+ ],
+ "เจ้าตัวรู้และยินยอมให้ใช้วันเกิดเพื่อดูดวงบนหมอดู.com (ไม่ใช้รูปถ่ายของคนอื่น)": [
+  "This person knows and agrees to their birth date being used for readings on Mohdoo.com (no photos of others)",
+  "本人知情并同意在Mohdoo.com使用其生日算命（不使用他人照片）"
+ ],
+ "เฉพาะไพ่ชุดใหญ่ 22 ใบ": [
+  "Major Arcana only, 22 cards",
+  "仅大阿卡纳 22 张"
+ ],
+ "เช่น 1กข 1234": [
+  "e.g. 1AB 1234",
+  "例如 1AB 1234"
+ ],
+ "เช่น 99/123": [
+  "e.g. 99/123",
+  "例如 99/123"
+ ],
+ "เช่น กรุงเทพมหานคร": [
+  "e.g. Bangkok",
+  "例如 曼谷"
+ ],
+ "เช่น การเงินของครอบครัว ค้าขาย สุขภาพ": [
+  "e.g. family finances, trade, health",
+  "例如 家庭财务、生意、健康"
+ ],
+ "เช่น ขอให้งานใหม่ราบรื่น สุขภาพแข็งแรง": [
+  "e.g. a smooth start at my new job, good health",
+  "例如 新工作顺利、身体健康"
+ ],
+ "เช่น งานใหม่ที่กำลังจะเริ่มจะเป็นอย่างไร?": [
+  "e.g. How will my upcoming new job go?",
+  "例如：即将开始的新工作会如何？"
+ ],
+ "เช่น ช่วงนี้งานติดขัด มีเรื่องขัดแย้งบ่อย": [
+  "e.g. work has been stuck lately, frequent conflicts",
+  "例如 最近工作不顺、常有争执"
+ ],
+ "เช่น ต้น": [
+  "e.g. Ton",
+  "例如 Ton"
+ ],
+ "เช่น ทิศตะวันออก": [
+  "e.g. east",
+  "例如 东方"
+ ],
+ "เช่น มี.ค. – เม.ย. 2570": [
+  "e.g. Mar – Apr 2570",
+  "例如 2570年3月–4月"
+ ],
+ "เช่น อยากได้ชื่อที่แปลว่าความสำเร็จ ออกเสียงง่าย": [
+  "e.g. a name meaning success, easy to pronounce",
+  "例如 寓意成功、容易发音的名字"
+ ],
+ "เช่น อยากได้โทนสีม่วง": [
+  "e.g. I'd like purple tones",
+  "例如 想要紫色调"
+ ],
+ "เช่น เรื่องงานช่วงนี้จะเป็นอย่างไร": [
+  "e.g. How will work go for me these days?",
+  "例如：近期工作运势如何？"
+ ],
+ "เช่น เสริมการงาน ความหมายดี ไม่ยาวเกินไป": [
+  "e.g. boosts career, good meaning, not too long",
+  "例如 助事业、寓意好、不要太长"
+ ],
+ "เช่น แต่งงาน ขึ้นบ้านใหม่ เปิดร้าน": [
+  "e.g. wedding, housewarming, shop opening",
+  "例如 结婚、乔迁、开店"
+ ],
+ "เซียมซี": [
+  "Siam Si fortune sticks",
+  "求签"
+ ],
+ "เซียมซีล่าสุด": [
+  "Latest Siam Si",
+  "最近求签"
+ ],
+ "เซียมซีใบที่": [
+  "Siam Si stick no.",
+  "签号：第"
+ ],
+ "เดช": [
+  "Det (power)",
+  "威权"
+ ],
+ "เดินทางราบรื่น": [
+  "Smooth travels",
+  "出行顺利"
+ ],
+ "เด่นที่สุด": [
+  "Strongest",
+  "最突出"
+ ],
+ "เด่นเรื่อง": [
+  "Specialises in",
+  "擅长"
+ ],
+ "เตรียมและแพ็กสินค้า": [
+  "Preparing and packing your order",
+  "备货及包装"
+ ],
+ "เติมพลังด้วยการพูดคุยและเรียนรู้สิ่งใหม่ คู่ที่เข้ากันดีคือราศีธาตุไฟ": [
+  "Recharge by talking and learning new things; best matched with Fire signs",
+  "通过交谈和学习新事物来充电，最合拍的是火象星座"
+ ],
+ "เติมพลังด้วยการออกกำลังกายหรือทำสิ่งท้าทาย คู่ที่เข้ากันดีคือราศีธาตุลม": [
+  "Recharge through exercise or challenges; best matched with Air signs",
+  "通过运动或挑战来充电，最合拍的是风象星座"
+ ],
+ "เติมพลังด้วยดนตรีหรือการอยู่ใกล้น้ำ คู่ที่เข้ากันดีคือราศีธาตุดิน": [
+  "Recharge with music or being near water; best matched with Earth signs",
+  "通过音乐或亲近水来充电，最合拍的是土象星座"
+ ],
+ "เติมพลังด้วยธรรมชาติและต้นไม้ คู่ที่เข้ากันดีคือราศีธาตุน้ำ": [
+  "Recharge with nature and trees; best matched with Water signs",
+  "通过亲近自然与树木来充电，最合拍的是水象星座"
+ ],
+ "เถาะ (กระต่าย)": [
+  "Tho (Rabbit)",
+  "卯（兔）"
+ ],
+ "เทา": [
+  "grey",
+  "灰"
+ ],
+ "เทียบดวงคู่": [
+  "Compatibility",
+  "合婚配对"
+ ],
+ "เทียบทะเบียน": [
+  "Compare plates",
+  "比较车牌"
+ ],
+ "เทียบทะเบียนที่กำลังเลือก ไม่เกิน 3 ชุด": [
+  "Compare plates you're choosing from, up to 3 sets",
+  "比较您正在挑选的车牌，最多3组"
+ ],
+ "เทียบป้ายทะเบียนรถ": [
+  "License Plate Comparison",
+  "车牌比较"
+ ],
+ "เทียบเบอร์": [
+  "Compare numbers",
+  "比较号码"
+ ],
+ "เทียบเบอร์ที่กำลังเลือก ไม่เกิน 3 ตัวเลือก": [
+  "Compare numbers you're choosing from, up to 3 options",
+  "比较您正在挑选的号码，最多3个选项"
+ ],
+ "เทียบเบอร์โทรศัพท์": [
+  "Phone Number Comparison",
+  "手机号比较"
+ ],
+ "เน้นวางแผนและพัฒนาตัวเอง": [
+  "Focus on planning and self-improvement",
+  "专注于规划与自我提升"
+ ],
+ "เน้นออมมากกว่าใช้": [
+  "Focus on saving more than spending",
+  "多存少花"
+ ],
+ "เบอร์ ทะเบียน บัตรประชาชน และบ้านเลขที่": [
+  "Phone numbers, plates, ID cards and house numbers",
+  "号码、车牌、身份证与门牌号"
+ ],
+ "เบอร์ที่ต้องการวิเคราะห์ (ถ้าเทียบ 3 เบอร์ ใส่บรรทัดละเบอร์)": [
+  "Number(s) to analyse (to compare 3 numbers, one per line)",
+  "要分析的号码（比较3个号码时每行一个）"
+ ],
+ "เบอร์ที่ต้องการเทียบ (บรรทัดละเบอร์ ไม่เกิน 3)": [
+  "Numbers to compare (one per line, up to 3)",
+  "要比较的号码（每行一个，最多3个）"
+ ],
+ "เบอร์โทร": [
+  "Phone number",
+  "电话号码"
+ ],
+ "เบอร์โทรผู้รับ": [
+  "Recipient's phone number",
+  "收件人电话"
+ ],
+ "เบอร์โทรศัพท์มือถือ": [
+  "Mobile phone number",
+  "手机号码"
+ ],
+ "เบอร์โทรและทะเบียนรถ": [
+  "Phone numbers and license plates",
+  "电话号码与车牌"
+ ],
+ "เปรียบเทียบให้ดีก่อนจ่าย": [
+  "Compare carefully before you pay",
+  "付款前仔细比较"
+ ],
+ "เปลี่ยนชื่อ": [
+  "Name Change",
+  "改名"
+ ],
+ "เปลี่ยนนามสกุล": [
+  "Surname Change",
+  "改姓"
+ ],
+ "เปลี่ยนรหัส": [
+  "Change code",
+  "更换代码"
+ ],
+ "เปลี่ยนเบอร์": [
+  "Change number",
+  "更换号码"
+ ],
+ "เปิดจอง": [
+  "Open for booking",
+  "开放预约"
+ ],
+ "เปิดดวงคนใกล้ตัว": [
+  "Open loved ones' fortunes",
+  "查看亲友运势"
+ ],
+ "เปิดดวงครั้งแรก": [
+  "Reveal your first fortune",
+  "首次揭晓运势"
+ ],
+ "เปิดมาเจอดวงวันนี้ทันที ภาพรวม งาน เงิน รัก สุขภาพ": [
+  "Open the app to see today's fortune instantly — overall, work, money, love, health",
+  "打开即可查看今日运势：整体、工作、财运、爱情、健康"
+ ],
+ "เปิดร้าน": [
+  "Opening a shop",
+  "开店"
+ ],
+ "เปิดแอปธนาคาร แล้วเลือกสแกน QR": [
+  "Open your banking app and choose Scan QR",
+  "打开银行App，选择扫描二维码"
+ ],
+ "เปิดไพ่": [
+  "Reveal cards",
+  "翻牌"
+ ],
+ "เปิดไพ่ 1 ครั้ง": [
+  "Draw cards once",
+  "抽牌1次"
+ ],
+ "เปิดไพ่ 3 ใบ ดูตัวคุณ คนที่คุณคิดถึง และอนาคตความรัก": [
+  "Draw 3 cards: you, the one you're thinking of, and your love future",
+  "抽 3 张牌：你自己、你思念的人，以及爱情的未来"
+ ],
+ "เปิดไพ่ตอบคำถาม ดูความรู้สึกและทางออกของเรื่อง": [
+  "Draw cards to answer your question, seeing feelings and the way forward",
+  "翻牌解答问题，看清感受与出路"
+ ],
+ "เปิดไพ่ตอบคำถาม เห็นภาพเรื่องความรัก การงาน และทางเลือก": [
+  "Draw cards to answer your question and see love, career and your options clearly",
+  "翻牌解答问题，看清爱情、事业与选择"
+ ],
+ "เปิดไพ่ทาโรต์ 1 ใบ รับคำแนะนำสำหรับวันนี้": [
+  "Draw 1 tarot card for today's guidance",
+  "抽 1 张塔罗牌，获取今日指引"
+ ],
+ "เปิดไพ่ทาโรต์ 3 ใบ ดูตัวคุณ คนที่คุณคิดถึง และอนาคตของความสัมพันธ์": [
+  "Draw 3 Tarot cards: you, the one on your mind, and the future of the relationship",
+  "抽3张塔罗牌：您自己、您思念的人，以及这段关系的未来"
+ ],
+ "เปิดไพ่ทาโรต์ออนไลน์ เลือกรูปแบบการเปิดไพ่ สับไพ่ จั่วไพ่ และอ่านคำทำนาย": [
+  "Online tarot reading: choose a spread, shuffle, draw cards and read your fortune",
+  "在线塔罗牌占卜：选择牌阵、洗牌、抽牌并解读预言"
+ ],
+ "เปิดไพ่แล้วอ่านความหมายตามตำแหน่ง": [
+  "Cards are drawn and read by their positions",
+  "翻牌后按位置解读含义"
+ ],
+ "เปิดไพ่ใหม่": [
+  "New reading",
+  "重新翻牌"
+ ],
+ "เป็นคู่ชงกัน ระวังการกระทบกระทั่ง ใจเย็นเข้าหากัน": [
+  "A clashing pair — beware of friction, approach each other calmly",
+  "属相相冲，小心摩擦，冷静相处"
+ ],
+ "เป็นคู่สามประสาน ช่วยหนุนนำกัน": [
+  "A trine pair — you lift each other up",
+  "三合之配，互相扶持"
+ ],
+ "เป็นพิธีเฉพาะชุมชน ทำโดยผู้ที่ผ่านการบวชเท่านั้น": [
+  "A community-specific rite, performed only by initiated practitioners",
+  "这是特定社群的仪式，只能由受过入门仪式的人主持"
+ ],
+ "เป้าหมายใหญ่ต้องใช้เวลา แบ่งเป็นก้าวเล็ก ๆ แล้วจะไปถึง": [
+  "Big goals take time — break them into small steps and you'll get there",
+  "大目标需要时间，拆成小步就能达成"
+ ],
+ "เพจ": [
+  "Page",
+  "侍从"
+ ],
+ "เพศ": [
+  "Sex",
+  "性别"
+ ],
+ "เพศของลูก": [
+  "Child's sex",
+  "孩子性别"
+ ],
+ "เพิ่มคนใกล้ตัว": [
+  "Add a loved one",
+  "添加亲友"
+ ],
+ "เพิ่มคนใกล้ตัวแล้ว": [
+  "Loved one added",
+  "已添加亲友"
+ ],
+ "เพิ่มรูป": [
+  "Add photo",
+  "添加照片"
+ ],
+ "เพิ่มวันเกิด เพื่อให้หมอดูวิเคราะห์ได้แม่นยำขึ้น": [
+  "Add your birth date so fortune tellers can analyse more accurately",
+  "添加生日，让占卜师分析更准确"
+ ],
+ "เพิ่มวันเกิดของคุณก่อน เพื่อดูดวงสมพงษ์": [
+  "Add your birth date first to see compatibility",
+  "请先添加你的生日以查看合婚配对"
+ ],
+ "เพิ่มวันเกิดในหน้าบัญชี รายงานจะตรงกับคุณมากขึ้น": [
+  "Add your birthday on the account page for a more personal report",
+  "在账户页面添加生日，报告会更贴合你"
+ ],
+ "เพิ่มวันเกิดในหน้าบัญชี แม่หมอจะวิเคราะห์ราศี เลขชีวิต และสีมงคลให้ละเอียดขึ้นค่ะ": [
+  "Add your birthday on the account page and the Seer will analyse your zodiac sign, life path number and lucky colours in more detail.",
+  "在账户页面添加生日，占卜师会更详细地分析你的星座、生命数字和幸运色。"
+ ],
+ "เพิ่มแฟน พ่อแม่ ลูก หรือเพื่อน แล้วดูดวงสมพงษ์ ดวงวันนี้ และดวงทั้งครอบครัว": [
+  "Add your partner, parents, children or friends, then see compatibility, today's fortune and the whole family's fortune",
+  "添加伴侣、父母、孩子或朋友，查看合婚配对、今日运势及全家运势"
+ ],
+ "เพิ่มแฟน พ่อแม่ หรือเพื่อน เพื่อดูดวงสมพงษ์และดวงทั้งครอบครัว": [
+  "Add your partner, parents or friends to see compatibility and the whole family's fortune",
+  "添加伴侣、父母或朋友，查看合婚配对及全家运势"
+ ],
+ "เพื่อความบันเทิงและเป็นแนวทางชีวิต": [
+  "For entertainment and life guidance",
+  "仅供娱乐及人生参考"
+ ],
+ "เพื่อน": [
+  "Friend",
+  "朋友"
+ ],
+ "เพื่อนบ้านอาเซียน": [
+  "ASEAN neighbors",
+  "东盟邻国"
+ ],
+ "เพื่อนอาจเป็นสื่อกลางแห่งความรัก": [
+  "A friend may become a go-between for love",
+  "朋友可能成为爱情的牵线人"
+ ],
+ "เพื่อนแท้ที่เกื้อหนุนกัน": [
+  "True friends who support each other",
+  "互相扶持的真朋友"
+ ],
+ "เมฆบังจันทร์ชั่วครู่ ลมพัดผ่านจันทร์ก็ฉาย": [
+  "Clouds hide the moon for a moment; the wind passes and the moon shines again",
+  "乌云暂时遮月，风过月又明"
+ ],
+ "เมตตา ใจกว้าง มองการณ์ไกล ชอบช่วยเหลือผู้อื่น": [
+  "Kind, generous, far-sighted, loves helping others",
+  "仁慈、大方、目光长远、乐于助人"
+ ],
+ "เมถุน": [
+  "Gemini",
+  "双子座"
+ ],
+ "เมนูหลัก": [
+  "Main menu",
+  "主菜单"
+ ],
+ "เมษ": [
+  "Aries",
+  "白羊座"
+ ],
+ "เมียนมา": [
+  "Myanmar",
+  "缅甸"
+ ],
+ "เมื่อหมอดูเปิดรับงานในหมวด": [
+  "When fortune tellers open bookings in",
+  "当占卜师开放预约分类"
+ ],
+ "เย็นชา หรือพูดจาเชือดเฉือนเกินไป": [
+  "Cold, or speaking too cuttingly",
+  "冷漠，或言辞过于尖锐"
+ ],
+ "เราจะส่งรหัส 6 หลักไปที่เบอร์นี้ทาง SMS": [
+  "We'll send a 6-digit code to this number by SMS",
+  "我们将通过短信向此号码发送6位验证码"
+ ],
+ "เราจะแจ้งเตือนเมื่อมีหมอดู": [
+  "We'll notify you when fortune tellers are available",
+  "有占卜师时我们会通知你"
+ ],
+ "เราจะแจ้งเตือนเมื่อเปิดจอง (ตัวอย่าง": [
+  "We'll notify you when booking opens (example",
+  "开放预约时我们会通知您（示例"
+ ],
+ "เราจะแจ้งเตือนเมื่อเปิดบริการ": [
+  "We'll notify you when the service opens",
+  "服务开放时我们会通知您"
+ ],
+ "เริ่ม": [
+  "Start",
+  "开始"
+ ],
+ "เริ่มก้าวผ่านความเศร้า และให้อภัยได้": [
+  "Beginning to move past sorrow and able to forgive",
+  "开始走出悲伤，能够原谅"
+ ],
+ "เริ่มคุยกับหมอดู AI": [
+  "Start chatting with the AI fortune teller",
+  "开始与AI占卜师聊天"
+ ],
+ "เริ่มดูดวง": [
+  "Start reading",
+  "开始算命"
+ ],
+ "เริ่มดูดวงเลย": [
+  "Start your reading now",
+  "立即开始算命"
+ ],
+ "เริ่มตื่นจากความเฉื่อยชา พร้อมรับสิ่งใหม่": [
+  "Waking up from inertia, ready for something new",
+  "从倦怠中醒来，准备迎接新事物"
+ ],
+ "เริ่มต้น": [
+  "From",
+  "起"
+ ],
+ "เริ่มปล่อยวางภาระที่ไม่จำเป็น หรือใกล้หมดแรงเต็มที": [
+  "Starting to let go of unnecessary burdens, or nearly exhausted",
+  "开始放下不必要的负担，或已接近筋疲力尽"
+ ],
+ "เริ่มฟื้นตัวจากความยากลำบาก": [
+  "Starting to recover from hardship",
+  "开始从困境中恢复"
+ ],
+ "เริ่มเป็นอิสระจากความกลัวและข้อจำกัดเดิม": [
+  "Becoming free from old fears and limitations",
+  "开始摆脱旧有的恐惧与限制"
+ ],
+ "เริ่มเลย": [
+  "Start now",
+  "立即开始"
+ ],
+ "เริ่มเหนื่อยล้าและอยากยอมแพ้ เลือกสู้เฉพาะเรื่องที่สำคัญ": [
+  "Growing weary and wanting to give up; pick only the battles that matter",
+  "开始疲惫想放弃，只为重要的事而战"
+ ],
+ "เรียงตาม": [
+  "Sort by",
+  "排序"
+ ],
+ "เรือแล่นต้านลม มือพายต้องมั่นคง": [
+  "A boat sails against the wind — the rower's hands must be steady",
+  "逆风行舟，划桨之手须稳"
+ ],
+ "เรื่อง": [
+  "topic",
+  "事项"
+ ],
+ "เรื่องต่าง ๆ จะเคลื่อนไหวเร็ว ข่าวดีหรือการเดินทางกำลังมา": [
+  "Things will move fast; good news or travel is coming",
+  "事情将迅速推进，好消息或旅行即将到来"
+ ],
+ "เรื่องที่ถาม": [
+  "Your question",
+  "所问之事"
+ ],
+ "เรื่องที่รับปรึกษา": [
+  "Topics covered",
+  "咨询主题"
+ ],
+ "เรื่องที่อยากขอพรเพิ่ม": [
+  "Additional wishes",
+  "其他想祈求的事"
+ ],
+ "เรื่องที่อยากถาม": [
+  "What you'd like to ask",
+  "想问的事"
+ ],
+ "เรื่องที่อยากรู้": [
+  "What you'd like to know",
+  "想了解的事"
+ ],
+ "เรื่องที่อยากสะเดาะเคราะห์": [
+  "What you'd like the ritual to remove",
+  "想消除的厄运"
+ ],
+ "เรื่องที่เคยให้หมอดู": [
+  "Topics you've asked fortune tellers about",
+  "曾向占卜师咨询的事"
+ ],
+ "เรื่องนี้มีน้ำหนักมากกว่าเรื่องในชีวิตประจำวันทั่วไป": [
+  "This matter carries more weight than everyday affairs",
+  "这件事比日常琐事更有分量"
+ ],
+ "เรื่องร้ายผ่านไปแล้ว ต่อจากนี้มีเรื่องดีรออยู่": [
+  "The bad times have passed — good things await from now on",
+  "坏事已经过去，接下来好事在等着你"
+ ],
+ "เรื่องสำคัญคุยต่อหน้าดีกว่าโทร": [
+  "Discuss important matters face to face rather than by phone",
+  "重要的事当面谈比打电话好"
+ ],
+ "เรื่องหนึ่งจบลงอย่างสิ้นสุด แต่ฟ้าหลังฝนกำลังมา": [
+  "Something has come to a definite end, but the sky clears after the rain",
+  "某件事彻底结束了，但雨过天晴即将到来"
+ ],
+ "เรื่องหัวใจเด่น ต้องเลือกด้วยใจจริง": [
+  "Matters of the heart stand out — choose with your true heart",
+  "感情运突出，要用真心做选择"
+ ],
+ "เรื่องในบ้านและครอบครัวลงตัว เหมาะจัดบ้าน": [
+  "Home and family matters fall into place — good for tidying the house",
+  "家庭事务顺利，适合整理家居"
+ ],
+ "เร็ว ๆ นี้": [
+  "Coming soon",
+  "即将推出"
+ ],
+ "เลข": [
+  "Number",
+  "数字"
+ ],
+ "เลข 7 ตัว 9 ฐาน": [
+  "7 Numbers 9 Bases",
+  "七数九基"
+ ],
+ "เลขกลุ่มเดียวกัน คุยกันรู้เรื่อง": [
+  "Numbers in the same group — you understand each other",
+  "数字同组，沟通顺畅"
+ ],
+ "เลขชีวิต": [
+  "Life path number",
+  "生命数字"
+ ],
+ "เลขต่างกลุ่ม ช่วยเติมมุมมองให้กัน": [
+  "Numbers in different groups — you broaden each other's views",
+  "数字不同组，可互补视角"
+ ],
+ "เลขทะเบียนรถ": [
+  "Licence plate",
+  "车牌号"
+ ],
+ "เลขที่คำสั่งซื้อ": [
+  "Order number",
+  "订单号"
+ ],
+ "เลขนำโชคประจำตัว": [
+  "Personal lucky numbers",
+  "个人幸运数字"
+ ],
+ "เลขนำโชควันนี้": [
+  "Today's lucky numbers",
+  "今日幸运数字"
+ ],
+ "เลขนำโชคและเลขเส้นทางชีวิตจากวันเกิด": [
+  "Lucky numbers and life path number from your birthday",
+  "根据生日得出的幸运数字与生命灵数"
+ ],
+ "เลขบัตรประชาชน": [
+  "ID card number",
+  "身份证号"
+ ],
+ "เลขบัตรประชาชน 13 หลัก (ระบบเก็บเฉพาะผลรวมและเลขท้าย 4 หลัก)": [
+  "13-digit national ID number (we store only the digit sum and last 4 digits)",
+  "13位身份证号码（系统仅保存数字总和及后4位）"
+ ],
+ "เลขมงคล": [
+  "Lucky numbers",
+  "吉祥数字"
+ ],
+ "เลขมงคลประจำตัว": [
+  "Personal auspicious numbers",
+  "个人吉祥数字"
+ ],
+ "เลขศาสตร์": [
+  "Numerology",
+  "数字命理"
+ ],
+ "เลขศาสตร์ / ทักษา": [
+  "Numerology / Taksa",
+  "数字命理 / 泰式八宫"
+ ],
+ "เลขศาสตร์ · เลขประจำวัน": [
+  "Numerology · number of the day",
+  "数字命理 · 今日数字"
+ ],
+ "เลขศาสตร์: เลขชีวิต": [
+  "Numerology: life path number",
+  "数字命理：生命数字"
+ ],
+ "เลขศาสตร์อ่านค่าของอักษรหรือชุดตัวเลข ส่วนทักษาตั้งชื่อโดยพิจารณากลุ่มอักษรตามวันเกิด": [
+  "Numerology reads the values of letters or number sets; Taksa names by letter groups according to the birth day",
+  "数字命理解读字母或数字组合的数值；泰式八宫依出生星期按字母组起名"
+ ],
+ "เลขเจ็ดตัวเก้าฐาน คำนวณดวงจากวันเดือนปีเกิด": [
+  "“Seven numbers, nine bases”: a chart calculated from your date of birth",
+  "七数九宫，根据出生年月日推算命盘"
+ ],
+ "เลขเดียวกัน มองโลกไปทางเดียวกัน": [
+  "Same number — you see the world the same way",
+  "数字相同，看世界的方式一致"
+ ],
+ "เลขเส้นทางชีวิตของคุณคือ": [
+  "Your life path number is",
+  "你的生命灵数是"
+ ],
+ "เลี่ยง": [
+  "Avoid",
+  "避开"
+ ],
+ "เลี่ยงการโต้เถียงกับหัวหน้าหรือลูกค้า": [
+  "Avoid arguing with your boss or clients",
+  "避免与上司或客户争执"
+ ],
+ "เลี่ยงการใช้จ่ายตามอารมณ์ เก็บเงินไว้ก่อนดีกว่า": [
+  "Avoid emotional spending — better to save for now",
+  "避免冲动消费，先存钱为好"
+ ],
+ "เลี่ยงการให้ยืมเงินช่วงนี้": [
+  "Avoid lending money for now",
+  "这段时间避免借钱给人"
+ ],
+ "เลี่ยงซื้อของเข้าบ้านชิ้นใหญ่วันนี้": [
+  "Avoid buying large items for the home today",
+  "今天避免购买大件家居用品"
+ ],
+ "เลือก": [
+  "Select",
+  "选择"
+ ],
+ "เลือกชื่อจากความหมาย เสียงอ่าน นามสกุล และความชอบ หากเกิดแล้วและต้องการอิงศาสตร์วันเกิด ให้ระบุวันเกิดตามหลักที่เลือก": [
+  "Choose a name by meaning, sound, surname and preference; if already born and you want to use a birth-day science, give the birth date per the chosen method",
+  "按含义、读音、姓氏及喜好选名；如已出生并想依据生日学说，请按所选方法提供出生日期"
+ ],
+ "เลือกดูดวงที่สนใจได้เลย สมัครด้วยเบอร์โทรตอนเริ่มดูดวง": [
+  "Pick any reading you like — sign up with your phone number when you start",
+  "随意选择想算的内容，开始算命时再用手机号注册"
+ ],
+ "เลือกดูตามประเทศ หรือตามประเภท แล้วกดอ่านรายละเอียด": [
+  "Browse by country or by type, then tap for details",
+  "按国家或类型浏览，点击查看详情"
+ ],
+ "เลือกดูตามประเทศหรือวิธีดู พร้อมแพ็กเกจที่เกี่ยวข้อง": [
+  "Browse by country or method, with related packages",
+  "按国家或方法浏览，并查看相关套餐"
+ ],
+ "เลือกตามศาสตร์": [
+  "Choose by science",
+  "按占卜术选择"
+ ],
+ "เลือกตามเรื่องที่เด่น": [
+  "Choose by specialty",
+  "按擅长领域选择"
+ ],
+ "เลือกพื้นที่ที่ต้องการดู": [
+  "Choose the space to read",
+  "选择要看的空间"
+ ],
+ "เลือกรูปแบบการเปิดไพ่ แล้วสับและจั่วไพ่ด้วยตัวเอง": [
+  "Choose a spread, then shuffle and draw the cards yourself",
+  "选择牌阵，然后亲手洗牌抽牌"
+ ],
+ "เลือกวิธีดู": [
+  "Choose a method",
+  "选择占卜方式"
+ ],
+ "เลือกวิธีดูดวง": [
+  "Choose how to get your reading",
+  "选择算命方式"
+ ],
+ "เลือกศาสตร์ที่สนใจ แล้วดูบริการที่ใช้ศาสตร์นั้น": [
+  "Choose a science you're interested in, then see the services that use it",
+  "选择感兴趣的学说，查看使用该学说的服务"
+ ],
+ "เลือกศาสตร์และหมอดู แล้วส่งคำถามหรือข้อมูลเกิดตามแพ็กเกจ": [
+  "Choose a science and a fortune teller, then send your question or birth data as per the package",
+  "选择学说与占卜师，然后按套餐提交问题或出生资料"
+ ],
+ "เลือกสิ่งที่ต้องการ": [
+  "Choose what you need",
+  "选择您的需求"
+ ],
+ "เลือกสิ่งที่อยากดู แล้วเลือกแพ็กเกจหรืออ่านศาสตร์ที่เกี่ยวข้อง": [
+  "Choose what you'd like to read, then pick a package or read about related arts",
+  "选择想看的主题，再选择套餐或阅读相关命理术"
+ ],
+ "เลือกสีหินตามวันเกิดของคุณให้อัตโนมัติ": [
+  "Gemstone colour chosen automatically by your birth day",
+  "根据你的出生日自动选择宝石颜色"
+ ],
+ "เลือกหมวด แล้วเลือกประเภทที่สนใจ เพื่อดูรายชื่อหมอดูที่เปิดรับคิว": [
+  "Choose a category, then a type you're interested in, to see fortune tellers taking bookings",
+  "选择分类，再选择感兴趣的类型，查看可预约的占卜师"
+ ],
+ "เลือกหมอดูตามศาสตร์": [
+  "Choose a fortune teller by science",
+  "按占卜术选择占卜师"
+ ],
+ "เลือกอีก": [
+  "Choose",
+  "再选"
+ ],
+ "เลือกแพ็กเกจ": [
+  "Choose a package",
+  "选择套餐"
+ ],
+ "เลือกไพ่": [
+  "Choose cards",
+  "选牌"
+ ],
+ "เล่าสถานการณ์สั้น ๆ แล้วถามสิ่งที่อยากรู้": [
+  "Briefly describe your situation, then ask what you want to know",
+  "简述你的情况，再提出想知道的问题"
+ ],
+ "เวลาส่งผล": [
+  "Delivery time",
+  "交付时间"
+ ],
+ "เวลาเกิด": [
+  "Birth time",
+  "出生时间"
+ ],
+ "เวลาเกิด (ถ้าทราบ)": [
+  "Birth time (if known)",
+  "出生时间（如知道）"
+ ],
+ "เวลาเกิด (ถ้ามี)": [
+  "Birth time (if available)",
+  "出生时间（如有）"
+ ],
+ "เวลาเกิด (ยิ่งแม่นยิ่งดี)": [
+  "Birth time (the more precise, the better)",
+  "出生时间（越精确越好）"
+ ],
+ "เวลาเกิด (ใช้แยกวันพุธกลางวัน/กลางคืน)": [
+  "Birth time (used to separate Wednesday day/night)",
+  "出生时间（用于区分星期三白天/夜间）"
+ ],
+ "เวลาเกิดของอีกฝ่าย (ถ้าทราบ)": [
+  "The other person's birth time (if known)",
+  "对方出生时间（如知道）"
+ ],
+ "เวลาและสถานที่ที่ถาม (ระบบบันทึกให้)": [
+  "Time and place of asking (recorded automatically)",
+  "提问的时间与地点（系统自动记录）"
+ ],
+ "เสน่ห์แรง คนรอบตัวใจดีกับคุณ เหมาะบอกความรู้สึก": [
+  "Strong charm — people are kind to you; a good time to confess your feelings",
+  "魅力十足，身边人对你友善，适合表白心意"
+ ],
+ "เสน่ห์แรง เป็นที่สนใจของคนรอบตัว": [
+  "Strong charm — you attract attention from those around you",
+  "魅力十足，备受身边人关注"
+ ],
+ "เสน่ห์และความมั่นใจของคุณดึงดูดโอกาสดี ๆ เข้ามา": [
+  "Your charm and confidence attract good opportunities",
+  "你的魅力与自信会吸引好机会"
+ ],
+ "เสน่ห์และชื่อเสียงเด่น เหมาะแนะนำตัว": [
+  "Charm and reputation shine — good for introducing yourself",
+  "魅力与名声突出，适合自我介绍"
+ ],
+ "เสริมการงาน": [
+  "Boost career",
+  "提升事业"
+ ],
+ "เสริมการเงิน": [
+  "Boost money",
+  "提升财运"
+ ],
+ "เสริมการเงิน สี": [
+  "Boost money with colour",
+  "增强财运的颜色"
+ ],
+ "เสริมความรัก": [
+  "Boost love",
+  "提升爱情"
+ ],
+ "เสริมความรัก เลขนำโชค": [
+  "Boost love, lucky numbers",
+  "增强爱情运 幸运数字"
+ ],
+ "เสริมงานใช้สี": [
+  "Boost career with colour",
+  "增强事业运的颜色"
+ ],
+ "เสริมรักใช้สี": [
+  "Boost love with colour",
+  "增强爱情运的颜色"
+ ],
+ "เสริมเงินใช้สี": [
+  "Boost money with colour",
+  "增强财运的颜色"
+ ],
+ "เสาร์": [
+  "Saturday",
+  "星期六"
+ ],
+ "เสี่ยงทาย": [
+  "Divination by chance",
+  "占卜求签"
+ ],
+ "เสี่ยงทายด้วยการหยิบใบไม้ แล้วอ่านคำทำนาย": [
+  "Divination by picking a leaf, then reading the prediction",
+  "抽取树叶占卜，再解读预言"
+ ],
+ "เสี่ยงทายด้วยจุดบนทราย ตอบคำถามเฉพาะเรื่อง": [
+  "Divination with dots in the sand, answering a specific question",
+  "以沙上点阵占卜，回答具体问题"
+ ],
+ "เสี่ยงทายด้วยลูกเต๋าโชโม": [
+  "Divination with Mo dice",
+  "以藏式骰子（Mo）占卜"
+ ],
+ "เสี่ยงทายตอบคำถามเฉพาะเรื่อง ช่วยมองทางเลือกก่อนตัดสินใจ": [
+  "Divination to answer a specific question, helping you weigh options before deciding",
+  "占卜回答具体问题，帮助您在决定前看清选择"
+ ],
+ "เสี่ยงอีกครั้ง": [
+  "Try again",
+  "再求一次"
+ ],
+ "เสี่ยงเซียมซี": [
+  "Draw Siam Si fortune sticks",
+  "求签"
+ ],
+ "เสี่ยงเซียมซี ใบทำนาย หรือลูกเต๋า ขอคำตอบเร็ว ๆ": [
+  "Fortune sticks, fortune slips or dice for a quick answer",
+  "求签、抽签诗或掷骰，快速求答案"
+ ],
+ "เสี่ยงเซียมซีออนไลน์ ตั้งจิตอธิษฐาน เขย่า แล้วอ่านคำทำนายพร้อมคำอธิบายภาษาไทยร่วมสมัย": [
+  "Draw Siam Si fortune sticks online — make a wish, shake, and read your prediction with a modern explanation",
+  "在线求签：诚心祈愿、摇签，阅读预言及通俗解读"
+ ],
+ "เสี่ยงเลย": [
+  "Draw now",
+  "立即求签"
+ ],
+ "เสี่ยงใบทำนายแบบศาลเจ้าญี่ปุ่น ดูดวงช่วงนี้แบบเร็ว ๆ": [
+  "Draw a Japanese shrine fortune slip for a quick read on the present",
+  "抽日本神社签，快速了解近期运势"
+ ],
+ "เส้นข้อมือ": [
+  "Wrist lines",
+  "腕纹"
+ ],
+ "เหมาะกับ": [
+  "Good for",
+  "适合"
+ ],
+ "เหมาะกับการหาหุ้นส่วนหรือทำงานเป็นทีม": [
+  "A good time to find partners or work as a team",
+  "适合寻找合作伙伴或团队合作"
+ ],
+ "เหมาะกับการเริ่มงานใหม่หรือเรียนรู้ทักษะใหม่": [
+  "A good time to start new work or learn new skills",
+  "适合开始新工作或学习新技能"
+ ],
+ "เหมาะทำเอกสาร เซ็นสัญญา": [
+  "Good for paperwork and signing contracts",
+  "适合处理文件、签订合同"
+ ],
+ "เหมาะเก็บออม วางรากฐาน ทำเรื่องบ้านหรือทรัพย์สิน": [
+  "Good for saving, building foundations, home or property matters",
+  "适合储蓄、打基础、处理房屋或资产事务"
+ ],
+ "เหรียญ": [
+  "Pentacles",
+  "星币"
+ ],
+ "เหรียญมงคลพกติดตัว": [
+  "Lucky pocket coin",
+  "随身开运币"
+ ],
+ "เหลือง": [
+  "Yellow",
+  "黄色"
+ ],
+ "เห็นเส้นข้อมือด้านใน": [
+  "Inner wrist lines visible",
+  "露出手腕内侧纹路"
+ ],
+ "เอซ": [
+  "Ace",
+  "王牌"
+ ],
+ "เอเชีย": [
+  "Asia",
+  "亚洲"
+ ],
+ "แก้ปีชง": [
+  "Clash-Year Remedy",
+  "化解犯太岁"
+ ],
+ "แก้ปีชง 1 ท่าน": [
+  "Clash-year remedy, 1 person",
+  "化解犯太岁 1人"
+ ],
+ "แก้ไขข้อมูล": [
+  "Edit details",
+  "编辑资料"
+ ],
+ "แจ้งประเภทสถานที่ ขนาด และจังหวัด": [
+  "State the type of place, size and province",
+  "说明场所类型、面积及府（省份）"
+ ],
+ "แจ้งเตือนฉันเมื่อมีหมอดู": [
+  "Notify me when fortune tellers are available",
+  "有占卜师时通知我"
+ ],
+ "แจ้งเตือนฉันเมื่อเปิดจอง": [
+  "Notify me when booking opens",
+  "开放预约时通知我"
+ ],
+ "แจ้งเตือนฉันเมื่อเปิดบริการ": [
+  "Notify me when the service opens",
+  "服务开放时通知我"
+ ],
+ "แดง": [
+  "Red",
+  "红色"
+ ],
+ "แต่งงาน": [
+  "Marriage",
+  "结婚"
+ ],
+ "แต่งงานแล้ว": [
+  "Married",
+  "已婚"
+ ],
+ "แต่มีบางจุดที่ต้องใส่ใจ ลองใช้ไพ่กลับหัวเป็นคำเตือนเพื่อปรับตัว": [
+  "but some points need attention; treat reversed cards as warnings to adjust",
+  "但有些地方需要留意，把逆位牌当作调整的提醒"
+ ],
+ "แต่ละศาสตร์เหมาะกับเรื่องไหน กดอ่านรายละเอียดได้": [
+  "See what each art is good for — tap for details",
+  "各命理术适合哪些主题，点击查看详情"
+ ],
+ "แนะนำ": [
+  "Recommended",
+  "推荐"
+ ],
+ "แบกรับอารมณ์คนอื่นจนเหนื่อย อย่าลืมดูแลใจตัวเอง": [
+  "Carrying others' emotions until you're tired; don't forget to care for your own heart",
+  "承担他人的情绪而疲惫，别忘了照顾自己的内心"
+ ],
+ "แบมือ เห็นเส้นชัด": [
+  "Open palm, lines clearly visible",
+  "张开手掌，纹路清晰"
+ ],
+ "แบ่งปันแล้วสบายใจ ไม่ขัดสน": [
+  "Sharing brings peace of mind — you won't be in want",
+  "乐于分享心安自在，不愁匮乏"
+ ],
+ "แปลงปี เดือน วัน และยามเกิดเป็น “สี่เสา” แล้วดูสมดุลของธาตุทั้งห้า เพื่ออ่านพื้นดวงและจังหวะชีวิตแต่ละช่วง": [
+  "Converts your birth year, month, day and hour into the “Four Pillars”, then reads the balance of the five elements for your core destiny and the rhythm of each life phase",
+  "将出生年、月、日、时转换为“四柱”，再看五行平衡，解读命格与人生各阶段的节奏"
+ ],
+ "แผนล่าช้าหรือไม่เป็นไปตามคาด อดทนอีกนิด": [
+  "Plans are delayed or not going as expected; be patient a little longer",
+  "计划延迟或未如预期，再耐心一点"
+ ],
+ "แพ็กเกจ": [
+  "Package",
+  "套餐"
+ ],
+ "แพ็กเกจ · รอเปิดจอง": [
+  "Package · Booking soon",
+  "套餐 · 即将开放预约"
+ ],
+ "แพ็กเกจ · เริ่ม": [
+  "Package · from",
+  "套餐 · 起价"
+ ],
+ "แพ็กเกจที่เปิดรับ": [
+  "Open packages",
+  "开放中的套餐"
+ ],
+ "แพ็กเกจสำหรับ": [
+  "Packages for",
+  "套餐适用于"
+ ],
+ "แฟน / คู่ครอง": [
+  "Partner / spouse",
+  "恋人 / 配偶"
+ ],
+ "แฟน · ครอบครัว · เพื่อน": [
+  "Partner · Family · Friends",
+  "伴侣 · 家人 · 朋友"
+ ],
+ "แฟ้มดวงของฉัน": [
+  "My Fortune File",
+  "我的命理档案"
+ ],
+ "แม่": [
+  "Mother",
+  "母亲"
+ ],
+ "แม่น้ำสองสายบรรจบ เกิดเป็นสายน้ำใหญ่": [
+  "Two rivers meet and become one great stream",
+  "两条河流交汇，汇成大江"
+ ],
+ "แม่หมอ AI พร้อมดูดวงให้แล้ว อยากรู้เรื่องไหนถามได้เลยนะคะ": [
+  "The AI Seer is ready to read your fortune — ask about anything you like.",
+  "AI占卜师已准备好为你算命，想知道什么尽管问吧。"
+ ],
+ "แรงจูงใจหดหาย หรือเริ่มช้าเกินไป ลองหาเหตุผลที่ทำให้อยากทำอีกครั้ง": [
+  "Motivation is fading, or you're starting too slowly; find a reason to want it again",
+  "动力消退，或起步太慢，试着找回想做的理由"
+ ],
+ "แรงบันดาลใจ ความทะเยอทะยาน และการลงมือทำ": [
+  "Inspiration, ambition and action",
+  "灵感、抱负与行动"
+ ],
+ "แรงบันดาลใจใหม่ · จุดประกาย · เริ่มต้น": [
+  "New inspiration · A spark · Beginnings",
+  "新灵感 · 火花 · 开始"
+ ],
+ "และ": [
+  "and",
+  "和"
+ ],
+ "แล้ว (ทดสอบ": [
+  "sent (test",
+  "已发送（测试"
+ ],
+ "แล้ว ดูได้ที่หน้าบัญชี": [
+  "already; see it on your account page",
+  "了，可在账户页面查看"
+ ],
+ "แสดงว่าเรื่องนี้เป็นบทเรียนสำคัญหรือจุดเปลี่ยนของชีวิต": [
+  "meaning this is an important lesson or a turning point in life",
+  "说明这是人生中重要的一课或转折点"
+ ],
+ "แสดงแนวทางและขอบเขตที่ผู้ให้บริการระบุ ก่อนเปิดแพ็กเกจ": [
+  "Shows the approach and scope stated by the provider before the package opens",
+  "开放套餐前显示服务者说明的方法与范围"
+ ],
+ "แอฟริกาตะวันตก": [
+  "West Africa",
+  "西非"
+ ],
+ "แอฟริกาตะวันตก และชุมชนโยรูบาพลัดถิ่น": [
+  "West Africa and the Yoruba diaspora",
+  "西非及约鲁巴海外社群"
+ ],
+ "โชคชะตา · จุดเปลี่ยน · วัฏจักร": [
+  "Destiny · Turning point · Cycles",
+  "命运 · 转折点 · 循环"
+ ],
+ "โชคดีมาจากความขยัน สิ่งที่มองหาอยู่ใกล้กว่าที่คิด": [
+  "Luck comes from hard work — what you seek is closer than you think",
+  "好运来自勤奋，所寻之物比想象中更近"
+ ],
+ "โชคลาภ": [
+  "Fortune & luck",
+  "财运"
+ ],
+ "โชคลาภและเสน่ห์เด่น เหมาะเรื่องเงินและความรัก": [
+  "Luck and charm stand out — good for money and love",
+  "财运和魅力突出，适合财务与感情之事"
+ ],
+ "โชติษะ / กุณฑลี": [
+  "Jyotisha / Kundli",
+  "吠陀占星 / 命盘（Kundli）"
+ ],
+ "โดดเด่น เรื่องนี้เกี่ยวข้องกับ": [
+  "stand out; this matter relates to",
+  "突出，这件事与此有关："
+ ],
+ "โทนม่วงสงบ นิยมพกเพื่อสมาธิและความรัก": [
+  "Calm purple tones, popular for focus and love",
+  "宁静紫色调，常用于专注与爱情"
+ ],
+ "โทรดูดวง": [
+  "Phone reading",
+  "电话算命"
+ ],
+ "โทรติดต่อ เจรจา ขอความช่วยเหลือได้ผล": [
+  "Calls, negotiations and asking for help go well",
+  "打电话联系、谈判、求助都很顺利"
+ ],
+ "โปรไฟล์ของฉัน": [
+  "My profile",
+  "我的资料"
+ ],
+ "โปรไฟล์หมอดู": [
+  "Fortune teller profile",
+  "占卜师资料"
+ ],
+ "โลก": [
+  "The World",
+  "世界"
+ ],
+ "โลกอาหรับและเปอร์เซีย": [
+  "The Arab and Persian world",
+  "阿拉伯与波斯世界"
+ ],
+ "โสด": [
+  "Single",
+  "单身"
+ ],
+ "โหงวเฮ้ง": [
+  "Face reading",
+  "面相"
+ ],
+ "โหมดทดลอง · ยังไม่มีการเก็บเงินและจัดส่งจริง รายชื่อสถานที่เป็นตัวอย่าง รอยืนยันพาร์ทเนอร์": [
+  "Demo mode · no real charges or shipping yet. Venue list is a sample, pending partner confirmation",
+  "演示模式 · 暂不真实收款和发货，地点列表仅为示例，待合作方确认"
+ ],
+ "โหมดทดลอง · ไม่ต้องสแกนจ่ายจริง": [
+  "Demo mode · no real payment scan needed",
+  "演示模式 · 无需真实扫码付款"
+ ],
+ "โหมดทดลอง · ไม่มีการเก็บเงินจริง กด “ฉันชำระเงินแล้ว” เพื่อลองใช้บริการได้เลย": [
+  "Demo mode · no real charge. Tap “I've paid” to try the service",
+  "演示模式 · 不会真实扣款，点击“我已付款”即可体验服务"
+ ],
+ "โหมดทดลอง · ไม่มีการเก็บเงินจริง สมัครแล้วลองคุยได้เลย": [
+  "Demo mode · No real charges — sign up and try chatting",
+  "演示模式 · 不会真实扣款，注册即可试聊"
+ ],
+ "โหราศาสตร์": [
+  "Astrology",
+  "占星术"
+ ],
+ "โหราศาสตร์จีน": [
+  "Chinese astrology",
+  "中国命理"
+ ],
+ "โหราศาสตร์ตะวันตก": [
+  "Western astrology",
+  "西洋占星"
+ ],
+ "โหราศาสตร์พม่า": [
+  "Burmese astrology",
+  "缅甸占星"
+ ],
+ "โหราศาสตร์พม่าที่ใช้วันเกิดในสัปดาห์แบบ 8 วัน (แยกวันพุธกลางวันกับกลางคืน) ร่วมกับปีเกิดตามปฏิทินพม่า จัดเป็นผังเพื่ออ่านนิสัยและช่วงชีวิต และนิยมไหว้พระประจำวันเกิดที่เจดีย์": [
+  "Burmese astrology using an 8-day birth week (Wednesday split into day and night) with the birth year on the Burmese calendar, arranged into a chart to read personality and life periods; people often pay respects at their birth-day shrine at the pagoda",
+  "缅甸占星以八日星期（星期三分白天与夜间）结合缅历出生年排盘，解读性格与人生阶段，人们常在佛塔礼拜出生日守护佛"
+ ],
+ "โหราศาสตร์ยูเรเนียน": [
+  "Uranian astrology",
+  "天王星占星"
+ ],
+ "โหราศาสตร์ลาว": [
+  "Lao astrology",
+  "老挝占星"
+ ],
+ "โหราศาสตร์สากล": [
+  "Universal astrology",
+  "国际占星"
+ ],
+ "โหราศาสตร์อินเดีย": [
+  "Indian Astrology",
+  "印度占星"
+ ],
+ "โหราศาสตร์อินเดีย ดูดวงละเอียดตั้งแต่พื้นดวงถึงคู่ครอง": [
+  "Indian astrology: a detailed reading from core destiny to partnership",
+  "印度占星，从命格到伴侣细致解读"
+ ],
+ "โหราศาสตร์อินเดียแบบนิรายนะ ผูกผังกุณฑลี 12 เรือนจากวัน เวลา และสถานที่เกิด อ่านพื้นดวง ดาวจร และเทียบดวงคู่": [
+  "Sidereal (Nirayana) Indian astrology, casting a 12-house Kundli from birth date, time and place to read core destiny, transits and couple compatibility",
+  "恒星黄道（Nirayana）印度占星，依出生日期、时间与地点排出十二宫命盘，解读命格、行运与双人合盘"
+ ],
+ "โหราศาสตร์เขมร": [
+  "Khmer astrology",
+  "高棉占星"
+ ],
+ "โหราศาสตร์และผังดวง": [
+  "Astrology and birth charts",
+  "占星与命盘"
+ ],
+ "โหราศาสตร์ไทย": [
+  "Thai astrology",
+  "泰国占星"
+ ],
+ "โอกาสทางการเงิน · เริ่มต้นอย่างมั่นคง": [
+  "Financial opportunity · A solid start",
+  "财务机遇 · 稳健的开始"
+ ],
+ "โอกาสหลุดมือ หรือวางแผนการเงินยังไม่รอบคอบ": [
+  "Missed opportunities, or financial plans not yet thought through",
+  "错失机会，或理财计划还不够周全"
+ ],
+ "โอกาสเรียนรู้หรืองานใหม่ที่ต้องอาศัยความตั้งใจ": [
+  "A chance to learn or a new job that requires dedication",
+  "需要用心投入的学习机会或新工作"
+ ],
+ "โอกาสใหม่ทางการเงินหรืองานกำลังมา คว้าไว้ให้มั่น": [
+  "A new financial or career opportunity is coming; hold on to it tightly",
+  "新的财务或工作机会即将到来，要牢牢抓住"
+ ],
+ "โอมิคุจิ": [
+  "Omikuji",
+  "御神签"
+ ],
+ "ใกล้ถึงเป้าแล้ว เหลืออีกนิดเดียว อย่าเพิ่งยอมแพ้": [
+  "You're almost at your goal, just a little more; don't give up yet",
+  "目标就在眼前，只差一点，先别放弃"
+ ],
+ "ใจเย็น ๆ ฟังอีกฝ่ายให้มากขึ้น เลี่ยงคำพูดแรง": [
+  "Stay calm, listen more to the other side, avoid harsh words",
+  "保持冷静，多听对方说，避免说重话"
+ ],
+ "ใจเย็นแต่หนักแน่น จะผ่านเรื่องยากได้": [
+  "Calm but firm — you'll get through tough times",
+  "沉着而坚定，能渡过难关"
+ ],
+ "ใช้": [
+  "Use",
+  "使用"
+ ],
+ "ใช้กับ": [
+  "Used with",
+  "适用于"
+ ],
+ "ใช้ข้อมูลจากโปรไฟล์ · แก้ได้ที่หน้าบัญชี": [
+  "Using your profile details · edit them on the account page",
+  "使用个人资料信息 · 可在账户页修改"
+ ],
+ "ใช้ข้อมูลเกิดผูกดวงและอ่านตำแหน่งดาว ลัคนา หรือดาวจรตามสำนัก": [
+  "Uses birth data to cast a chart and read planetary positions, the ascendant or transits per school",
+  "以出生资料排盘，按流派解读星体位置、上升点或流年行星"
+ ],
+ "ใช้ความฉลาดเอาเปรียบ หรือเข้มงวดเกินไป": [
+  "Using cleverness to take advantage, or being too strict",
+  "利用聪明占便宜，或过于严苛"
+ ],
+ "ใช้ความหมายตามชุดไพ่หรือแนวทางของผู้พยากรณ์": [
+  "Uses meanings from the deck or the reader's approach",
+  "依牌组含义或占卜者的方法解读"
+ ],
+ "ใช้จ่ายเกินตัว หรือเริ่มรู้จักแบ่งปัน": [
+  "Overspending, or learning to share",
+  "入不敷出，或开始学会分享"
+ ],
+ "ใช้ดู": [
+  "Used for",
+  "用于"
+ ],
+ "ใช้ตำแหน่งดาวและจุดคำนวณพิเศษบนผังดวงในการพยากรณ์": [
+  "Predicts using planetary positions and special points on the chart",
+  "利用星盘上的行星位置与特殊点进行预测"
+ ],
+ "ใช้ปฏิทินจันทรคติเขมรและปีนักษัตร 12 ปี ดูพื้นดวงและหาฤกษ์มงคล เช่น งานแต่งและขึ้นบ้านใหม่ อาจารย์มักให้คำแนะนำร่วมกับพิธีทางพุทธ": [
+  "Uses the Khmer lunar calendar and the 12-year Chinese zodiac to read core destiny and find auspicious times for weddings and housewarmings; masters often give advice alongside Buddhist rites",
+  "以高棉农历与十二生肖看命格并择吉时，如婚礼与乔迁；师傅常结合佛教仪式给予建议"
+ ],
+ "ใช้ประกอบการทำนาย": [
+  "Used in predictions",
+  "用于占卜"
+ ],
+ "ใช้ผังดวงกำเนิดจากวัน เวลา และสถานที่เกิด หรือเทียบผังของสองคน": [
+  "Uses a birth chart from your date, time and place of birth, or compares two people's charts",
+  "以出生日期、时间和地点排本命盘，或比较两人命盘"
+ ],
+ "ใช้รหัส": [
+  "Use code",
+  "使用代码"
+ ],
+ "ใช้รหัสทดลอง AI แล้ว": [
+  "AI trial code applied",
+  "已使用AI试用码"
+ ],
+ "ใช้รูปเดิมในแฟ้มดวง": [
+  "Use existing photo from Fortune File",
+  "使用命理档案中的照片"
+ ],
+ "ใช้รูปเดิมในแฟ้มดวงได้เลย หรือเลือกรูปใหม่": [
+  "Use the photo already in your Fortune File, or choose a new one",
+  "可直接使用命理档案中的照片，或选择新照片"
+ ],
+ "ใช้วัน เวลา และสถานที่เกิด ดูพื้นดวงและจังหวะชีวิต": [
+  "Uses birth date, time and place to read core destiny and life rhythms",
+  "依出生日期、时间与地点看命格与人生节奏"
+ ],
+ "ใช้วันเกิด เวลาเกิด และเรื่องที่สนใจจากโปรไฟล์": [
+  "Uses your birth date, birth time and interests from your profile",
+  "使用你个人资料中的出生日期、出生时间和关注事项"
+ ],
+ "ใช้วันเกิดในสัปดาห์ ปีนักษัตร และปฏิทินจันทรคติแบบลาว ใกล้เคียงกับโหราศาสตร์ไทยสายล้านนาและอีสาน นิยมใช้ดูพื้นดวงและหาฤกษ์งานบุญ งานแต่ง ขึ้นบ้านใหม่": [
+  "Uses the day of birth, Chinese zodiac and Lao lunar calendar, close to Lanna and Isan Thai astrology; popular for reading core destiny and timing merit ceremonies, weddings and housewarmings",
+  "以出生星期、生肖与老挝农历推算，接近泰国兰纳与伊森派占星，常用于看命格及为功德仪式、婚礼、乔迁择吉时"
+ ],
+ "ใช้เป็นเลขโปรดของวัน": [
+  "Use as your favourite number of the day",
+  "作为今日幸运数字使用"
+ ],
+ "ใช้เลขเหล่านี้เป็นเลขโปรด เช่น ตั้งรหัส เลือกที่นั่ง หรือวันนัดสำคัญที่ลงท้ายด้วยเลขนี้": [
+  "Use these as your favourite numbers, e.g. for passcodes, seat choices, or important dates ending in them",
+  "把这些数字当作你的幸运数字，例如设置密码、选座位，或选择以此结尾的重要日子"
+ ],
+ "ใช้เลยตอนนี้": [
+  "Use it now",
+  "立即使用"
+ ],
+ "ใช้เวลาเรียบง่ายด้วยกันแล้วจะใกล้ชิดขึ้น": [
+  "Spend simple time together and you'll grow closer",
+  "一起度过简单的时光，会更加亲近"
+ ],
+ "ใช้เหตุผลและความตรงไปตรงมา คุณมองทะลุเรื่องหลอกลวงได้": [
+  "Use reason and directness; you can see through deception",
+  "运用理性与坦率，你能看穿欺骗"
+ ],
+ "ใช้แพ็กเกจวิเคราะห์พื้นที่เดียวกับฮวงจุ้ย": [
+  "Uses the same space analysis package as Feng Shui",
+  "与风水共用同一空间分析套餐"
+ ],
+ "ใช้แล้ว": [
+  "Used",
+  "已使用"
+ ],
+ "ใช้ได้ถึง": [
+  "Valid until",
+  "有效期至"
+ ],
+ "ใช้ได้ทันทีหลังชำระ": [
+  "Available right after payment",
+  "付款后即可使用"
+ ],
+ "ใบ": [
+  "cards",
+  "张"
+ ],
+ "ใบ ตามที่ใจคุณรู้สึก": [
+  "cards, as your heart guides you",
+  "张，跟随你内心的感觉"
+ ],
+ "ใบที่": [
+  "Card no.",
+  "第"
+ ],
+ "ใบหน้า": [
+  "Face",
+  "面部"
+ ],
+ "ใบเสนอราคาก่อนยืนยัน": [
+  "Quotation before confirmation",
+  "确认前提供报价单"
+ ],
+ "ใบใช้ได้": [
+  "valid",
+  "张可用"
+ ],
+ "ใบไม้": [
+  "Leaves",
+  "树叶"
+ ],
+ "ใส่สี": [
+  "Wear",
+  "穿戴"
+ ],
+ "ให้ค่าตัวเลขกับตัวอักษรและชุดตัวเลข เช่น ชื่อ เบอร์โทรศัพท์ ทะเบียนรถ แล้วอ่านความหมายของผลรวม": [
+  "Assigns numeric values to letters and number sequences such as names, phone numbers and license plates, then reads the meaning of the total",
+  "为字母与数字组合（如姓名、电话号码、车牌）赋予数值，再解读总和的含义"
+ ],
+ "ให้ทีมเลือกสถานที่": [
+  "Let the team choose the place",
+  "由团队选择地点"
+ ],
+ "ให้ทีมเลือกสถานที่ที่เหมาะกับดวง": [
+  "Let the team choose a place that suits your fortune",
+  "由团队选择与你命理相合的地点"
+ ],
+ "ให้พื้นที่ส่วนตัวกันบ้าง": [
+  "Give each other some personal space",
+  "给彼此一些私人空间"
+ ],
+ "ให้หมอดูเลือก": [
+  "Let the fortune teller choose",
+  "由占卜师选择"
+ ],
+ "ให้หมอดูเลือกตามดวง": [
+  "Let the fortune teller choose based on your fortune",
+  "由占卜师根据你的命理选择"
+ ],
+ "ได้รับ": [
+  "Received",
+  "已获得"
+ ],
+ "ได้รับการสนับสนุนจากคนใกล้ตัว": [
+  "Support comes from those close to you",
+  "得到身边人的支持"
+ ],
+ "ได้รับความรักและการดูแลจากคนรอบข้าง": [
+  "You receive love and care from those around you",
+  "得到身边人的关爱与照顾"
+ ],
+ "ได้รับมอบหมายงานสำคัญ แสดงฝีมือได้เต็มที่": [
+  "You're entrusted with important work — show your full skill",
+  "被委以重任，可尽情展现实力"
+ ],
+ "ได้ใบที่": [
+  "Drew stick no.",
+  "抽得第"
+ ],
+ "ไทย": [
+  "Thailand",
+  "泰国"
+ ],
+ "ไทย · จีน · ญี่ปุ่น · เกาหลี · อินเดีย · ศาสตร์จากทั่วโลก": [
+  "Thailand · China · Japan · Korea · India · sciences from around the world",
+  "泰国 · 中国 · 日本 · 韩国 · 印度 · 全球占卜术"
+ ],
+ "ไทยและชุมชนจีน": [
+  "Thailand and Chinese communities",
+  "泰国及华人社群"
+ ],
+ "ไปที่หน้าบัญชี": [
+  "Go to account page",
+  "前往账户页"
+ ],
+ "ไปได้ดี ถ้าฟังกันมากขึ้นและให้พื้นที่ส่วนตัว": [
+  "Going well, if you listen more and give each other space",
+  "发展不错，只要多倾听并给彼此空间"
+ ],
+ "ไพ่": [
+  "Card",
+  "牌"
+ ],
+ "ไพ่ 1 ใบ": [
+  "1 card",
+  "1张牌"
+ ],
+ "ไพ่ 3 ใบ": [
+  "3 cards",
+  "3张牌"
+ ],
+ "ไพ่ 36 ใบ อ่านเหตุการณ์ใกล้ตัวแบบตรงไปตรงมา": [
+  "36 cards for a straightforward read on everyday events",
+  "36张牌，直截了当地解读身边之事"
+ ],
+ "ไพ่ 36 ใบจากยุโรปศตวรรษที่ 19 ตั้งชื่อตามหมอดูชาวฝรั่งเศส อ่านไพ่ต่อกันเป็นประโยค ตอบเรื่องในชีวิตประจำวันได้ตรงไปตรงมา": [
+  "A 36-card deck from 19th-century Europe, named after a French fortune teller; cards are read together like sentences, answering everyday questions directly",
+  "源自19世纪欧洲的36张牌，以一位法国占卜师命名，牌与牌连读成句，直接回答日常生活问题"
+ ],
+ "ไพ่ 78 ใบที่นิยมไปทั่วโลก อ่านได้ทุกเรื่อง": [
+  "78 cards popular worldwide — for any question",
+  "风靡全球的78张牌，可问任何事"
+ ],
+ "ไพ่ 78 ใบที่เริ่มจากเกมไพ่ในอิตาลีช่วงศตวรรษที่ 15 ก่อนนิยมใช้พยากรณ์ในยุโรป อ่านสัญลักษณ์และตำแหน่งของไพ่ตามคำถาม": [
+  "A 78-card deck that began as a card game in 15th-century Italy before becoming popular for divination in Europe; the symbols and positions of the cards are read according to your question",
+  "78张牌，起源于15世纪意大利的纸牌游戏，后在欧洲流行用于占卜，依问题解读牌的象征与位置"
+ ],
+ "ไพ่ · ผังดวง · ชื่อมงคล · ฮวงจุ้ย · ฤกษ์ · เสี่ยงทาย": [
+  "Cards · Birth charts · Lucky names · Feng Shui · Auspicious times · Divination",
+  "牌卡 · 命盘 · 吉祥名字 · 风水 · 吉时 · 占卜"
+ ],
+ "ไพ่กรีก": [
+  "Greek cards",
+  "希腊神话牌"
+ ],
+ "ไพ่กลับหัว": [
+  "Reversed card",
+  "逆位牌"
+ ],
+ "ไพ่กำลัง": [
+  "The cards are",
+  "牌面正"
+ ],
+ "ไพ่ของคุณพร้อมแล้ว…": [
+  "Your cards are ready…",
+  "你的牌已准备好…"
+ ],
+ "ไพ่ครบสำรับ 78 ใบ": [
+  "Full deck, 78 cards",
+  "完整牌组 78 张"
+ ],
+ "ไพ่ชุดใหญ่": [
+  "Major Arcana",
+  "大阿卡纳"
+ ],
+ "ไพ่ชุดใหญ่ · MAJOR ARCANA": [
+  "Major Arcana · MAJOR ARCANA",
+  "大阿卡纳 · MAJOR ARCANA"
+ ],
+ "ไพ่ชุดใหญ่หลายใบ": [
+  "Many Major Arcana cards",
+  "多张大阿卡纳"
+ ],
+ "ไพ่ตั้ง": [
+  "Upright card",
+  "正位牌"
+ ],
+ "ไพ่ตำนานเทพเจ้ากรีก เติมพลังใจในวันที่ท้อ": [
+  "Greek mythology cards to lift your spirits when you feel down",
+  "希腊神话牌，在你低落时给予力量"
+ ],
+ "ไพ่ทักษามหายุค": [
+  "Taksa Mahayuk cards",
+  "泰式八宫大运牌"
+ ],
+ "ไพ่ทักษามหายุค ไพ่วิญญาณ ไพ่มหาเทพ ไพ่กรีก ไพ่อียิปต์ และไพ่นาคราช": [
+  "Taksa Mahayuk cards, spirit cards, Maha Thep deity cards, Greek cards, Egyptian cards and Naga cards",
+  "泰式八宫大时代牌、灵魂牌、大神牌、希腊牌、埃及牌及那伽牌"
+ ],
+ "ไพ่ทาโรต์": [
+  "Tarot",
+  "塔罗牌"
+ ],
+ "ไพ่ทาโรต์ / ไพ่ยิปซี": [
+  "Tarot / Gypsy Cards",
+  "塔罗牌 / 吉普赛牌"
+ ],
+ "ไพ่ทาโรต์ที่เปิด": [
+  "Tarot cards drawn",
+  "抽到的塔罗牌"
+ ],
+ "ไพ่ทาโรต์ประจำวัน": [
+  "Daily Tarot",
+  "每日塔罗牌"
+ ],
+ "ไพ่ทาโรต์สำหรับคำถามนี้": [
+  "Tarot for this question",
+  "此问题的塔罗牌"
+ ],
+ "ไพ่ทาโรต์หรือไพ่ยิปซี": [
+  "Tarot or gypsy cards",
+  "塔罗牌或吉普赛牌"
+ ],
+ "ไพ่ทำนาย": [
+  "Oracle cards",
+  "占卜卡"
+ ],
+ "ไพ่ทำนายจากองค์เทพในคติฮินดู": [
+  "Prediction cards from Hindu deities",
+  "印度教神明占卜卡"
+ ],
+ "ไพ่ที่คุณเปิดล่าสุด": [
+  "Your most recent cards",
+  "你最近抽到的牌"
+ ],
+ "ไพ่ที่สื่อถึงพลังลึกลับและชะตาที่ซ่อนอยู่": [
+  "Cards that reveal mystic forces and hidden destiny",
+  "揭示神秘力量与隐藏命运的牌"
+ ],
+ "ไพ่ที่เล่าเรื่องราวของพญานาคในทุกใบ": [
+  "Cards that tell the story of the Naga in every card",
+  "每张都讲述那伽故事的牌"
+ ],
+ "ไพ่ที่แต่ละสำรับมีความหมายเฉพาะ อ่านภาพรวมและให้กำลังใจ": [
+  "Decks with their own meanings, for an overview and encouragement",
+  "每副牌有独特含义，看整体并给予鼓励"
+ ],
+ "ไพ่ที่แต่ละสำรับมีระบบความหมายของตัวเอง ผู้ให้บริการระบุสำรับและแนวทางการอ่านก่อนเปิดไพ่": [
+  "Each deck has its own system of meanings; the provider states the deck and reading approach before drawing",
+  "每副牌都有自己的含义体系，服务者在翻牌前说明牌组与解读方法"
+ ],
+ "ไพ่ทุกใบเป็น": [
+  "All cards are",
+  "所有牌都是"
+ ],
+ "ไพ่นาคราช": [
+  "Naga King cards",
+  "那伽王牌"
+ ],
+ "ไพ่พยากรณ์ของไทย ใช้ความหมายตามชุดไพ่และแนวทางของผู้พยากรณ์ อ่านภาพรวมหรือตอบคำถามเฉพาะเรื่อง": [
+  "Thai fortune cards, using meanings from the deck and the reader's approach for an overview or a specific question",
+  "泰国占卜牌，依牌组含义与占卜者的方法解读整体或回答具体问题"
+ ],
+ "ไพ่พยากรณ์สายอียิปต์โบราณ": [
+  "Ancient Egyptian prediction cards",
+  "古埃及占卜牌"
+ ],
+ "ไพ่พยากรณ์แบบไทยที่ประยุกต์จากหลักไพ่ยิปซี": [
+  "Thai prediction cards adapted from Gypsy cards",
+  "改编自吉普赛牌的泰式占卜牌"
+ ],
+ "ไพ่พรหมญาณ": [
+  "Phrommayan cards",
+  "梵天智慧牌"
+ ],
+ "ไพ่ภาพที่สื่อความหมายชัดเจน เข้าใจง่าย": [
+  "Picture cards with clear, easy meanings",
+  "含义清晰易懂的图画牌"
+ ],
+ "ไพ่มหาเทพ": [
+  "Great Deities cards",
+  "大神明牌"
+ ],
+ "ไพ่วิญญาณ": [
+  "Spirit cards",
+  "灵魂牌"
+ ],
+ "ไพ่ศักดิ์สิทธิ์ ใช้หยั่งรู้ชะตาจากอดีตถึงอนาคต": [
+  "Sacred cards that reveal destiny from past to future",
+  "洞悉过去到未来命运的神圣牌"
+ ],
+ "ไพ่สำรับเฉพาะ": [
+  "Special Decks",
+  "特殊牌组"
+ ],
+ "ไพ่ออราเคิล": [
+  "Oracle cards",
+  "神谕卡"
+ ],
+ "ไพ่ออราเคิล / ไพ่พรหมญาณ": [
+  "Oracle / Brahma Yan Cards",
+  "神谕卡 / 梵天智慧牌"
+ ],
+ "ไพ่อียิปต์": [
+  "Egyptian cards",
+  "埃及牌"
+ ],
+ "ไพ่เฉพาะสำรับ": [
+  "Oracle decks",
+  "特色牌组"
+ ],
+ "ไพ่เลอนอร์ม็อง": [
+  "Lenormand",
+  "雷诺曼牌"
+ ],
+ "ไพ่แต่ละใบมีความหมาย บอกเล่าเรื่องราวทั้งอดีตและอนาคต": [
+  "Each card has meaning, telling stories of past and future",
+  "每张牌都有含义，讲述过去与未来"
+ ],
+ "ไพ่แห่งคำอธิษฐาน สิ่งที่หวังไว้มีแนวโน้มเป็นจริง": [
+  "The wish card; what you hope for is likely to come true",
+  "愿望之牌，你所期盼的很可能成真"
+ ],
+ "ไพ่ใบที่": [
+  "Card",
+  "第"
+ ],
+ "ไพ่ไทยใช้ถามเรื่องใกล้ตัว ตอบตรงและเข้าใจง่าย": [
+  "Thai cards for everyday questions, with direct, easy-to-understand answers",
+  "泰国牌用于询问身边之事，回答直接易懂"
+ ],
+ "ไฟ": [
+  "fire",
+  "火"
+ ],
+ "ไฟ-ลม": [
+  "Fire-Air",
+  "火-风"
+ ],
+ "ไฟ: 0, ดิน: 0, ลม: 0, น้ำ: 0": [
+  "Fire: 0, Earth: 0, Air: 0, Water: 0",
+  "火: 0, 土: 0, 风: 0, 水: 0"
+ ],
+ "ไฟลุกกลางลมแรง ระวังเปลวไหม้มือ": [
+  "Fire blazes in a strong wind — beware the flames burning your hand",
+  "烈风中火势高涨，小心火焰灼手"
+ ],
+ "ไฟล์ดิจิทัล ออกแบบตามสีมงคลของคุณ ส่งทางแชท": [
+  "Digital file designed in your lucky colours, sent via chat",
+  "依你的幸运色设计的数字文件，通过聊天发送"
+ ],
+ "ไม่ชงกัน อยู่ด้วยกันได้ราบรื่น": [
+  "No clash — you live together smoothly",
+  "不相冲，相处顺利"
+ ],
+ "ไม่ต้องรอคิวหมอดู": [
+  "No waiting in line for a fortune teller",
+  "无需排队等占卜师"
+ ],
+ "ไม่ต้องใช้ข้อมูลส่วนตัว": [
+  "No personal information needed",
+  "无需个人信息"
+ ],
+ "ไม่พบหมอดูที่ตรงกับการค้นหา": [
+  "No fortune tellers match your search",
+  "没有符合搜索条件的占卜师"
+ ],
+ "ไม่มีรหัสก็ลองคุยได้ แม่หมอจะตอบแบบตัวอย่าง": [
+  "No code? You can still chat — the Seer will reply with sample answers",
+  "没有代码也能试聊，占卜师会给出示例回答"
+ ],
+ "ไม่มีศาสตร์สำหรับเรื่องนี้ในประเทศนี้ ลองเลือก “ทั้งหมด”": [
+  "No arts for this topic in this country. Try “All”",
+  "此国家暂无该主题的命理术，请试试“全部”"
+ ],
+ "ไม่มีแพ็กเกจสำหรับเรื่องนี้ ลองเลือก “ทั้งหมด”": [
+  "No packages for this topic. Try “All”",
+  "此主题暂无套餐，请试试“全部”"
+ ],
+ "ไม่ระบุ": [
+  "Not specified",
+  "不指定"
+ ],
+ "ไม่เกิน 3 ชุด": [
+  "Up to 3 sets",
+  "最多3组"
+ ],
+ "ไม่เกิน 3 เบอร์": [
+  "Up to 3 numbers",
+  "最多3个号码"
+ ],
+ "ไม่เปิดเป็นบริการออนไลน์ เก็บไว้เป็นข้อมูลเพื่อการเรียนรู้": [
+  "Not offered as an online service; kept as information for learning",
+  "不提供线上服务，仅作为了解资料"
+ ],
+ "ไม่ใช่การชำระเงินจริง": [
+  "Not a real payment",
+  "非真实付款"
+ ],
+ "ไม่ใช่ทุกอย่างจะเป็นอย่างที่เห็น ใช้สัญชาตญาณนำทางในความมืด": [
+  "Not everything is as it seems; let intuition guide you through the dark",
+  "并非一切都如表面所见，让直觉在黑暗中为你指引"
+ ],
+ "ไม่ได้ยินเสียง ลองกดไมค์แล้วพูดอีกครั้งนะคะ": [
+  "Couldn't hear you — tap the mic and speak again.",
+  "没有听到声音，请再点麦克风说一次。"
+ ],
+ "ไม่ได้หมายถึงความตาย แต่คือการปิดฉากเก่าเพื่อเปิดบทใหม่ที่ดีกว่า": [
+  "It doesn't mean death, but closing an old chapter to open a better new one",
+  "它并不代表死亡，而是结束旧篇章，开启更好的新篇章"
+ ],
+ "ไม้เท้า": [
+  "Wands",
+  "权杖"
+ ],
+ "ไว้ทีหลัง": [
+  "Later",
+  "稍后再说"
+ ],
+ "ไว้ใจกันมากขึ้น อย่าระแวงเกินเหตุ": [
+  "Trust each other more — don't be overly suspicious",
+  "多一些信任，不要过度猜疑"
+ ],
+ "ไหว้พระ 1 สถานที่": [
+  "Pay respect to the Buddha at 1 place",
+  "礼佛 1处"
+ ],
+ "ไหว้พระพร้อมคำอธิษฐานของคุณ และรูป/วิดีโอยืนยัน": [
+  "Paying respect to the Buddha with your prayer, plus photo/video proof",
+  "礼佛并诵念您的祈愿，附照片/视频凭证"
+ ],
+ "ไหว้พระแทน": [
+  "Prayers on Your Behalf",
+  "代为礼佛"
+ ],
+ "ไหว้แก้ปีชงที่ศาลเจ้าหรือวัดจีน ตามปีนักษัตรของคุณ ทีมเตรียมของไหว้และทำพิธีแทน": [
+  "A clash-year ceremony at a Chinese shrine or temple according to your Chinese zodiac year; the team prepares the offerings and performs it for you",
+  "按您的生肖在中国神庙或寺庙举行化解犯太岁仪式；团队准备供品并代为举行"
+ ],
+ "ไอเดียดี ลงมือทำแล้วสำเร็จ": [
+  "Good ideas — act on them and succeed",
+  "好主意，付诸行动就能成功"
+ ],
+ "ไอเดียมากแต่ไม่ลงมือ หรือยังขาดทิศทาง": [
+  "Many ideas but no action, or still lacking direction",
+  "想法很多却不行动，或仍缺乏方向"
+ ],
+ "ไอเดียหรือโปรเจกต์ใหม่กำลังจุดประกาย ลงมือตอนที่ไฟยังแรง": [
+  "A new idea or project is sparking; act while the fire is strong",
+  "新的想法或项目正在萌发，趁热打铁去行动"
+ ]
+}

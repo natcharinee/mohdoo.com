@@ -221,7 +221,7 @@ function toggleMic() {
   const mic = $('aiMic');
   stopSpeaking();
   rec = new Recognition();
-  rec.lang = 'th-TH';
+  rec.lang = window.LANG_LOCALE || 'th-TH';
   rec.interimResults = true;
   rec.continuous = false;
   let finalText = '';
@@ -255,7 +255,8 @@ const canSpeak = 'speechSynthesis' in window;
 let speakingBtn = null;
 function thaiVoice() {
   const vs = speechSynthesis.getVoices();
-  return vs.find((v) => v.lang === 'th-TH') || vs.find((v) => v.lang && v.lang.startsWith('th'));
+  const want = window.LANG_LOCALE || 'th-TH';
+  return vs.find((v) => v.lang === want) || vs.find((v) => v.lang && v.lang.startsWith(want.slice(0, 2)));
 }
 function stopSpeaking() {
   if (!canSpeak) return;
@@ -268,7 +269,7 @@ function speak(btn) {
   const text = btn.parentElement.querySelector('.b-text').innerText
     .replace(/\(โหมดตัวอย่าง[^)]*\)/g, '').replace(/[✦✧☾☽☀☸•]/g, ' ').trim();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'th-TH';
+  u.lang = window.LANG_LOCALE || 'th-TH';
   const v = thaiVoice();
   if (v) u.voice = v;
   u.rate = 0.95;
@@ -309,7 +310,7 @@ async function ask(text) {
         messages: u.aiChat.slice(-20),
         profile: { first: u.first, last: u.last, birthdate: u.birthdate, birthtime: u.birthtime, birthplace: u.birthplace,
           gender: u.gender, relation: u.relation, interests: u.interests, today: new Date().toISOString().slice(0, 10),
-          file: typeof fortuneFileText === 'function' ? fortuneFileText(u) : '' },
+          file: typeof fortuneFileText === 'function' ? fortuneFileText(u) : '', lang: window.LANG || 'th' },
       }),
     });
     if (r.ok) reply = (await r.json()).reply;

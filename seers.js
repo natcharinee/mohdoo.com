@@ -24,7 +24,7 @@ const seerAvatar = (s, cls = '') =>
   `<span class="seer-av photo ${cls}"><img src="${s.img}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('i'),{textContent:'${s.name.replace(/'/g, '').charAt(0)}'}))"></span>`;
 const seerCard = (s) => `<button class="seer-row" data-seer="${s.id}">
     ${seerAvatar(s)}
-    <span class="seer-txt"><b>${esc(s.name)}</b>
+    <span class="seer-txt"><b translate="no">${esc(s.name)}</b>
       <small>เด่นเรื่อง ${s.strong.slice(0, 2).join(' · ')}</small>
       <small class="seer-sci">${s.types.slice(0, 3).join(' · ')}${s.types.length > 3 ? ' …' : ''}</small></span>
     <span class="seer-price"><small>เริ่ม</small>${CATEGORY_PRICE} ฿</span>
@@ -45,7 +45,7 @@ function renderSeers() {
     <div class="sec-head"><h3>หมอดูบนแอป</h3><span class="sec-note">${SEERS.length} ท่าน</span></div>
     <div class="hscroll seer-feat">${featured.map((s) => `<button class="feat-card" data-seer="${s.id}">
         ${seerAvatar(s, 'big')}
-        <b>${esc(s.name)}</b><small>เด่นเรื่อง${s.strong[0]}</small>
+        <b translate="no">${esc(s.name)}</b><small>เด่นเรื่อง${s.strong[0]}</small>
         <span class="feat-meta">${s.types.length} ศาสตร์</span>
       </button>`).join('')}</div>
 
@@ -90,7 +90,7 @@ function openSeer(id) {
   seerPanel.querySelector('.panel-body').innerHTML = `
     <div class="seer-hero">
       ${seerAvatar(s, 'xl')}
-      <h3>${esc(s.name)}</h3>
+      <h3 translate="no">${esc(s.name)}</h3>
       <p>หมอดูบนแพลตฟอร์ม หมอดู.com · ${s.types.length} ศาสตร์</p>
     </div>
     <div class="pf-card">
@@ -105,7 +105,7 @@ function openSeer(id) {
       <div class="sec-head"><h3>บริการและราคา</h3></div>
       <ul class="order-info">${tiers.map((t) => `<li><small>${t.label}</small><b>${t.price == null ? 'ยังไม่เปิดรับ' : `${t.price.toLocaleString('th-TH')} ฿`}</b></li>`).join('')}</ul>
     </div>
-    <button class="btn-gold full" id="bookSeer">ดูดวงกับ ${esc(s.name)} ›</button>
+    <button class="btn-gold full" id="bookSeer">ดูดวงกับ <span translate="no">${esc(s.name)}</span> ›</button>
     <p class="pay-note">ชำระเงินด้วย QR ก่อน แล้วกรอกคำถามให้หมอดู</p>`;
   seerPanel.querySelector('#bookSeer').addEventListener('click', () => startCheckout({
     key: `seer:${s.id}`, icon: '🔮', title: `ดูดวงกับ ${s.name}`, sub: `เด่นเรื่อง ${s.strong.join(' · ')}`,

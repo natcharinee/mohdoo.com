@@ -69,7 +69,7 @@ function renderProfile() {
   profileBody.innerHTML = `
     <div class="pf-hero">
       <div class="pf-avatar">${esc((u.first || u.name || '✦').charAt(0).toUpperCase())}${b ? `<span class="pf-sign">${b.zodiac.split(' ')[0]}</span>` : ''}</div>
-      <h3>${esc(fullName)}</h3>
+      <h3 translate="no">${esc(fullName)}</h3>
       ${u.phone ? `<p>📱 ${esc(u.phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'))}</p>` : u.email ? `<p>${esc(u.email)}</p>` : ''}
       ${u.created ? `<p class="pf-since">สมาชิกตั้งแต่ ${thDate(u.created)}</p>` : ''}
       <button class="btn-ghost pf-edit" id="pfEdit">✎ แก้ไขข้อมูล</button>
@@ -121,6 +121,11 @@ function renderProfile() {
           <span class="hist-date">${thDate(h.at)}</span>
         </button></li>`).join('')}</ul>`
       : `<p class="pf-empty">ยังไม่เคยดูดวง ผลการดูดวงครั้งต่อไปจะถูกเก็บไว้ที่นี่ให้ย้อนอ่านได้</p>`}
+    </section>
+
+    <section class="pf-card">
+      <div class="sec-head"><h3 translate="no">ภาษา · Language · 语言</h3></div>
+      <div class="pf-lang" translate="no">${langButtons()}</div>
     </section>
 
     <button class="btn-ghost full pf-logout" id="pfLogout">ออกจากระบบ</button>

@@ -360,6 +360,29 @@ body:not(.app-ui) .app-cta { margin-top: auto; padding-top: 16px; }
 .hello small { display: block; font-size: .85rem; color: var(--muted); font-weight: 300; }
 
 .app-bar { position: relative; }
+/* ปุ่มเลือกภาษา TH · EN · 中 */
+.lang-switch { position: absolute; right: max(12px, var(--gut, 12px)); top: calc(env(safe-area-inset-top, 0px) + 12px); z-index: 30; }
+.lang-cur { display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 12px 0 10px; border-radius: 999px; cursor: pointer;
+  background: rgba(13, 7, 36, .55); border: 1px solid rgba(227, 179, 255, .28); color: var(--gold-2);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: border-color .2s; }
+.lang-cur:hover, .lang-switch.open .lang-cur { border-color: var(--gold); }
+.lang-cur b { font-size: .8rem; font-weight: 600; letter-spacing: .04em; }
+.lf { font-size: 1.1rem; line-height: 1; }
+.lang-caret { width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.lang-switch.open .lang-caret { transform: translateY(2px) rotate(-135deg); }
+.lang-menu { position: absolute; right: 0; top: calc(100% + 8px); min-width: 168px; margin: 0; padding: 6px; list-style: none; border-radius: 16px;
+  background: rgba(22, 11, 52, .96); border: 1px solid rgba(227, 179, 255, .25); box-shadow: 0 14px 34px rgba(0, 0, 0, .5);
+  animation: langDrop .18s ease-out; }
+.lang-menu[hidden] { display: none; }
+@keyframes langDrop { from { opacity: 0; transform: translateY(-6px); } }
+.lang-menu button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 11px; border: 0;
+  background: transparent; color: var(--text); font: inherit; font-size: .9rem; text-align: left; cursor: pointer; }
+.lang-menu button:hover { background: rgba(227, 179, 255, .1); }
+.lang-menu button[aria-selected="true"] { color: var(--gold-2); background: rgba(240, 200, 120, .1); }
+.lang-menu em { margin-left: auto; font-style: normal; color: var(--gold); }
+.pf-lang { display: flex; gap: 8px; margin-top: 8px; }
+.pf-lang button { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 12px; background: rgba(0, 0, 0, .25); border: 1px solid rgba(227, 179, 255, .2); color: var(--text); cursor: pointer; }
+.pf-lang button[aria-pressed="true"] { border-color: var(--gold); color: var(--gold-2); }
 .account-pop {
   position: absolute; right: 0; top: 48px; z-index: 25; min-width: 180px; padding: 12px;
   border-radius: 16px; background: rgba(30, 14, 70, .96); border: 1px solid var(--line);

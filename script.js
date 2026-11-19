@@ -201,7 +201,7 @@ function applyUser() {
   document.body.classList.toggle('member', !!u);
   if (u) {
     $('avatarBtn').textContent = u.name.trim().charAt(0).toUpperCase() || '✦';
-    $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">สวัสดี</span> <b class="hello-name">คุณ${escapeHTML(u.name)}</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย<i class="fl r"></i></small>`;
+    $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">สวัสดี</span> <b class="hello-name" translate="no">${(window.LANG || 'th') === 'th' ? 'คุณ' : ''}${escapeHTML(u.name)}</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย<i class="fl r"></i></small>`;
   } else {
     $('avatarBtn').textContent = '👤';
     $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">ยินดีต้อนรับสู่</span> <b class="hello-name">หมอดู.com</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>เลือกดูดวงที่สนใจได้เลย สมัครด้วยเบอร์โทรตอนเริ่มดูดวง<i class="fl r"></i></small>`;
@@ -545,3 +545,28 @@ if (document.fonts) document.fonts.ready.then(fitHome);
 const _applyUserFit = applyUser;
 applyUser = function () { _applyUserFit(); requestAnimationFrame(fitHome); };
 fitHome();
+
+// ---------- เลือกภาษา (i18n.js) ----------
+const LANG_FLAG = { th: '🇹🇭', en: '🇬🇧', zh: '🇨🇳' };
+const LANG_NAME = { th: 'ไทย', en: 'English', zh: '中文' };
+const LANG_CODE = { th: 'TH', en: 'EN', zh: '中文' };
+function langButtons() {
+  return Object.keys(LANG_NAME).map((l) =>
+    `<button type="button" data-lang="${l}" aria-pressed="${(window.LANG || 'th') === l}" lang="${l}"><span class="lf">${LANG_FLAG[l]}</span>${LANG_NAME[l]}</button>`).join('');
+}
+// หน้าแรก: ปุ่มภาษาแบบ dropdown (ธง + ชื่อภาษา)
+(() => {
+  const cur = window.LANG || 'th';
+  const box = $('langSwitch');
+  box.innerHTML = `<button type="button" class="lang-cur" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+      <span class="lf">${LANG_FLAG[cur]}</span><b>${LANG_CODE[cur]}</b><i class="lang-caret" aria-hidden="true"></i></button>
+    <ul class="lang-menu" role="listbox" hidden>${Object.keys(LANG_NAME).map((l) =>
+      `<li><button type="button" role="option" data-lang="${l}" aria-selected="${cur === l}" lang="${l}"><span class="lf">${LANG_FLAG[l]}</span>${LANG_NAME[l]}${cur === l ? '<em>✓</em>' : ''}</button></li>`).join('')}</ul>`;
+  const btn = box.querySelector('.lang-cur');
+  const menu = box.querySelector('.lang-menu');
+  const toggle = (open) => { menu.hidden = !open; btn.setAttribute('aria-expanded', String(open)); box.classList.toggle('open', open); };
+  btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(menu.hidden); });
+  document.addEventListener('click', (e) => { if (!box.contains(e.target)) toggle(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+})();
+document.addEventListener('click', (e) => { const b = e.target.closest('[data-lang]'); if (b && window.setLang) setLang(b.dataset.lang); });

@@ -34,6 +34,12 @@ function codeAllowed(given) {
   });
 }
 
+// ผู้ใช้เลือกภาษาเว็บเป็น EN / 中文 → ให้แม่หมอตอบเป็นภาษานั้น
+const REPLY_LANG = {
+  en: '\n\nตอบเป็นภาษาอังกฤษทั้งหมด (Reply in English).',
+  zh: '\n\nตอบเป็นภาษาจีนตัวย่อทั้งหมด (请用简体中文回答).',
+};
+
 function profileText(p = {}) {
   const lines = [
     p.first && `ชื่อ: ${p.first} ${p.last || ''}`.trim(),
@@ -68,7 +74,7 @@ export default async function handler(req, res) {
   const messages = [
     ...history.slice(0, -1),
     history[history.length - 1],
-    { role: 'system', content: `ข้อมูลของผู้ถาม (ใช้ประกอบการวิเคราะห์):\n${profileText(body.profile)}` },
+    { role: 'system', content: `ข้อมูลของผู้ถาม (ใช้ประกอบการวิเคราะห์):\n${profileText(body.profile)}${REPLY_LANG[body.profile?.lang] || ''}` },
   ];
 
   try {
