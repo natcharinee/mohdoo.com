@@ -123,11 +123,6 @@ function renderProfile() {
       : `<p class="pf-empty">ยังไม่เคยดูดวง ผลการดูดวงครั้งต่อไปจะถูกเก็บไว้ที่นี่ให้ย้อนอ่านได้</p>`}
     </section>
 
-    <section class="pf-card">
-      <div class="sec-head"><h3 translate="no">ภาษา · Language · 语言</h3></div>
-      <div class="pf-lang" translate="no">${langButtons()}</div>
-    </section>
-
     <button class="btn-ghost full pf-logout" id="pfLogout">ออกจากระบบ</button>
     <p class="pf-note">ข้อมูลของคุณใช้เพื่อการทำนายเท่านั้น (ตัวอย่าง: เก็บไว้ในเบราว์เซอร์นี้)</p>`;
 }

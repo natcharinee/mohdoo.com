@@ -1407,6 +1407,10 @@
   "Reconciliation or a fresh start is possible",
   "可以和好或重新开始"
  ],
+ "คือวัดเด่นแนะนำ": [
+  "marks recommended temples",
+  "为推荐寺庙"
+ ],
  "คุณ": [
   "you",
   "你"
@@ -1550,6 +1554,10 @@
  "ค่าบริการ": [
   "Service fee",
   "服务费"
+ ],
+ "ค่าบริการทำแทน": [
+  "Proxy service fee",
+  "代办服务费"
  ],
  "ค้นหาหมอดู หรือศาสตร์ เช่น ไพ่ทาโรต์": [
   "Search fortune tellers or sciences, e.g. Tarot",
@@ -1723,6 +1731,10 @@
   "Number of incense sticks and candle colours by birth day",
   "依出生日决定香支数量与蜡烛颜色"
  ],
+ "จำนวนเงินทำบุญ": [
+  "Merit donation amount",
+  "功德金额"
+ ],
  "จิตรกรรมปู่ม่านย่าม่านและพระประธาน": [
   "Pu Man Ya Man mural and the principal Buddha image",
   "“普曼雅曼”壁画与主佛像"
@@ -1866,6 +1878,10 @@
  "ชำระเงินด้วย QR ก่อน แล้วกรอกคำถามให้หมอดู": [
   "Pay by QR first, then fill in your question for the fortune teller",
   "先扫码付款，再填写给占卜师的问题"
+ ],
+ "ชำระเงินด้วย QR ›": [
+  "Pay with QR ›",
+  "扫码支付 ›"
  ],
  "ชำระเงินสำเร็จ": [
   "Payment successful",
@@ -2886,6 +2902,10 @@
  "ทีมทำพิธีแทนคุณ": [
   "Our team performs it for you",
   "团队代您完成仪式"
+ ],
+ "ทีมนำเงินทำบุญทั้งหมดไปทำบุญตามรายการที่คุณเลือก พร้อมรูปและวิดีโอยืนยัน": [
+  "The team donates the full amount as you chose, with photo and video proof",
+  "团队将全部功德金按您的选择捐出，并附照片和视频凭证"
  ],
  "ทีมไม่ประสานกัน หรืองานยังขาดคุณภาพ": [
   "The team isn't in sync, or the work still lacks quality",
@@ -4071,6 +4091,10 @@
   "The heavens open a bright path, stars guide across the sky",
   "天开明路，星辰引路于苍穹"
  ],
+ "ภาค": [
+  "Region",
+  "地区"
+ ],
  "ภาคกลาง · ตะวันตก": [
   "Central · West",
   "中部 · 西部"
@@ -4666,6 +4690,14 @@
  "ระบบพยากรณ์ทางศาสนาของชาวโยรูบา ทำโดยนักบวช (บาบาลาโว) ด้วยเมล็ดปาล์มหรือโซ่โอเปเล เพื่อหาบท “โอดู” 1 ใน 256 บท": [
   "The Yoruba religious divination system, performed by a priest (babalawo) with palm nuts or the opele chain to find one of the 256 “Odu” verses",
   "约鲁巴人的宗教占卜体系，由祭司（巴巴拉沃）使用棕榈果或奥佩莱链进行，以求得256篇“奥杜”之一"
+ ],
+ "ระบุจำนวน (บาท)": [
+  "Amount (baht)",
+  "金额（泰铢）"
+ ],
+ "ระบุจำนวนเอง": [
+  "Enter my own amount",
+  "自定义金额"
  ],
  "ระบุประเภทงาน ช่วงวันที่สะดวก และข้อมูลเกิดเมื่อผู้ให้บริการจำเป็นต้องใช้": [
   "Specify the type of event, convenient dates, and birth data if the provider needs it",
@@ -8159,6 +8191,10 @@
   "money",
   "钱"
  ],
+ "เงินทำบุญ": [
+  "Merit donation",
+  "功德金"
+ ],
  "เงินเข้ามือ มีโอกาสได้โชคเล็ก ๆ": [
   "Money comes in — a chance of small windfalls",
   "进账有望，或有小财运"
@@ -8887,6 +8923,14 @@
   "Select",
   "选择"
  ],
+ "เลือกจำนวนเงินทำบุญ": [
+  "Choose a donation amount",
+  "选择功德金额"
+ ],
+ "เลือกจำนวนเงินทำบุญก่อน": [
+  "Choose a donation amount first",
+  "请先选择功德金额"
+ ],
  "เลือกชื่อจากความหมาย เสียงอ่าน นามสกุล และความชอบ หากเกิดแล้วและต้องการอิงศาสตร์วันเกิด ให้ระบุวันเกิดตามหลักที่เลือก": [
   "Choose a name by meaning, sound, surname and preference; if already born and you want to use a birth-day science, give the birth date per the chosen method",
   "按含义、读音、姓氏及喜好选名；如已出生并想依据生日学说，请按所选方法提供出生日期"
@@ -8942,6 +8986,10 @@
  "เลือกศาสตร์และหมอดู แล้วส่งคำถามหรือข้อมูลเกิดตามแพ็กเกจ": [
   "Choose a science and a fortune teller, then send your question or birth data as per the package",
   "选择学说与占卜师，然后按套餐提交问题或出生资料"
+ ],
+ "เลือกสถานที่ทำพิธี": [
+  "Choose the ritual place",
+  "选择仪式地点"
  ],
  "เลือกสิ่งที่ต้องการ": [
   "Choose what you need",
@@ -9715,6 +9763,10 @@
   "Let the team choose a place that suits your fortune",
   "由团队按您的命理选择地点"
  ],
+ "ให้ทีมเลือกให้": [
+  "Let the team choose",
+  "由团队选择"
+ ],
  "ให้พื้นที่ส่วนตัวกันบ้าง": [
   "Give each other some personal space",
   "给彼此一些私人空间"
@@ -10075,6 +10127,14 @@
   "It doesn't mean death, but closing an old chapter to open a better new one",
   "它并不代表死亡，而是结束旧篇章，开启更好的新篇章"
  ],
+ "ไม่ได้เลือก ทีมจะเลือกสถานที่ที่เหมาะกับดวงของคุณให้": [
+  "Not chosen: the team will pick a place that suits your fortune",
+  "未选择：团队将按您的命理挑选合适地点"
+ ],
+ "ไม่ได้เลือก ทีมจะเลือกสถานที่ที่เหมาะกับดวงของคุณให้ · ✦ คือวัดเด่นแนะนำ": [
+  "Not chosen: the team will pick a place that suits your fortune · ✦ marks recommended temples",
+  "未选择：团队将按您的命理挑选合适地点 · ✦ 为推荐寺庙"
+ ],
  "ไม้เท้า": [
   "Wands",
   "权杖"
@@ -10303,8 +10363,16 @@
   "✦ Top pick",
   "✦ 推荐"
  ],
+ "📍 เลือกสถานที่ทำพิธี": [
+  "📍 Choose the ritual place",
+  "📍 选择仪式地点"
+ ],
  "🙏 ขอพรทั่วไป": [
   "🙏 General blessings",
   "🙏 一般祈福"
+ ],
+ "🙏 จำนวนเงินทำบุญ": [
+  "🙏 Merit donation amount",
+  "🙏 功德金额"
  ]
 }

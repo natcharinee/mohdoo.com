@@ -170,7 +170,7 @@ function startCheckout(item) {
   if (!item) return;
   if (!currentUser()) { requireLogin(() => startCheckout(item)); return; }
   clearInterval(timer);
-  order = { item, tier: item.tiers.findIndex((t) => t.price != null && !t.soon) };
+  order = { item, tier: item.tiers.findIndex((t) => t.price != null && !t.soon), donation: null };
   if (order.tier < 0) { toast('บริการนี้ยังไม่เปิดให้จอง จะแจ้งเตือนเมื่อเปิด ✦'); return; }
   renderSummary();
   openPanel('payPanel');
@@ -193,22 +193,117 @@ function renderSummary() {
           <span class="tl">${esc(t.label)}${t.soon ? '<small>เร็ว ๆ นี้</small>' : ''}</span><span class="tp">${t.price == null ? 'สอบถาม' : baht(t.price)}</span></label>`;
       }).join('')}
     </fieldset>
-    <div class="pay-total"><span>ยอดชำระ</span><b id="payTotal">${baht(item.tiers[order.tier].price)}</b></div>
+    ${placePickerHTML(item)}
+    ${donates(item) ? donationHTML() : ''}
+    <div class="pay-total"><span>ยอดชำระ</span><b id="payTotal">${baht(orderTotal())}</b></div>
     <button class="btn-gold full" id="toQR">ชำระเงินด้วย QR ›</button>
     <p class="pay-note">ชำระแล้วจึงเริ่มบริการ · ${item.next.kind === 'form' ? 'ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย' : item.next.kind === 'ai' ? 'ใช้ได้ทันทีหลังชำระ' : 'ขั้นต่อไปเริ่มดูดวงได้ทันที'}</p>`;
   $('payBody').querySelectorAll('input[name="ptier"]').forEach((r) => r.addEventListener('change', () => {
     order.tier = +r.value;
-    $('payTotal').textContent = baht(item.tiers[order.tier].price);
+    updateTotal();
   }));
   $('toQR').addEventListener('click', renderQR);
+  bindPlacePicker(item);
+  if (donates(item)) bindDonation();
+  updateTotal();
+}
+
+// ---------- เงินทำบุญ (บริการมงคล): ยอดชำระ = ค่าบริการทำแทน + เงินทำบุญที่เลือก ----------
+const DONATION_STEPS = [20, 50, 100, 200, 300, 500, 1000];
+const donates = (item) => !!placeField(item);
+const orderTotal = () => (order.item.tiers[order.tier].price || 0) + (order.donation || 0);
+function donationHTML() {
+  return `<fieldset class="pay-donate"><legend>🙏 จำนวนเงินทำบุญ</legend>
+      <div class="pp-row dn-row">
+        <select id="dnSel" aria-label="จำนวนเงินทำบุญ">
+          <option value="">เลือกจำนวนเงินทำบุญ</option>
+          ${DONATION_STEPS.map((n) => `<option value="${n}" ${order.donation === n ? 'selected' : ''}>${baht(n)}</option>`).join('')}
+          <option value="custom">ระบุจำนวนเอง</option>
+        </select>
+        <input id="dnCustom" type="number" inputmode="numeric" min="1" max="100000" step="1" placeholder="ระบุจำนวน (บาท)" hidden>
+      </div>
+      <p class="pp-hint">ทีมนำเงินทำบุญทั้งหมดไปทำบุญตามรายการที่คุณเลือก พร้อมรูปและวิดีโอยืนยัน</p>
+    </fieldset>
+    <ul class="pay-sum">
+      <li><span>ค่าบริการทำแทน</span><b id="paySvc"></b></li>
+      <li><span>เงินทำบุญ</span><b id="payDonate">—</b></li>
+    </ul>`;
+}
+function bindDonation() {
+  const sel = $('dnSel');
+  const inp = $('dnCustom');
+  const set = (n) => { order.donation = n > 0 ? Math.min(100000, Math.floor(n)) : null; updateTotal(); };
+  sel.addEventListener('change', () => {
+    const custom = sel.value === 'custom';
+    inp.hidden = !custom;
+    if (custom) { inp.focus(); set(+inp.value); } else set(+sel.value);
+  });
+  inp.addEventListener('input', () => set(+inp.value));
+}
+function updateTotal() {
+  const item = order.item;
+  $('payTotal').textContent = baht(orderTotal());
+  if (!donates(item)) return;
+  $('paySvc').textContent = baht(item.tiers[order.tier].price);
+  $('payDonate').textContent = order.donation ? baht(order.donation) : '—';
+  const btn = $('toQR');
+  btn.disabled = !order.donation;
+  btn.textContent = order.donation ? 'ชำระเงินด้วย QR ›' : 'เลือกจำนวนเงินทำบุญก่อน';
+}
+
+// ---------- เลือกสถานที่ทำพิธีตั้งแต่ขั้นแรก (บริการมงคล) ----------
+const placeField = (item) => item.next && item.next.kind === 'form' && (item.next.fields || []).find((f) => f.name === 'place' && f.groups);
+const placeByLabel = (label) => PLACES.find((p) => placeLabel(p) === label);
+function placePickerHTML(item) {
+  const f = placeField(item);
+  if (!f) return '';
+  const cur = placeByLabel((item.preset || {}).place);
+  const allowed = new Set(f.groups.flatMap(([, list]) => list));
+  const regions = PLACE_REGIONS.filter((r) => PLACES.some((p) => p.region === r.id && allowed.has(placeLabel(p))));
+  const region = cur ? cur.region : '';
+  const options = (rid) => PLACES.filter((p) => p.region === rid && allowed.has(placeLabel(p)))
+    .map((p) => `<option value="${esc(placeLabel(p))}" ${cur === p ? 'selected' : ''}>${p.feat ? '✦ ' : ''}${esc(p.name)} · ${esc(p.prov)}</option>`).join('');
+  return `<fieldset class="pay-place"><legend>📍 เลือกสถานที่ทำพิธี</legend>
+      <div class="pp-row">
+        <select id="ppRegion" aria-label="ภาค"><option value="">ให้ทีมเลือกให้</option>${regions.map((r) =>
+          `<option value="${r.id}" ${r.id === region ? 'selected' : ''}>${r.icon} ${esc(r.name)}</option>`).join('')}</select>
+        <select id="ppPlace" aria-label="สถานที่" ${region ? '' : 'disabled'}>${region ? options(region) : `<option value="">${esc(f.options[0])}</option>`}</select>
+      </div>
+      <div id="ppInfo">${cur ? placeInfoHTML(cur) : '<p class="pp-hint">ไม่ได้เลือก ทีมจะเลือกสถานที่ที่เหมาะกับดวงของคุณให้ · ✦ คือวัดเด่นแนะนำ</p>'}</div>
+    </fieldset>`;
+}
+function placeInfoHTML(p) {
+  return `<div class="pp-info"><span>${p.icon}</span><div><b>${esc(p.name)}</b><small>📍 ${esc(p.loc)} · องค์สักการะ ${esc(p.deity)}</small><p>${esc(p.good)}</p></div></div>`;
+}
+function bindPlacePicker(item) {
+  const f = placeField(item);
+  if (!f) return;
+  const allowed = new Set(f.groups.flatMap(([, list]) => list));
+  const setPlace = (label) => {
+    item.preset = { ...(item.preset || {}), place: label || f.options[0] };
+    const p = placeByLabel(label);
+    $('ppInfo').innerHTML = p ? placeInfoHTML(p) : '<p class="pp-hint">ไม่ได้เลือก ทีมจะเลือกสถานที่ที่เหมาะกับดวงของคุณให้ · ✦ คือวัดเด่นแนะนำ</p>';
+  };
+  $('ppRegion').addEventListener('change', (e) => {
+    const rid = e.target.value;
+    const sel = $('ppPlace');
+    if (!rid) { sel.innerHTML = `<option value="">${esc(f.options[0])}</option>`; sel.disabled = true; setPlace(''); return; }
+    // วัดแนะนำขึ้นก่อนในแต่ละภาค
+    const list = PLACES.filter((p) => p.region === rid && allowed.has(placeLabel(p))).sort((a, b) => b.feat - a.feat);
+    sel.innerHTML = list.map((p) => `<option value="${esc(placeLabel(p))}">${p.feat ? '✦ ' : ''}${esc(p.name)} · ${esc(p.prov)}</option>`).join('');
+    sel.disabled = false;
+    setPlace(sel.value);
+  });
+  $('ppPlace').addEventListener('change', (e) => setPlace(e.target.value));
 }
 
 // ขั้นที่ 2: QR สำหรับชำระเงิน
 function renderQR() {
   const t = order.item.tiers[order.tier];
+  if (donates(order.item) && !order.donation) return; // ต้องเลือกจำนวนเงินทำบุญก่อน
   order.no = `MD${Date.now().toString().slice(-8)}`;
-  order.amount = t.price;
-  order.label = t.label;
+  order.amount = orderTotal();
+  order.label = order.donation ? `${t.label} + เงินทำบุญ ${baht(order.donation)}` : t.label;
   setStep(2, 'สแกนเพื่อชำระเงิน');
   $('payBody').innerHTML = `
     <div class="qr-card">
@@ -216,7 +311,7 @@ function renderQR() {
       <p class="qr-head">สแกนจ่ายผ่านแอปธนาคาร</p>
       <div class="qr-box" id="qrBox"></div>
       <p class="qr-amount">${baht(order.amount)}</p>
-      <p class="qr-meta">${esc(order.item.title)} · ${esc(t.label)}<br>เลขที่คำสั่งซื้อ ${order.no}</p>
+      <p class="qr-meta">${esc(order.item.title)} · ${esc(t.label)}${order.donation ? `<br>ค่าบริการทำแทน ${baht(t.price)} + เงินทำบุญ ${baht(order.donation)}` : ''}<br>เลขที่คำสั่งซื้อ ${order.no}</p>
       <p class="qr-timer">QR หมดอายุใน <b id="qrTime">${ORDER_MINUTES}:00</b></p>
     </div>
     <ol class="qr-how"><li>เปิดแอปธนาคาร แล้วเลือกสแกน QR</li><li>ตรวจยอดเงินให้ตรง แล้วยืนยันการโอน</li><li>กลับมากด “ฉันชำระเงินแล้ว”</li></ol>
@@ -347,7 +442,7 @@ function renderIntake(fields) {
     if (data.birthdate) cur.birthdate = data.birthdate;
     shots.filter((s) => s.src).forEach((s) => savePhoto(cur, s.slot, s.src, order.item.title));
     if (!saveUserWithPhotos(cur)) { delete form.dataset.busy; return; }
-    const histId = addHistory({ kind: 'order', svc: order.item.key, icon: order.item.icon, title: order.item.title, status: done ? done.status : 'รอหมอดูตอบ',
+    const histId = addHistory({ kind: 'order', svc: order.item.key, donation: order.donation || undefined, icon: order.item.icon, title: order.item.title, status: done ? done.status : 'รอหมอดูตอบ',
       no: order.no, amount: order.amount, label: order.label, data, fields: fields.map((f) => [f.name, f.label]),
       photos: shots.map((s) => s.slot),
       ...(done ? { steps: done.steps, note: done.text } : {}) });

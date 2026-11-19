@@ -621,10 +621,6 @@ fitHome();
 const LANG_FLAG = { th: '🇹🇭', en: '🇬🇧', zh: '🇨🇳' };
 const LANG_NAME = { th: 'ไทย', en: 'English', zh: '中文' };
 const LANG_CODE = { th: 'TH', en: 'EN', zh: '中文' };
-function langButtons() {
-  return Object.keys(LANG_NAME).map((l) =>
-    `<button type="button" data-lang="${l}" aria-pressed="${(window.LANG || 'th') === l}" lang="${l}"><span class="lf">${LANG_FLAG[l]}</span>${LANG_NAME[l]}</button>`).join('');
-}
 // หน้าแรก: ปุ่มภาษาแบบ dropdown (ธง + ชื่อภาษา)
 (() => {
   const cur = window.LANG || 'th';

@@ -380,9 +380,6 @@ body:not(.app-ui) .app-cta { margin-top: auto; padding-top: 16px; }
 .lang-menu button:hover { background: rgba(227, 179, 255, .1); }
 .lang-menu button[aria-selected="true"] { color: var(--gold-2); background: rgba(240, 200, 120, .1); }
 .lang-menu em { margin-left: auto; font-style: normal; color: var(--gold); }
-.pf-lang { display: flex; gap: 8px; margin-top: 8px; }
-.pf-lang button { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 12px; background: rgba(0, 0, 0, .25); border: 1px solid rgba(227, 179, 255, .2); color: var(--text); cursor: pointer; }
-.pf-lang button[aria-pressed="true"] { border-color: var(--gold); color: var(--gold-2); }
 .account-pop {
   position: absolute; right: 0; top: 48px; z-index: 25; min-width: 180px; padding: 12px;
   border-radius: 16px; background: rgba(30, 14, 70, .96); border: 1px solid var(--line);
@@ -1491,3 +1488,48 @@ body.app-ui .hello small { display: flex; align-items: center; justify-content: 
 .pl-pick .link { justify-self: center; font-size: .74rem; color: var(--muted); }
 .pl-more { margin-top: 10px; }
 .pl .pf-note { margin-top: 10px; }
+/* ขั้นตอนอยู่บนสุดของบริการมงคล */
+.mk-sec > .mk-steps { margin: 0 0 18px; }
+
+/* ===== หน้าชำระเงิน: ตัวเลือกแพ็กเกจ (เดิมอยู่ใน services.css ซึ่งหน้าแรกไม่ได้โหลด) ===== */
+.pay-tiers { border: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.pay-tiers legend { padding: 0; margin-bottom: 8px; color: var(--muted); font-size: .85rem; }
+.pay-tiers .tier { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; cursor: pointer;
+  border: 1px solid rgba(245, 201, 107, .25); background: rgba(0, 0, 0, .3); transition: border-color .25s, background .25s; }
+.pay-tiers .tier:has(input:checked) { border-color: var(--gold); background: rgba(245, 201, 107, .1); }
+.pay-tiers .tier input { accent-color: var(--gold); }
+.pay-tiers .tl { flex: 1; }
+.pay-tiers .tp { color: var(--gold); font-weight: 600; }
+.pay-tiers .tier small { color: #ffcf8a; margin-left: 6px; font-size: .75rem; }
+
+/* ===== หน้าชำระเงิน: เลือกสถานที่ทำพิธี ===== */
+.pay-place { border: 1px solid rgba(240, 200, 120, .3); border-radius: 16px; padding: 12px 14px 14px; margin: 0 0 12px; background: rgba(240, 200, 120, .05); }
+.pay-place legend { padding: 0 6px; color: var(--gold-2); font-size: .88rem; font-weight: 500; }
+.pp-row { display: grid; grid-template-columns: minmax(130px, 1fr) 2fr; gap: 8px; }
+.pp-row select { min-width: 0; width: 100%; padding: 11px 30px 11px 12px; border-radius: 12px; font: inherit; font-size: .9rem; color: var(--text);
+  background: rgba(0, 0, 0, .35) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23f5c96b' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border: 1px solid rgba(245, 201, 107, .25); appearance: none; -webkit-appearance: none; cursor: pointer; }
+.pp-row select:disabled { opacity: .55; cursor: default; }
+.pp-row select option { background: #1d0f42; color: #f1eaff; }
+.pp-hint { margin: 8px 0 0; font-size: .74rem; color: var(--muted); }
+.pp-info { display: flex; gap: 10px; margin-top: 10px; padding: 10px; border-radius: 12px; background: rgba(0, 0, 0, .25); }
+.pp-info > span { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #4a2a8a, #1a0b40); border: 1px solid rgba(240, 200, 120, .45); }
+.pp-info b { display: block; font-size: .86rem; color: var(--gold-2); font-weight: 600; }
+.pp-info small { display: block; font-size: .7rem; color: var(--lilac); margin-top: 2px; }
+.pp-info p { margin: 4px 0 0; font-size: .74rem; color: var(--muted); line-height: 1.5; }
+@media (max-width: 599px) { .pp-row { grid-template-columns: 1fr; } .pp-row select { font-size: 16px; } }
+
+/* ===== เงินทำบุญ + สรุปยอด ===== */
+.pay-donate { border: 1px solid rgba(240, 200, 120, .3); border-radius: 16px; padding: 12px 14px 14px; margin: 0 0 12px; background: rgba(240, 200, 120, .05); }
+.pay-donate legend { padding: 0 6px; color: var(--gold-2); font-size: .88rem; font-weight: 500; }
+.dn-row { grid-template-columns: 1fr 1fr; }
+.dn-row input { min-width: 0; width: 100%; padding: 11px 12px; border-radius: 12px; font: inherit; font-size: .95rem; color: var(--text);
+  background: rgba(0, 0, 0, .35); border: 1px solid rgba(245, 201, 107, .25); outline: none; color-scheme: dark; }
+.dn-row input:focus { border-color: var(--gold); }
+.dn-row input[hidden] { display: none; }
+.dn-row:has(input[hidden]) { grid-template-columns: 1fr; }
+.pay-sum { list-style: none; margin: 0 0 4px; padding: 0 4px; display: grid; gap: 6px; }
+.pay-sum li { display: flex; justify-content: space-between; font-size: .88rem; color: var(--muted); }
+.pay-sum b { color: var(--text); font-weight: 500; }
+#toQR:disabled { opacity: .55; cursor: not-allowed; filter: grayscale(.3); }
+@media (max-width: 599px) { .dn-row input { font-size: 16px; } }

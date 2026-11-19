@@ -30,6 +30,14 @@ function renderMongkol() {
         <span class="mk-ico">🪷</span>
         <div><h3>บริการมงคล</h3><p>ทำบุญ ไหว้พระ สะเดาะเคราะห์ และแก้ปีชงแทนคุณ ทีมงานทำพิธีที่สถานที่จริง แล้วส่งรูปและวิดีโอยืนยัน</p></div>
       </div>
+      <section class="mk-steps">
+        <h4>ขั้นตอนการทำพิธีแทนคุณ</h4>
+        <ol>
+          <li><span class="ms-ico">📝</span><em>1</em><b>จองและแจ้งชื่อ</b><small>ใส่ชื่อผู้รับบุญ คำอธิษฐาน และเลือกสถานที่</small></li>
+          <li><span class="ms-ico">🛕</span><em>2</em><b>ทีมทำพิธีแทนคุณ</b><small>ทำพิธีที่วัดหรือสถานที่จริงตามที่เลือก</small></li>
+          <li><span class="ms-ico">📸</span><em>3</em><b>รับรูปและวิดีโอยืนยัน</b><small>ส่งให้ภายใน 3 วัน ดูได้ใน “ประวัติการดูดวง”</small></li>
+        </ol>
+      </section>
       <div class="sec-head"><h3>ทำบุญ · แก้ดวงออนไลน์</h3><span class="sec-note">ค่าบริการ ${baht(SERVICE_PRICE)}</span></div>
       <div class="mk-grid">${merit.map((s) => `
         <article class="mk-card">
@@ -39,14 +47,6 @@ function renderMongkol() {
           <button class="btn-gold" data-merit="${s.id}">จองพิธี ›</button>
         </article>`).join('')}</div>
       ${placesHTML()}
-      <section class="mk-steps">
-        <h4>ขั้นตอนการทำพิธีแทนคุณ</h4>
-        <ol>
-          <li><span class="ms-ico">📝</span><em>1</em><b>จองและแจ้งชื่อ</b><small>ใส่ชื่อผู้รับบุญ คำอธิษฐาน และเลือกสถานที่</small></li>
-          <li><span class="ms-ico">🛕</span><em>2</em><b>ทีมทำพิธีแทนคุณ</b><small>ทำพิธีที่วัดหรือสถานที่จริงตามที่เลือก</small></li>
-          <li><span class="ms-ico">📸</span><em>3</em><b>รับรูปและวิดีโอยืนยัน</b><small>ส่งให้ภายใน 3 วัน ดูได้ใน “ประวัติการดูดวง”</small></li>
-        </ol>
-      </section>
     </section>
 
     <section class="mk-sec" ${mkTab === 'items' ? '' : 'hidden'}>
