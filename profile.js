@@ -237,15 +237,25 @@ profileBody.addEventListener('click', (e) => {
 });
 
 // ---------- ดูผลย้อนหลัง ----------
+// ปุ่มเปิดใบผลดวงของรายการนี้ (fortune-slip.js)
+const slipButton = (h) => (typeof slipSupported === 'function' && slipSupported(h)
+  ? `<button class="btn-gold full slip-open" data-slip-of="${h.id}">📜 ดูใบผลดวง · บันทึกเป็นรูป</button>` : '');
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-slip-of]');
+  if (!b) return;
+  const h = (currentUser().history || []).find((x) => x.id === b.dataset.slipOf);
+  if (h) openSlip(h);
+});
+
 function openHistory(id) {
   const u = currentUser();
   const h = (u.history || []).find((x) => x.id === id);
   if (!h) return;
   if (h.kind === 'personal') {
-    openReading(GIFTS.find((g) => g.id === h.gift), u);
+    openReading(GIFTS.find((g) => g.id === h.gift), u, h.id);
   } else if (h.kind === 'daily') {
     $('readingTitle').textContent = 'รายงานดวงประจำวัน';
-    $('readingBody').innerHTML = dailyHTML(h.report, 'รายงานที่บันทึกไว้ · เพื่อความบันเทิงและเป็นแนวทางชีวิต');
+    $('readingBody').innerHTML = dailyHTML(h.report, 'รายงานที่บันทึกไว้ · เพื่อความบันเทิงและเป็นแนวทางชีวิต') + slipButton(h);
     openPanel('readingPanel');
   } else {
     $('readingTitle').textContent = h.title;
@@ -276,7 +286,7 @@ function openHistory(id) {
         <li><span>💗</span><span><small>ความรัก</small>${esc(h.love)}</span></li>
         <li><span>💰</span><span><small>การเงิน</small>${esc(h.money)}</span></li></ul>`;
     }
-    $('readingBody').innerHTML = `<div class="reading-head"><span class="win-ico">${h.icon}</span><div><p class="win-label">ดูเมื่อ ${thDate(h.at)}</p><h3>${esc(h.title)}</h3></div></div>${q}${body}`;
+    $('readingBody').innerHTML = `<div class="reading-head"><span class="win-ico">${h.icon}</span><div><p class="win-label">ดูเมื่อ ${thDate(h.at)}</p><h3>${esc(h.title)}</h3></div></div>${q}${body}${slipButton(h)}`;
     openPanel('readingPanel');
   }
 }

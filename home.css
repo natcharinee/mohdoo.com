@@ -1546,3 +1546,254 @@ body.app-ui .hello small { display: flex; align-items: center; justify-content: 
   color: #fff; background: #0b0618; border: 1px solid rgba(255, 255, 255, .25); text-decoration: none; cursor: pointer; }
 .app-dl:hover { border-color: var(--gold); }
 .app-dl span { font-size: 1.05rem; }
+
+/* ===================== ใบผลดวง (Fortune Receipt) ===================== */
+.slip-overlay { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; padding: 14px 12px;
+  background: rgba(6, 2, 18, .8); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity .3s; }
+.slip-overlay.open { opacity: 1; }
+.slip-overlay[hidden] { display: none; }
+.slip-stage { position: relative; width: min(392px, 100%); max-height: 100%; display: flex; flex-direction: column; }
+.slip-x { position: absolute; top: -4px; right: -4px; z-index: 3; width: 34px; height: 34px; border-radius: 50%; color: var(--gold-2);
+  background: rgba(20, 10, 48, .9); border: 1px solid rgba(240, 200, 120, .45); cursor: pointer; }
+/* ช่องเครื่องพิมพ์ใบเสร็จ */
+.slip-printer { position: relative; z-index: 2; height: 26px; margin: 0 -10px; border-radius: 14px;
+  background: linear-gradient(180deg, #3a2470, #1a0d3d); border: 1px solid rgba(240, 200, 120, .4); box-shadow: 0 6px 18px rgba(0, 0, 0, .5); }
+.slip-printer span { position: absolute; left: 14px; right: 14px; top: 50%; height: 4px; margin-top: -2px; border-radius: 4px; background: #07030f; box-shadow: 0 1px 0 rgba(240, 200, 120, .35); }
+.slip-scroll { position: relative; z-index: 1; flex: 1; min-height: 0; overflow-y: auto; margin-top: -13px; padding: 0 0 6px; scrollbar-width: none; }
+.slip-scroll::-webkit-scrollbar { display: none; }
+.slip-feed { padding-top: 8px; animation: slipPrint 1.8s cubic-bezier(.25, .8, .3, 1) both; }
+@keyframes slipPrint { from { transform: translateY(-100%); } }
+@media (prefers-reduced-motion: reduce) { .slip-feed { animation: none; } }
+.slip-actions { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; padding-top: 12px; }
+.slip-actions .btn-gold, .slip-actions .btn-ghost { padding: 13px 10px; }
+
+/* กระดาษใบผลดวง */
+.slip { --ink: #2c1748; --gold-ink: #a8741c; --paper: #fbf4e3; --muted-ink: #6d5a86;
+  position: relative; margin: 0 auto 12px; padding: 26px 22px 30px; color: var(--ink); font-family: "Kanit", sans-serif; font-weight: 400;
+  background: var(--paper) linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(240, 225, 190, .35)); box-shadow: 0 18px 40px rgba(0, 0, 0, .45); }
+/* ขอบฟันเลื่อยบน-ล่างแบบใบเสร็จ */
+.slip::before, .slip::after { content: ""; position: absolute; left: 0; right: 0; height: 10px; background-repeat: repeat-x; background-size: 14px 10px; }
+.slip::before { top: -9px; background-image: linear-gradient(45deg, var(--paper) 50%, transparent 50%), linear-gradient(-45deg, var(--paper) 50%, transparent 50%); background-position: 0 100%, 7px 100%; }
+.slip::after { bottom: -9px; background-image: linear-gradient(135deg, var(--paper) 50%, transparent 50%), linear-gradient(-135deg, var(--paper) 50%, transparent 50%); background-position: 0 0, 7px 0; }
+
+.sl-head { text-align: center; }
+.sl-logo { font-family: "Charm", serif; font-size: 2.1rem; line-height: 1.1; color: var(--gold-ink); }
+.sl-logo span:last-child { font-family: "Cinzel Decorative", serif; font-size: .95rem; margin-left: 2px; }
+.sl-moon { margin-right: 6px; font-size: 1.5rem; }
+.sl-type { margin: 4px 0 0; font-size: .7rem; letter-spacing: .32em; color: var(--muted-ink); }
+.sl-orn { margin: 8px 0 12px; font-size: .78rem; letter-spacing: .3em; color: var(--gold-ink); }
+.sl-meta { margin: 0 0 12px; padding: 10px 0; border-top: 1.5px solid var(--ink); border-bottom: 1px dashed rgba(44, 23, 72, .45); display: grid; gap: 4px; }
+.sl-meta div { display: flex; align-items: baseline; gap: 6px; font-size: .78rem; }
+.sl-meta dt { color: var(--muted-ink); flex: none; }
+.sl-meta div::after { content: ""; order: 1; flex: 1; border-bottom: 1px dotted rgba(44, 23, 72, .35); transform: translateY(-3px); }
+.sl-meta dd { order: 2; margin: 0; font-weight: 500; text-align: right; }
+.sl-item { display: flex; align-items: center; gap: 10px; padding: 4px 0 2px; }
+.sl-ico { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-size: 1.3rem; background: #efe3c6; border: 1.5px solid var(--gold-ink); }
+.sl-item > div { flex: 1; min-width: 0; }
+.sl-item small { display: block; font-size: .66rem; letter-spacing: .08em; color: var(--muted-ink); }
+.sl-item b { display: block; font-size: .95rem; font-weight: 600; line-height: 1.35; }
+.sl-item p { margin: 2px 0 0; font-size: .74rem; color: var(--muted-ink); font-style: italic; }
+.sl-item em { flex: none; align-self: flex-start; font-style: normal; font-size: .7rem; padding: 2px 8px; border: 1px solid var(--ink); border-radius: 999px; }
+.sl-cut { position: relative; margin: 14px -22px 6px; border-top: 1.5px dashed rgba(44, 23, 72, .5); }
+.sl-cut span { position: absolute; left: 10px; top: -11px; font-size: .9rem; background: var(--paper); padding: 0 4px; color: var(--muted-ink); }
+
+.sl-blocks { list-style: none; margin: 0; padding: 0; }
+.sl-blocks li { display: flex; gap: 12px; padding: 13px 0; border-bottom: 1px dotted rgba(44, 23, 72, .35); }
+.sl-no { flex: none; width: 34px; font-family: "Cinzel Decorative", serif; font-size: 1.35rem; font-weight: 700; line-height: 1; color: var(--gold-ink); }
+.sl-bt { flex: 1; min-width: 0; }
+.sl-bt small { display: block; font-size: .66rem; letter-spacing: .1em; color: var(--muted-ink); }
+.sl-bt b { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 1px; font-size: .95rem; font-weight: 600; }
+.sl-bt b > span:first-child { font-size: 1.05rem; }
+.sl-bt em { display: block; font-style: normal; font-size: .7rem; color: var(--gold-ink); letter-spacing: .04em; }
+.sl-bt p { margin: 4px 0 0; font-size: .8rem; line-height: 1.6; color: #3d2a5a; }
+.sl-stars { font-size: .8rem; letter-spacing: 1px; color: #c99a2e; }
+.sl-stars i { font-style: normal; color: #ddd0b4; }
+
+.sl-total { position: relative; margin: 16px 0 12px; padding: 14px 14px 18px; border: 3px double var(--ink); border-radius: 4px; background: rgba(239, 227, 198, .45); }
+.sl-total-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: .95rem; font-weight: 700; letter-spacing: .02em; }
+.sl-total-head .sl-stars { font-size: 1rem; }
+.sl-total p { margin: 8px 0 0; padding-right: 74px; font-size: .82rem; line-height: 1.65; }
+.sl-stamp { position: absolute; right: 8px; bottom: 8px; width: 82px; height: 82px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #b3302d; border: 3px double #b3302d; transform: rotate(-14deg); opacity: .88; text-align: center; background: rgba(251, 244, 227, .6); }
+.sl-stamp span { font-size: .86rem; font-weight: 700; line-height: 1.15; padding: 0 6px; }
+.sl-stamp small { margin-top: 2px; font-size: .5rem; letter-spacing: .1em; border-top: 1px solid #b3302d; padding-top: 2px; }
+
+.sl-lucky { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.sl-lucky div { padding: 8px 10px; border: 1px solid rgba(44, 23, 72, .25); border-radius: 6px; text-align: center; }
+.sl-lucky small { display: block; font-size: .66rem; color: var(--muted-ink); letter-spacing: .06em; }
+.sl-lucky b { display: inline-flex; align-items: center; gap: 6px; font-size: .9rem; font-weight: 600; }
+.sl-lucky i { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(44, 23, 72, .35); }
+
+.sl-foot { text-align: center; padding-top: 10px; border-top: 1.5px dashed rgba(44, 23, 72, .5); }
+.sl-bar { display: flex; justify-content: center; align-items: stretch; gap: 2px; height: 46px; margin: 4px auto 4px; }
+.sl-bar i { display: block; background: var(--ink); }
+.sl-code { margin: 0; font-size: .7rem; letter-spacing: .3em; color: var(--muted-ink); }
+.sl-thanks { margin: 10px 0 2px; font-family: "Charm", serif; font-size: 1.25rem; color: var(--gold-ink); }
+.sl-foot small { font-size: .62rem; color: var(--muted-ink); }
+
+/* ปุ่มเปิดใบผลดวงในหน้าต่าง ๆ */
+.slip-open { margin-top: 12px; }
+.sl-total { min-height: 116px; }
+.sl-total-head { justify-content: flex-start; flex-wrap: wrap; padding-right: 80px; }
+.sl-total p { padding-right: 90px; }
+
+/* ===== ใบผลดวง v2: จัดกลาง ไม่มีเลขลำดับ ===== */
+.slip .sl-orn { margin-bottom: 4px; }
+.slip .sl-item { flex-direction: column; text-align: center; gap: 2px; padding: 16px 0 4px; margin-top: 10px; border-top: 1.5px solid var(--ink); }
+.slip .sl-item .sl-ico { width: 54px; height: 54px; font-size: 1.6rem; margin-bottom: 6px; box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px rgba(168, 116, 28, .45); }
+.slip .sl-item small { font-size: .7rem; letter-spacing: .2em; }
+.slip .sl-item b { font-size: 1.12rem; }
+.slip .sl-item p { margin-top: 4px; font-size: .8rem; }
+.slip .sl-item em { align-self: center; margin-top: 8px; border: 0; padding: 0; font-size: .74rem; color: var(--gold-ink); letter-spacing: .04em; }
+.slip .sl-cut { margin-top: 16px; }
+.slip .sl-blocks li { flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: 18px 8px 16px; border: 0; }
+.sl-bi { width: 46px; height: 46px; margin-bottom: 6px; border-radius: 50%; display: grid; place-items: center; font-size: 1.35rem;
+  background: radial-gradient(circle at 35% 30%, #fffaf0, #efe2c3); border: 1.5px solid var(--gold-ink); box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px rgba(168, 116, 28, .35); }
+.slip .sl-blocks small { font-size: .66rem; letter-spacing: .22em; color: var(--gold-ink); font-weight: 500; }
+.slip .sl-blocks b { font-size: 1.02rem; font-weight: 700; line-height: 1.35; }
+.slip .sl-blocks em { font-style: italic; font-size: .74rem; color: var(--muted-ink); }
+.slip .sl-blocks .sl-stars { margin-top: 2px; font-size: .9rem; }
+.slip .sl-blocks p { margin: 6px 0 0; max-width: 290px; font-size: .82rem; line-height: 1.7; color: #3d2a5a; }
+.slip .sl-blocks .sl-div { padding: 0; display: flex; align-items: center; gap: 10px; color: var(--gold-ink); font-size: .7rem; }
+.slip .sl-blocks .sl-div::before, .slip .sl-blocks .sl-div::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(168, 116, 28, .55), transparent); }
+.slip .sl-total { margin-top: 18px; text-align: center; padding: 16px 14px 20px; }
+.slip .sl-total-head { justify-content: center; padding-right: 0; flex-direction: column; gap: 2px; }
+.slip .sl-total p { padding-right: 0; margin-bottom: 70px; }
+.slip .sl-stamp { left: 50%; right: auto; bottom: 10px; width: 76px; height: 76px; margin-left: -38px; }
+.slip .sl-blocks .sl-div { flex-direction: row; width: 70%; margin: 0 auto; }
+.slip .sl-stamp small { font-size: .5rem; letter-spacing: .12em; }
+/* ไม่มีส่วนท้าย (บาร์โค้ด) แล้ว → ช่องสีเสริมดวง/เลขนำโชคเป็นส่วนสุดท้าย */
+.slip .sl-lucky { margin-bottom: 4px; }
+
+/* ===== ใบผลดวง: โทนม่วง (กระดาษม่วงเข้ม ตัวอักษรครีม ทองเป็นจุดเด่น) ===== */
+.slip { --paper: #2a1360; --ink: #f7efff; --gold-ink: #f2c96b; --muted-ink: #cbb8f0;
+  background: var(--paper) radial-gradient(120% 60% at 50% 0%, rgba(155, 89, 208, .35), transparent 70%),
+    radial-gradient(120% 50% at 50% 100%, rgba(120, 60, 190, .3), transparent 70%);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(242, 201, 107, .25); }
+.slip .sl-head { position: relative; }
+.slip .sl-logo { color: var(--gold-ink); text-shadow: 0 0 18px rgba(242, 201, 107, .35); }
+.slip .sl-type { color: var(--muted-ink); }
+.slip .sl-item { border-top-color: rgba(242, 201, 107, .55); }
+.slip .sl-item .sl-ico, .slip .sl-bi { background: radial-gradient(circle at 35% 30%, #5a2fa0, #1e0b48); border-color: var(--gold-ink);
+  box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px rgba(242, 201, 107, .45), 0 0 18px rgba(242, 201, 107, .25); }
+.slip .sl-item small, .slip .sl-item p { color: var(--muted-ink); }
+.slip .sl-cut { border-top-color: rgba(203, 184, 240, .45); }
+.slip .sl-cut span { color: var(--muted-ink); background: var(--paper); }
+.slip .sl-blocks p { color: #e6dcfa; }
+.slip .sl-blocks em { color: var(--muted-ink); }
+.slip .sl-blocks .sl-div::before, .slip .sl-blocks .sl-div::after { background: linear-gradient(90deg, transparent, rgba(242, 201, 107, .6), transparent); }
+.slip .sl-stars { color: #f2c96b; }
+.slip .sl-stars i { color: rgba(203, 184, 240, .3); }
+.slip .sl-total { border: 1.5px solid rgba(242, 201, 107, .65); border-radius: 14px; background: rgba(12, 4, 32, .35);
+  box-shadow: inset 0 0 0 4px rgba(42, 19, 96, 1), inset 0 0 0 5px rgba(242, 201, 107, .3); }
+.slip .sl-total-head { color: var(--gold-ink); }
+.slip .sl-stamp { color: var(--gold-ink); border-color: var(--gold-ink); background: rgba(42, 19, 96, .85); box-shadow: 0 0 16px rgba(242, 201, 107, .25); opacity: .95; }
+.slip .sl-stamp small { border-top-color: var(--gold-ink); }
+.slip .sl-lucky div { border-color: rgba(242, 201, 107, .35); background: rgba(12, 4, 32, .3); border-radius: 12px; }
+.slip .sl-lucky i { border-color: rgba(255, 255, 255, .5); }
+.slip { --paper: #3b1c7c;
+  background: var(--paper) radial-gradient(130% 55% at 50% 0%, rgba(196, 150, 255, .38), transparent 72%),
+    radial-gradient(130% 45% at 50% 100%, rgba(160, 100, 235, .32), transparent 72%);
+  box-shadow: 0 0 0 1px rgba(242, 201, 107, .35), 0 20px 50px rgba(0, 0, 0, .6), 0 0 60px rgba(155, 89, 208, .35); }
+.slip .sl-item .sl-ico, .slip .sl-bi { background: radial-gradient(circle at 35% 30%, #7a48c8, #2a1060); }
+.slip .sl-total { background: rgba(20, 6, 50, .35); box-shadow: inset 0 0 0 4px #3b1c7c, inset 0 0 0 5px rgba(242, 201, 107, .3); }
+.slip .sl-stamp { background: rgba(59, 28, 124, .9); }
+.slip .sl-cut span { background: transparent; }
+.slip-overlay { background: rgba(4, 1, 12, .86); }
+.slip { background: radial-gradient(130% 55% at 50% 0%, rgba(196, 150, 255, .38), transparent 72%),
+    radial-gradient(130% 45% at 50% 100%, rgba(160, 100, 235, .32), transparent 72%), var(--paper); }
+.slip { background: radial-gradient(130% 55% at 50% 0%, rgba(196, 150, 255, .38), transparent 72%),
+    radial-gradient(120% 40% at 50% 78%, rgba(160, 100, 235, .28), transparent 70%), var(--paper); }
+.slip .sl-total { box-shadow: none; border: 3px double rgba(242, 201, 107, .7); }
+
+/* ===== ใบผลดวง v3: ภาพลายเส้นวาดมือ + คำทำนายแบบบรรยาย ===== */
+.slip { padding-bottom: 0; overflow: visible; }
+.slip .sl-head { position: relative; z-index: 1; }
+.sl-art { display: block; height: auto; }
+.sl-art-ball { width: 132px; margin: 8px auto 2px; }
+.slip .sl-item { border-top: 0; margin-top: 0; padding-top: 2px; position: relative; z-index: 1; }
+.slip .sl-item small { color: var(--gold-ink); }
+.sl-story { position: relative; z-index: 1; margin-top: 16px; }
+.sl-story p { margin: 0 0 14px; text-indent: 1.6em; font-size: .86rem; line-height: 1.95; color: #ebe2fb; }
+.sl-story p b { color: var(--gold-ink); font-weight: 600; }
+.sl-story p i { font-style: normal; color: var(--muted-ink); }
+.sl-story p .sl-stars { font-size: .78rem; }
+.sl-art-cards { width: 206px; margin: 6px auto 0; }
+.slip .sl-total { min-height: 0; margin: 6px 0 16px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; text-align: center; }
+.sl-overall { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 1.12rem; font-weight: 700; color: var(--gold-ink); letter-spacing: .04em; }
+.sl-overall::before, .sl-overall::after { content: ""; flex: 1; border-top: 2px dotted rgba(242, 201, 107, .65); }
+.sl-overall-stars { margin-top: 4px; font-size: 1.05rem; }
+.slip .sl-total p { margin: 10px 0 0; padding: 0; font-size: .9rem; line-height: 1.95; color: #f7efff; }
+.slip .sl-stamp { position: relative; left: auto; right: auto; bottom: auto; margin: 14px auto 0; }
+.sl-spark { position: absolute; z-index: 0; height: auto; opacity: .9; }
+.sl-spark.sp1 { width: 20px; top: 118px; left: 18px; }
+.sl-spark.sp2 { width: 15px; top: 34%; right: 12px; }
+.sl-spark.sp3 { width: 12px; top: 55%; left: 10px; }
+.sl-spark.sp4 { width: 22px; top: 74%; right: 16px; }
+.sl-art-clouds { width: calc(100% + 44px); height: 48px; margin: 12px -22px 0; }
+.sl-art-clouds { margin-bottom: 10px; }
+/* ไม่มีภาพไพ่คั่นแล้ว → เว้นระยะก่อน “ดวงโดยรวม” */
+.slip .sl-total { margin-top: 18px; }
+/* ประกายดาวอยู่เฉพาะที่ว่าง: ข้างลูกแก้ว และข้างตราประทับ (ไม่ทับข้อความ) */
+.sl-spark.sp1 { top: 112px; left: 52px; right: auto; bottom: auto; width: 20px; }
+.sl-spark.sp2 { top: 150px; right: 50px; left: auto; bottom: auto; width: 15px; }
+.sl-spark.sp3 { top: auto; bottom: 168px; left: 70px; right: auto; width: 14px; }
+.sl-spark.sp4 { top: auto; bottom: 196px; right: 62px; left: auto; width: 22px; }
+/* คำทำนายเต็มบรรทัด: จัดชิดสองข้าง ไม่ย่อหน้า ระยะห่างย่อหน้าน้อยลง */
+.sl-story p { text-indent: 0; text-align: justify; text-justify: inter-character; margin-bottom: 10px; line-height: 1.85; }
+.slip .sl-total p { text-align: justify; text-justify: inter-character; text-align-last: center; }
+/* คำทำนายจัดกึ่งกลางทั้งหมด (เลิกจัดชิดสองข้าง ซึ่งทำให้บางบรรทัดล้นขอบ) */
+.sl-story p, .slip .sl-total p { text-align: center; text-justify: auto; text-align-last: center; overflow-wrap: anywhere; }
+.sl-story p b { display: block; margin-bottom: 2px; }
+.sl-story p { margin-bottom: 16px; }
+.slip .sl-total { margin-bottom: 18px; }
+
+/* ===== ใบผลดวงแบบใบเซียมซี: กลอน 4 วรรค + คำทำนาย 4 เรื่อง ===== */
+.sl-cards { position: relative; z-index: 1; margin: 10px 0 0; text-align: center; font-size: .78rem; color: var(--muted-ink); letter-spacing: .02em; }
+.sl-verse { position: relative; z-index: 1; margin: 16px 6px 6px; padding: 14px 6px; text-align: center;
+  border-top: 2px dotted rgba(242, 201, 107, .55); border-bottom: 2px dotted rgba(242, 201, 107, .55); }
+.sl-verse p { margin: 0; font-family: "Charm", serif; font-size: 1.32rem; line-height: 1.75; color: #fff3d6; text-shadow: 0 0 12px rgba(242, 201, 107, .25); }
+.slip-wait { margin: 40px 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--gold-2); font-size: .95rem; }
+.slip-writing { padding-bottom: 20px; }
+.sl-verse p { line-height: 1.95; }
+/* บรรทัดสมดุล: ไม่เหลือคำสั้น ๆ ค้างบรรทัดสุดท้าย และไม่ล้นขอบ */
+.sl-story p, .slip .sl-total p { text-wrap: balance; overflow-wrap: break-word; max-width: 100%; }
+.sl-story p { line-height: 1.9; }
+
+/* ===== รูปไพ่ในใบผลดวง ===== */
+.sl-card { --cw: 76px; position: relative; display: inline-block; width: var(--cw); height: calc(var(--cw) * 1.62); border-radius: 9px; padding: 3px;
+  background: linear-gradient(160deg, #f6d98a, #c99a3c); box-shadow: 0 8px 20px rgba(0, 0, 0, .4), 0 0 16px rgba(242, 201, 107, .35); }
+.sl-card-in { position: absolute; inset: 3px; border-radius: 7px; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  padding: 7px 4px 8px; background: linear-gradient(160deg, #2c1670, #12063a 60%, #3a1060); border: 1px solid rgba(242, 201, 107, .55); overflow: hidden; }
+.sl-card.rev .sl-card-in { transform: rotate(180deg); }
+.sl-card-orn { font-style: normal; font-size: calc(var(--cw) * .13); color: var(--gold-ink, #f2c96b); line-height: 1; }
+.sl-card-sym { font-size: calc(var(--cw) * .44); line-height: 1; filter: drop-shadow(0 0 6px rgba(242, 201, 107, .6)); }
+.sl-card-en { font-family: "Cinzel Decorative", serif; font-size: calc(var(--cw) * .085); letter-spacing: .03em; color: #f6dc9a; text-align: center; line-height: 1.15; }
+.sl-cardrow { position: relative; z-index: 1; display: flex; justify-content: center; gap: 14px; margin: 14px 0 4px; }
+.sl-cardrow figure { margin: 0; width: 92px; display: flex; flex-direction: column; align-items: center; }
+.sl-cardrow figure .sl-card { transform: rotate(var(--r, 0deg)); }
+.sl-cardrow.n1 figure { width: 120px; }
+.sl-cardrow.n1 .sl-card { --cw: 96px; }
+.sl-cardrow figcaption { margin-top: 10px; text-align: center; line-height: 1.3; }
+.sl-cardrow figcaption small { display: block; font-size: .64rem; color: var(--muted-ink, #cbb8f0); }
+.sl-cardrow figcaption b { display: block; font-size: .8rem; color: var(--gold-ink, #f2c96b); font-weight: 600; }
+.sl-cardrow figcaption em { display: inline-block; margin-top: 2px; font-style: normal; font-size: .6rem; padding: 1px 6px; border-radius: 999px; border: 1px solid rgba(242, 201, 107, .5); color: #f6dc9a; }
+.sl-cardrow { margin-bottom: 18px; }
+
+/* ===== หน้าไพ่ทาโรต์แบบวาดใหม่ ===== */
+.sl-card { --cw: 82px; padding: 0; border-radius: 9px; background: none; box-shadow: 0 10px 22px rgba(0, 0, 0, .45), 0 0 18px rgba(242, 201, 107, .3); }
+.sl-card-in { inset: 0; padding: 0; border: 0; border-radius: 9px; background: none; display: block; }
+.sl-card-art { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sl-card-top { position: absolute; left: 0; right: 0; top: 7%; text-align: center; font-family: "Cinzel Decorative", serif; font-weight: 700;
+  font-size: calc(var(--cw) * .13); letter-spacing: .06em; color: #f6dc9a; line-height: 1; }
+.sl-card-en { position: absolute; left: 14%; right: 14%; top: 79.2%; height: 9.8%; display: flex; align-items: center; justify-content: center; text-align: center;
+  font-family: "Cinzel Decorative", serif; font-weight: 700; font-size: calc(var(--cw) * .066); letter-spacing: .02em; line-height: 1; color: #2a1260; }
+.sl-card-orn, .sl-card-sym { display: none; }
+.sl-cardrow.n1 .sl-card { --cw: 104px; }
+.sl-card-en { left: 16%; right: 16%; }
+.sl-card-en.long { font-size: calc(var(--cw) * .05); letter-spacing: 0; }
+.sl-card { --cw: 94px; }
+.sl-cardrow { gap: 10px; }
+.sl-cardrow figure { width: 104px; }
+.sl-cardrow.n1 .sl-card { --cw: 120px; }
+.sl-cardrow.n1 figure { width: 140px; }

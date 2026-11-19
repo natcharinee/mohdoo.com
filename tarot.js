@@ -198,6 +198,7 @@ $('revealBtn').addEventListener('click', () => {
       cards: drawn.map((d, i) => ({ pos: spread.positions[i], th: d.card.th, en: d.card.en, sym: d.card.sym, rev: d.reversed, text: d.reversed ? d.card.rev : d.card.up })),
       summary: tone.replace(/<[^>]+>/g, ''),
     } }, location.origin);
+    $('slipBtn').hidden = false;
   }
 });
 
@@ -238,3 +239,6 @@ $('againBtn').addEventListener('click', (e) => {
 // เปิดจากลิงก์ เช่น tarot.html?spread=love หรือ ?spread=one → ข้ามไปขั้นสับไพ่เลย
 const preset = SPREADS.find((sp) => sp.id === new URLSearchParams(location.search).get('spread'));
 if (preset) startDraw(preset);
+
+// ใบผลดวง (เปิดในหน้าแรก)
+$('slipBtn').addEventListener('click', () => window.parent.postMessage({ type: 'mohdoo-slip', kind: 'tarot' }, location.origin));

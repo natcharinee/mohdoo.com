@@ -224,7 +224,7 @@ async function runPhotoReading({ histId, kind, slots, topic, retry }) {
         <div class="ai-reading-body">${fmtReading(r.reading)}</div>
         ${r.summary ? `<p class="ai-reading-sum"><b>✦ สรุป</b>${esc(r.summary)}</p>` : ''}
         <p class="pf-note">เก็บไว้ในแฟ้มดวงแล้ว และนำไปรวมในรายงานดวงประจำวัน · เพื่อความบันเทิงและเป็นแนวทางชีวิต</p>
-      </article>${foot}`;
+      </article><button class="btn-gold full slip-open" data-slip-of="${histId}">📜 รับใบผลดวง</button>${foot}`;
   } else if (r.status === 'unclear') {
     updateHistory(histId, { status: 'รูปไม่ชัด รอรูปใหม่', note: r.reading });
     $('payBody').innerHTML = `<div class="pay-ok"><span class="ok-ring">📷</span><h3>ขอรูปใหม่อีกครั้งนะคะ</h3>

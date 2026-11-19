@@ -56,6 +56,7 @@ function showResult(idx) {
       kind: 'siamsi', icon: '🎋', title: `เซียมซีใบที่ ${idx + 1}`, question: wish,
       no: idx + 1, lv: d.lv, verse: d.verse, meaning: d.meaning, work: d.work, love: d.love, money: d.money,
     } }, location.origin);
+    $('slipBtn').hidden = false;
   }
 
   $('stepShake').hidden = true;
@@ -79,3 +80,6 @@ $('againBtn').addEventListener('click', () => {
   $('wish').value = '';
   $('hint').textContent = 'ตั้งจิตอธิษฐานถึงเรื่องที่อยากรู้ แล้วกดเขย่ากระบอก';
 });
+
+// ใบผลดวง (เปิดในหน้าแรก)
+$('slipBtn').addEventListener('click', () => window.parent.postMessage({ type: 'mohdoo-slip', kind: 'siamsi' }, location.origin));

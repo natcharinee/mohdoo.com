@@ -189,8 +189,8 @@ function useCoupon(id) {
   renderCoupons();
   const g = GIFTS.find((x) => x.id === c.gift);
   if (g.href) { openFrame(`${g.href}${g.href.includes('?') ? '&' : '?'}paid=coupon`); return; }
-  addHistory({ kind: 'personal', gift: g.id, title: g.name, icon: g.icon });
-  openReading(g, currentUser());
+  const histId = addHistory({ kind: 'personal', gift: g.id, title: g.name, icon: g.icon });
+  openReading(g, currentUser(), histId);
 }
 
 // ---------- หน้าผลคำทำนาย (แผงในโทรศัพท์) ----------
@@ -202,10 +202,11 @@ readingPanel.innerHTML = `<header class="panel-bar"><button class="back">‹ ก
 $('screen').insertBefore(readingPanel, $('framePanel'));
 readingPanel.querySelector('.back').addEventListener('click', () => closePanel('readingPanel'));
 
-function openReading(g, u) {
+function openReading(g, u, histId) {
   const fn = { color: readColor, name: readName, number: readNumber, zodiac: readZodiac }[g.id];
   $('readingTitle').textContent = g.name;
   $('readingBody').innerHTML = `<div class="reading-head"><span class="win-ico">${g.icon}</span><div><p class="win-label">ของคุณ${esc(u.first || u.name)} ${esc(u.last || '')}</p><h3>${g.name}</h3></div></div>${fn(u)}
+    ${histId ? `<button class="btn-gold full slip-open" data-slip-of="${histId}">📜 รับใบผลดวง · บันทึกเป็นรูป</button>` : ''}
     <p class="reading-note">คำทำนายเพื่อความบันเทิงและเป็นกำลังใจ · อยากรู้ลึกกว่านี้ ปรึกษาหมอดูได้ที่หมวดหมู่</p>`;
   openPanel('readingPanel');
 }

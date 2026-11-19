@@ -175,6 +175,7 @@ function renderChat(u) {
     </form>
     <p class="ai-code-note" id="aiCodeNote">${u.aiCode ? '' : 'ไม่มีรหัสก็ลองคุยได้ แม่หมอจะตอบแบบตัวอย่าง'}</p>
     ${dailyReport(u)}
+    <button class="btn-gold full slip-open" data-slip-daily>📜 รับใบผลดวงวันนี้ · บันทึกเป็นรูป</button>
     <button class="cc-link" data-open-circle><span>👨‍👩‍👧</span><b>ดวงคนใกล้ตัววันนี้</b><small>แฟน · ครอบครัว · เพื่อน</small><em>›</em></button>
     <p class="ai-sub">✦ สงสัยเรื่องไหน ถามแม่หมอ AI ต่อได้เลย</p>
     <div class="ai-log" id="aiLog">

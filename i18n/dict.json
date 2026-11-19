@@ -223,6 +223,10 @@
   "Back to home",
   "返回首页"
  ],
+ "กลับหัว": [
+  "reversed",
+  "逆位"
+ ],
  "กลัวการเปลี่ยนแปลงจนไม่กล้าออกจากที่เดิม": [
   "Fear of change keeps you from leaving where you are",
   "害怕改变，不敢离开原地"
@@ -391,9 +395,17 @@
   "Money, work and stability",
   "财运、工作与稳定"
  ],
+ "การเงินคล่องตัว เหมาะลงทุนในสิ่งที่ศึกษามาดีแล้ว หรือเริ่มเก็บออมก้อนใหม่": [
+  "Money flows smoothly; a good time to invest in what you've studied well, or start a new savings fund.",
+  "财务灵活，适合投资已深入了解的项目，或开始新一笔储蓄。"
+ ],
  "การเงินพอดี ไม่ขาดไม่เกิน": [
   "Money is just enough, neither short nor excess",
   "财运平稳，不缺也不余"
+ ],
+ "การเงินมั่นคง รายรับสม่ำเสมอ ควรวางแผนใช้จ่ายและเก็บออมควบคู่กัน": [
+  "Finances are stable with steady income; plan your spending and saving side by side.",
+  "财务稳定，收入稳定，应同时规划好开支与储蓄。"
  ],
  "การเงินเริ่มฟื้นตัว": [
   "Finances begin to recover",
@@ -478,6 +490,10 @@
  "กำลังฟื้นตัวจากความเจ็บปวด สิ่งที่แย่ที่สุดผ่านไปแล้ว": [
   "Recovering from pain — the worst is over",
   "正从伤痛中恢复，最糟糕的已经过去"
+ ],
+ "กำลังสร้างรูป…": [
+  "Creating image…",
+  "正在生成图片…"
  ],
  "กำลังสับไพ่…": [
   "Shuffling…",
@@ -619,6 +635,10 @@
   "asking you to slow down and listen to your heart",
   "提醒你放慢脚步，倾听内心"
  ],
+ "ขอให้โชคดีมีชัย": [
+  "Wishing you good fortune",
+  "祝您好运连连"
+ ],
  "ขับรถช้า ๆ เผื่อเวลาเดินทาง": [
   "Drive slowly and allow extra travel time",
   "慢慢开车，预留出行时间"
@@ -662,6 +682,10 @@
  "ข่าวดีเรื่องหัวใจ · ความอ่อนโยน · จินตนาการ": [
   "Good news of the heart · Tenderness · Imagination",
   "感情好消息 · 温柔 · 想象力"
+ ],
+ "ข้อ": [
+  "Point",
+  "第"
  ],
  "ข้อความหวาน ๆ หรือความรู้สึกดี ๆ ที่ไม่คาดคิดกำลังมา": [
   "A sweet message or unexpected good feelings are coming",
@@ -743,6 +767,10 @@
   "People around you lend support; teamwork goes well",
   "身边的人给予支持，团队合作顺利"
  ],
+ "คนเกิดวัน": [
+  "People born on",
+  "出生于"
+ ],
  "คนแขวน": [
   "The Hanged Man",
   "倒吊人"
@@ -754,6 +782,14 @@
  "คนโสดมีโอกาสพบคนถูกใจ คนมีคู่หวานขึ้น": [
   "Singles may meet someone they like; couples grow sweeter",
   "单身者有望遇到心仪之人，有伴者感情更甜蜜"
+ ],
+ "คนโสดยังไม่ต้องรีบร้อน รักตัวเองให้เต็มที่ก่อน แล้วคนที่ใช่จะเข้ามา": [
+  "Singles needn't rush; love yourself fully first, and the right person will come.",
+  "单身者不必着急，先好好爱自己，对的人自然会出现。"
+ ],
+ "คนโสดได้รู้จักคนใหม่ผ่านเพื่อนหรือที่ทำงาน คนมีคู่เข้าใจกันดี": [
+  "Singles meet someone new through friends or work; couples understand each other well.",
+  "单身者可通过朋友或工作认识新的人；有伴侣者彼此相知相惜。"
  ],
  "คนใกล้ตัว": [
   "Loved ones",
@@ -923,6 +959,10 @@
   "Wishes fulfilled · Contentment",
   "心愿达成 · 满足"
  ],
+ "ความพยายามช่วงที่ผ่านมาเริ่มออกดอกออกผล อย่าเพิ่งเปลี่ยนทิศทางกลางคัน": [
+  "Your recent efforts are starting to bear fruit; don't change direction midway.",
+  "近来的努力开始开花结果，不要半途改变方向。"
+ ],
  "ความพยายามอย่างสม่ำเสมอจะพาไปถึงเป้าหมาย อย่าใจร้อน": [
   "Steady effort will take you to your goal; don't be impatient",
   "持之以恒必达目标，切莫心急"
@@ -995,13 +1035,25 @@
   "Love, partners, fertility and wealth",
   "爱情、伴侣、丰饶与财富"
  ],
+ "ความรักต้องการความเข้าใจ ฟังอีกฝ่ายให้มากขึ้นและเลี่ยงการประชดประชัน": [
+  "Love needs understanding; listen more to your partner and avoid sarcasm.",
+  "感情需要理解，多倾听对方，避免冷嘲热讽。"
+ ],
  "ความรักต้องใช้เวลาให้เติบโต": [
   "Love needs time to grow",
   "爱情需要时间成长"
  ],
+ "ความรักอบอุ่น มีคนห่วงใยอยู่เสมอ ใส่ใจเรื่องเล็ก ๆ แล้วหัวใจจะใกล้กันขึ้น": [
+  "Love is warm and someone always cares for you; attend to the little things and your hearts will grow closer.",
+  "感情温暖，总有人关心着你；用心于小事，两颗心会更贴近。"
+ ],
  "ความรักอบอุ่น มีเรื่องน่ายินดีในครอบครัว": [
   "Warm love and happy news in the family",
   "爱情温暖，家中有喜事"
+ ],
+ "ความรักเบ่งบาน เหมาะบอกความรู้สึก หรือคุยเรื่องอนาคตร่วมกัน": [
+  "Love is blossoming; a good time to share your feelings or talk about a future together.",
+  "爱情绽放，适合表白心意，或一起谈谈未来。"
  ],
  "ความรักและครอบครัวตามความเชื่อผู้ศรัทธา": [
   "Love and family, as believed by worshippers",
@@ -1175,6 +1227,10 @@
   "Patience · Long-term investment · Awaiting results",
   "耐心 · 长期投资 · 等待结果"
  ],
+ "ความอดทนและการฟังเสียงใจตัวเองคือแสงนำทาง ช่วงนี้เหมาะเก็บแรงไว้ก่อน": [
+  "Patience and listening to your heart light the way. This is a time to save your strength",
+  "耐心与倾听内心是指引之光，这段时间适合养精蓄锐"
+ ],
  "ความอยากรู้ · ช่างสังเกต · ข่าวสาร": [
   "Curiosity · Observant · News",
   "好奇 · 善于观察 · 消息"
@@ -1194,6 +1250,10 @@
  "ความอุดมสมบูรณ์ เงินและความรักงอกงาม": [
   "Abundance — money and love flourish",
   "丰盛富足，财运与爱情兴旺"
+ ],
+ "ความเครียดอาจส่งผลต่อร่างกาย หาเวลาทำสมาธิหรือทำสิ่งที่ชอบ": [
+  "Stress may affect your body; make time to meditate or do something you enjoy.",
+  "压力可能影响身体，抽空冥想或做些自己喜欢的事。"
  ],
  "ความเจ็บปวดทางใจที่ต้องยอมรับ เพื่อจะได้เยียวยา": [
   "Heartache you must accept in order to heal",
@@ -1315,6 +1375,10 @@
   "Question or matter you'd like to consult on",
   "想咨询的问题或事情"
  ],
+ "คำทำนาย": [
+  "Prediction",
+  "预言"
+ ],
  "คำทำนายของคุณ": [
   "Your prediction",
   "你的签文"
@@ -1322,6 +1386,10 @@
  "คำทำนายความรักจากไพ่ 3 ใบ พร้อมสรุปภาพรวม อ่านได้ทันที": [
   "A 3-card love reading with an overall summary, ready instantly",
   "3张牌爱情占卜，附整体总结，即刻可读"
+ ],
+ "คำทำนายที่": [
+  "Prediction",
+  "预言"
  ],
  "คำทำนายประจำวันจากไพ่ 1 ใบ อ่านได้ทันที": [
   "A daily reading from 1 card, ready instantly",
@@ -1383,6 +1451,10 @@
   "Reading and advice for 1 spot",
   "1处位置的解读与建议"
  ],
+ "คำแนะนำ": [
+  "Advice",
+  "建议"
+ ],
  "คำแนะนำการจัดวางตามขอบเขต": [
   "Layout advice within scope",
   "按范围提供布局建议"
@@ -1395,9 +1467,17 @@
   "Advice from elders or experienced people will help you greatly",
   "长辈或有经验者的建议会对你大有帮助"
  ],
+ "คำแนะนำจากไพ่": [
+  "Advice from the cards",
+  "牌面建议"
+ ],
  "คำแนะนำวิธีสะเดาะเคราะห์ที่เหมาะกับดวง และทีมทำพิธีให้ พร้อมหลักฐาน": [
   "Advice on the misfortune-removal ritual that suits your chart, performed by our team with proof",
   "建议适合您命盘的消灾仪式，由团队代为举行并提供凭证"
+ ],
+ "คิดการใดสำเร็จดังใจเนื่อง": [
+  "Whatever you plan will succeed as you wish",
+  "所谋诸事皆如意"
  ],
  "คิดนามสกุลใหม่": [
   "Create a new surname",
@@ -1406,6 +1486,10 @@
  "คืนดีหรือเริ่มต้นใหม่ได้": [
   "Reconciliation or a fresh start is possible",
   "可以和好或重新开始"
+ ],
+ "คืนเดือนมืดดาวน้อยยังส่องแสง": [
+  "On a moonless night, small stars still shine",
+  "月黑犹有小星明"
  ],
  "คือวัดเด่นแนะนำ": [
   "marks recommended temples",
@@ -1438,6 +1522,10 @@
  "คุณกำลังออกจากช่วงยากลำบากไปสู่น่านน้ำที่สงบกว่า": [
   "You're leaving hard times for calmer waters",
   "你正走出困境，驶向更平静的水域"
+ ],
+ "คุณคือชาวราศี": [
+  "You are a",
+  "您是"
  ],
  "คุณดูแลทั้งงาน บ้าน และคนรอบข้างได้อย่างดีเยี่ยม": [
   "You take excellent care of work, home and the people around you",
@@ -1535,6 +1623,14 @@
   "My coupons",
   "我的优惠券"
  ],
+ "คู่ที่": [
+  "Best match:",
+  "最佳配对："
+ ],
+ "คู่ที่เข้ากันดี": [
+  "Best matches",
+  "最佳配对"
+ ],
  "คู่รัก": [
   "The Lovers",
   "恋人"
@@ -1554,6 +1650,14 @@
  "ค่อย ๆ ดีขึ้นจากความพยายาม": [
   "Gradually improving through effort",
   "努力之下逐渐好转"
+ ],
+ "ค่อยค่อยเดินทีละก้าวอย่างตั้งใจ": [
+  "Walk slowly, one mindful step at a time",
+  "徐徐用心步步行"
+ ],
+ "ค่อยค่อยเดินทีละนิดอย่างเรื่อยเรื่อย": [
+  "Step by step, little by little, steady on",
+  "一步一步缓缓行"
  ],
  "ค่อยเป็นค่อยไป หาจุดสมดุลแล้วทุกอย่างลงตัว": [
   "Take it step by step; find balance and all falls into place",
@@ -1607,6 +1711,10 @@
   "Small hiccups at work — check details before submitting",
   "工作略有波折，提交前请检查细节"
  ],
+ "งานมีทั้งเรื่องง่ายและเรื่องท้าทาย ตรวจรายละเอียดให้รอบคอบก่อนส่งงาน": [
+  "Work has both easy tasks and challenges; check the details carefully before submitting.",
+  "工作有易有难，提交前务必仔细检查细节。"
+ ],
  "งานยากแต่จะทำให้คุณเก่งขึ้นมาก": [
   "The work is hard but will make you much more skilled",
   "工作虽难，却会让您大有长进"
@@ -1619,9 +1727,21 @@
   "Work is heavy but manageable with good planning",
   "工作繁重，但规划得当便能顺利"
  ],
+ "งานอาจมีอุปสรรคหรือคนไม่เข้าใจ ใจเย็นและอธิบายให้ชัดแล้วจะผ่านไปได้": [
+  "Work may meet obstacles or misunderstandings; stay calm and explain clearly, and you'll get through.",
+  "工作或遇阻碍或不被理解，保持冷静、说明清楚，就能顺利度过。"
+ ],
  "งานเดินหน้าได้ดี เหมาะเสนอไอเดียหรือเริ่มโปรเจกต์ใหม่": [
   "Work moves forward well — good for pitching ideas or new projects",
   "工作进展顺利，适合提出想法或启动新项目"
+ ],
+ "งานเดินหน้าไปได้ด้วยดี ถ้าตั้งใจและรักษามาตรฐานไว้ จะมีคนเห็นความสามารถ": [
+  "Work is moving forward well; stay committed and keep your standards, and your abilities will be noticed.",
+  "工作进展顺利，只要用心并保持水准，你的能力会被看见。"
+ ],
+ "งานเด่นมาก มีโอกาสใหม่หรือผู้ใหญ่ชื่นชมผลงาน เหมาะเสนอไอเดียหรือเริ่มโปรเจกต์ที่ตั้งใจไว้": [
+  "Work shines brightly, with new opportunities or praise from superiors; a great time to pitch ideas or start the project you've planned.",
+  "工作表现出色，有新机会或获上级赏识，适合提出想法或启动筹划已久的项目。"
  ],
  "จลวอใ็": [
   "จลวอใ็",
@@ -1671,6 +1791,10 @@
   "Good news or a long-awaited contact will arrive",
   "将收到好消息或期待已久的联络"
  ],
+ "จะได้พบทางออกอย่างงดงาม": [
+  "A graceful way out will soon be found",
+  "终将寻得美好路"
+ ],
  "จักรพรรดิ": [
   "The Emperor",
   "皇帝"
@@ -1686,6 +1810,10 @@
  "จังหวะชีวิตเปลี่ยนเป็นทางดี มีโชคเข้ามา": [
   "Life turns for the better; luck is coming",
   "人生节奏好转，好运降临"
+ ],
+ "จังหวะดีสำหรับการเริ่มงานใหม่ สมัครงาน หรือเจรจาสิ่งที่รอมานาน": [
+  "A good moment to start a new job, apply for work, or negotiate what you've long waited for.",
+  "适合开始新工作、求职，或洽谈期待已久的事。"
  ],
  "จัดกลุ่มตัวอักษรตามวันเกิดเป็น บริวาร อายุ เดช ศรี มูละ อุตสาหะ มนตรี และกาลกิณี แล้วเลือกอักษรมงคลมาตั้งชื่อ": [
   "Letters are grouped by your day of birth into Boriwan, Ayu, Det, Si, Mula, Utsaha, Montri and Kalakini, then auspicious letters are chosen for the name",
@@ -1731,6 +1859,10 @@
   "The waning moon slowly fades, then returns full once more",
   "残月渐隐，终将再度圆满"
  ],
+ "จันทร์เต็มดวงส่องทางกลางนภา": [
+  "The full moon lights the path across the sky",
+  "满月当空照前程"
+ ],
  "จากแฟ้มดวงของคุณ": [
   "From your Fortune File",
   "来自你的命理档案"
@@ -1754,6 +1886,10 @@
  "จีน": [
   "China",
   "中国"
+ ],
+ "จึงเด่นเป็นพิเศษ ใช้จุดแข็งนี้นำทางได้เต็มที่": [
+  "is especially strong. Let this strength guide you",
+  "的能量格外突出，尽情发挥这一优势"
  ],
  "จื่อเวย": [
   "Zi Wei",
@@ -1907,6 +2043,10 @@
   "Life is out of balance; some things are too much, others too little",
   "生活正在失衡，有些事过多，有些事过少"
  ],
+ "ชีวิตจริงก็เป็นเช่นนั้นหนา": [
+  "Such is the way of real life, after all",
+  "人生本来就如此"
+ ],
  "ชื่อ": [
   "Name",
   "姓名"
@@ -1934,6 +2074,10 @@
  "ชื่อ-นามสกุลผู้รับบุญ": [
   "Full name of merit recipient",
   "功德受益人姓名"
+ ],
+ "ชื่อกระเดื่องมีคนรักทุกทิศทาง": [
+  "Your name is known and loved in every direction",
+  "名声远播八方爱"
  ],
  "ชื่อของคุณมีพลังของ": [
   "Your name carries the energy of",
@@ -1995,6 +2139,18 @@
   "A downturn is only temporary; don't fight the current, wait for the right moment",
   "低谷只是暂时的，不要逆流而行，等待合适的时机"
  ],
+ "ช่วงนี้ควรระวังเป็นพิเศษ ทั้งคำพูด การเงิน และการตัดสินใจ ถอยมาตั้งหลักสักนิด ทำบุญและดูแลใจตัวเองให้ดี แล้วเคราะห์จะเบาบางลง": [
+  "Be especially careful now with words, money and decisions. Step back to regroup, make merit and look after your heart, and misfortune will ease.",
+  "此时需特别谨慎言辞、财务与决定。稍作退让重整旗鼓，行善积德、照顾好自己的内心，厄运便会减轻。"
+ ],
+ "ช่วงนี้ดวงขึ้นลงเป็นจังหวะ มีทั้งเรื่องดีและบททดสอบให้เรียนรู้ อย่ารีบร้อนตัดสินใจ ค่อย ๆ ทำทีละเรื่อง แล้วทางที่ใช่จะชัดเจนขึ้นเอง": [
+  "Your fortune rises and falls in rhythm, with good news and lessons to learn. Don’t rush decisions; take things one at a time and the right path will become clear.",
+  "运势起伏有序，有好事也有考验。不要急于决定，一件一件慢慢来，正确的道路自会清晰。"
+ ],
+ "ช่วงนี้ดูแลใจตัวเองให้ดี ไม่จำเป็นต้องพิสูจน์อะไรกับใคร": [
+  "Take good care of your heart for now; you don't need to prove anything to anyone.",
+  "这段时间好好照顾自己的内心，不必向任何人证明什么。"
+ ],
  "ช่วงนี้ต้องใช้ความอดทน เลี่ยงการตัดสินใจเรื่องใหญ่ตอนอารมณ์ไม่นิ่ง": [
   "Patience is needed now; avoid big decisions when your emotions are unsettled",
   "此时需要耐心，情绪不稳时避免做重大决定"
@@ -2007,9 +2163,25 @@
   "This period may feel quiet, but it's a good time to lay foundations",
   "这段时间或许冷清，却是打基础的好时机"
  ],
+ "ช่วงนี้อาจรู้สึกว่างานเดินช้า ให้ทำเรื่องที่ค้างให้เสร็จทีละเรื่อง แล้วจะเห็นทางไปต่อ": [
+  "Work may feel slow lately; finish pending tasks one at a time and the way forward will appear.",
+  "近来工作或许感觉缓慢，把手头未完成的事逐一做完，就会看见前路。"
+ ],
+ "ช่วงนี้เป็นจังหวะทองของคุณ สิ่งที่ตั้งใจไว้มีโอกาสสำเร็จสูง กล้าลงมือและรักษาความตั้งใจไว้ให้มั่น แล้วโชคดีจะตามมาไม่ขาดสาย": [
+  "This is your golden moment. What you set out to do has a high chance of success. Act boldly and hold firm, and good luck will keep coming.",
+  "此时正是您的黄金时机，心中所愿极有可能实现。勇敢行动、坚守初心，好运将源源不断。"
+ ],
  "ช่วงนี้เป็นจังหวะเริ่มต้นที่ดี สิ่งที่ตั้งใจมีโอกาสสำเร็จสูง": [
   "This is a good time to begin; what you intend has a high chance of success",
   "此时是开始的好时机，心中所愿极有可能成功"
+ ],
+ "ช่วงนี้เหมาะทบทวนและพัฒนาตัวเอง มากกว่าเริ่มสิ่งใหม่": [
+  "Now is better for reflecting and self-improvement than for starting something new.",
+  "这段时间适合反省与提升自我，而非开始新事物。"
+ ],
+ "ช่วงนี้ใช้จ่ายเท่าที่จำเป็น และระวังมิจฉาชีพหรือข้อเสนอที่ดีเกินจริง": [
+  "Spend only on what's necessary, and beware of scams or offers that seem too good to be true.",
+  "这段时间只花必要的钱，并提防诈骗或好得不真实的提议。"
  ],
  "ช่วงนี้ไพ่": [
   "Right now the cards",
@@ -2055,6 +2227,10 @@
   "Talkative, clever, adaptable, curious",
   "健谈、聪明、适应力强、好奇心旺盛"
  ],
+ "ช้าลงอีกนิด ทบทวนสิ่งที่ผ่านมา แล้วเลือกเฉพาะเรื่องที่สำคัญจริง ๆ": [
+  "Slow down a little, reflect on the past, and focus only on what truly matters",
+  "放慢脚步，回顾过去，只专注于真正重要的事"
+ ],
  "ซศสีื๊": [
   "ซศสีื๊",
   "ซศสีื๊"
@@ -2083,9 +2259,29 @@
   "ฏฐไ์",
   "ฏฐไ์"
  ],
+ "ดวง": [
+  "Luck in",
+  "运势"
+ ],
+ "ดวงกลาง ๆ": [
+  "Fair fortune",
+  "运势平平"
+ ],
+ "ดวงการงาน": [
+  "Career luck",
+  "事业运"
+ ],
+ "ดวงการเงิน": [
+  "Money luck",
+  "财运"
+ ],
  "ดวงการเงินปีนี้": [
   "My finances this year",
   "今年财运"
+ ],
+ "ดวงกำลังขึ้นสูง ทั้งงาน เงิน และความรักมีแรงหนุน ใช้โอกาสนี้เริ่มสิ่งใหม่ และแบ่งปันความสุขให้คนรอบตัว ความดีจะย้อนกลับมาหาคุณ": [
+  "Your fortune is rising, with support in work, money and love. Use this chance to start something new and share your joy; kindness will return to you.",
+  "运势正旺，事业、财运与爱情皆有助力。把握机会开启新事物，并与身边人分享喜悦，善意终将回到您身边。"
  ],
  "ดวงของ": [
   "Fortune of",
@@ -2119,6 +2315,10 @@
   "Chinese astrology: BaZi / Zi Wei Dou Shu",
   "中国命理：八字 / 紫微斗数"
  ],
+ "ดวงช่วงนี้ค่อนข้างราบรื่น อาจมีเรื่องให้คิดบ้างแต่ไม่หนักหนา ใช้สติและความอดทนนำทาง แล้วทุกอย่างจะลงตัวอย่างที่หวัง": [
+  "Things are fairly smooth right now. There may be a few things to think over, but nothing heavy. Let mindfulness and patience guide you and everything will fall into place.",
+  "近期运势较为顺遂，偶有需要思考之事但不严重。以理智与耐心为指引，一切终将如愿。"
+ ],
  "ดวงดาว": [
   "The Star",
   "星星"
@@ -2126,6 +2326,10 @@
  "ดวงดาวรอคุณอยู่": [
   "The stars await you",
   "星辰在等你"
+ ],
+ "ดวงดี": [
+  "Good fortune",
+  "运势佳"
  ],
  "ดวงทั้งครอบครัว / กลุ่ม": [
   "Family / group fortune",
@@ -2138,6 +2342,14 @@
  "ดวงฟรี · ต้อนรับสมาชิกใหม่": [
   "Free reading · welcome gift for new members",
   "免费算命 · 新会员见面礼"
+ ],
+ "ดวงฟรีต้อนรับสมาชิกใหม่": [
+  "Free welcome reading",
+  "新会员欢迎免费算命"
+ ],
+ "ดวงยังมีอุปสรรคให้ฝ่า แต่ทุกเรื่องมีทางออกเสมอ อดทนและไม่หุนหัน ขอความช่วยเหลือจากคนที่ไว้ใจ แล้วฟ้าจะกลับมาสดใสอีกครั้ง": [
+  "There are still obstacles to overcome, but every problem has a way out. Be patient, don’t act rashly, and ask trusted people for help; the sky will clear again.",
+  "仍有障碍需要跨越，但凡事总有出路。保持耐心、切勿冲动，向信任的人求助，天空终会再次放晴。"
  ],
  "ดวงวันนี้": [
   "Today's fortune",
@@ -2159,17 +2371,41 @@
   "Korean Four Pillars, using birth year, month, day and hour to read personality, life rhythms and compatibility between two people",
   "韩国四柱，以出生年、月、日、时解读性格、人生节奏与两人的契合度"
  ],
+ "ดวงอยู่ในช่วงทรงตัว เหมาะกับการเตรียมพร้อมมากกว่าการเสี่ยง ดูแลใจให้นิ่งและเก็บแรงไว้ อีกไม่นานจังหวะดีจะเวียนมาถึง": [
+  "Your fortune is holding steady, better for preparing than for taking risks. Keep your heart calm and save your energy; good timing will come around soon.",
+  "运势平稳，宜做准备不宜冒险。保持内心平静、养精蓄锐，好时机很快就会到来。"
+ ],
  "ดวงอาทิตย์": [
   "The Sun",
   "太阳"
+ ],
+ "ดวงเด่นมาก": [
+  "Excellent fortune",
+  "运势极佳"
+ ],
+ "ดวงโดยรวม": [
+  "Overall fortune",
+  "整体运势"
  ],
  "ดอกบัวยังตูม รอแสงอรุณ": [
   "The lotus is still in bud, waiting for the dawn",
   "莲花含苞，静待晨曦"
  ],
+ "ดั่งดอกไม้บานรับแสงตะวัน": [
+  "Like flowers blooming to greet the sun",
+  "如花迎日正盛开"
+ ],
  "ดาบ": [
   "Swords",
   "宝剑"
+ ],
+ "ดาวดวงน้อยส่องทางให้ก้าวไป": [
+  "A little star lights the way ahead",
+  "小星照路引前行"
+ ],
+ "ดาวเรียงกันส่องนำทุกย่างก้าว": [
+  "Stars align to guide your every step",
+  "群星连珠引步程"
  ],
  "ดาวเหนือนิ่งกลางฟ้า ชี้ทางผู้เดินทาง": [
   "The North Star stands still in the sky, guiding the traveller",
@@ -2343,6 +2579,10 @@
   "See how your current first name and surname support or clash with your birth date",
   "看看您现在的姓名与生日是相辅还是相冲"
  ],
+ "ดูสถานการณ์ตอนนี้และทิศทางข้างหน้า": [
+  "See where you are now and the road ahead",
+  "看清现状与未来方向"
+ ],
  "ดูสถานะและคำตอบได้ที่ “ประวัติการดูดวง” ในหน้าบัญชี": [
   "See status and answers in “reading history” on your account page",
   "可在账户页面的“算命记录”查看进度和回复"
@@ -2379,9 +2619,17 @@
   "Take care of your health and rest well",
   "注意健康，充分休息"
  ],
+ "ดูแลเรื่องอาหารการกินให้ตรงเวลา ร่างกายจะกลับมาสดใส": [
+  "Keep regular mealtimes, and your body will regain its vitality.",
+  "注意按时饮食，身体便会恢复活力。"
+ ],
  "ดูโหงวเฮ้ง": [
   "Face Reading",
   "面相"
+ ],
+ "ดูใบผลดวง · บันทึกเป็นรูป": [
+  "View fortune slip · save as image",
+  "查看运势单 · 保存为图片"
  ],
  "ดูไพ่ทาโรต์": [
   "Tarot Reading",
@@ -2406,6 +2654,10 @@
  "ตราด": [
   "Trat",
   "达叻"
+ ],
+ "ตอนนี้ · กำลังจะเกิด · ผลลัพธ์": [
+  "Now · What’s coming · Outcome",
+  "现在 · 即将发生 · 结果"
  ],
  "ตอนนี้มีคนถามเยอะมาก รอสักครู่แล้วลองใหม่นะคะ": [
   "Lots of people are asking right now — please wait a moment and try again.",
@@ -2450,6 +2702,10 @@
  "ตัวคุณ": [
   "You",
   "你自己"
+ ],
+ "ตัวตนของคุณ": [
+  "Who you are",
+  "您的个性"
  ],
  "ตัวเลือก 3 วันหรือช่วงเวลา พร้อมเหตุผลและเงื่อนไขของแต่ละช่วง": [
   "3 date or time options, with the reasons and conditions for each",
@@ -2506,6 +2762,10 @@
  "ตั้งหรือเปลี่ยนชื่อตามทักษาให้เข้ากับวันเกิด": [
   "Choose or change a name by Taksa to suit your day of birth",
   "依泰式八宫取名或改名，与出生星期相合"
+ ],
+ "ตั้งใจทำงานไปไม่ช้าไม่รวย": [
+  "Work diligently—neither slow nor quickly rich",
+  "勤勉做事不急富"
  ],
  "ตาทิพย์": [
   "Clairvoyance",
@@ -2735,6 +2995,10 @@
   "General",
   "综合"
  ],
+ "ทั้งงานเงินความรักไม่เสื่อมคลาย": [
+  "Work, wealth, and love will never fade",
+  "事业财运情不衰"
+ ],
  "ทั้งหมด": [
   "All",
   "全部"
@@ -2742,6 +3006,10 @@
  "ทั้งหลัง": [
   "Whole house",
   "整栋房屋"
+ ],
+ "ทางข้างหน้ามีทั้งร้อนและเย็น": [
+  "The road ahead holds both heat and cool",
+  "前路有热亦有凉"
  ],
  "ทางตัน · ลังเล · ไม่ยอมมองความจริง": [
   "Deadlock · Indecision · Refusing to see the truth",
@@ -2867,6 +3135,10 @@
   "Who is the merit for?",
   "为谁做功德？"
  ],
+ "ทำบุญไว้ใจสงบในทุกวัน": [
+  "Make merit, and find peace in every day",
+  "行善积德心常安"
+ ],
  "ทำพิธีที่วัดหรือสถานที่จริงตามที่เลือก": [
   "At the real temple or place you chose",
   "在您选择的寺庙或实地进行"
@@ -2930,6 +3202,10 @@
  "ที่อยู่จัดส่ง": [
   "Shipping address",
   "收货地址"
+ ],
+ "ที่ออกมากลับหัว": [
+  "(reversed)",
+  "（逆位）"
  ],
  "ทุกครั้งที่ดูดวง ระบบเก็บข้อมูลและรูปไว้ที่นี่ แล้วนำมารวมเป็นรายงานดวงประจำวันให้อัตโนมัติ": [
   "Every time you get a reading, your details and photos are saved here and automatically combined into your daily horoscope report",
@@ -3010,6 +3286,10 @@
  "ธาตุน้ำ": [
   "Water element",
   "水元素"
+ ],
+ "ธาตุประจำตัวคือธาตุ": [
+  "with the element of",
+  "元素为"
  ],
  "ธาตุลม": [
   "Air element",
@@ -3143,6 +3423,10 @@
   "Personality",
   "性格本质"
  ],
+ "นิสัยเด่น": [
+  "Key traits",
+  "突出性格"
+ ],
  "นิสัยเด่นของคุณ": [
   "Your standout traits",
   "你的突出性格"
@@ -3216,8 +3500,8 @@
   "祭祀仪式"
  ],
  "บอกว่า": [
-  "says",
-  "说"
+  "says:",
+  "表示："
  ],
  "บัญชี": [
   "Account",
@@ -3239,6 +3523,14 @@
   "Photo saved to your Fortune File",
   "照片已保存到命理档案"
  ],
+ "บันทึกรูปใบผลดวง": [
+  "Save fortune slip",
+  "保存运势单"
+ ],
+ "บันทึกรูปใบผลดวงแล้ว": [
+  "Fortune slip saved",
+  "运势单已保存"
+ ],
  "บาดแผลกำลังสมานตัว ค่อย ๆ ปล่อยความเจ็บปวดไป": [
   "Wounds are healing; slowly let the pain go",
   "伤口正在愈合，慢慢放下痛苦"
@@ -3250,6 +3542,10 @@
  "บึงกาฬ": [
   "Bueng Kan",
   "汶甘"
+ ],
+ "บุญเก่ามาหนุนนำให้รุ่งเรือง": [
+  "Past merit lifts you toward prosperity",
+  "前世福德助兴旺"
  ],
  "บุรีรัมย์": [
   "Buriram",
@@ -3519,9 +3815,21 @@
   "Total",
   "总和"
  ],
+ "ผลรวมชื่อ-นามสกุล": [
+  "Name total",
+  "姓名总和"
+ ],
  "ผลรวมที่ได้สะท้อนพลังชื่อในภาพรวม ถ้าอยากวิเคราะห์ละเอียดหรือเปลี่ยนชื่อ ดูแพ็กเกจได้ในหมวดศาสตร์แห่งเลข": [
   "The total reflects your name's overall energy. For detailed analysis or a name change, see packages in the Numerology category",
   "总数反映了名字的整体能量。如需详细分析或改名，请在数字命理分类中查看套餐"
+ ],
+ "ผลลัพธ์": [
+  "Outcome",
+  "结果"
+ ],
+ "ผลลัพธ์สวยงามรออยู่ปลายทาง": [
+  "A beautiful outcome awaits at journey's end",
+  "美好结果在终点"
  ],
  "ผลวิเคราะห์ชื่อพร้อมคำแนะนำ": [
   "Name analysis with advice",
@@ -3599,6 +3907,10 @@
   "The Harmoniser",
   "协调者"
  ],
+ "ผู้รับคำทำนาย": [
+  "For",
+  "求测者"
+ ],
  "ผู้รู้ (ออมเบียซี) จัดเมล็ดพืชเป็นตารางสัญลักษณ์ 16 แบบ แล้วอ่านเพื่อหาสาเหตุของปัญหาและวันมงคล": [
   "A diviner (ombiasy) arranges seeds into a grid of 16 symbols, then reads it to find the cause of problems and auspicious days",
   "智者（ombiasy）将种子排成16种符号的方阵，解读以找出问题根源与吉日"
@@ -3638,6 +3950,10 @@
  "ฝนตกพรำทั้งวัน ปลูกต้นกล้ารอวันงาม": [
   "Drizzle falls all day; plant seedlings and await their beauty",
   "细雨终日，栽下幼苗静待美景"
+ ],
+ "ฝนเพิ่งซาฟ้าใสกลับมาเยือน": [
+  "The rain has eased; clear skies return",
+  "雨歇天晴又重来"
  ],
  "ฝีมือของคุณเป็นที่ยอมรับ การทำงานเป็นทีมจะได้ผลดี": [
   "Your skills are recognised; teamwork will pay off",
@@ -3947,6 +4263,10 @@
   "The power of numbers and letters that shape your life",
   "影响人生的数字与字母能量"
  ],
+ "พลังของไพ่เปิดทางให้ ความตั้งใจและความจริงใจของคุณจะเป็นแม่เหล็กดึงโอกาสดี ๆ เข้ามา": [
+  "The cards open the way. Your determination and sincerity will draw good opportunities to you",
+  "牌面为您开路，您的决心与真诚将吸引好机会到来"
+ ],
  "พลังงานของไพ่โดยรวม": [
   "Overall energy of the cards",
   "牌面整体能量"
@@ -3975,6 +4295,10 @@
   "Creative power · Skill · Taking action",
   "创造力 · 技能 · 付诸行动"
  ],
+ "พลังเต็มเปี่ยม แต่อย่าลืมพักผ่อนให้สมดุลกับงาน": [
+  "Your energy is high, but remember to balance rest with work.",
+  "精力充沛，但别忘了劳逸结合。"
+ ],
  "พลังเต็มเปี่ยมพร้อมลุย การเดินทางหรือเรื่องตื่นเต้นกำลังมา": [
   "Full of energy and ready to go; travel or excitement is coming",
   "精力充沛，蓄势待发，旅行或令人兴奋的事即将到来"
@@ -3994,6 +4318,10 @@
  "พักผ่อนให้พอ ดื่มน้ำเยอะ ๆ ระวังเหนื่อยสะสม": [
   "Get enough rest, drink plenty of water, beware of building fatigue",
   "充分休息，多喝水，小心疲劳累积"
+ ],
+ "พักผ่อนให้มากขึ้น อย่าฝืนตัวเอง ถ้ามีอาการผิดปกติควรปรึกษาแพทย์": [
+  "Rest more and don't push yourself; if you feel unwell, consult a doctor.",
+  "多休息，不要勉强自己；如有不适，应咨询医生。"
  ],
  "พังงา": [
   "Phang Nga",
@@ -4107,6 +4435,14 @@
   "The heavens open a bright path, stars guide across the sky",
   "天开明路，星辰引路于苍穹"
  ],
+ "ฟ้าเปิดทางสว่างกลางใจฝัน": [
+  "Heaven opens a bright path in your dreams",
+  "天开明路照梦心"
+ ],
+ "ฟ้าใสใหม่จะกลับมาให้ชื่นใจ": [
+  "Fresh clear skies will return to cheer you",
+  "晴空重现令心欢"
+ ],
  "ภาค": [
   "Region",
   "地区"
@@ -4154,6 +4490,10 @@
  "ภาพรวมชีวิต": [
   "Life overview",
   "人生整体"
+ ],
+ "ภาพรวมเป็นไปในทางที่ดี มีคนช่วยเหลือและมีโอกาสเข้ามาเรื่อย ๆ ขอเพียงตั้งใจทำสิ่งตรงหน้าให้ดีที่สุด ผลลัพธ์ที่สวยงามจะค่อย ๆ ปรากฏ": [
+  "Overall things are heading in a good direction, with help and opportunities arriving steadily. Just do your best with what’s in front of you and beautiful results will gradually appear.",
+  "整体趋势向好，贵人相助、机会不断。只要用心做好眼前的事，美好的结果会逐渐显现。"
  ],
  "ภาพลวง · ความกังวล · จิตใต้สำนึก": [
   "Illusion · Anxiety · The subconscious",
@@ -4299,17 +4639,33 @@
   "There is competition or disagreement; use it as a push to grow stronger",
   "存在竞争或意见分歧，把它当作变得更强的动力"
  ],
+ "มีข่าวดีเรื่องเงิน ทั้งจากงานประจำและงานเสริม": [
+  "Good news about money, from both your main job and side work.",
+  "财运有好消息，来自正职与副业。"
+ ],
  "มีคนคุย": [
   "Seeing someone",
   "有暧昧对象"
+ ],
+ "มีคนพาคนช่วยไม่เดียวดาย": [
+  "Others guide and help; you are not alone",
+  "有人引路不孤单"
  ],
  "มีคนแนะนำเรื่องเงินที่เป็นประโยชน์": [
   "Someone gives you useful financial advice",
   "有人给你有益的理财建议"
  ],
+ "มีคนแอบชื่นชมอยู่ใกล้ตัว ความสัมพันธ์ที่มีอยู่จะลึกซึ้งขึ้น": [
+  "Someone nearby secretly admires you; your current relationship will deepen.",
+  "身边有人暗中欣赏你，现有的关系会更加深厚。"
+ ],
  "มีความชัดเจนในเส้นทางอาชีพ": [
   "Clarity in your career path",
   "职业方向清晰明确"
+ ],
+ "มีงานเข้ามาให้ทำต่อเนื่อง ทีมงานช่วยกันดี ควรวางแผนให้ชัดแล้วงานจะราบรื่น": [
+  "Work keeps coming in and the team cooperates well; plan clearly and things will run smoothly.",
+  "工作接连不断，团队合作良好；规划清楚，工作便会顺利。"
  ],
  "มีช่วงคิดต่างบ้าง ทำกิจกรรมร่วมกันจะช่วยให้ใกล้กันขึ้น": [
   "You'll sometimes see things differently; doing activities together brings you closer",
@@ -4343,6 +4699,10 @@
   "Energetic, driven to succeed, good with money and management",
   "精力充沛、追求成功、擅长理财与管理"
  ],
+ "มีรายได้เพิ่มเล็ก ๆ น้อย ๆ จากความขยัน ใช้เงินอย่างมีสติแล้วจะเหลือเก็บ": [
+  "Diligence brings a little extra income; spend mindfully and you'll have some to save.",
+  "勤奋带来些许额外收入，理性消费便能有所结余。"
+ ],
  "มีรูปล่าสุด": [
   "Latest photo available",
   "有最新照片"
@@ -4375,6 +4735,10 @@
   "Intro page only",
   "仅有介绍页"
  ],
+ "มีเพื่อนเตือนมีมือยื่นมาช่วย": [
+  "Friends warn you, and hands reach out to help",
+  "友人提醒伸援手"
+ ],
  "มีเรื่องติดขัดเล็กน้อย ตรวจงานให้รอบคอบ": [
   "Minor hitches — review your work carefully",
   "有些小阻滞，仔细检查工作"
@@ -4382,6 +4746,10 @@
  "มีเรื่องมงคลและความสำเร็จที่น่าภาคภูมิใจ": [
   "Auspicious events and achievements to be proud of",
   "有喜事临门，成就令人自豪"
+ ],
+ "มีเรื่องให้ตัดสินใจ ฟังความเห็นคนรอบตัวก่อน แล้วค่อยเลือกทางที่มั่นคง": [
+  "A decision awaits; hear the views of those around you first, then choose the steady path.",
+  "有事需要决定，先听听身边人的意见，再选择稳妥的道路。"
  ],
  "มีแฟน": [
   "In a relationship",
@@ -4471,6 +4839,10 @@
   "remains the main energy of this period",
   "仍是这段时间的主要能量"
  ],
+ "ยังไม่ควรลงทุนก้อนใหญ่ ให้ศึกษาข้อมูลเพิ่มก่อน": [
+  "Hold off on large investments for now; research more first.",
+  "暂不宜大额投资，先多了解信息。"
+ ],
  "ยังไม่ถึงเวลาเปลี่ยนงาน สะสมประสบการณ์ไปก่อน": [
   "Not yet the time to change jobs — keep building experience",
   "还不是换工作的时候，先积累经验"
@@ -4530,6 +4902,10 @@
  "ยังไม่เปิดรับ": [
   "Not taking bookings",
   "暂不接受预约"
+ ],
+ "ยังไม่ได้กรอกนามสกุล เพิ่มได้ที่หน้าบัญชี": [
+  "No surname yet. Add it in your account",
+  "尚未填写姓氏，可在账户中添加"
  ],
  "ยังไม่ได้กรอกรหัสทดลองใช้ AI": [
   "No AI trial code entered yet",
@@ -4631,6 +5007,10 @@
   "Moving house",
   "搬家"
  ],
+ "รดน้ำใจดูแลอย่างใส่ใจ": [
+  "Water it with kindness and tend it with care",
+  "以心浇灌细呵护"
+ ],
  "รถศึก": [
   "The Chariot",
   "战车"
@@ -4695,6 +5075,10 @@
   "The bell rings clear — good news from afar",
   "钟声悠扬，远方传来好消息"
  ],
+ "ระดับ": [
+  "level",
+  "等级"
+ ],
  "ระบบทดสอบ: ใช้รหัส": [
   "Test system: use code",
   "测试系统：使用验证码"
@@ -4731,6 +5115,10 @@
   "Caution",
   "注意"
  ],
+ "ระวังการตัดสินใจตอนอารมณ์ไม่นิ่ง และคำพูดที่อาจทำให้คนใกล้ตัวเข้าใจผิด": [
+  "Avoid decisions when your mood is unsettled, and words that may be misunderstood by those close to you",
+  "避免在情绪不稳时做决定，注意言辞以免亲近的人误会"
+ ],
  "ระวังการลงทุนที่ดูดีเกินจริง": [
   "Beware of investments that look too good to be true",
   "小心好得令人难以置信的投资"
@@ -4738,6 +5126,10 @@
  "ระวังการหลอกลวง หรือคุณเองกำลังหลบเลี่ยงบางอย่าง": [
   "Beware of deception, or you yourself may be avoiding something",
   "小心欺骗，或者你自己正在逃避某些事"
+ ],
+ "ระวังการให้ยืมเงินหรือลงทุนที่เสี่ยง เก็บเงินไว้กับตัวจะปลอดภัยกว่า": [
+  "Be careful lending money or making risky investments; keeping your money close is safer.",
+  "谨慎借钱给人或进行高风险投资，把钱留在身边更安全。"
  ],
  "ระวังของหายหรือถูกหลอก": [
   "Beware of losing things or being deceived",
@@ -4755,6 +5147,10 @@
   "Beware of mistakes from carelessness",
   "小心因粗心而犯错"
  ],
+ "ระวังความผิดพลาดเล็ก ๆ และคำพูดในที่ทำงาน ยังไม่ควรเปลี่ยนงานหรือเสี่ยงช่วงนี้": [
+  "Watch out for small mistakes and your words at work; avoid changing jobs or taking risks for now.",
+  "留意工作中的小失误和言辞，这段时间暂不宜换工作或冒险。"
+ ],
  "ระวังความหยิ่ง หรือรู้สึกว่าความพยายามไม่มีใครเห็น": [
   "Beware of arrogance, or feeling that your efforts go unseen",
   "小心骄傲，或觉得自己的努力无人看见"
@@ -4766,6 +5162,10 @@
  "ระวังความเผด็จการหรือการยึดติดกับกฎจนเกินไป ลองยืดหยุ่นบ้าง": [
   "Beware of being too authoritarian or rigid about rules; try to be more flexible",
   "小心过于专制或死守规则，试着灵活一些"
+ ],
+ "ระวังความเหนื่อยสะสม พักสายตาและยืดเส้นยืดสายระหว่างวัน": [
+  "Beware of accumulated fatigue; rest your eyes and stretch throughout the day.",
+  "小心疲劳累积，白天记得让眼睛休息、伸展筋骨。"
  ],
  "ระวังคำพูดที่อาจทำร้ายใจกัน": [
   "Beware of words that may hurt each other",
@@ -4779,9 +5179,21 @@
   "Beware of insincere sweet talk, or unrealistic daydreams",
   "小心虚情假意的甜言蜜语，或不切实际的幻想"
  ],
+ "ระวังวาจาระวังใจไม่หุนหัน": [
+  "Guard your words and heart; do not act rashly",
+  "慎言慎心莫冲动"
+ ],
  "ระวังสิ่งที่ผูกมัดคุณไว้ ไม่ว่าจะเป็นนิสัย ความสัมพันธ์ หรือความโลภ": [
   "Beware of what binds you, whether habits, relationships or greed",
   "警惕束缚你的东西，无论是习惯、关系还是贪婪"
+ ],
+ "ระวังอารมณ์และคำพูดที่ทำร้ายใจกัน ถ้ามีเรื่องขัดใจ ให้พักก่อนแล้วค่อยคุย": [
+  "Beware of moods and words that hurt; if there's friction, take a break first and talk later.",
+  "小心情绪和伤人的话语；若有不快，先冷静一下再谈。"
+ ],
+ "ระวังอุบัติเหตุเล็ก ๆ และการเดินทาง ใจเย็นและไม่เร่งรีบ": [
+  "Watch out for minor accidents and while traveling; stay calm and don't rush.",
+  "注意小意外与出行安全，保持冷静，不要匆忙。"
  ],
  "ระวังเอกสารและสัญญา อ่านให้ละเอียด": [
   "Be careful with documents and contracts — read them closely",
@@ -4854,6 +5266,18 @@
  "รับเลย": [
   "Claim now",
   "立即领取"
+ ],
+ "รับใบผลดวง": [
+  "Get fortune slip",
+  "领取运势单"
+ ],
+ "รับใบผลดวง · บันทึกเป็นรูป": [
+  "Get fortune slip · save as image",
+  "领取运势单 · 保存为图片"
+ ],
+ "รับใบผลดวงวันนี้ · บันทึกเป็นรูป": [
+  "Get today’s fortune slip · save as image",
+  "领取今日运势单 · 保存为图片"
  ],
  "ราคา": [
   "Price",
@@ -4951,6 +5375,10 @@
   "Good income, with some left to save",
   "收入不错，还有余钱可存"
  ],
+ "รายรับรายจ่ายพอ ๆ กัน เลี่ยงการซื้อของตามอารมณ์ และตรวจสัญญาให้ละเอียด": [
+  "Income and expenses are about even; avoid impulse buying and read contracts carefully.",
+  "收支大致持平，避免冲动消费，并仔细审阅合同。"
+ ],
  "รายละเอียด": [
   "Details",
   "详情"
@@ -5039,6 +5467,10 @@
   "Your zodiac sign and personality",
   "你的星座与性格"
  ],
+ "รุ่งอรุณจะเยือนมาในไม่ช้า": [
+  "The dawn will come before too long",
+  "黎明不久便来临"
+ ],
  "รูป": [
   "Photo",
   "照片"
@@ -5111,6 +5543,10 @@
   "knows you",
   "了解你"
  ],
+ "รู้จักพักรู้จักไปตามเวลา": [
+  "Know when to rest and when to move on",
+  "知停知行顺时节"
+ ],
  "รู้จักศาสตร์นี้": [
   "About this art",
   "了解此命理术"
@@ -5123,9 +5559,17 @@
   "Investing with someone trustworthy brings good results",
   "与可信之人合作投资，收获良好"
  ],
+ "ร่างกายสดชื่น พลังงานดี เหมาะเริ่มออกกำลังกายหรือดูแลตัวเองแบบใหม่": [
+  "You feel refreshed with good energy; a great time to start exercising or a new self-care routine.",
+  "身体清爽、精力充沛，适合开始运动或新的自我保养方式。"
+ ],
  "ร่างกายสดชื่น เหมาะออกกำลังกาย": [
   "Body feels refreshed — good for exercise",
   "身体清爽，适合运动"
+ ],
+ "ร่างกายแข็งแรงดี มีเวลาให้ตัวเองบ้าง ออกไปเดินรับลมจะช่วยเติมพลัง": [
+  "Your body is strong; take some time for yourself—a walk in the breeze will recharge you.",
+  "身体健康，给自己留些时间，出去散步吹吹风可补充能量。"
  ],
  "ร่างกายและใจต้องการพัก หยุดสักครู่เพื่อชาร์จพลัง": [
   "Body and mind need rest; pause for a while to recharge",
@@ -5194,6 +5638,14 @@
  "ลม-ไฟ": [
   "Air-Fire",
   "风-火"
+ ],
+ "ลมดีพัดใบเรือออกจากท่า": [
+  "A fair wind fills the sails from harbor",
+  "好风吹帆出港行"
+ ],
+ "ลมแรงพัดเรือโคลงอย่าเพิ่งออก": [
+  "Strong winds rock the boat—don't set out yet",
+  "风急船摇莫出航"
  ],
  "ลมโชยเย็นใต้ร่มไม้ พักใจให้สบาย": [
   "A cool breeze under the shade of a tree — let your heart rest",
@@ -5879,6 +6331,10 @@
   "A good day for self-reflection and careful decisions",
   "适合自我反省、谨慎决策的一天"
  ],
+ "วันที่": [
+  "Date",
+  "日期"
+ ],
  "วันนี้": [
   "Today",
   "今天"
@@ -5974,6 +6430,14 @@
  "วิธีสะเดาะเคราะห์": [
   "Misfortune-removal method",
   "消灾方式"
+ ],
+ "วิธีเติมพลังธาตุ": [
+  "How to recharge your element:",
+  "补充元素能量："
+ ],
+ "วิธีใช้เลขนำโชค": [
+  "How to use lucky numbers",
+  "幸运数字用法"
  ],
  "วินาที": [
   "seconds",
@@ -6287,6 +6751,10 @@
   "Very bright",
   "非常光明"
  ],
+ "สถานการณ์ตอนนี้": [
+  "Right now",
+  "当前状况"
+ ],
  "สถานการณ์ในที่ทำงานกลับมาดีขึ้น": [
   "Things at work take a turn for the better",
   "工作状况好转"
@@ -6431,6 +6899,10 @@
   "Summary from every science",
   "综合各门命理总结"
  ],
+ "สรุปรวมดวงเรื่องนี้": [
+  "Overall fortune",
+  "整体运势总结"
+ ],
  "สรุปรายการ": [
   "Order summary",
   "订单摘要"
@@ -6442,6 +6914,10 @@
  "สร้างผังดวงจากวัน เวลา และสถานที่เกิด": [
   "Create a birth chart from your date, time and place of birth",
   "依据出生日期、时间和地点绘制星盘"
+ ],
+ "สร้างรูปไม่สำเร็จ ลองกดอีกครั้ง หรือแคปหน้าจอแทนนะคะ": [
+  "Couldn’t create the image. Try again or take a screenshot",
+  "图片生成失败，请重试或截图保存"
  ],
  "สลากเสี่ยงทายที่ศาลเจ้าและวัดในญี่ปุ่น จับฉลากตามหมายเลขแล้วอ่านคำทำนาย มีระดับตั้งแต่โชคดีมาก (ไดคิจิ) จนถึงโชคไม่ดี (เคียว)": [
   "Fortune slips at Japanese shrines and temples: draw a numbered slip and read the prediction, ranging from great blessing (daikichi) to bad luck (kyō)",
@@ -6470,6 +6946,10 @@
  "สอบถามราคา": [
   "Ask for a price",
   "询问价格"
+ ],
+ "สะท้อนรากฐานและครอบครัวที่หนุนหลังคุณ": [
+  "reflects the roots and family that support you",
+  "反映支持您的根基与家庭"
  ],
  "สะเดาะเคราะห์": [
   "Misfortune-Removal Ritual",
@@ -6579,6 +7059,10 @@
   "Order placed",
   "下单成功"
  ],
+ "สายน้ำไหลบางช่วงเชี่ยวบางช่วงนิ่ง": [
+  "The river runs swift in places, still in others",
+  "河水时急时平静"
+ ],
  "สายรุ้งหลังฝน มอบความหวังใหม่": [
   "A rainbow after the rain brings new hope",
   "雨后彩虹，带来新的希望"
@@ -6594,6 +7078,10 @@
  "สำรับไพ่": [
   "Deck",
   "牌组"
+ ],
+ "สำหรับคุณ": [
+  "For",
+  "致"
  ],
  "สำเร็จตามเป้าหมาย มีชื่อเสียงดี": [
   "Goals achieved, with a fine reputation",
@@ -6623,6 +7111,18 @@
   "Auspiciousness and Chinese community heritage",
   "吉祥与华人社区遗产"
  ],
+ "สิ่งดีใหม่รออยู่ข้างหน้านี้": [
+  "New good things are waiting just ahead",
+  "美好新事在前方"
+ ],
+ "สิ่งที่กำลังจะเกิด": [
+  "What’s coming",
+  "即将发生"
+ ],
+ "สิ่งที่ควรระวัง": [
+  "Watch out for",
+  "注意事项"
+ ],
  "สิ่งที่คุณจะได้รับ": [
   "What you'll receive",
   "您将获得"
@@ -6630,6 +7130,10 @@
  "สิ่งที่ติดขัดเป็นเพียงช่วงหนึ่ง ทุกอย่างจะคลี่คลายเมื่อถึงเวลา": [
   "What's stuck is only a phase; everything will resolve in time",
   "受阻只是一时，时机到了一切都会化解"
+ ],
+ "สิ่งที่ลงแรงไปเริ่มเห็นผล มีโอกาสได้รับมอบหมายงานสำคัญ หรือก้าวสู่ตำแหน่งที่ดีขึ้น": [
+  "Your hard work is paying off; you may be given an important assignment or move up to a better position.",
+  "付出的努力开始见效，有机会承担重要任务或晋升更好职位。"
  ],
  "สิ่งที่ลงแรงไว้กำลังเติบโต อดทนรอผลอีกนิด": [
   "What you've invested in is growing; be patient a little longer for results",
@@ -6642,6 +7146,14 @@
  "สิ่งที่ลงแรงไว้เริ่มเห็นผล โอกาสจากที่ไกลกำลังมา": [
   "Your efforts are starting to pay off; opportunities from afar are coming",
   "付出开始见到成效，远方的机会即将到来"
+ ],
+ "สิ่งที่ส่งเสริมคุณ": [
+  "What supports you",
+  "助您之力"
+ ],
+ "สิ่งที่หวังจะสมดั่งใจเรา": [
+  "What you hope for will come true",
+  "所愿之事皆如愿"
  ],
  "สิ่งที่หวังยังไม่ถึงเวลา เตรียมตัวให้พร้อมแล้วรอจังหวะ": [
   "What you hope for hasn't arrived yet — prepare well and wait for the moment",
@@ -6678,6 +7190,10 @@
  "สีที่ควรเลี่ยงในวันสำคัญ": [
   "Colours to avoid on important days",
   "重要日子应避免的颜色"
+ ],
+ "สีนี้คือพลังประจำตัว ใส่แล้วมั่นใจและเป็นตัวเอง": [
+  "this colour is your personal power; wearing it brings confidence",
+  "此颜色是您的本命能量，穿戴后更自信"
  ],
  "สีน้ำตาล": [
   "brown",
@@ -6747,6 +7263,10 @@
   "Colour for wealth",
   "招财色"
  ],
+ "สีเสริมดวง": [
+  "Lucky colour",
+  "幸运色"
+ ],
  "สีเหลือง": [
   "yellow",
   "黄色"
@@ -6774,6 +7294,14 @@
  "สุขภาพ": [
   "health",
   "健康"
+ ],
+ "สุขภาพแข็งแรงทั้งกายและใจ อารมณ์ดีส่งผลให้ทุกเรื่องราบรื่น": [
+  "Healthy in body and mind; a good mood keeps everything running smoothly.",
+  "身心健康，好心情让诸事顺遂。"
+ ],
+ "สุขภาพโดยรวมดี ดื่มน้ำให้พอและนอนให้เป็นเวลา จะสดชื่นตลอดวัน": [
+  "Overall health is good; drink enough water and sleep regularly to stay fresh all day.",
+  "整体健康良好，多喝水、规律作息，全天都会精神饱满。"
  ],
  "สุราษฎร์ธานี": [
   "Surat Thani",
@@ -6918,6 +7446,10 @@
  "หญิง": [
   "Female",
   "女"
+ ],
+ "หนทางนี้มีขวากหนามอยู่ข้างหน้า": [
+  "Thorns lie along this road ahead",
+  "此路前方有荆棘"
  ],
  "หนองคาย": [
   "Nong Khai",
@@ -7251,6 +7783,10 @@
   "Be patient for long-term rewards",
   "耐心等待长期回报"
  ],
+ "อดทนอีกนิดอย่าหวั่นไหว": [
+  "Endure a little more; do not waver",
+  "再忍片刻莫动摇"
+ ],
  "อดีต": [
   "Past",
   "过去"
@@ -7287,6 +7823,10 @@
   "What style of name would you like?",
   "想要什么风格的名字？"
  ],
+ "อยู่ในราศี": [
+  "falls in",
+  "属于"
+ ],
  "อยู่ในหมวด": [
   "In category",
   "所属类别"
@@ -7295,9 +7835,17 @@
   "Don't rush to accept offers — study the details first",
   "不要急于接受提议，先研究细节"
  ],
+ "อย่ารีบร้อนจนมองข้ามรายละเอียดเล็ก ๆ และรักษาสมดุลระหว่างงานกับใจ": [
+  "Don’t rush past small details, and keep a balance between work and heart",
+  "不要急于求成而忽略细节，保持工作与内心的平衡"
+ ],
  "อย่าลืมดูแลตัวเอง คุณอาจให้คนอื่นมากเกินไปจนหมดแรง": [
   "Don't forget to take care of yourself; you may be giving others so much that you're drained",
   "别忘了照顾自己，你可能为他人付出太多而精疲力尽"
+ ],
+ "อย่าหมดแรงอย่าท้อเมื่อยามเหนื่อย": [
+  "Don't lose strength or heart when weary",
+  "疲惫之时莫灰心"
  ],
  "อย่าเก็บคำพูดคนอื่นมาคิดมาก": [
   "Don't take others' words too much to heart",
@@ -7306,6 +7854,14 @@
  "อย่าเพิ่งตัดสินใจจากคำพูดของคนอื่น": [
   "Don't decide based on what others say just yet",
   "先别凭别人的话做决定"
+ ],
+ "อย่าเพิ่งตัดสินใจเรื่องหัวใจตอนอารมณ์ไม่นิ่ง ให้เวลาเป็นตัวช่วย": [
+  "Don't make decisions of the heart while emotions are unsettled; let time help.",
+  "情绪不稳时别急着做感情决定，让时间来帮忙。"
+ ],
+ "อย่าเพิ่งพักความหวังที่ตั้งไว้": [
+  "Do not set aside the hopes you hold",
+  "莫将心愿轻放下"
  ],
  "อย่าใช้อารมณ์คุยเรื่องสำคัญ": [
   "Don't discuss important matters in anger",
@@ -7318,6 +7874,10 @@
  "ออกจากระบบแล้ว แล้วพบกันใหม่": [
   "Logged out — see you again soon",
   "已退出登录，期待再见"
+ ],
+ "ออกมา ถ้าอยากปรับชื่อให้เสริมดวงยิ่งขึ้น ดูแพ็กเกจในหมวดศาสตร์แห่งเลข": [
+  ". To adjust your name for better luck, see the numerology packages",
+  "。若想改名增运，请查看数字命理套餐"
  ],
  "ออกรถ": [
   "New car",
@@ -7359,9 +7919,25 @@
   "Building with a dragon coiled around it",
   "巨龙盘绕的建筑"
  ],
+ "อาจนอนน้อยหรือเครียดได้ง่าย ลองลดกาแฟและเข้านอนให้เร็วขึ้น": [
+  "You may sleep too little or stress easily; try cutting back on coffee and going to bed earlier.",
+  "可能睡眠不足或容易紧张，试着少喝咖啡、早点就寝。"
+ ],
  "อาจมีความเข้าใจผิด พูดกันตรง ๆ แล้วจะดีขึ้น": [
   "There may be a misunderstanding — speak openly and things will improve",
   "可能有误会，坦诚沟通就会好转"
+ ],
+ "อาจมีรายจ่ายที่ไม่ได้คาดไว้ เตรียมเงินสำรองไว้สักหน่อย": [
+  "Unexpected expenses may arise; keep a little emergency fund ready.",
+  "可能有意外开支，准备一些备用金。"
+ ],
+ "อาจมีเงินรั่วไหลจากเรื่องเล็ก ๆ จดรายจ่ายไว้จะช่วยได้มาก": [
+  "Money may leak away on small things; tracking your expenses will help a lot.",
+  "钱可能在小事上流失，记账会很有帮助。"
+ ],
+ "อาจมีเรื่องให้คิดมากในใจ ลองคุยกันเปิดอก อย่าเก็บไว้คนเดียว": [
+  "Something may weigh on your mind; talk openly instead of keeping it to yourself.",
+  "心里可能有些烦恼，试着敞开心扉谈谈，别独自承受。"
  ],
  "อาทิตย์": [
   "Sunday",
@@ -7811,6 +8387,10 @@
   "Almost there",
   "就差一点"
  ],
+ "อีกไม่นานต้นกล้าจะเติบใหญ่": [
+  "Before long the sapling will grow tall",
+  "不久幼苗成大树"
+ ],
  "อีฟา": [
   "Ifá",
   "伊法（Ifá）"
@@ -7987,6 +8567,10 @@
   "Read documents carefully before signing",
   "签字前仔细阅读文件"
  ],
+ "อ่านแล้ว": [
+  "Read",
+  "已解读"
+ ],
  "อ่านไฟล์รูปไม่ได้ ลองรูปอื่นนะคะ": [
   "Couldn't read the image — please try another one.",
   "无法读取图片，请换一张试试。"
@@ -8071,6 +8655,10 @@
   "Born on",
   "出生于"
  ],
+ "เกิดวันที่": [
+  "Born on",
+  "出生日期"
+ ],
  "เกิดวันเดียวกัน จังหวะชีวิตคล้ายกัน": [
   "Born on the same weekday — similar life rhythm",
   "同一天出生，人生节奏相似"
@@ -8094,6 +8682,10 @@
  "เก็บเป็นคูปอง (ใช้ได้": [
   "Save as a coupon (valid for",
   "保存为优惠券（有效期"
+ ],
+ "เก็บแรงไว้รอฟ้าใสกลับมา": [
+  "Save your strength until clear skies return",
+  "养精蓄锐待天晴"
  ],
  "เก็บในแฟ้มดวงแล้ว": [
   "Saved to your Fortune File",
@@ -8207,6 +8799,10 @@
   "Understand the feelings of those around you",
   "体谅身边人的感受"
  ],
+ "เคราะห์ร้ายนั้นจะผ่านพ้นไปด้วยดี": [
+  "Misfortune will pass and all be well",
+  "厄运终将平安过"
+ ],
  "เครื่องราง หินมงคล และของเสริมดวง เลือกสีและแบบตามวันเกิดของคุณ": [
   "Talismans, lucky stones and fortune boosters — colours and styles chosen by your birth day",
   "护身符、开运石与增运小物，依出生日选择颜色和款式"
@@ -8226,6 +8822,10 @@
  "เงินเข้ามือ มีโอกาสได้โชคเล็ก ๆ": [
   "Money comes in — a chance of small windfalls",
   "进账有望，或有小财运"
+ ],
+ "เงินไหลเข้าหลายทาง มีโชคลาภหรือรายได้พิเศษ แบ่งเก็บไว้ส่วนหนึ่งจะดีมาก": [
+  "Money flows in from many sources, with luck or extra income; set some aside and you'll do very well.",
+  "财源多方涌入，有偏财或额外收入，存下一部分会更好。"
  ],
  "เจดีย์บนยอดเขา": [
   "Hilltop stupa",
@@ -8367,6 +8967,10 @@
   "Smooth travels",
   "出行顺利"
  ],
+ "เดินหน้าตามแผนอย่างมั่นใจ ลงมือทำทีละก้าวแล้วผลลัพธ์จะค่อย ๆ ชัดขึ้น": [
+  "Move ahead with your plan confidently. Take it step by step and results will become clear",
+  "按计划自信前进，一步一个脚印，结果会逐渐明朗"
+ ],
  "เด่นที่สุด": [
   "Strongest",
   "最突出"
@@ -8378,6 +8982,10 @@
  "เตรียมและแพ็กสินค้า": [
   "Preparing and packing your order",
   "备货及包装"
+ ],
+ "เติมพลัง": [
+  "Recharge",
+  "补充能量"
  ],
  "เติมพลังด้วยการพูดคุยและเรียนรู้สิ่งใหม่ คู่ที่เข้ากันดีคือราศีธาตุไฟ": [
   "Recharge by talking and learning new things; best matched with Fire signs",
@@ -8531,6 +9139,10 @@
   "Open your banking app and choose Scan QR",
   "打开银行App，选择扫描二维码"
  ],
+ "เปิดใจคุยกันตรง ๆ ความสัมพันธ์จะมั่นคงขึ้นอีกระดับ": [
+  "Talk openly and honestly, and your relationship will grow even stronger.",
+  "坦诚直接地沟通，感情会更上一层楼。"
+ ],
  "เปิดไพ่": [
   "Reveal cards",
   "翻牌"
@@ -8579,9 +9191,17 @@
   "A trine pair — you lift each other up",
   "三合之配，互相扶持"
  ],
+ "เป็นช่วงเหมาะกับการจัดระเบียบการเงินและตั้งเป้าหมายการออม": [
+  "A good time to organize your finances and set savings goals.",
+  "适合整理财务、设定储蓄目标。"
+ ],
  "เป็นพิธีเฉพาะชุมชน ทำโดยผู้ที่ผ่านการบวชเท่านั้น": [
   "A community-specific rite, performed only by initiated practitioners",
   "这是特定社群的仪式，只能由受过入门仪式的人主持"
+ ],
+ "เป็นสีประจำตัว เสริมงานด้วยสี": [
+  "as their personal colour; boost work with",
+  "为本命色，事业宜用"
  ],
  "เป้าหมายใหญ่ต้องใช้เวลา แบ่งเป็นก้าวเล็ก ๆ แล้วจะไปถึง": [
   "Big goals take time — break them into small steps and you'll get there",
@@ -8647,6 +9267,10 @@
   "For entertainment and life guidance",
   "仅供娱乐及人生参考"
  ],
+ "เพื่อความบันเทิงและเป็นแนวทางชีวิต · mohdoo.com": [
+  "For entertainment and life guidance · mohdoo.com",
+  "仅供娱乐与生活参考 · mohdoo.com"
+ ],
  "เพื่อน": [
   "Friend",
   "朋友"
@@ -8667,6 +9291,10 @@
   "Clouds hide the moon for a moment; the wind passes and the moon shines again",
   "乌云暂时遮月，风过月又明"
  ],
+ "เมฆบังจันทร์เพียงครู่ไม่นานนัก": [
+  "Clouds hide the moon, but only for a while",
+  "云遮明月只片刻"
+ ],
  "เมตตา ค้าขายตามความเชื่อ และศิลปกรรม": [
   "Kindness and trade as believed, plus the art",
   "按信仰祈求人缘与生意，并欣赏艺术"
@@ -8683,6 +9311,10 @@
   "Main menu",
   "主菜单"
  ],
+ "เมล็ดพันธุ์ที่หว่านไว้เริ่มผลิใบ": [
+  "The seeds you sowed begin to sprout leaves",
+  "播下种子始发芽"
+ ],
  "เมษ": [
   "Aries",
   "白羊座"
@@ -8690,6 +9322,10 @@
  "เมียนมา": [
   "Myanmar",
   "缅甸"
+ ],
+ "เมื่อดูไพ่ทั้งชุดร่วมกัน": [
+  "Reading all the cards together:",
+  "综合整组牌来看："
  ],
  "เมื่อหมอดูเปิดรับงานในหมวด": [
   "When fortune tellers open bookings in",
@@ -8859,9 +9495,17 @@
   "Licence plate",
   "车牌号"
  ],
+ "เลขที่": [
+  "No.",
+  "编号"
+ ],
  "เลขที่คำสั่งซื้อ": [
   "Order number",
   "订单号"
+ ],
+ "เลขนำโชค": [
+  "Lucky numbers",
+  "幸运数字"
  ],
  "เลขนำโชคประจำตัว": [
   "Personal lucky numbers",
@@ -8891,6 +9535,14 @@
   "Personal auspicious numbers",
   "个人吉祥数字"
  ],
+ "เลขวันเกิด": [
+  "Birthday number",
+  "生日数字"
+ ],
+ "เลขวันเกิดตรงกับเลขเส้นทางชีวิต พลังของเลข": [
+  "Your birthday number matches your life path number, so the power of number",
+  "生日数字与生命数字相同，数字"
+ ],
  "เลขศาสตร์": [
   "Numerology",
   "数字命理"
@@ -8919,9 +9571,21 @@
   "Same number — you see the world the same way",
   "数字相同，看世界的方式一致"
  ],
+ "เลขเสริมดวง": [
+  "Supporting number",
+  "增运数字"
+ ],
+ "เลขเส้นทางชีวิต": [
+  "Life path number",
+  "生命数字"
+ ],
  "เลขเส้นทางชีวิตของคุณคือ": [
   "Your life path number is",
   "你的生命灵数是"
+ ],
+ "เลขเส้นทางชีวิตคือ": [
+  "life path number is",
+  "生命数字为"
  ],
  "เลย": [
   "Loei",
@@ -9047,6 +9711,10 @@
   "Choose a package",
   "选择套餐"
  ],
+ "เลือกใส่ในวันนัดสำคัญเรื่องหัวใจ เสริมเสน่ห์และความอ่อนโยน": [
+  "Wear it on important dates of the heart to boost charm and tenderness",
+  "在重要约会时穿戴，增添魅力与温柔"
+ ],
  "เลือกไพ่": [
   "Choose cards",
   "选牌"
@@ -9095,6 +9763,10 @@
   "Vietnam",
   "越南"
  ],
+ "เสน่ห์แรง คนรอบตัวเอ็นดู คนโสดมีโอกาสพบคนถูกใจ คนมีคู่รักกันหวานชื่น": [
+  "Your charm is strong and others adore you; singles may meet someone special, couples share sweet love.",
+  "魅力十足，身边人喜爱你；单身者有机会遇到心仪之人，有伴侣者甜蜜恩爱。"
+ ],
  "เสน่ห์แรง คนรอบตัวใจดีกับคุณ เหมาะบอกความรู้สึก": [
   "Strong charm — people are kind to you; a good time to confess your feelings",
   "魅力十足，身边人对你友善，适合表白心意"
@@ -9138,6 +9810,10 @@
  "เสริมรักใช้สี": [
   "Boost love with colour",
   "增强爱情运的颜色"
+ ],
+ "เสริมเงินด้วยสี": [
+  "boost money with",
+  "财运宜用"
  ],
  "เสริมเงินใช้สี": [
   "Boost money with colour",
@@ -9198,6 +9874,10 @@
  "เหมาะกับ": [
   "Good for",
   "适合"
+ ],
+ "เหมาะกับกระเป๋าเงิน เคสโทรศัพท์ หรือวันเจรจาเรื่องเงินและค้าขาย": [
+  "Great for wallets, phone cases, or days of money talks and trading",
+  "适合钱包、手机壳，或谈钱做生意的日子"
  ],
  "เหมาะกับการหาหุ้นส่วนหรือทำงานเป็นทีม": [
   "A good time to find partners or work as a team",
@@ -9274,6 +9954,10 @@
  "แจ้งเตือนฉันเมื่อเปิดบริการ": [
   "Notify me when the service opens",
   "服务开放时通知我"
+ ],
+ "แชร์": [
+  "Share",
+  "分享"
  ],
  "แดง": [
   "Red",
@@ -9387,9 +10071,17 @@
   "Read by the AI Seer",
   "AI占卜师已解读"
  ],
+ "แม่หมอกำลังเขียนใบผลดวงของคุณ…": [
+  "The Seer is writing your fortune slip…",
+  "占卜师正在为您书写运势单…"
+ ],
  "แม่ฮ่องสอน": [
   "Mae Hong Son",
   "夜丰颂"
+ ],
+ "แม้ไกลไกลก็ถึงฝั่งฝันได้": [
+  "However far, you'll reach the shore of dreams",
+  "路远终能达梦岸"
  ],
  "แยกราชประสงค์ เขตปทุมวัน กรุงเทพฯ": [
   "Ratchaprasong Intersection, Pathum Wan District, Bangkok",
@@ -9419,6 +10111,10 @@
   "and",
   "和"
  ],
+ "และควรเลี่ยงสี": [
+  "and avoid",
+  "并在重要日子避开"
+ ],
  "แล้ว (ทดสอบ": [
   "sent (test",
   "已发送（测试"
@@ -9426,6 +10122,14 @@
  "แล้ว ดูได้ที่หน้าบัญชี": [
   "already; see it on your account page",
   "了，可在账户页面查看"
+ ],
+ "แล้วชะตาจะคลี่คลายในไม่ช้า": [
+  "And fate will soon untangle itself",
+  "命运不久便舒展"
+ ],
+ "แล้วโชคชะตาจะพาไปถึงฝั่ง": [
+  "And destiny will carry you to shore",
+  "命运终将送彼岸"
  ],
  "แสดงว่าเรื่องนี้เป็นบทเรียนสำคัญหรือจุดเปลี่ยนของชีวิต": [
   "meaning this is an important lesson or a turning point in life",
@@ -9462,6 +10166,10 @@
  "โชคดีมาจากความขยัน สิ่งที่มองหาอยู่ใกล้กว่าที่คิด": [
   "Luck comes from hard work — what you seek is closer than you think",
   "好运来自勤奋，所寻之物比想象中更近"
+ ],
+ "โชคพร่างพราวมาถึงในเร็ววัน": [
+  "Dazzling fortune will arrive very soon",
+  "鸿运灿烂即将至"
  ],
  "โชคลาภ": [
   "Fortune & luck",
@@ -9623,6 +10331,14 @@
   "You're almost at your goal, just a little more; don't give up yet",
   "目标就在眼前，只差一点，先别放弃"
  ],
+ "ใจนิ่งไว้ไม่รีบร้อนรอบคอบ": [
+  "Keep your heart calm, unhurried, and careful",
+  "心静不急细思量"
+ ],
+ "ใจสบายกายก็สบาย หากิจกรรมผ่อนคลายทำบ้างจะดีมาก": [
+  "A relaxed mind brings a relaxed body; some calming activities would do you good.",
+  "心情放松身体也舒畅，做些放松的活动会很好。"
+ ],
  "ใจเย็น ๆ ฟังอีกฝ่ายให้มากขึ้น เลี่ยงคำพูดแรง": [
   "Stay calm, listen more to the other side, avoid harsh words",
   "保持冷静，多听对方说，避免说重话"
@@ -9659,6 +10375,10 @@
   "Overspending, or learning to share",
   "入不敷出，或开始学会分享"
  ],
+ "ใช้ชื่อเต็มในงานสำคัญและเอกสาร เพื่อดึงพลัง": [
+  "Use your full name for important work and documents to bring out the power of",
+  "在重要工作和文件中使用全名，以发挥"
+ ],
  "ใช้ดู": [
   "Used for",
   "用于"
@@ -9678,6 +10398,10 @@
  "ใช้ผังดวงกำเนิดจากวัน เวลา และสถานที่เกิด หรือเทียบผังของสองคน": [
   "Uses a birth chart from your date, time and place of birth, or compares two people's charts",
   "以出生日期、时间和地点排本命盘，或比较两人命盘"
+ ],
+ "ใช้พลังชื่อให้เต็มที่": [
+  "Make the most of your name",
+  "充分发挥姓名能量"
  ],
  "ใช้รหัส": [
   "Use code",
@@ -9706,6 +10430,14 @@
  "ใช้วันเกิดในสัปดาห์ ปีนักษัตร และปฏิทินจันทรคติแบบลาว ใกล้เคียงกับโหราศาสตร์ไทยสายล้านนาและอีสาน นิยมใช้ดูพื้นดวงและหาฤกษ์งานบุญ งานแต่ง ขึ้นบ้านใหม่": [
   "Uses the day of birth, Chinese zodiac and Lao lunar calendar, close to Lanna and Isan Thai astrology; popular for reading core destiny and timing merit ceremonies, weddings and housewarmings",
   "以出生星期、生肖与老挝农历推算，接近泰国兰纳与伊森派占星，常用于看命格及为功德仪式、婚礼、乔迁择吉时"
+ ],
+ "ใช้สี": [
+  "use",
+  "以"
+ ],
+ "ใช้เป็นเลขโปรด ตั้งรหัส เลือกที่นั่ง เบอร์โทร หรือวันนัดสำคัญที่ลงท้ายด้วยเลขเหล่านี้": [
+  "Use them as favourite numbers: passwords, seats, phone numbers, or important dates ending in these digits",
+  "可作为常用数字：密码、座位、电话号码，或以这些数字结尾的重要日期"
  ],
  "ใช้เป็นเลขโปรดของวัน": [
   "Use as your favourite number of the day",
@@ -9747,6 +10479,14 @@
   "Available right after payment",
   "付款后即可使用"
  ],
+ "ในตำแหน่ง": [
+  "in the position of",
+  "位于"
+ ],
+ "ในวันสำคัญ": [
+  "on important days",
+  "（重要日子）"
+ ],
  "ใบ": [
   "cards",
   "张"
@@ -9758,6 +10498,18 @@
  "ใบที่": [
   "Card no.",
   "第"
+ ],
+ "ใบผลดวง": [
+  "Fortune slip",
+  "运势单"
+ ],
+ "ใบผลดวง · FORTUNE RECEIPT": [
+  "FORTUNE RECEIPT",
+  "运势单 · FORTUNE RECEIPT"
+ ],
+ "ใบผลดวง หมอดู.com": [
+  "Mohdoo.com fortune slip",
+  "Mohdoo.com 运势单"
  ],
  "ใบหน้า": [
   "Face",
@@ -9783,6 +10535,10 @@
   "Wear",
   "穿戴"
  ],
+ "ใส่หรือพกในวันประชุม สัมภาษณ์งาน หรือเริ่มโปรเจกต์ใหม่ งานจะราบรื่น": [
+  "Wear or carry it for meetings, interviews or new projects for smooth work",
+  "在会议、面试或新项目时穿戴或携带，工作更顺利"
+ ],
  "ให้ค่าตัวเลขกับตัวอักษรและชุดตัวเลข เช่น ชื่อ เบอร์โทรศัพท์ ทะเบียนรถ แล้วอ่านความหมายของผลรวม": [
   "Assigns numeric values to letters and number sequences such as names, phone numbers and license plates, then reads the meaning of the total",
   "为字母与数字组合（如姓名、电话号码、车牌）赋予数值，再解读总和的含义"
@@ -9803,6 +10559,14 @@
   "Give each other some personal space",
   "给彼此一些私人空间"
  ],
+ "ให้มองเห็นทั้งสุขและบททดสอบ": [
+  "To see both joy and the trials it brings",
+  "苦乐考验皆看清"
+ ],
+ "ให้ร่มเงาให้ผลได้ชื่นชม": [
+  "It gives shade and fruit for all to enjoy",
+  "既予荫凉又结果"
+ ],
  "ให้หมอดูเลือก": [
   "Let the fortune teller choose",
   "由占卜师选择"
@@ -9810,6 +10574,10 @@
  "ให้หมอดูเลือกตามดวง": [
   "Let the fortune teller choose based on your fortune",
   "由占卜师根据你的命理选择"
+ ],
+ "ให้ใจบอกทางเดินอย่างช้าช้า": [
+  "Let your heart guide you, slowly on your way",
+  "随心指路慢慢行"
  ],
  "ได้บนแอปหมอดู.com": [
   "in the Mohdoo.com app",
@@ -9864,7 +10632,7 @@
   "发展不错，只要多倾听并给彼此空间"
  ],
  "ไพ่": [
-  "Card",
+  "The card",
   "牌"
  ],
  "ไพ่ 1 ใบ": [
@@ -9982,6 +10750,10 @@
  "ไพ่ที่สื่อถึงพลังลึกลับและชะตาที่ซ่อนอยู่": [
   "Cards that reveal mystic forces and hidden destiny",
   "揭示神秘力量与隐藏命运的牌"
+ ],
+ "ไพ่ที่เปิดได้": [
+  "Cards drawn",
+  "抽到的牌"
  ],
  "ไพ่ที่เล่าเรื่องราวของพญานาคในทุกใบ": [
   "Cards that tell the story of the Naga in every card",
