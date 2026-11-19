@@ -1,3 +1,5 @@
 .claude/
 .DS_Store
 node_modules/
+# ไฟล์ต้นฉบับภาพ (ไม่ใช้บนเว็บ)
+/*.png
