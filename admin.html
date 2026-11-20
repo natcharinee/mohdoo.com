@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>หลังบ้าน หมอดู.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <!-- เข้าสู่ระบบ: เบอร์ทีมงาน → OTP -->
+  <main class="login" id="login" hidden>
+    <form class="card login-card" id="loginForm">
+      <p class="brand">🔮 หมอดู.com <small>หลังบ้าน</small></p>
+      <h1>เข้าสู่ระบบทีมงาน</h1>
+      <div id="stepPhone">
+        <label>เบอร์โทรศัพท์
+          <span class="phone"><select name="cc"><option value="66">🇹🇭 +66</option><option value="856">🇱🇦 +856</option><option value="95">🇲🇲 +95</option><option value="1">🇺🇸 +1</option></select>
+          <input name="phone" inputmode="tel" placeholder="812345678" autocomplete="tel-national" required></span></label>
+        <button class="btn primary full" type="submit">ขอรหัส OTP</button>
+      </div>
+      <div id="stepCode" hidden>
+        <p class="muted" id="codeTo"></p>
+        <label>รหัส OTP 6 หลัก<input name="code" inputmode="numeric" maxlength="6" autocomplete="one-time-code"></label>
+        <button class="btn primary full" type="submit">เข้าสู่ระบบ</button>
+        <button class="btn ghost full" type="button" id="backPhone">เปลี่ยนเบอร์</button>
+      </div>
+      <p class="err" id="loginErr" hidden></p>
+      <p class="muted small">เฉพาะเบอร์ที่ได้รับสิทธิ์ทีมงาน หมอดู หรือผู้ดูแลระบบ</p>
+    </form>
+  </main>
+
+  <div class="shell" id="shell" hidden>
+    <aside class="side">
+      <p class="brand">🔮 หมอดู.com <small>หลังบ้าน</small></p>
+      <nav id="nav">
+        <a href="#dash" data-v="dash" data-r="staff admin"><i>📊</i>ภาพรวม</a>
+        <a href="#orders" data-v="orders"><i>🧾</i>คำสั่งซื้อ<b class="dot" id="qBadge" hidden></b></a>
+        <a href="#users" data-v="users" data-r="staff admin"><i>👥</i>ลูกค้า</a>
+        <a href="#seers" data-v="seers" data-r="staff admin"><i>🔮</i>หมอดู</a>
+        <a href="#stock" data-v="stock" data-r="staff admin"><i>📦</i>สินค้า</a>
+        <a href="#broadcast" data-v="broadcast" data-r="admin"><i>📣</i>ประกาศ</a>
+        <a href="#settings" data-v="settings" data-r="staff admin"><i>⚙️</i>ตั้งค่าระบบ</a>
+      </nav>
+      <div class="me"><span id="meName"></span><small id="meRole"></small><button class="btn ghost sm" id="logout">ออกจากระบบ</button></div>
+    </aside>
+    <main class="main" id="view"></main>
+  </div>
+  <div class="toast" id="toast" hidden></div>
+  <dialog id="viewer"><img alt=""><video controls></video><button class="btn ghost sm" value="close" onclick="this.closest('dialog').close()">ปิด</button></dialog>
+  <script src="admin.js"></script>
+</body>
+</html>

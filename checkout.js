@@ -112,13 +112,21 @@ const SHIP_FIELDS = [
 // ข้อความหลังส่งข้อมูล + ขั้นตอนติดตามงาน (บริการที่ไม่ใช่หมอดูตอบ)
 const AFTER = {
   merit: { status: 'รับเรื่องแล้ว · เตรียมทำพิธี', title: 'รับเรื่องเรียบร้อย',
-    text: 'ทีมจะทำพิธีให้ภายใน 3 วัน และส่งรูปถ่ายกับวิดีโอยืนยันมาที่ “ประวัติการดูดวง”',
+    text: 'ทีมจะทำพิธีให้ภายใน 3 วัน และส่งรูปถ่ายกับวิดีโอยืนยันมาที่ “ประวัติบริการมงคล” ในหน้าบัญชี',
     steps: ['รับเรื่องและตรวจข้อมูล', 'ทีมทำพิธีที่สถานที่จริง', 'ส่งรูปถ่าย + วิดีโอยืนยัน'] },
   shop: { status: 'รับคำสั่งซื้อ · เตรียมจัดส่ง', title: 'สั่งซื้อเรียบร้อย',
-    text: 'ร้านจะจัดส่งภายใน 3–5 วันทำการ และแจ้งเลขพัสดุใน “ประวัติการดูดวง”',
+    text: 'ร้านจะจัดส่งภายใน 3–5 วันทำการ และแจ้งเลขพัสดุใน “ประวัติการซื้อสินค้า”',
     steps: ['รับคำสั่งซื้อ', 'เตรียมและแพ็กสินค้า', 'จัดส่งพร้อมเลขพัสดุ'] },
 };
 
+// ===== แบ่งงานตามปุ่มเมนู =====
+// 1 ดูดวง (ตามประเภท/ประเทศ) 40 บาท → แม่หมอ AI ตอบทันทีตามศาสตร์ที่เลือก เป็นใบผลดวง บันทึกเป็นรูปได้
+//     (ลายมือ/โหงวเฮ้ง → AI อ่านรูป) · เบอร์ ทะเบียน ชื่อ คู่ ฮวงจุ้ย → AI วิเคราะห์จากข้อมูลที่กรอก
+// 2 หมอดู (seer:…)                 → ส่งคำถามแล้วรอหมอดูท่านนั้นตอบเป็นข้อความ
+// 3 ดูดวงประจำวัน 150 บาท/30 วัน  → ถามแม่หมอ AI ได้ไม่จำกัด + ดวงโดยรวมทุกเช้า
+// 4 มงคล                          → บริการทำแทน (ค่าบริการ + เงินทำบุญ) และวัตถุมงคล (จัดส่งตามที่อยู่)
+const askNow = (s) => !s.link && s.group !== 'merit' && !['palm', 'face'].includes(s.id);
+const ASK_LABEL = 'ถาม 1 เรื่อง · รับใบผลดวงทันที';
 const ASK_FIELDS = [
   { name: 'topic', label: 'เรื่องที่อยากถาม', type: 'select', options: ['การงาน', 'การเงิน', 'ความรัก', 'สุขภาพ', 'การเรียน', 'ครอบครัว', 'อื่น ๆ'] },
   { name: 'question', label: 'คำถามของคุณ', type: 'textarea', required: true, placeholder: 'เล่าสถานการณ์สั้น ๆ แล้วถามสิ่งที่อยากรู้' },
@@ -132,7 +140,7 @@ function itemFromService(id, title) {
   return {
     key: s.id, icon: s.icon, title: title || s.name, sub: s.get,
     tiers: s.prices.map((p) => ({ label: p.label, price: p.price, soon: p.soon || !s.open })),
-    next: s.link ? { kind: 'frame', href: s.link } : { kind: 'form', fields: FORM_FIELDS[s.id] || ASK_FIELDS },
+    next: s.link ? { kind: 'frame', href: s.link } : { kind: 'form', fields: FORM_FIELDS[s.id] || ASK_FIELDS, instant: askNow(s) },
     done: AFTER[s.group],
   };
 }
@@ -148,7 +156,7 @@ function itemFromType(catId, idx) {
     if (it) return it;
   }
   return { key: `${catId}:${idx}`, icon: t.icon, title: t.name, sub: `${c.name} · ${t.desc}`,
-    tiers: [{ label: 'ถาม 1 เรื่อง (ตอบเป็นข้อความ)', price: CATEGORY_PRICE }], next: { kind: 'form', fields: ASK_FIELDS } };
+    tiers: [{ label: ASK_LABEL, price: CATEGORY_PRICE }], next: { kind: 'form', fields: ASK_FIELDS, instant: true } };
 }
 function itemFromHref(href) {
   const page = pageOf(href);
@@ -187,13 +195,16 @@ function startCheckout(item) {
   if (!item) return;
   if (!currentUser()) { requireLogin(() => startCheckout(item)); return; }
   clearInterval(timer);
-  order = { item, tier: item.tiers.findIndex((t) => t.price != null && !t.soon), donation: null };
+  order = { item, tier: item.tiers.findIndex((t) => t.price != null && !t.soon), donation: null, qty: 1, stock: null };
+  // ขั้นที่ 3 ตามประเภท: สินค้า → ยืนยันคำสั่งซื้อ · บริการมงคล → ยืนยันรายการ · ดูดวง → เริ่มดูดวง
+  payPanel.querySelector('.pay-steps li[data-s="3"]').textContent = item.shop ? 'ยืนยันคำสั่งซื้อ' : donates(item) || (item.done && !item.shop) ? 'ยืนยันรายการ' : 'เริ่มดูดวง';
   if (order.tier < 0) { toast('บริการนี้ยังไม่เปิดให้จอง จะแจ้งเตือนเมื่อเปิด ✦'); return; }
   renderSummary();
   openPanel('payPanel');
 }
 function cancelCheckout() {
   clearInterval(timer);
+  if (window.SERVER && order && order.no && !order.paid) srvCancel(order.no);
   closePanel('payPanel');
 }
 
@@ -210,11 +221,13 @@ function renderSummary() {
           <span class="tl">${esc(t.label)}${t.soon ? '<small>เร็ว ๆ นี้</small>' : ''}</span><span class="tp">${t.price == null ? 'สอบถาม' : baht(t.price)}</span></label>`;
       }).join('')}
     </fieldset>
+    ${item.qtyPick ? qtyHTML() : ''}
+    ${item.aiPlan ? aiExpiryHTML() : ''}
     ${placePickerHTML(item)}
     ${donates(item) ? donationHTML() : ''}
     <div class="pay-total"><span>ยอดชำระ</span><b id="payTotal">${baht(orderTotal())}</b></div>
     <button class="btn-gold full" id="toQR">ชำระเงินด้วย QR ›</button>
-    <p class="pay-note">ชำระแล้วจึงเริ่มบริการ · ${item.next.kind === 'form' ? 'ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย' : item.next.kind === 'ai' ? 'ใช้ได้ทันทีหลังชำระ' : 'ขั้นต่อไปเริ่มดูดวงได้ทันที'}</p>`;
+    <p class="pay-note">${item.ship ? 'ชำระแล้วกรอกที่อยู่จัดส่ง · ร้านจัดส่งภายใน 3–5 วันทำการ' : item.shop ? 'ชำระแล้วแจ้งรายละเอียด · ทีมส่งไฟล์ให้ภายใน 24 ชั่วโมง' : donates(item) ? 'ชำระแล้วกรอกข้อมูลสำหรับทำพิธี · ส่งรูปและวิดีโอยืนยันภายใน 3 วัน' : `ชำระแล้วจึงเริ่มบริการ · ${item.next.instant ? 'ขั้นต่อไปพิมพ์คำถาม แล้วรับใบผลดวงตอบคำถามทันที' : item.next.kind === 'form' ? 'ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย' : item.next.kind === 'ai' ? 'ใช้ได้ทันทีหลังชำระ' : 'ขั้นต่อไปเริ่มดูดวงได้ทันที'}`}</p>`;
   $('payBody').querySelectorAll('input[name="ptier"]').forEach((r) => r.addEventListener('change', () => {
     order.tier = +r.value;
     updateTotal();
@@ -222,13 +235,56 @@ function renderSummary() {
   $('toQR').addEventListener('click', renderQR);
   bindPlacePicker(item);
   if (donates(item)) bindDonation();
+  if (item.qtyPick) bindQty(item);
   updateTotal();
 }
 
 // ---------- เงินทำบุญ (บริการมงคล): ยอดชำระ = ค่าบริการทำแทน + เงินทำบุญที่เลือก ----------
 const DONATION_STEPS = [20, 50, 100, 200, 300, 500, 1000];
 const donates = (item) => !!placeField(item);
-const orderTotal = () => (order.item.tiers[order.tier].price || 0) + (order.donation || 0);
+const orderTotal = () => (order.item.tiers[order.tier].price || 0) * (order.qty || 1) + (order.donation || 0);
+// ---------- สมาชิกรายเดือน: บอกวันหมดอายุก่อนจ่าย ----------
+function aiExpiryHTML() {
+  const u = currentUser();
+  const from = aiRenewFrom(u);
+  const renew = from > Date.now() + 60e3;
+  const fmt = (t) => new Date(t).toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
+  return `<div class="pay-expire"><span>📅</span><div>
+      <small>${renew ? 'ต่ออายุจากวันหมดอายุเดิม' : 'เริ่มใช้ได้ทันทีวันนี้'}</small>
+      <b>ใช้ได้ถึง ${fmt(addMonth(from))}</b>
+      <em>${renew ? `สมาชิกเดิมหมดอายุ ${fmt(from)} · ต่อให้อีก 1 เดือน` : `${fmt(from)} – ${fmt(addMonth(from))}`}</em></div></div>`;
+}
+
+// ---------- จำนวนสินค้า (วัตถุมงคล): ไม่เกินสต๊อกที่เหลือ ----------
+const QTY_MAX = 20;
+function qtyHTML() {
+  return `<div class="pay-qty"><div class="qty-lbl"><span>จำนวน</span><small id="qtyLeft"></small></div>
+      <div class="qty-step"><button type="button" data-qty="-1" aria-label="ลดจำนวน">−</button><b id="qtyVal">${order.qty}</b><button type="button" data-qty="1" aria-label="เพิ่มจำนวน">+</button></div></div>`;
+}
+async function bindQty(item) {
+  const max = () => Math.min(QTY_MAX, order.stock == null ? QTY_MAX : order.stock);
+  const paint = () => {
+    $('qtyVal').textContent = order.qty;
+    $('qtyLeft').textContent = order.stock == null ? '' : order.stock === 0 ? 'สินค้าหมด' : `เหลือ ${order.stock} ชิ้น`;
+    $('payBody').querySelector('[data-qty="-1"]').disabled = order.qty <= 1;
+    $('payBody').querySelector('[data-qty="1"]').disabled = order.qty >= max();
+    const btn = $('toQR');
+    if (order.stock === 0) { btn.disabled = true; btn.textContent = 'สินค้าหมดชั่วคราว'; } else if (!donates(item)) { btn.disabled = false; btn.textContent = 'ชำระเงินด้วย QR ›'; }
+    updateTotal();
+  };
+  $('payBody').querySelectorAll('[data-qty]').forEach((b) => b.addEventListener('click', () => {
+    order.qty = Math.max(1, Math.min(max(), order.qty + +b.dataset.qty));
+    paint();
+  }));
+  paint();
+  if (typeof loadShopStock === 'function') {
+    const st = await loadShopStock();
+    if (!$('qtyVal')) return;
+    order.stock = st[item.shopId] ?? null;
+    order.qty = Math.max(1, Math.min(order.qty, max()));
+    paint();
+  }
+}
 function donationHTML() {
   return `<fieldset class="pay-donate"><legend>🙏 จำนวนเงินทำบุญ</legend>
       <div class="pp-row dn-row">
@@ -315,27 +371,45 @@ function bindPlacePicker(item) {
 }
 
 // ขั้นที่ 2: QR สำหรับชำระเงิน
-function renderQR() {
+async function renderQR() {
   const t = order.item.tiers[order.tier];
   if (donates(order.item) && !order.donation) return; // ต้องเลือกจำนวนเงินทำบุญก่อน
-  order.no = `MD${Date.now().toString().slice(-8)}`;
-  order.amount = orderTotal();
-  order.label = order.donation ? `${t.label} + เงินทำบุญ ${baht(order.donation)}` : t.label;
+  // มีระบบหลังบ้าน → เซิร์ฟเวอร์คิดราคาและสร้าง QR PromptPay (หรือ QR ทดลอง)
+  let so = null; // คำสั่งซื้อจากเซิร์ฟเวอร์
+  if (window.SERVER) {
+    const btn = $('toQR');
+    if (btn) { btn.disabled = true; btn.textContent = 'กำลังสร้าง QR…'; }
+    try { ({ order: so } = await srvCreateOrder(order)); } catch (err) {
+      toast(err.message);
+      if (err.status === 401) { cancelCheckout(); requireLogin(() => startCheckout(order.item)); return; }
+      if (err.code === 'out_of_stock') { renderSummary(); return; } // สต๊อกเปลี่ยน → โหลดจำนวนที่เหลือใหม่
+      if (btn) { btn.disabled = false; btn.textContent = 'ชำระเงินด้วย QR ›'; }
+      return;
+    }
+  }
+  order.paid = false;
+  order.no = so ? so.no : `MD${Date.now().toString().slice(-8)}`;
+  order.amount = so ? so.amount : orderTotal();
+  order.label = so ? so.label : order.donation ? `${t.label} + เงินทำบุญ ${baht(order.donation)}` : order.item.qtyPick ? `${order.qty} ชิ้น` : t.label;
+  const demo = !so || so.demo;
   setStep(2, 'สแกนเพื่อชำระเงิน');
   $('payBody').innerHTML = `
     <div class="qr-card">
-      <span class="demo-tag">โหมดทดลอง · ไม่ต้องสแกนจ่ายจริง</span>
+      ${demo ? '<span class="demo-tag">โหมดทดลอง · ไม่ต้องสแกนจ่ายจริง</span>' : '<span class="demo-tag pp-tag">PromptPay · สแกนได้ทุกธนาคาร</span>'}
       <p class="qr-head">สแกนจ่ายผ่านแอปธนาคาร</p>
       <div class="qr-box" id="qrBox"></div>
       <p class="qr-amount">${baht(order.amount)}</p>
-      <p class="qr-meta">${esc(order.item.title)} · ${esc(t.label)}${order.donation ? `<br>ค่าบริการทำแทน ${baht(t.price)} + เงินทำบุญ ${baht(order.donation)}` : ''}<br>เลขที่คำสั่งซื้อ ${order.no}</p>
+      <p class="qr-meta">${esc(order.item.title)} · ${esc(order.item.qtyPick ? `${order.qty} ชิ้น × ${baht(t.price)}` : t.label)}${order.donation ? `<br>ค่าบริการทำแทน ${baht(t.price)} + เงินทำบุญ ${baht(order.donation)}` : ''}<br>เลขที่คำสั่งซื้อ ${order.no}</p>
       <p class="qr-timer">QR หมดอายุใน <b id="qrTime">${ORDER_MINUTES}:00</b></p>
     </div>
     <ol class="qr-how"><li>เปิดแอปธนาคาร แล้วเลือกสแกน QR</li><li>ตรวจยอดเงินให้ตรง แล้วยืนยันการโอน</li><li>กลับมากด “ฉันชำระเงินแล้ว”</li></ol>
-    <button class="btn-gold full" id="paidBtn">ฉันชำระเงินแล้ว <small>(ทดลอง)</small></button>
+    <button class="btn-gold full" id="paidBtn">${demo ? 'ฉันชำระเงินแล้ว <small>(ทดลอง)</small>' : 'ตรวจสอบการชำระเงิน'}</button>
     <button class="btn-ghost full" id="cancelPay">ยกเลิกคำสั่งซื้อ</button>`;
-  drawQR($('qrBox'), `MOHDOO-DEMO|${order.no}|${order.amount}THB|ไม่ใช่การชำระเงินจริง`);
-  let left = ORDER_MINUTES * 60;
+  if (so && so.qr) $('qrBox').innerHTML = `<img src="${esc(so.qr)}" alt="QR PromptPay ${baht(order.amount)}">`;
+  else drawQR($('qrBox'), `MOHDOO-DEMO|${order.no}|${order.amount}THB|ไม่ใช่การชำระเงินจริง`);
+  let left = so && so.expires_at ? Math.max(60, Math.round((so.expires_at - Date.now()) / 1000)) : ORDER_MINUTES * 60;
+  $('qrTime').textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+  if (so && !demo) pollPaid(order.no); // PromptPay จริง: ถามสถานะเป็นระยะ จ่ายแล้วไปต่อเอง
   clearInterval(timer);
   timer = setInterval(() => {
     left -= 1;
@@ -358,21 +432,55 @@ function drawQR(box, text) {
   }
 }
 
-// ตรวจการชำระเงิน (ตัวอย่าง) → สำเร็จ → ขั้นต่อไป
-function confirmPaid() {
+// PromptPay จริง: ถามสถานะทุก 4 วินาทีระหว่างหน้า QR เปิดอยู่
+function pollPaid(no) {
+  clearInterval(pollPaid.t);
+  pollPaid.t = setInterval(async () => {
+    if (!order || order.no !== no || order.paid || !$('qrBox')) { clearInterval(pollPaid.t); return; }
+    try {
+      const r = await srvOrder(no);
+      if (r.order.status !== 'pending') { clearInterval(pollPaid.t); afterServerPaid(r); }
+    } catch (_) {}
+  }, 4000);
+}
+function afterServerPaid(r) {
+  if (['expired', 'cancelled'].includes(r.order.status)) { toast('QR หมดอายุหรือถูกยกเลิก กรุณาสร้างคำสั่งซื้อใหม่'); renderSummary(); return; }
+  order.paid = true;
+  order.aiUntil = r.ai_until;
+  clearInterval(timer);
+  showPaid();
+}
+
+// ตรวจการชำระเงิน → สำเร็จ → ขั้นต่อไป
+async function confirmPaid() {
+  if (window.SERVER) {
+    const btn = $('paidBtn');
+    btn.disabled = true;
+    try {
+      const r = SERVER.pay === 'demo' ? await srvDemoPay(order.no) : await srvOrder(order.no);
+      if (r.order.status === 'pending') { toast('ยังไม่พบการชำระเงิน สแกนจ่ายแล้วรอสักครู่ ระบบจะไปต่อให้เอง'); btn.disabled = false; return; }
+      afterServerPaid(r);
+    } catch (err) { toast(err.message); btn.disabled = false; }
+    return;
+  }
   clearInterval(timer);
   $('payBody').innerHTML = `<div class="pay-wait"><span class="spinner"></span><p>กำลังตรวจสอบการชำระเงิน…</p></div>`;
-  setTimeout(() => {
+  setTimeout(showPaid, 1400);
+}
+function showPaid() {
+  {
     addPayment();
     setStep(3, 'ชำระเงินสำเร็จ');
     const r = payPanel.getBoundingClientRect();
     burst(r.left + r.width / 2, r.top + 200, 50, 200);
     const next = order.item.next;
+    if (order.item.ship) { renderIntake(next.fields); return; } // สินค้า: จ่ายแล้วกรอกที่อยู่จัดส่งต่อทันที
     $('payBody').innerHTML = `
-      <div class="pay-ok"><span class="ok-ring">✓</span><h3>ชำระเงินสำเร็จ</h3><p>${baht(order.amount)} · ${order.no}</p></div>
-      <button class="btn-gold full" id="goNext">${next.kind === 'ai' ? '✦ เริ่มคุยกับหมอดู AI' : next.kind === 'frame' ? '✦ เริ่มดูดวงเลย' : 'กรอกข้อมูลสำหรับการทำนาย ›'}</button>`;
+      <div class="pay-ok"><span class="ok-ring">✓</span><h3>ชำระเงินสำเร็จ</h3><p>${baht(order.amount)} · ${order.no}</p>
+        ${order.item.aiPlan ? `<p class="pay-ok-exp">📅 สมาชิกใช้ได้ถึง <b>${new Date(order.aiUntil || addMonth(aiRenewFrom(currentUser()))).toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' })}</b></p>` : ''}</div>
+      <button class="btn-gold full" id="goNext">${next.kind === 'ai' ? '✦ เริ่มคุยกับหมอดู AI' : next.kind === 'frame' || next.instant ? '✦ เริ่มดูดวงเลย' : order.item.shop ? 'ส่งรายละเอียดคำสั่งซื้อ ›' : donates(order.item) ? 'กรอกข้อมูลสำหรับทำพิธี ›' : 'กรอกข้อมูลสำหรับการทำนาย ›'}</button>`;
     $('goNext').addEventListener('click', proceed);
-  }, 1400);
+  }
 }
 function addPayment() {
   const u = currentUser();
@@ -381,7 +489,7 @@ function addPayment() {
 }
 function proceed() {
   const next = order.item.next;
-  if (next.kind === 'ai') { activateAI(); return; }
+  if (next.kind === 'ai') { activateAI(order.aiUntil); return; }
   if (next.kind === 'frame') {
     closePanel('payPanel');
     const sep = next.href.includes('?') ? '&' : '?';
@@ -395,11 +503,12 @@ function proceed() {
 function renderIntake(fields) {
   const u = currentUser();
   const b = u.birthdate ? new Date(u.birthdate).toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
-  setStep(3, 'กรอกข้อมูลสำหรับการทำนาย');
+  setStep(3, order.item.ship ? 'ที่อยู่จัดส่ง' : order.item.shop ? 'ยืนยันคำสั่งซื้อ' : donates(order.item) ? 'ข้อมูลสำหรับทำพิธี' : order.item.next.instant ? 'ถามคำถามของคุณ' : 'กรอกข้อมูลสำหรับการทำนาย');
   const input = (f) => {
     const req = f.required ? 'required' : '';
     const pre = { fullname: [u.first || u.name, u.last].filter(Boolean).join(' '), phone: localPhone(u.phone) };
-    const val = f.prefill ? esc(pre[f.prefill] ?? u[f.prefill] ?? '') : '';
+    const saved = order.item.ship && (u.shipAddr || {})[f.name]; // ที่อยู่ที่ใช้ครั้งก่อน
+    const val = saved ? esc(saved) : f.prefill ? esc(pre[f.prefill] ?? u[f.prefill] ?? '') : '';
     const extra = `${f.inputmode ? `inputmode="${f.inputmode}"` : ''} ${f.pattern ? `pattern="${f.pattern}"` : ''} ${f.maxlength ? `maxlength="${f.maxlength}"` : ''}`;
     if (f.type === 'textarea') return `<textarea name="${f.name}" rows="3" ${req} placeholder="${esc(f.placeholder || '')}">${val}</textarea>`;
     if (f.type === 'select') {
@@ -416,7 +525,16 @@ function renderIntake(fields) {
     }
     return `<input type="${f.type || 'text'}" name="${f.name}" ${req} ${extra} value="${val}" placeholder="${esc(f.placeholder || '')}" autocomplete="off">`;
   };
-  $('payBody').innerHTML = `
+  const shopHead = order.item.shop ? `
+    <div class="ship-ok"><span class="ok-ring">✓</span><div><b>ชำระเงินสำเร็จ ${baht(order.amount)}</b>
+      <small>${esc(order.item.title)} · ${esc(order.label)} · ${order.no}</small></div></div>
+    <p class="ship-note">${order.item.ship ? '📦 กรอกที่อยู่สำหรับจัดส่ง ร้านจะส่งภายใน 3–5 วันทำการ และแจ้งเลขพัสดุใน “ประวัติการซื้อสินค้า”' : '🖼️ แจ้งรายละเอียดเพิ่มเติม ทีมจะส่งไฟล์ให้ภายใน 24 ชั่วโมง'}</p>` : '';
+  $('payBody').innerHTML = shopHead ? `${shopHead}
+    <form class="form" id="intakeForm">
+      ${fields.map((f) => `<label>${f.label}${f.required ? '' : ' <small>(ไม่บังคับ)</small>'}${input(f)}</label>`).join('')}
+      ${order.item.ship ? '<label class="ship-save"><input type="checkbox" name="saveAddr" checked> จำที่อยู่นี้ไว้ใช้ครั้งต่อไป</label>' : ''}
+      <button class="btn-gold full" type="submit">ยืนยันคำสั่งซื้อ ›</button>
+    </form>` : `
     <div class="intake-me">
       <div><small>ชื่อ</small><b>${esc([u.first || u.name, u.last].filter(Boolean).join(' '))}</b></div>
       <div><small>วันเกิด</small><b>${b || '—'}</b></div>
@@ -428,7 +546,7 @@ function renderIntake(fields) {
       ${u.birthdate ? '' : '<label>วันเกิดของคุณ<input type="date" name="birthdate" required></label>'}
       ${fields.map((f) => `<label>${f.label}${f.required ? '' : ' <small>(ไม่บังคับ)</small>'}${input(f)}</label>`).join('')}
       ${fields.some((f) => f.slot) ? '<p class="pf-note">📷 รูปจะเก็บไว้ใน “แฟ้มดวง” ของคุณ ใช้ดูดวงครั้งต่อไปและรายงานดวงประจำวัน ลบได้ทุกเมื่อในหน้าบัญชี</p>' : ''}
-      <button class="btn-gold full" type="submit">${order.item.done ? 'ยืนยัน ›' : 'ส่งให้หมอดู ›'}</button>
+      <button class="btn-gold full" type="submit">${order.item.next.instant ? '✦ ดูคำตอบเลย' : order.item.done ? 'ยืนยัน ›' : 'ส่งให้หมอดู ›'}</button>
     </form>`;
   $('intakeForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -455,10 +573,38 @@ function renderIntake(fields) {
       data[f.name] = `•••••••••${d.slice(-4)} · ผลรวม ${[...d].reduce((a, b) => a + +b, 0)}`;
     });
     const done = order.item.done;
+    const keepAddr = !!data.saveAddr; // ช่องจำที่อยู่ ไม่ใช่ข้อมูลคำสั่งซื้อ
+    delete data.saveAddr;
     const cur = currentUser();
+    // มีระบบหลังบ้าน → ส่งข้อมูลและรูปให้หมอดู/ทีมงานผ่านเซิร์ฟเวอร์ก่อน
+    if (window.SERVER) {
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      try {
+        await srvIntake(order.no, {
+          form: data, fields: fields.map((f) => [f.name, f.label]),
+          photos: shots.map((s) => ({ slot: s.slot, data: s.src || (cur.photos || {})[s.slot] })).filter((x) => x.data),
+        });
+      } catch (err) { toast(err.message); btn.disabled = false; delete form.dataset.busy; return; }
+    }
     if (data.birthdate) cur.birthdate = data.birthdate;
+    if (order.item.ship) { // จำที่อยู่จัดส่ง (ติ๊กไว้)
+      if (keepAddr) cur.shipAddr = { receiver: data.receiver, tel: data.tel, address: data.address };
+    }
     shots.filter((s) => s.src).forEach((s) => savePhoto(cur, s.slot, s.src, order.item.title));
     if (!saveUserWithPhotos(cur)) { delete form.dataset.busy; return; }
+    // ถามแล้วรู้ผลทันที → บันทึกเป็นประวัติแบบ “ถามดวง” แล้วเปิดใบผลดวงตอบคำถามนั้นเลย
+    if (order.item.next.instant) {
+      // บริการที่กรอกข้อมูล (เบอร์ ชื่อ ทะเบียน ฯลฯ) → ใช้ข้อมูลที่กรอกเป็น “คำถาม” บนใบ
+      const filled = fields.filter((f) => f.name !== 'topic' && f.name !== 'question' && data[f.name] && f.type !== 'file').map((f) => `${f.label}: ${data[f.name]}`);
+      const askId = addHistory({ kind: 'ask', svc: order.item.key, icon: order.item.icon, title: order.item.title,
+        topic: data.topic || 'ภาพรวม', question: data.question || filled.join(' · ').slice(0, 160), data, fields: fields.map((f) => [f.name, f.label]),
+        no: order.no, amount: order.amount, label: order.label });
+      const h = (currentUser().history || []).find((x) => x.id === askId);
+      closePanel('payPanel');
+      if (h) openSlip(h);
+      return;
+    }
     const histId = addHistory({ kind: 'order', svc: order.item.key, donation: order.donation || undefined, icon: order.item.icon, title: order.item.title, status: done ? done.status : 'รอหมอดูตอบ',
       no: order.no, amount: order.amount, label: order.label, data, fields: fields.map((f) => [f.name, f.label]),
       photos: shots.map((s) => s.slot),

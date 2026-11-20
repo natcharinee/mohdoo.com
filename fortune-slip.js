@@ -17,11 +17,42 @@ const TAROT_FILL = {
   ],
 };
 const AREA_ICON = { การงาน: '💼', การเงิน: '💰', ความรัก: '💞', สุขภาพ: '🌿' };
+// ---------- ถามคำถาม (รู้ผลทันที): คำตอบตรงคำถามตามระดับดวง ----------
+const ASK_SCORES = [5, 4, 4, 3, 4, 5, 3, 4, 2, 4];
+const askTopic = (t) => (!t || t === 'อื่น ๆ' || t === 'ภาพรวม' ? 'ที่คุณถาม' : t);
+const ASK_ANSWER = {
+  5: ['ดวงเปิดทางเต็มที่ คำตอบคือ “มีโอกาสสูงมาก” จังหวะนี้ลงมือได้เลย คนรอบตัวพร้อมหนุน และจะเห็นผลชัดภายในหนึ่งถึงสองเดือนนี้',
+    'ฟ้าเปิดให้แล้ว สิ่งที่หวังมีแนวโน้มสำเร็จเกินคาด อย่าลังเลนาน ยิ่งตัดสินใจเร็ว ผลยิ่งออกมาดี โชคดีจะตามมาเป็นลำดับ'],
+  4: ['แนวโน้มเป็นไปในทางดี มีโอกาสสำเร็จมากกว่าครึ่ง ขอแค่เตรียมตัวให้พร้อมและไม่ประมาท ผลลัพธ์จะออกมาน่าพอใจ',
+    'คำตอบคือ “ได้” แต่ต้องใช้ความอดทนอีกหน่อย ช่วงแรกอาจช้า พอผ่านไปสักระยะเรื่องจะคลี่คลายและเป็นไปตามที่หวัง'],
+  3: ['เรื่องนี้ยังก้ำกึ่ง ผลจะออกมาดีหรือไม่ขึ้นกับการตัดสินใจของคุณเอง ค่อย ๆ ดูจังหวะ หาข้อมูลให้รอบด้านก่อนลงมือ',
+    'ดวงช่วงนี้ทรงตัว ยังไม่มีอะไรชี้ขาด แนะนำให้รอดูสัญญาณอีกสักพัก ถ้ามีคนที่ไว้ใจได้ ลองปรึกษาก่อนตัดสินใจ'],
+  2: ['ช่วงนี้ยังไม่ใช่จังหวะที่ดีที่สุด แนะนำให้ชะลอไว้ก่อน ใช้เวลานี้เตรียมตัวให้พร้อม แล้วโอกาสที่ดีกว่าจะมาในไม่ช้า',
+    'มีอุปสรรคเล็ก ๆ ขวางอยู่ ไม่ได้แปลว่าเป็นไปไม่ได้ แต่ต้องใช้ความพยายามมากขึ้น และระวังคำพูดหรือการตัดสินใจที่เร่งรีบ'],
+};
+// บริการวิเคราะห์ข้อมูล (เบอร์ ทะเบียน ชื่อ คู่ ฮวงจุ้ย) ที่ไม่มีคำถาม → คำสรุปแบบผลวิเคราะห์ (ใช้เมื่อ AI ยังไม่พร้อม)
+const ANALYZE_ANSWER = {
+  5: 'ให้พลังดีเด่นมาก ส่งเสริมทั้งการงาน การเงิน และความสัมพันธ์ เหมาะใช้ต่อไปหรือเลือกใช้ได้อย่างมั่นใจ',
+  4: 'โดยรวมให้พลังดี ช่วยหนุนเรื่องการงานและการเงิน มีจุดเล็ก ๆ ที่ควรระวังบ้าง แต่ใช้ต่อได้อย่างสบายใจ',
+  3: 'ให้พลังกลาง ๆ มีทั้งด้านที่หนุนและด้านที่ควรระวัง ถ้ามีตัวเลือกอื่น ลองเทียบดูก่อนตัดสินใจ',
+  2: 'มีจุดที่ยังไม่ค่อยส่งเสริมดวงช่วงนี้ แนะนำให้พิจารณาปรับเปลี่ยน หรือเสริมด้วยสีและเลขมงคลประจำวันเกิด',
+};
+const askAnswer = (h, lv) => {
+  const L = Math.max(2, Math.min(5, lv));
+  if (h.data && !h.data.question) return `${h.title}ของคุณ ${ANALYZE_ANSWER[L]}`;
+  return `เรื่อง${askTopic(h.topic)}ที่ถามมา ${ASK_ANSWER[L][seedOf(h.id) % 2]}`;
+};
 
 // ---------- แปลงประวัติการดูดวง 1 รายการ → ข้อมูลใบผลดวง ----------
 function slipFromEntry(h) {
   const base = { icon: h.icon || '✦', title: h.title, question: h.question || '', at: h.at,
-    no: h.kind === 'order' && h.no ? h.no : `MD-${String(h.id).slice(-6).toUpperCase()}` };
+    no: (h.kind === 'order' || h.kind === 'ask') && h.no ? h.no : `MD-${String(h.id).slice(-6).toUpperCase()}` };
+  if (h.kind === 'ask') {
+    // ถามคำถาม 40 บาท: ระดับดวงคงที่ต่อคำถาม (เปิดดูซ้ำได้ผลเดิม)
+    const score = ASK_SCORES[seedOf(`${h.id}|${h.question}`) % ASK_SCORES.length];
+    const asked = !!(h.data ? h.data.question : h.question);
+    return { ...base, service: asked ? h.title : 'ผลวิเคราะห์ทันที', title: asked ? `ถามเรื่อง${askTopic(h.topic)}` : h.title, topic: h.topic, score, summary: askAnswer(h, score) };
+  }
   if (h.kind === 'tarot') {
     const ups = h.cards.filter((c) => !c.rev).length / h.cards.length;
     const score = ups === 1 ? 5 : ups >= 0.5 ? 4 : ups > 0 ? 3 : 2;
@@ -46,7 +77,7 @@ function slipFromEntry(h) {
       text: (AREA_TIP[label] || ['', ''])[n >= 4 ? 0 : 1],
     }));
     return { ...base, service: 'ดูดวงประจำวัน', title: 'รายงานดวงประจำวัน', blocks, score: r.scores[0][1], summary: r.summary,
-      lucky: { color: r.color.money, nums: r.lucky } };
+      lucky: { color: r.color.money, nums: r.lucky, colors: [['งาน', r.color.work], ['เงิน', r.color.money], ['รัก', r.color.love]], avoid: r.color.avoid } };
   }
   if (h.kind === 'personal') return personalSlip(h, base);
   if (h.kind === 'order' && h.reading) {
@@ -63,7 +94,7 @@ function slipFromEntry(h) {
   }
   return null;
 }
-const slipSupported = (h) => !!(h && (['tarot', 'siamsi', 'daily'].includes(h.kind) || (h.kind === 'order' && h.reading)
+const slipSupported = (h) => !!(h && (['tarot', 'siamsi', 'daily', 'ask'].includes(h.kind) || (h.kind === 'order' && h.reading)
   || (h.kind === 'personal' && ['color', 'name', 'number', 'zodiac'].includes(h.gift))));
 
 // ---------- ดวงฟรีจากวงล้อต้อนรับ (คำนวณจากข้อมูลเกิดและชื่อในโปรไฟล์) ----------
@@ -150,15 +181,20 @@ function slipHTML(s) {
     </div>
     ${s.cardsLine ? `<p class="sl-cards">${esc(s.cardsLine)}</p>` : ''}
     <div class="sl-verse">${s.text.verse.map((l) => `<p>${esc(l)}</p>`).join('')}</div>
+    ${s.text.answer ? `<div class="sl-answer"><h4 class="sl-overall"><span>คำตอบของแม่หมอ</span></h4><p>${esc(s.text.answer)}</p></div>` : ''}
     <div class="sl-story">${s.text.topics.map((t) => `<p><b>${esc(t.label)}</b>${esc(t.text)}</p>`).join('')}</div>
     <div class="sl-total">
       <h4 class="sl-overall"><span>ดวงโดยรวม</span></h4>
       ${s.score ? `<div class="sl-overall-stars">${stars(s.score)}</div>` : ''}
       <p>${esc(s.text.overall || s.summary)}</p>
     </div>
+    ${(s.text.advice || []).length ? `<div class="sl-advice"><h4 class="sl-overall"><span>ทางเสริมดวง</span></h4>
+      <ul>${s.text.advice.map((a) => `<li>${esc(a)}</li>`).join('')}</ul></div>` : ''}
     ${lucky ? `<div class="sl-lucky">
-      <div><small>สีเสริมดวง</small><b><i style="background:${HEX[lucky.color] || '#d4a64a'}"></i>สี${esc(lucky.color)}</b></div>
+      ${lucky.colors ? `<div class="sl-colors"><small>สีเสริมดวงวันนี้</small><b>${lucky.colors.map(([k, c]) => `<span><i style="background:${HEX[c] || '#d4a64a'}"></i>${k}${esc(c)}</span>`).join('')}</b></div>`
+        : `<div><small>สีเสริมดวง</small><b><i style="background:${HEX[lucky.color] || '#d4a64a'}"></i>สี${esc(lucky.color)}</b></div>`}
       <div><small>เลขนำโชค</small><b>${lucky.nums.join(' · ')}</b></div>
+      ${lucky.avoid ? `<div class="sl-avoid"><small>สีที่ควรเลี่ยง</small><b><i style="background:${HEX[lucky.avoid] || '#888'}"></i>สี${esc(lucky.avoid)}</b></div>` : ''}
     </div>` : ''}
     ${SLIP_ART.clouds}
   </article>`;
@@ -278,6 +314,27 @@ function cardRowHTML(cards) {
 let slipData = null;
 // ---------- ข้อความในใบ: แม่หมอ AI แต่งให้ (เก็บไว้ในประวัติ) หรือใช้คลังกลอนสำรอง ----------
 function seedOf(str) { let x = 2166136261; for (const c of String(str)) x = Math.imul(x ^ c.charCodeAt(0), 16777619); return x >>> 0; }
+// ดวงประจำวัน: ทางเสริมดวงจากข้อมูลวันนั้นจริง (สี · เรื่องที่อ่อนสุด · สีที่ควรเลี่ยง · เลขนำโชค)
+function dailyAdvice(r) {
+  const c = r.color;
+  const parts = r.scores.slice(1);
+  const worst = parts.reduce((a, b) => (b[1] < a[1] ? b : a));
+  return [
+    `ใส่สี${c.work}ไปทำงาน สี${c.money}เสริมการเงิน และสี${c.love}เมื่อมีนัดเรื่องหัวใจ`,
+    `${worst[0]}เป็นเรื่องที่ต้องระวังที่สุดวันนี้ ${(AREA_TIP[worst[0]] || ['', ''])[1]}`,
+    `เลี่ยงสี${c.avoid}ในวันนี้ และใช้เลข ${r.lucky.join(' · ')} เป็นเลขโปรดของวัน`,
+  ];
+}
+const slipAdvice = (s, h) => (h.kind === 'daily' && h.report ? dailyAdvice(h.report) : localAdvice(s, h));
+// ทางเสริมดวง 2–3 ข้อ: เรื่องที่ถาม (หรือเรื่องที่ดวงอ่อนสุด) + ภาพรวมตามระดับดวง
+function localAdvice(s, h) {
+  const lv = Math.max(2, Math.min(5, s.score || 4));
+  const seed = seedOf(`${h.id}advice`);
+  const topic = SLIP_TOPICS.includes(h.topic) ? h.topic : SLIP_TOPICS[seed % SLIP_TOPICS.length];
+  const t = SLIP_ADVICE[topic];
+  const g = SLIP_ADVICE.ภาพรวม[lv];
+  return [t[seed % t.length], t[(seed + 1) % t.length], g[(seed >>> 3) % g.length]];
+}
 function localSlipText(s, h) {
   const lv = Math.max(2, Math.min(5, s.score || 4));
   const seed = seedOf(h.id);
@@ -309,18 +366,49 @@ function localSlipText(s, h) {
     topics = [['การงาน', h.work], ['ความรัก', h.love], ['การเงิน', h.money], ['สุขภาพ', '']]
       .map(([label, own], i) => ({ label, text: own ? `${own} ${bankTopic(label, lv, 3 + i * 2, false)}` : bankTopic(label, lv, 9) }));
   } else if (h.kind === 'daily') {
-    topics = h.report.scores.slice(1, 5).map(([label, n], i) => ({ label, text: `${(AREA_TIP[label] || ['', ''])[n >= 4 ? 0 : 1]} ${bankTopic(label, n, 3 + i * 2, false)}` }));
+    // ดวงประจำวัน: ใช้ข้อมูลชุดเดียวกับหน้า “ดวงของคุณวันนี้” ทุกเรื่อง (ดาว คำแนะนำ สี ไพ่ ทักษา เลข)
+    const r = h.report;
+    const c = r.color;
+    const extra = {
+      การงาน: `ทักษาวันนี้ตกเป็น${r.taksa.name} ${r.taksa.tip} ใส่สี${c.work}ช่วยเสริมงาน`,
+      การเงิน: `ใส่สี${c.money}เสริมการเงิน และใช้เลข ${r.lucky.join(' ')} เป็นเลขนำโชคของวัน`,
+      ความรัก: `ไพ่ ${r.card[0]} บอกว่า${r.card[2]} ใส่สี${c.love}เมื่อมีนัดเรื่องหัวใจ`,
+      สุขภาพ: `ราศี${r.zodiac.name} ธาตุ${r.zodiac.el} ${r.zodiac.tip}`,
+    };
+    topics = r.scores.slice(1, 5).map(([label, n]) => ({ label: `${label} ${'★'.repeat(n)}${'☆'.repeat(5 - n)}`, text: `${(AREA_TIP[label] || ['', ''])[n >= 4 ? 0 : 1]} · ${extra[label] || ''}` }));
+    return { verse, topics, overall: `${r.summary.split(' · ')[0]} · เลขประจำวัน ${r.number.n} (${r.number.title}) ${r.number.text}`, advice: dailyAdvice(r) };
+  } else if (h.kind === 'ask') {
+    // เรื่องที่ถามขึ้นก่อน แล้วตามด้วยเรื่องอื่น
+    const first = SLIP_TOPICS.includes(h.topic) ? h.topic : null;
+    if (first) topics = [topics.find((t) => t.label === first), ...topics.filter((t) => t.label !== first)];
+    return { verse, answer: s.summary, topics, overall: pick(SLIP_OVERALL[lv], 7), advice: localAdvice(s, h) };
   } else if (h.kind === 'personal' || h.kind === 'order') {
     topics = s.blocks.map((b) => ({ label: b.tag, text: h.gift === 'zodiac' ? b.text : `${b.title} · ${b.text}` }));
   }
-  return { verse, topics, overall: `${s.summary} ${pick(SLIP_OVERALL[lv], 7)}` };
+  return { verse, topics, overall: `${s.summary} ${pick(SLIP_OVERALL[lv], 7)}`, advice: localAdvice(s, h) };
 }
 // รายละเอียดการดูดวงที่ส่งให้แม่หมอ AI แต่งใบ (ข้อความล้วน ไม่มีรูป)
 function slipDetail(s, h) {
   if (h.kind === 'tarot') return `${h.title}\n${h.cards.map((c) => `${c.pos}: ${c.th} (${c.en})${c.rev ? ' กลับหัว' : ''} — ${c.text}`).join('\n')}\nภาพรวมไพ่: ${h.summary}`;
   if (h.kind === 'siamsi') return `เซียมซีใบที่ ${h.no} ระดับ ${h.lv}\nกลอน: ${h.verse}\nความหมาย: ${h.meaning}\nการงาน: ${h.work}\nความรัก: ${h.love}\nการเงิน: ${h.money}`;
-  if (h.kind === 'daily') return `รายงานดวงประจำวัน\n${h.report.scores.map(([l, n]) => `${l} ${n}/5`).join(' · ')}\n${h.report.summary}`;
+  if (h.kind === 'daily') {
+    const r = h.report;
+    const c = r.color;
+    return [`รายงานดวงประจำวัน (ใบผลดวงต้องตรงกับข้อมูลนี้ทุกข้อ ห้ามแต่งเนื้อหาอื่น)`,
+      `คะแนน: ${r.scores.map(([l, n]) => `${l} ${n}/5`).join(' · ')}`,
+      `ราศี${r.zodiac.name} ธาตุ${r.zodiac.el}: ${r.zodiac.tip}`, `เลขประจำวัน ${r.number.n} ${r.number.title}: ${r.number.text}`,
+      `ไพ่ประจำวัน ${r.card[0]}: ${r.card[2]}`, `ทักษาวันนี้ตกเป็น${r.taksa.name}: ${r.taksa.tip}`,
+      `สีมงคลวัน${c.day}: งานสี${c.work} เงินสี${c.money} รักสี${c.love} ควรเลี่ยงสี${c.avoid}`, `เลขนำโชค ${r.lucky.join(' ')}`,
+      `สรุปของวัน: ${r.summary}`].join('\n');
+  }
   if (h.kind === 'order') return `${h.title}\n${h.reading}`;
+  if (h.kind === 'ask') {
+    const label = Object.fromEntries(h.fields || []);
+    const info = Object.entries(h.data || {}).filter(([k, v]) => v && !['topic', 'question'].includes(k) && !String(v).startsWith('📷')).map(([k, v]) => `${label[k] || k}: ${v}`);
+    return [`ศาสตร์/บริการที่ลูกค้าเลือก: ${h.title} (ตอบตามหลักของศาสตร์นี้)`, `เรื่องที่ถาม: ${h.topic || 'ภาพรวม'}`,
+      h.data && h.data.question ? `คำถาม: ${h.data.question}` : '', info.length ? `ข้อมูลที่ลูกค้ากรอกให้วิเคราะห์:\n${info.join('\n')}` : '',
+      `ระดับดวงจากการเสี่ยงทาย: ${s.score}/5`].filter(Boolean).join('\n');
+  }
   return `${s.title}\n${s.blocks.map((b) => `${b.tag}: ${b.title} — ${b.text}`).join('\n')}`;
 }
 async function aiSlipText(s, h) {
@@ -331,14 +419,14 @@ async function aiSlipText(s, h) {
     const r = await fetch('/api/slip', {
       method: 'POST', signal: ctrl.signal,
       headers: { 'Content-Type': 'application/json', 'X-AI-Code': u.aiCode || '' },
-      body: JSON.stringify({ kind: h.kind, service: s.service, title: s.title, question: s.question, score: s.score, detail: slipDetail(s, h),
+      body: JSON.stringify({ order_no: h.no || '', kind: h.kind, service: s.service, title: s.title, question: s.question, score: s.score, detail: slipDetail(s, h),
         profile: { first: u.first || u.name, birthdate: u.birthdate, lang: window.LANG || 'th' } }),
     });
     clearTimeout(t);
     if (!r.ok) return null;
     const j = await r.json();
     if (!Array.isArray(j.verse) || !Array.isArray(j.topics) || !j.topics.length) return null;
-    return { verse: j.verse.slice(0, 4).map(String), topics: j.topics.slice(0, 4).map((x) => ({ label: String(x.label), text: String(x.text) })), overall: String(j.overall || ''), ai: true };
+    return { verse: j.verse.slice(0, 4).map(String), answer: j.answer ? String(j.answer) : '', advice: Array.isArray(j.advice) ? j.advice.slice(0, 3).map(String) : [], topics: j.topics.slice(0, 4).map((x) => ({ label: String(x.label), text: String(x.text) })), overall: String(j.overall || ''), ai: true };
   } catch (_) { return null; } // ไม่มีเซิร์ฟเวอร์ AI / หมดเวลา → ใช้คลังกลอน
 }
 
@@ -361,11 +449,13 @@ async function openSlip(h) {
   const token = ++slipToken;
   slipEl.hidden = false;
   requestAnimationFrame(() => slipEl.classList.add('open'));
-  if (h.slipAI) { s.text = h.slipAI; renderSlip(s); return; }
+  if (h.slipAI) { s.text = { ...h.slipAI, advice: (h.slipAI.advice || []).length ? h.slipAI.advice : slipAdvice(s, h) }; renderSlip(s); return; }
   slipEl.innerHTML = `<div class="slip-stage slip-writing"><button class="slip-x" data-slip-close aria-label="ปิด">✕</button>
       <div class="slip-printer"><span></span></div><p class="slip-wait"><span class="spinner small"></span>แม่หมอกำลังเขียนใบผลดวงของคุณ…</p></div>`;
   const ai = await aiSlipText(s, h);
   if (token !== slipToken || slipEl.hidden) return;
+  if (ai && !(ai.advice || []).length) ai.advice = slipAdvice(s, h); // AI ไม่ได้ให้ทางเสริมดวง → ใช้คลัง
+  if (ai && h.kind === 'ask' && !ai.answer) ai.answer = s.summary; // AI ไม่ได้ตอบคำถามแยก → ใช้คำตอบตามระดับดวง
   if (ai) { updateHistory(h.id, { slipAI: ai }); s.text = ai; } else s.text = localSlipText(s, h);
   renderSlip(s);
 }

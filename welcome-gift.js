@@ -80,7 +80,7 @@ function wheelSVG() {
 let spinning = false;
 function startWelcomeGift() {
   const u = currentUser();
-  if (!u || u.wheelSpun) return;
+  if (!u || u.wheelSpun || u.role === 'seer') return; // หมอดูไม่มีวงล้อของขวัญ
   $('giftResult').hidden = true;
   $('spinBtn').disabled = false;
   $('giftLater').hidden = false;
@@ -232,7 +232,7 @@ function readColor(u) {
   const c = DAY_COLORS[date.getDay()];
   return `<p class="reading-lead">คุณเกิดวัน<b>${c.day}</b> สีประจำวันเกิดคือ<b>สี${c.birth}</b></p>
     <ul class="swatches">${swatch('สีประจำวันเกิด', c.birth)}${swatch('เสริมการงาน', c.work)}${swatch('เสริมการเงิน', c.money)}${swatch('เสริมความรัก', c.love)}</ul>
-    <p class="reading-tip">✦ ช่วงไหนอยากให้งานราบรื่น ลองใส่หรือพกของ<b>สี${c.work}</b> ส่วนวันที่มีนัดสำคัญเรื่องหัวใจ เลือก<b>สี${c.love}</b><br>✦ สีที่ควรเลี่ยงในวันสำคัญ: <b>สี${c.avoid}</b></p>`;
+    <p class="reading-tip">✦ ช่วงไหนอยากให้งานราบรื่น ลองใส่หรือพกของ<b>สี${c.work}</b> ส่วนวันที่มีนัดสำคัญเรื่องหัวใจ เลือก<b>สี${c.love}</b></p><p class="avoid-tag"><i class="sw-no" style="background:${HEX[c.avoid]}"></i>สีที่ควรเลี่ยงในวันสำคัญ<b>สี${c.avoid}</b></p>`;
 }
 
 // ----- ตัวเลข (เส้นทางชีวิต / ชื่อ) -----

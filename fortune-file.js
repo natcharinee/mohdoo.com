@@ -195,7 +195,7 @@ async function aiReadPhotos(kind, slots, topic) {
     const r = await fetch('/api/reading', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-AI-Code': u.aiCode || '' },
-      body: JSON.stringify({ kind, topic, images,
+      body: JSON.stringify({ order_no: (typeof order !== 'undefined' && order && order.no) || '', kind, topic, images,
         profile: { first: u.first || u.name, birthdate: u.birthdate, gender: u.gender, file: fortuneFileText(u), lang: window.LANG || 'th' } }),
     });
     if (r.ok) { const j = await r.json(); return { status: j.unclear ? 'unclear' : 'ok', ...j }; }

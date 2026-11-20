@@ -216,8 +216,8 @@
 
           <!-- แถบเมนูล่าง -->
           <nav class="tabbar member-only" aria-label="เมนูหลัก">
-            <a href="index.html" data-tab-id="home" aria-current="page"><span>🏠</span>ดูดวง</a>
-            <button id="tabSeers" data-tab-id="seers"><span>🔮</span>หมอดู</button>
+            <a href="index.html" data-tab-id="home" aria-current="page"><span class="tab-wheel" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13.5" class="tw-ring"/><circle cx="16" cy="16" r="9" class="tw-ring2"/><g class="tw-spokes"><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(0 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(30 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(60 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(90 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(120 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(150 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(180 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(210 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(240 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(270 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(300 16 16)"/><line x1="16" y1="2.5" x2="16" y2="7" transform="rotate(330 16 16)"/></g><path class="tw-star" d="M16 10.2c.6 3.6 2.2 5.2 5.8 5.8-3.6.6-5.2 2.2-5.8 5.8-.6-3.6-2.2-5.2-5.8-5.8 3.6-.6 5.2-2.2 5.8-5.8z"/></svg></span>ดูดวง</a>
+            <button id="tabSeers" data-tab-id="seers"><span class="tab-seer" aria-hidden="true"><svg viewBox="0 0 32 32"><path class="ts-hood" d="M16 3.5c-5 0-8.2 4.6-8.2 10 0 3.2.9 5.6 2.2 7.4L7 27.5h18l-3-6.6c1.3-1.8 2.2-4.2 2.2-7.4 0-5.4-3.2-10-8.2-10z"/><path class="ts-face" d="M12 14.5c0-3 1.8-5.2 4-5.2s4 2.2 4 5.2c0 2.6-1.8 4.3-4 4.3s-4-1.7-4-4.3z"/><path class="ts-eye" d="M13.8 14.6q.9-.8 1.8 0M16.4 14.6q.9-.8 1.8 0"/><circle class="ts-ball" cx="16" cy="23.2" r="4.2"/><path class="ts-stand" d="M12.4 27.6h7.2"/><path class="ts-glint" d="M14.6 21.8q.6-.9 1.6-1.1"/><path class="ts-star" d="M25.4 5.2c.2 1.3.8 1.9 2.1 2.1-1.3.2-1.9.8-2.1 2.1-.2-1.3-.8-1.9-2.1-2.1 1.3-.2 1.9-.8 2.1-2.1z"/></svg></span>หมอดู</button>
             <a href="#ai" class="tab-center" data-tab-id="ai" aria-label="ดูดวงประจำวัน">
               <span><svg viewBox="0 0 40 40" aria-hidden="true" class="ai-ico">
                 <defs><radialGradient id="aiOrbG" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#d9b8ff"/><stop offset="1" stop-color="#5a1fa8"/></radialGradient></defs>
@@ -313,6 +313,7 @@
   <script src="script.js"></script>
   <script src="welcome-gift.js"></script>
   <script src="profile.js"></script>
+  <script src="avatars.js"></script>
   <script src="fortune-file.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
   <script src="places-data.js"></script>
@@ -321,8 +322,10 @@
   <script src="seers.js"></script>
   <script src="ai.js"></script>
   <script src="circle.js"></script>
+  <script src="shop-data.js"></script>
   <script src="mongkol.js"></script>
   <script src="slip-bank.js"></script>
   <script src="fortune-slip.js"></script>
+  <script src="server-sync.js"></script>
 </body>
 </html>

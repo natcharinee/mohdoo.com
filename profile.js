@@ -49,6 +49,7 @@ const profileBody = profilePanel.querySelector('.panel-body');
 
 function openProfile() {
   renderProfile();
+  if (typeof srvProfileOpened === 'function') srvProfileOpened();
   closeAllPanels();
   setActiveTab('account');
   openPanel('profilePanel');
@@ -61,19 +62,23 @@ function renderProfile() {
   const coupons = u.coupons || [];
   const live = coupons.filter((c) => !c.used && c.expires > Date.now());
   const past = coupons.filter((c) => c.used || c.expires <= Date.now()).slice(-3).reverse();
-  const hist = u.history || [];
+  // แยกการซื้อวัตถุมงคลออกจากการดูดวง
+  const hist = (u.history || []).filter((h) => !isPurchase(h) && !isMerit(h));
+  const merits = (u.history || []).filter(isMerit);
+  const buys = (u.history || []).filter(isPurchase);
   const fullName = [u.first || u.name, u.last].filter(Boolean).join(' ');
   const cell = (label, value, extra = '') =>
     `<div class="pf-cell"><small>${label}</small><b class="${value ? '' : 'muted'}">${value || 'ยังไม่ระบุ'}</b>${extra}</div>`;
 
   profileBody.innerHTML = `
     <div class="pf-hero">
-      <div class="pf-avatar">${esc((u.first || u.name || '✦').charAt(0).toUpperCase())}${b ? `<span class="pf-sign">${b.zodiac.split(' ')[0]}</span>` : ''}</div>
+      <button class="pf-avatar ${typeof hasAvatarArt === 'function' && hasAvatarArt(u) ? 'has-art' : ''}" data-avatar aria-label="เปลี่ยนรูปโปรไฟล์">${typeof avatarInner === 'function' ? avatarInner(u) : esc((u.first || u.name || '✦').charAt(0).toUpperCase())}<span class="pf-cam" aria-hidden="true">📷</span></button>
       <h3 translate="no">${esc(fullName)}</h3>
       ${u.phone ? `<p>📱 ${esc(prettyPhone(u.phone))}</p>` : u.email ? `<p>${esc(u.email)}</p>` : ''}
       ${u.created ? `<p class="pf-since">สมาชิกตั้งแต่ ${thDate(u.created)}</p>` : ''}
       <button class="btn-ghost pf-edit" id="pfEdit">✎ แก้ไขข้อมูล</button>
     </div>
+    ${typeof srvProfileHTML === 'function' ? srvProfileHTML() : ''}
 
     <div class="pf-stats">
       <div><b>${hist.length}</b><small>ดูดวงแล้ว</small></div>
@@ -105,23 +110,17 @@ function renderProfile() {
 
     <section class="pf-card">
       <div class="sec-head"><h3>คูปองของฉัน</h3><span class="sec-note">${live.length} ใบใช้ได้</span></div>
-      ${!u.wheelSpun && u.first ? `<button class="spin-cta" data-spin><span>🎡</span><b>ยังมีสิทธิ์หมุนวงล้อรับดวงฟรี 1 ครั้ง</b><em>หมุนเลย ›</em></button>` : ''}
+      ${!u.wheelSpun && u.first && u.role !== 'seer' ? `<button class="spin-cta" data-spin><span>🎡</span><b>ยังมีสิทธิ์หมุนวงล้อรับดวงฟรี 1 ครั้ง</b><em>หมุนเลย ›</em></button>` : ''}
       ${u.pendingGift ? `<button class="spin-cta" data-claim><span>${GIFTS.find((g) => g.id === u.pendingGift).icon}</span><b>ได้รับ “${GIFTS.find((g) => g.id === u.pendingGift).name}” ยังไม่ได้เลือกใช้</b><em>รับเลย ›</em></button>` : ''}
       ${live.length || past.length ? `<div class="coupons">
         ${live.map((c) => couponHTML(c, true)).join('')}
         ${past.map((c) => couponHTML(c, false)).join('')}
-      </div>` : (u.wheelSpun || !u.first ? '<p class="pf-empty">ยังไม่มีคูปอง</p>' : '')}
+      </div>` : (u.wheelSpun || !u.first || u.role === 'seer' ? '<p class="pf-empty">ยังไม่มีคูปอง</p>' : '')}
     </section>
 
-    <section class="pf-card">
-      <div class="sec-head"><h3>ประวัติการดูดวง</h3><span class="sec-note">${hist.length} ครั้ง</span></div>
-      ${hist.length ? `<ul class="hist">${hist.map((h) => `<li><button class="hist-row" data-hist="${h.id}">
-          <span class="hist-ico">${h.icon || '✦'}</span>
-          <span class="hist-txt"><b>${esc(h.title)}</b><small>${histLine(h)}</small></span>
-          <span class="hist-date">${thDate(h.at)}</span>
-        </button></li>`).join('')}</ul>`
-      : `<p class="pf-empty">ยังไม่เคยดูดวง ผลการดูดวงครั้งต่อไปจะถูกเก็บไว้ที่นี่ให้ย้อนอ่านได้</p>`}
-    </section>
+    ${histSection('fortune', 'ประวัติการดูดวง', 'ครั้ง', hist, (h) => histLine(h), '✦', 'ยังไม่เคยดูดวง ผลการดูดวงครั้งต่อไปจะถูกเก็บไว้ที่นี่ให้ย้อนอ่านได้')}
+    ${histSection('merit', 'ประวัติบริการมงคล', 'รายการ', merits, (h) => esc(meritLine(h)), '🙏', 'ยังไม่มีบริการมงคล เมื่อทีมทำพิธีให้แล้ว รูปและวิดีโอยืนยันจะอยู่ที่นี่')}
+    ${histSection('shop', 'ประวัติการซื้อสินค้า', 'รายการ', buys, (h) => esc(buyLine(h)), '📦', 'ยังไม่มีการสั่งซื้อ วัตถุมงคลที่สั่งจะแสดงสถานะและเลขพัสดุที่นี่')}
 
     <button class="btn-ghost full pf-logout" id="pfLogout">ออกจากระบบ</button>
     <p class="pf-note">ข้อมูลของคุณใช้เพื่อการทำนายเท่านั้น (ตัวอย่าง: เก็บไว้ในเบราว์เซอร์นี้)</p>`;
@@ -204,10 +203,32 @@ function couponHTML(c, usable) {
   </div>`;
 }
 
+// ---------- รายการประวัติ: แสดง 4 รายการล่าสุด กด “ดูเพิ่มเติม” เพื่อแสดงทั้งหมด ----------
+const HIST_SHOW = 4;
+const histOpen = {}; // ส่วนที่กดดูทั้งหมดแล้ว (จำไว้ระหว่างเปิดหน้าบัญชี)
+function histSection(key, title, unit, list, line, icon, empty) {
+  const all = !!histOpen[key];
+  const shown = all ? list : list.slice(0, HIST_SHOW);
+  return `<section class="pf-card">
+      <div class="sec-head"><h3>${title}</h3><span class="sec-note">${list.length} ${unit}</span></div>
+      ${list.length ? `<ul class="hist">${shown.map((h) => `<li><button class="hist-row" data-hist="${h.id}">
+          <span class="hist-ico">${h.icon || icon}</span>
+          <span class="hist-txt"><b>${esc(h.title)}</b><small>${line(h)}</small></span>
+          <span class="hist-date">${thDate(h.at)}</span>
+        </button></li>`).join('')}</ul>
+        ${list.length > HIST_SHOW ? `<button class="btn-ghost full hist-more" data-hist-more="${key}">${all ? 'ย่อรายการ ▴' : `ดูเพิ่มเติม (อีก ${list.length - HIST_SHOW} ${unit}) ▾`}</button>` : ''}`
+      : `<p class="pf-empty">${empty}</p>`}
+    </section>`;
+}
+const isPurchase = (h) => h.kind === 'order' && String(h.svc || '').startsWith('shop:');
+const isMerit = (h) => h.kind === 'order' && (SERVICES.find((s) => s.id === h.svc) || {}).group === 'merit';
+const meritLine = (h) => [h.status, h.data && h.data.place, (h.proof || []).length ? `📸 รูปยืนยัน ${h.proof.length}` : '', `${Number(h.amount).toLocaleString('th-TH')} ฿`].filter(Boolean).join(' · ');
+const buyLine = (h) => [h.status, h.label, `${Number(h.amount).toLocaleString('th-TH')} ฿`, h.tracking ? `พัสดุ ${h.tracking.no}` : ''].filter(Boolean).join(' · ');
 function histLine(h) {
   if (h.kind === 'tarot') return esc(h.cards.map((c) => `${c.th}${c.rev ? ' (กลับหัว)' : ''}`).join(' · '));
   if (h.kind === 'siamsi') return esc(`${h.lv} · ${h.verse}`);
   if (h.kind === 'daily') return esc(`${h.report.mood} · ${h.report.scores.map(([l, n]) => `${l} ${n}★`).slice(1).join(' ')}`);
+  if (h.kind === 'ask') return esc(`“${h.question}” · รู้ผลทันที`);
   if (h.kind === 'order') return esc(`${h.status} · ${h.label} · ${Number(h.amount).toLocaleString('th-TH')} ฿`);
   return 'ผลคำทำนายจากข้อมูลส่วนตัวของคุณ';
 }
@@ -232,6 +253,19 @@ profileBody.addEventListener('click', (e) => {
   if (t.closest('[data-claim]')) return claimPending();
   const cp = t.closest('[data-coupon]');
   if (cp) { useCoupon(cp.dataset.coupon); setTimeout(renderProfile, 400); return; }
+  if (t.closest('[data-avatar]')) { openAvatarPicker(); return; }
+  const more = t.closest('[data-hist-more]');
+  if (more) { // ขยาย/ย่อรายการ โดยไม่เลื่อนหน้าหนี
+    const key = more.dataset.histMore;
+    const card = more.closest('.pf-card');
+    const top = card.getBoundingClientRect().top;
+    histOpen[key] = !histOpen[key];
+    renderProfile();
+    const again = profileBody.querySelector(`[data-hist-more="${key}"]`)?.closest('.pf-card');
+    const body = [profileBody, profilePanel].find((e) => e.scrollHeight > e.clientHeight + 4) || profileBody;
+    if (again) body.scrollTop += again.getBoundingClientRect().top - top;
+    return;
+  }
   const h = t.closest('[data-hist]');
   if (h) openHistory(h.dataset.hist);
 });
@@ -251,6 +285,7 @@ function openHistory(id) {
   const u = currentUser();
   const h = (u.history || []).find((x) => x.id === id);
   if (!h) return;
+  if (h.kind === 'ask') { openSlip(h); return; } // ถามคำถาม → เปิดใบผลดวงที่ตอบไว้
   if (h.kind === 'personal') {
     openReading(GIFTS.find((g) => g.id === h.gift), u, h.id);
   } else if (h.kind === 'daily') {
@@ -270,11 +305,15 @@ function openHistory(id) {
     } else if (h.kind === 'order') {
       body = h.reading
         ? `<div class="ai-reading-body">${fmtReading(h.reading)}</div>${h.summary ? `<p class="ai-reading-sum"><b>✦ สรุป</b>${esc(h.summary)}</p>` : ''}`
-        : `<div class="order-status"><span class="spinner small"></span><div><b>${esc(h.status)}</b><small>${esc(h.note || 'หมอดูจะตอบกลับภายใน 24 ชั่วโมง')}</small></div></div>`;
+        : `<div class="order-status">${['done', 'shipped', 'refunded', 'cancelled'].includes(h.srv) ? '<span class="ok-mini">✓</span>' : '<span class="spinner small"></span>'}<div><b>${esc(h.status)}</b><small>${esc(h.srv === 'done' ? 'ดำเนินการเรียบร้อยแล้ว ขอบคุณที่ใช้บริการหมอดู.com ✦' : h.srv === 'shipped' ? 'สินค้าออกจากร้านแล้ว ติดตามพัสดุได้ด้านล่าง' : h.note || 'หมอดูจะตอบกลับภายใน 24 ชั่วโมง')}</small></div></div>`;
       body += `
-        ${h.steps ? `<ol class="track">${h.steps.map((st, i) => `<li class="${i === 0 ? 'done' : i === 1 ? 'now' : ''}">${esc(st)}</li>`).join('')}</ol>` : ''}
+        ${h.steps ? `<ol class="track">${h.steps.map((st, i) => { const n = h.stepNow ?? 1; return `<li class="${i < n ? 'done' : i === n ? 'now' : ''}">${esc(st)}</li>`; }).join('')}</ol>` : ''}
+        ${h.tracking ? `<p class="order-track-no">📦 ${esc(h.tracking.carrier)} · เลขพัสดุ <b>${esc(h.tracking.no)}</b></p>` : ''}
+        ${h.proof && h.proof.length ? `<div class="proof-media">${h.proof.map((m) => (/video/.test(m.type || '')
+          ? `<video src="${esc(m.url)}" controls playsinline preload="metadata"></video>`
+          : `<a href="${esc(m.url)}" target="_blank" rel="noopener"><img src="${esc(m.url)}" alt="${esc(m.caption || 'รูปยืนยัน')}" loading="lazy"></a>`)).join('')}</div>` : ''}
         <ul class="order-info">
-          <li><small>แพ็กเกจ</small><b>${esc(h.label)}</b></li>
+          <li><small>${isPurchase(h) ? 'จำนวน' : 'แพ็กเกจ'}</small><b>${esc(h.label)}</b></li>
           <li><small>ยอดชำระ</small><b>${Number(h.amount).toLocaleString('th-TH')} ฿</b></li>
           <li><small>เลขที่คำสั่งซื้อ</small><b>${esc(h.no)}</b></li>
           ${(h.fields || []).filter(([k]) => h.data[k]).map(([k, label]) => `<li><small>${esc(label)}</small><b>${esc(h.data[k])}</b></li>`).join('')}

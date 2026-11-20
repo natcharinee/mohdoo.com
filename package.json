@@ -3,6 +3,12 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@anthropic-ai/sdk": "^1.8.0"
+    "@anthropic-ai/sdk": "^1.8.0",
+    "@vercel/blob": "^2.9.0",
+    "postgres": "^4.1.1",
+    "web-push": "^4.0.0"
+  },
+  "scripts": {
+    "dev": "node dev-server.mjs"
   }
 }

@@ -1,9 +1,10 @@
 // ===== แม่หมอ AI อ่านรูป: ลายมือ · โหงวเฮ้ง · ข้อมือ · ลายเท้า (Vercel Serverless Function) =====
 // POST /api/reading  { kind, topic, images: [{ slot, data: "data:image/jpeg;base64,..." }], profile }
 //   → { reading, summary }   หรือ { unclear: true, reading } ถ้ารูปไม่ชัด/ไม่ใช่ส่วนที่ขอ
-// ใช้ Environment Variables เดียวกับ /api/chat: ANTHROPIC_API_KEY และ MOHDOO_AI_CODE (ส่งรหัสใน header X-AI-Code)
-import { timingSafeEqual } from 'node:crypto';
+// สิทธิ์ใช้: ลูกค้าที่จ่ายแล้ว (ดู _lib/aigate.js) หรือรหัสทดลอง MOHDOO_AI_CODE · ต้องตั้ง ANTHROPIC_API_KEY
 import Anthropic from '@anthropic-ai/sdk';
+import { aiAllowed } from './_lib/aigate.js';
+import { VOICE } from './_lib/voice.js';
 
 const MAX_IMAGES = 4;
 const MAX_IMAGE_CHARS = 2_000_000; // base64 ต่อรูป (~1.5 MB) — หน้าเว็บย่อรูปเหลือด้านยาว 480px อยู่แล้ว
@@ -37,8 +38,10 @@ const SYSTEM_PROMPT = `คุณคือ "แม่หมอ AI" ของ ห�
 
 รูปแบบคำตอบ (อ่านบนมือถือ):
 - 4 หัวข้อสั้นพอดี ขึ้นต้นด้วย • แต่ละหัวข้อ: ลักษณะที่เห็น → ความหมาย (ใช้ทำใบผลดวง 4 ก้อน)
-- ปิดด้วยคำแนะนำ 1–2 ข้อที่ทำได้จริง
-- บรรทัดสุดท้ายเขียนว่า "สรุปสั้น:" ตามด้วยสรุปหนึ่งประโยค (ไม่เกิน 120 ตัวอักษร) สำหรับเก็บในแฟ้มดวง`;
+- ก่อนบรรทัดสรุป ให้มีหัวข้อ "ทางเสริมดวง" 2–3 ข้อที่ทำได้จริง ตามลักษณะที่เห็น
+- บรรทัดสุดท้ายเขียนว่า "สรุปสั้น:" ตามด้วยสรุปหนึ่งประโยค (ไม่เกิน 120 ตัวอักษร) สำหรับเก็บในแฟ้มดวง
+
+${VOICE}`;
 
 const REPLY_LANG = {
   en: '\n\nตอบเป็นภาษาอังกฤษทั้งหมด และใช้ "Summary:" แทน "สรุปสั้น:" (Reply in English).',
@@ -47,14 +50,6 @@ const REPLY_LANG = {
 
 const client = new Anthropic(); // อ่าน ANTHROPIC_API_KEY จาก environment
 
-function codeAllowed(given) {
-  const codes = (process.env.MOHDOO_AI_CODE || '').split(',').map((c) => c.trim()).filter(Boolean);
-  const g = Buffer.from(String(given || '').trim());
-  return codes.some((c) => {
-    const b = Buffer.from(c);
-    return b.length === g.length && timingSafeEqual(b, g);
-  });
-}
 
 function parseImage(img) {
   const m = /^data:(image\/[a-z+]+);base64,([A-Za-z0-9+/=]+)$/.exec(String(img?.data || ''));
@@ -73,11 +68,11 @@ function profileText(p = {}) {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
-  if (!process.env.ANTHROPIC_API_KEY || !process.env.MOHDOO_AI_CODE) return res.status(503).json({ error: 'ai_not_configured' });
-  if (!codeAllowed(req.headers['x-ai-code'])) return res.status(401).json({ error: 'invalid_code' });
+  if (!process.env.ANTHROPIC_API_KEY) return res.status(503).json({ error: 'ai_not_configured' });
 
   let body;
   try { body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {}; } catch (_) { return res.status(400).json({ error: 'bad_request' }); }
+  if (!(await aiAllowed(req, { need: 'order', orderNo: body.order_no, kinds: ['photo'] }))) return res.status(401).json({ error: 'invalid_code' }); // จ่ายแล้ว (คำสั่งซื้อ/สมาชิก) หรือรหัสทดลอง
   const kind = KINDS[body.kind] ? body.kind : null;
   const images = (Array.isArray(body.images) ? body.images : []).slice(0, MAX_IMAGES).map(parseImage).filter(Boolean);
   if (!kind || !images.length) return res.status(400).json({ error: 'bad_request' });

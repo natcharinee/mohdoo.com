@@ -192,6 +192,7 @@ function persistUser(u) {
   try {
     localStorage.setItem(USER_KEY, JSON.stringify(u));
     if (u.phone) { const all = accounts(); all[u.phone] = u; localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(all)); }
+    if (typeof srvSaveProfile === 'function') srvSaveProfile(u); // มีระบบหลังบ้าน → บันทึกขึ้นเซิร์ฟเวอร์ด้วย
     return true;
   } catch (_) { return false; } // พื้นที่เบราว์เซอร์เต็ม (มักเกิดจากรูป) → ให้ผู้เรียกจัดการ
 }
@@ -201,7 +202,8 @@ function applyUser() {
   document.body.classList.add('app-ui');
   document.body.classList.toggle('member', !!u);
   if (u) {
-    $('avatarBtn').textContent = u.name.trim().charAt(0).toUpperCase() || '✦';
+    if (typeof avatarInner === 'function') $('avatarBtn').innerHTML = avatarInner(u);
+    else $('avatarBtn').textContent = u.name.trim().charAt(0).toUpperCase() || '✦';
     $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">สวัสดี</span> <b class="hello-name" translate="no">${(window.LANG || 'th') === 'th' ? 'คุณ' : ''}${escapeHTML(u.name)}</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย<i class="fl r"></i></small>`;
   } else {
     $('avatarBtn').textContent = '👤';
@@ -226,6 +228,7 @@ function toggleAccount() {
   openProfile();
 }
 function logout() {
+  if (typeof srvLogout === 'function') srvLogout();
   try { localStorage.removeItem(USER_KEY); } catch (_) {}
   closeAllPanels();
   setActiveTab('home');
@@ -276,14 +279,27 @@ $('phoneForm').phone.addEventListener('input', (e) => {
   if (v !== e.target.value) e.target.value = v;
 });
 
-$('phoneForm').addEventListener('submit', (e) => {
+$('phoneForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+  if (e.target.dataset.busy) return;
   pendingPhone = cleanPhone(e.target.phone.value);
   const nat = nationalDigits(e.target.phone.value);
   const okLen = $('phoneCc').value === '66' ? nat.length === 9 : nat.length >= 6 && nat.length <= 13;
   if (!okLen) { toast($('phoneCc').value === '66' ? 'กรุณากรอกเบอร์มือถือ 9 หลัก (ไม่ต้องใส่ 0 ข้างหน้า)' : 'กรุณากรอกเบอร์มือถือให้ถูกต้อง'); return; }
+  // มีระบบหลังบ้าน → ส่ง OTP จริงผ่านเซิร์ฟเวอร์ (เซิร์ฟเวอร์บอกว่าเบอร์นี้มีบัญชีแล้วหรือยัง)
+  let hasAccount = !!findAccount(pendingPhone);
+  let demoOtp = true;
+  if (typeof serverReady !== 'undefined') await serverReady; // ไม่มี server-sync.js → โหมดทดลองต่อได้
+  if (window.SERVER) {
+    e.target.dataset.busy = '1';
+    try {
+      const r = await srvSendOtp(pendingPhone, authMode);
+      hasAccount = r.exists && !r.sent;
+      demoOtp = !!r.demo;
+    } catch (err) { toast(err.message); return; } finally { delete e.target.dataset.busy; }
+  }
   // สมัครด้วยเบอร์ที่มีบัญชีแล้ว → ไม่ให้สมัครซ้ำ เปลี่ยนเป็นเข้าสู่ระบบ
-  if (authMode === 'register' && findAccount(pendingPhone)) {
+  if (authMode === 'register' && hasAccount) {
     const phone = e.target.phone.value;
     const cc = $('phoneCc').value;
     setTab('login');
@@ -299,7 +315,7 @@ $('phoneForm').addEventListener('submit', (e) => {
   $('otpForm').reset();
   startResend();
   showStep('otp');
-  toast(`ส่งรหัส OTP ไปที่ ${prettyPhone(pendingPhone)} แล้ว (ทดสอบ: ${DEMO_OTP})`);
+  toast(`ส่งรหัส OTP ไปที่ ${prettyPhone(pendingPhone)} แล้ว${demoOtp ? ` (ทดสอบ: ${DEMO_OTP})` : ''}`);
 });
 function startResend() {
   let left = 60;
@@ -315,15 +331,39 @@ function startResend() {
     btn.textContent = 'ขอรหัส OTP ใหม่';
   }, 1000);
 }
-$('otpResend').addEventListener('click', () => { startResend(); toast(`ส่งรหัสใหม่แล้ว (ทดสอบ: ${DEMO_OTP})`); });
+$('otpResend').addEventListener('click', async () => {
+  if (window.SERVER) {
+    try { const r = await srvSendOtp(pendingPhone, 'login'); startResend(); toast(`ส่งรหัสใหม่แล้ว${r.demo ? ` (ทดสอบ: ${DEMO_OTP})` : ''}`); } catch (err) { toast(err.message); }
+    return;
+  }
+  startResend();
+  toast(`ส่งรหัสใหม่แล้ว (ทดสอบ: ${DEMO_OTP})`);
+});
 $('otpChange').addEventListener('click', () => { clearInterval(resendTimer); showStep('phone'); });
 $('otpForm').otp.addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6); $('otpError').hidden = true; });
 
-$('otpForm').addEventListener('submit', (e) => {
+$('otpForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (e.target.otp.value !== DEMO_OTP) { $('otpError').hidden = false; e.target.otp.select(); return; }
-  clearInterval(resendTimer);
-  const existing = findAccount(pendingPhone);
+  if (window.SERVER) {
+    // ตรวจรหัสที่เซิร์ฟเวอร์ → ได้เซสชัน + โปรไฟล์ (ถ้ามีบัญชีแล้ว)
+    if (e.target.dataset.busy) return;
+    e.target.dataset.busy = '1';
+    let r;
+    try { r = await srvVerify(pendingPhone, e.target.otp.value); } catch (err) {
+      $('otpError').textContent = err.message; $('otpError').hidden = false; e.target.otp.select(); return;
+    } finally { delete e.target.dataset.busy; }
+    clearInterval(resendTimer);
+    const local = findAccount(pendingPhone);
+    if (!r.isNew) { finishAuth(srvUserFrom(r.user), false); return; }
+    // บัญชีจากช่วงทดลองในเครื่องนี้ → ย้ายขึ้นเซิร์ฟเวอร์ (ประวัติ/คูปองไม่หาย)
+    if (local && local.birthdate) { finishAuth({ ...local, phone: pendingPhone, role: r.user.role, seerId: r.user.seer_id || null }, false); return; }
+    // ทีมงานลงชื่อหมอดูไว้แล้ว → เติมชื่อให้ในหน้ากรอกข้อมูล
+    if (r.user.name && !$('infoForm').first.value) $('infoForm').first.value = r.user.name;
+  } else {
+    if (e.target.otp.value !== DEMO_OTP) { $('otpError').hidden = false; e.target.otp.select(); return; }
+    clearInterval(resendTimer);
+  }
+  const existing = !window.SERVER && findAccount(pendingPhone);
   if (existing) {
     // บัญชีเก่าที่เก็บเป็น 08… → ย้ายไปเก็บแบบมีรหัสประเทศ
     if (existing.phone !== pendingPhone) {
@@ -347,18 +387,22 @@ $('otpForm').addEventListener('submit', (e) => {
 
 $('infoForm').addEventListener('submit', (e) => {
   e.preventDefault();
+  // มีระบบหลังบ้าน: ต้องยืนยัน OTP ของเบอร์นี้ก่อนจึงสร้างบัญชีได้
+  if (window.SERVER && typeof srvSession !== 'undefined' && srvSession !== pendingPhone) { toast('กรุณายืนยันรหัส OTP ก่อนนะคะ'); showStep('phone'); return; }
   const d = new FormData(e.target);
   const first = String(d.get('first')).trim();
   finishAuth({
     phone: pendingPhone, name: first, first, last: String(d.get('last')).trim(),
     birthdate: String(d.get('birthdate')), birthtime: String(d.get('birthtime') || ''),
     created: Date.now(), coupons: [], history: [], wheelSpun: false,
+    ...(window.SERVER && typeof srvLast !== 'undefined' && srvLast ? { role: srvLast.role, seerId: srvLast.seer_id || null } : {}),
   }, true);
   e.target.reset();
 });
 
 function finishAuth(user, isNew) {
   persistUser(user);
+  if (typeof srvAfterAuth === 'function') srvAfterAuth(); // สิทธิ์ (หมอดู) · สมาชิก AI · งานและแจ้งเตือนจากเซิร์ฟเวอร์
   closeSheet(true);
   applyUser();
   $('phoneForm').reset();
@@ -366,9 +410,9 @@ function finishAuth(user, isNew) {
   // ยังไม่เคยหมุนวงล้อของขวัญต้อนรับ (สมัครใหม่ หรือบัญชีเดิมที่ยังไม่ได้หมุน) → เปิดวงล้อก่อน แล้วค่อยทำสิ่งที่กดไว้ต่อ
   // บัญชีเดิมที่กด “ไว้ทีหลัง” จะไม่ถูกถามซ้ำภายใน 3 วัน (ยังหมุนได้จากหน้าบัญชี)
   const later = user.giftLaterAt && Date.now() - user.giftLaterAt < 3 * 864e5;
-  if (!user.wheelSpun && (isNew || !later) && typeof startWelcomeGift === 'function') setTimeout(startWelcomeGift, 900);
+  if (!user.wheelSpun && user.role !== 'seer' && (isNew || !later) && typeof startWelcomeGift === 'function') setTimeout(startWelcomeGift, 900);
   else resumeAfterAuth();
-  toast(isNew ? 'สมัครสำเร็จ! ยินดีต้อนรับสู่หมอดู.com ✦' : `ยินดีต้อนรับกลับ คุณ${user.name} ✦`);
+  toast(user.role === 'seer' ? `ยินดีต้อนรับ ${user.name} ✦ บัญชีนี้เป็นบัญชีหมอดู ตอบคำถามลูกค้าได้ที่แท็บ “บัญชี”` : isNew ? 'สมัครสำเร็จ! ยินดีต้อนรับสู่หมอดู.com ✦' : `ยินดีต้อนรับกลับ คุณ${user.name} ✦`);
   const r = screen.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + r.height / 2, 60, 260);
 }

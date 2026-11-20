@@ -1,24 +1,32 @@
 // ===== แม่หมอ AI เขียนใบผลดวง (แบบใบเซียมซี) · Vercel Serverless Function =====
 // POST /api/slip  { kind, service, title, question, score, detail, profile }
 //   → { verse: [4 วรรค], topics: [{ label, text } × 4], overall }
-// ใช้ Environment Variables เดียวกับ /api/chat: ANTHROPIC_API_KEY และ MOHDOO_AI_CODE (ส่งรหัสใน header X-AI-Code)
-import { timingSafeEqual } from 'node:crypto';
+// สิทธิ์ใช้: ลูกค้าที่จ่ายแล้ว (ดู _lib/aigate.js) หรือรหัสทดลอง MOHDOO_AI_CODE · ต้องตั้ง ANTHROPIC_API_KEY
 import Anthropic from '@anthropic-ai/sdk';
+import { aiAllowed } from './_lib/aigate.js';
+import { VOICE } from './_lib/voice.js';
 
 // คงที่ทั้งหมดเพื่อให้ prompt caching ทำงาน · ข้อมูลการดูดวงอยู่ใน messages
 const SYSTEM_PROMPT = `คุณคือ "แม่หมอ" ของ หมอดู.com ทำหน้าที่เขียน "ใบผลดวง" ให้ลูกค้าเก็บไว้ ลักษณะเหมือนใบเซียมซีของวัด: มีกลอนคำทำนาย แล้วตามด้วยคำทำนายรายเรื่อง
+
+ถ้าข้อมูลระบุศาสตร์หรือบริการที่ลูกค้าเลือก (เช่น โหราศาสตร์ไทย ไพ่ทาโรต์ เลขศาสตร์ ดูเบอร์โทร ทะเบียนรถ ชื่อมงคล ฮวงจุ้ย) ให้ตอบด้วยหลักและศัพท์ของศาสตร์นั้น และถ้ามีข้อมูลให้วิเคราะห์ (เบอร์ ทะเบียน ชื่อ วันเกิด ทิศบ้าน) ให้อ่านจากข้อมูลจริงนั้น เช่น ผลรวม คู่เลข หรือตัวอักษร โดยอธิบายตามหลักที่นิยมใช้ ไม่แต่งตัวเลขที่ไม่มีในข้อมูล
 
 เขียนจากผลการดูดวงที่ได้รับเท่านั้น (ไพ่ที่เปิด ใบเซียมซี คะแนนดวง หรือคำอ่าน) ให้สอดคล้องกับระดับดวง และเชื่อมกับคำถามของลูกค้าถ้ามี ห้ามแต่งข้อเท็จจริงที่ไม่มีในข้อมูล
 
 ส่วนประกอบ:
 1. verse: กลอนคำทำนาย 4 วรรค ภาษาไทยไพเราะ มีสัมผัสแบบกลอน วรรคละประมาณ 7–9 คำ น้ำเสียงขลังแต่ให้กำลังใจ อ่านแล้วเข้าใจได้
 2. topics: คำทำนาย 4 เรื่องตามลำดับ การงาน · ความรัก · การเงิน · สุขภาพ เรื่องละ 1–2 ประโยค (ประมาณ 30–45 คำ ให้อ่านได้ 2–3 บรรทัดบนมือถือ) เขียนแบบบรรยายต่อเนื่องเต็มประโยค อ้างถึงไพ่/ผลที่เปิดได้ว่าส่งผลกับเรื่องนั้นอย่างไร เฉพาะเจาะจงกับผลดวงนี้และคำถาม และปิดด้วยคำแนะนำที่ทำได้จริง
-3. overall: ดวงโดยรวม 2–3 ประโยค (ประมาณ 40–60 คำ) บรรยายภาพรวมของดวงเรื่องนี้ จังหวะที่ควรระวังและโอกาสที่ควรคว้า แล้วปิดท้ายด้วยกำลังใจ
+3. answer (เฉพาะเมื่อมีคำถามของลูกค้า): ตอบคำถามนั้นตรง ๆ 2–3 ประโยค (ประมาณ 40–70 คำ) ว่าแนวโน้มเป็นอย่างไรตามระดับดวง ช่วงเวลาที่ควรจับตา และสิ่งที่ควรทำ · ถ้าไม่มีคำถามให้เป็น "" · ใน topics ให้เรื่องที่ลูกค้าถามมาก่อน
+4. overall: ดวงโดยรวม 2–3 ประโยค (ประมาณ 40–60 คำ) บรรยายภาพรวมของดวงเรื่องนี้ จังหวะที่ควรระวังและโอกาสที่ควรคว้า แล้วปิดท้ายด้วยกำลังใจ
+
+5. advice: ทางเสริมดวง 2–3 ข้อ ข้อละ 1 ประโยคสั้น (ไม่เกิน 25 คำ) ทำได้จริงในชีวิตประจำวัน ตรงกับเรื่องที่ถามและระดับดวง เช่น สิ่งที่ควรทำ/เลี่ยง ช่วงเวลาที่เหมาะ สีหรือเลขเสริมดวง ทำบุญหรือไหว้พระที่ตรงกับเรื่อง (ทางเลือก ไม่ต้องเสียเงิน)
+
+${VOICE}
 
 ข้อห้าม: ไม่ฟันธงเรื่องความตาย โรคร้าย หรือเหตุร้ายแรง เรื่องสุขภาพให้เป็นคำแนะนำทั่วไป ไม่แนะนำการตัดสินใจทางการเงินก้อนใหญ่แทนลูกค้า
 
 ตอบเป็น JSON อย่างเดียว ไม่มีข้อความอื่น รูปแบบ:
-{"verse":["วรรค 1","วรรค 2","วรรค 3","วรรค 4"],"topics":[{"label":"การงาน","text":"..."},{"label":"ความรัก","text":"..."},{"label":"การเงิน","text":"..."},{"label":"สุขภาพ","text":"..."}],"overall":"..."}`;
+{"verse":["วรรค 1","วรรค 2","วรรค 3","วรรค 4"],"answer":"...","topics":[{"label":"การงาน","text":"..."},{"label":"ความรัก","text":"..."},{"label":"การเงิน","text":"..."},{"label":"สุขภาพ","text":"..."}],"overall":"...","advice":["...","..."]}`;
 
 const REPLY_LANG = {
   en: '\n\nเขียนทั้งหมดเป็นภาษาอังกฤษ (กลอนเป็นบทกวีภาษาอังกฤษ 4 บรรทัด) และใช้ label: Career, Love, Money, Health',
@@ -28,14 +36,6 @@ const LEVEL = { 5: 'ดวงเด่นมาก', 4: 'ดวงดี', 3: '�
 
 const client = new Anthropic(); // อ่าน ANTHROPIC_API_KEY จาก environment
 
-function codeAllowed(given) {
-  const codes = (process.env.MOHDOO_AI_CODE || '').split(',').map((c) => c.trim()).filter(Boolean);
-  const g = Buffer.from(String(given || '').trim());
-  return codes.some((c) => {
-    const b = Buffer.from(c);
-    return b.length === g.length && timingSafeEqual(b, g);
-  });
-}
 
 // ดึง JSON ก้อนแรกออกจากคำตอบ (กันกรณีมีข้อความหรือ ``` ห่อ)
 function parseSlip(text) {
@@ -50,17 +50,18 @@ function parseSlip(text) {
       .filter((t) => t.label && t.text).slice(0, 4);
     const overall = String(j.overall || '').trim().slice(0, 900);
     if (verse.length < 2 || topics.length < 4 || !overall) return null;
-    return { verse, topics, overall };
+    const advice = (Array.isArray(j.advice) ? j.advice : []).map((a) => String(a).trim().slice(0, 200)).filter(Boolean).slice(0, 3);
+    return { verse, answer: String(j.answer || '').trim().slice(0, 700), topics, overall, advice };
   } catch (_) { return null; }
 }
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
-  if (!process.env.ANTHROPIC_API_KEY || !process.env.MOHDOO_AI_CODE) return res.status(503).json({ error: 'ai_not_configured' });
-  if (!codeAllowed(req.headers['x-ai-code'])) return res.status(401).json({ error: 'invalid_code' });
+  if (!process.env.ANTHROPIC_API_KEY) return res.status(503).json({ error: 'ai_not_configured' });
 
   let body;
   try { body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {}; } catch (_) { return res.status(400).json({ error: 'bad_request' }); }
+  if (!(await aiAllowed(req, { need: 'order', orderNo: body.order_no }))) return res.status(401).json({ error: 'invalid_code' }); // จ่ายแล้ว (คำสั่งซื้อ/สมาชิก) หรือรหัสทดลอง
   const detail = String(body.detail || '').slice(0, 3000);
   if (!detail.trim()) return res.status(400).json({ error: 'bad_request' });
   const p = body.profile || {};

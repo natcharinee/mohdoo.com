@@ -1,6 +1,18 @@
 // ===== ดูดวงประจำวัน (สมาชิกรายเดือน): รายงานดวงทุกวันจากทุกศาสตร์ + ถามแม่หมอ AI =====
 const AI_PRICE = 150;      // ราคาต่อเดือน
 const AI_DAYS = 30;
+// หมดอายุวันที่เดียวกันของเดือนถัดไป (ตรงกับ addMonth ฝั่งเซิร์ฟเวอร์) · 31 ม.ค. → 28/29 ก.พ.
+function addMonth(ts) {
+  const d = new Date(ts);
+  const day = d.getDate();
+  d.setDate(1);
+  d.setMonth(d.getMonth() + 1);
+  d.setDate(Math.min(day, new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()));
+  return d.getTime();
+}
+// คำเตือน (เลี่ยง… / ระวัง…) เป็นสีแดงให้เห็นชัด
+const warnMark = (html) => html.replace(/((?:ต้อง|ควร)?(?:เลี่ยง|ระวัง)[^\s·()<.,]*)/g, '<span class="warn">⚠️ $1</span>');
+const aiRenewFrom = (u) => (u && u.aiUntil && u.aiUntil > Date.now() ? u.aiUntil : Date.now());
 const AI_SUGGEST = ['ดวงความรักเดือนนี้เป็นอย่างไร', 'ควรเปลี่ยนงานช่วงนี้ไหม', 'สีมงคลและเลขนำโชคของฉัน', 'ดวงการเงินปีนี้', 'ฉันกับเขาเข้ากันได้ไหม'];
 
 const aiPanel = makePanel('aiPanel', 'ดูดวงประจำวัน');
@@ -39,22 +51,22 @@ function renderAIPitch(u) {
       <li><span>🧬</span><div><b>รู้จักคุณ</b><small>ใช้วันเกิด เวลาเกิด และเรื่องที่สนใจจากโปรไฟล์</small></div></li>
       <li><span>⚡</span><div><b>ตอบทันที</b><small>ไม่ต้องรอคิวหมอดู</small></div></li>
     </ul>
-    <div class="buy-row"><div><small>${expired ? 'สมาชิกหมดอายุแล้ว · ต่ออายุ' : 'สมาชิกรายเดือน'}</small><b>${AI_PRICE} ฿ <em>/ ${AI_DAYS} วัน</em></b></div>
+    <div class="buy-row"><div><small>${expired ? 'สมาชิกหมดอายุแล้ว · ต่ออายุ' : 'สมาชิกรายเดือน'}</small><b>${AI_PRICE} ฿ <em>/ เดือน</em></b></div>
       <button class="btn-gold" id="aiSubscribe">${expired ? 'ต่ออายุ ›' : 'สมัครเลย ›'}</button></div>
     <p class="test-mode">🧪 โหมดทดลอง · ไม่มีการเก็บเงินจริง สมัครแล้วลองคุยได้เลย</p>
     <p class="pay-note">ชำระด้วย QR แล้วเริ่มคุยได้ทันที · คำทำนายเพื่อความบันเทิงและเป็นแนวทางชีวิต</p>`;
   $('aiSubscribe').addEventListener('click', () => startCheckout({
     key: 'ai-month', icon: '🔮', title: 'ดูดวงประจำวัน รายเดือน', sub: 'รายงานดวงทุกวันจากทุกศาสตร์ + ถามแม่หมอ AI',
-    tiers: [{ label: `${AI_DAYS} วัน · รายงานทุกวัน`, price: AI_PRICE }],
+    tiers: [{ label: '1 เดือน · ดวงทุกเช้า + ถาม AI ไม่จำกัด', price: AI_PRICE }], aiPlan: true,
     next: { kind: 'ai' },
   }));
 }
 
 // เรียกจาก checkout.js หลังชำระเงินสำเร็จ
-function activateAI() {
+function activateAI(until) {
   const u = currentUser();
   const from = aiActive(u) ? u.aiUntil : Date.now();
-  u.aiUntil = from + AI_DAYS * 864e5;
+  u.aiUntil = until || addMonth(from); // until = วันหมดอายุจากเซิร์ฟเวอร์
   u.aiChat = u.aiChat || [];
   persistUser(u);
   closePanel('payPanel');
@@ -131,13 +143,15 @@ function dailyHTML(r, note = '') {
   const c = r.color;
   return `<article class="daily">
     <header class="daily-head"><span class="daily-date">${new Date(r.date).toLocaleDateString('th-TH', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</span><h3>ดวงของคุณวันนี้</h3></header>
-    <div class="daily-sum"><b>✦ สรุปรวมจากทุกศาสตร์</b><p>${esc(r.summary)}</p></div>
+    <div class="daily-sum"><b>✦ สรุปรวมจากทุกศาสตร์</b><p>${warnMark(esc(r.summary))}</p></div>
     <ul class="daily-stars">${r.scores.map(row).join('')}</ul>
     <div class="daily-grid">
       <div class="dg"><small>♈&#xFE0E; โหราศาสตร์ · ราศี${r.zodiac.name}</small><b>${r.zodiac.sym}&#xFE0E; ธาตุ${r.zodiac.el}</b><p>${r.zodiac.tip}</p></div>
       <div class="dg"><small>🔢 เลขศาสตร์ · เลขประจำวัน</small><b>${r.number.n} · ${r.number.title}</b><p>${r.number.text}</p></div>
       <div class="dg"><small>🎨 สีมงคลวัน${c.day}</small><b class="dg-colors">${['work', 'money', 'love'].map((k) => `<span class="sw" style="background:${HEX[c[k]]}" title="${c[k]}"></span>`).join('')}</b>
-        <p>งาน<b>สี${c.work}</b> · เงิน<b>สี${c.money}</b> · รัก<b>สี${c.love}</b><br>เลี่ยง<b>สี${c.avoid}</b></p></div>
+        <p>งาน<b>สี${c.work}</b> · เงิน<b>สี${c.money}</b> · รัก<b>สี${c.love}</b></p>
+        <p class="avoid-txt">ควรเลี่ยง<b>สี${c.avoid}</b></p>
+        <div class="avoid-corner"><small>🚫 สีที่ควรเลี่ยง</small><b class="dg-colors"><span class="sw" style="background:${HEX[c.avoid]}" title="${c.avoid}"></span></b></div></div>
       <div class="dg"><small>🃏 ไพ่ทาโรต์ประจำวัน</small><b>${r.card[1]} ${r.card[0]}</b><p>${r.card[2]}</p></div>
       <div class="dg"><small>🪷 ทักษา · วันนี้ตกเป็น</small><b>${r.taksa.name}</b><p>${r.taksa.tip}</p></div>
       <div class="dg"><small>🍀 เลขนำโชควันนี้</small><b class="dg-nums">${r.lucky.map((n) => `<span>${n}</span>`).join('')}</b><p>ใช้เป็นเลขโปรดของวัน</p></div>
@@ -299,8 +313,16 @@ async function ask(text) {
   u.aiChat = [...(u.aiChat || []), { role: 'user', content: q }].slice(-50);
   persistUser(u);
   const log = $('aiLog');
-  log.insertAdjacentHTML('beforeend', `<div class="bubble me">${fmtMsg(q)}</div><div class="bubble ai typing" id="aiTyping"><i></i><i></i><i></i></div>`);
+  log.insertAdjacentHTML('beforeend', `<div class="bubble me">${fmtMsg(q)}</div><div class="bubble ai typing" id="aiTyping"><span class="t-dots"><i></i><i></i><i></i></span><small class="t-step">${THINK_STEPS[0]}</small></div>`);
   scrollLog();
+  // แม่หมอ “ค้นดวง” สักครู่ก่อนตอบ: ข้อความสถานะเปลี่ยนไปเรื่อย ๆ + ใช้เวลาอย่างน้อย 4–7 วินาที (คำถามยาวคิดนานขึ้น)
+  let step = 0;
+  const stepTimer = setInterval(() => {
+    step = Math.min(step + 1, THINK_STEPS.length - 1);
+    const el = document.querySelector('#aiTyping .t-step');
+    if (el) el.textContent = THINK_STEPS[step];
+  }, 1500);
+  const thinking = new Promise((r) => setTimeout(r, Math.min(7000, 4000 + q.length * 40 + Math.random() * 1500)));
 
   let reply;
   try {
@@ -323,35 +345,117 @@ async function ask(text) {
     }
   } catch (_) { /* ไม่มีเซิร์ฟเวอร์ AI (เช่น เปิดในเครื่อง) → ใช้คำตอบตัวอย่าง */ }
   if (!reply) reply = demoReply(q, u);
+  await thinking;
+  clearInterval(stepTimer);
 
   $('aiTyping')?.remove();
   const cur = currentUser();
   cur.aiChat = [...(cur.aiChat || []), { role: 'assistant', content: reply }].slice(-50);
   persistUser(cur);
-  log.insertAdjacentHTML('beforeend', aiBubble(reply));
+  await typeOut(log, reply); // พิมพ์คำตอบทีละบรรทัด เหมือนแม่หมอกำลังเขียน
   if (u.aiCode && !currentUser().aiCode) renderChat(currentUser()); // รหัสผิด → แสดงช่องกรอกใหม่
   scrollLog();
   asking = false;
 }
 
-// ---------- คำตอบตัวอย่าง (ใช้เมื่อยังไม่ได้เชื่อม AI บนเซิร์ฟเวอร์) ----------
-function demoReply(q, u, why = 'ยังไม่ได้เชื่อม AI จริงบนเซิร์ฟเวอร์') {
-  const out = [];
-  if (u.birthdate) {
-    const { m, d, date } = birthParts(u);
-    const [zName, , zEl] = zodiacOf(m, d);
-    const c = DAY_COLORS[date.getDay()];
-    const life = lifeNumber(u);
-    out.push(`**ราศี${zName} (ธาตุ${zEl})** — ช่วงนี้พลังของธาตุ${zEl}ช่วยให้คุณ${zEl === 'ไฟ' ? 'กล้าตัดสินใจ' : zEl === 'ดิน' ? 'มั่นคงและวางแผนได้ดี' : zEl === 'ลม' ? 'สื่อสารเก่ง มีไอเดียใหม่' : 'เข้าใจความรู้สึกคนรอบข้าง'}`);
-    out.push(`**เลขศาสตร์: เลขชีวิต ${life}** — ${NUM_MEANING[life][1]}`);
-    out.push(`**สีมงคล (เกิดวัน${c.day})** — เสริมงานใช้สี${c.work} เสริมเงินใช้สี${c.money} เสริมรักใช้สี${c.love}`);
-  } else {
-    out.push('เพิ่มวันเกิดในหน้าบัญชี แม่หมอจะวิเคราะห์ราศี เลขชีวิต และสีมงคลให้ละเอียดขึ้นค่ะ');
+// ---------- แม่หมอกำลังคิด / กำลังพิมพ์ ----------
+const THINK_STEPS = ['แม่หมอกำลังเปิดดวงของคุณ…', 'กำลังดูราศีและวันเกิด…', 'กำลังคำนวณเลขศาสตร์…', 'กำลังเปิดไพ่ให้คำถามนี้…', 'กำลังรวบรวมคำทำนาย…'];
+const calm = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+async function typeOut(log, reply) {
+  if (calm()) { log.insertAdjacentHTML('beforeend', aiBubble(reply)); return; }
+  log.insertAdjacentHTML('beforeend', '<div class="bubble ai writing"><div class="b-text"></div></div>');
+  const bubble = log.lastElementChild;
+  const box = bubble.querySelector('.b-text');
+  const lines = fmtMsg(reply).split('<br>');
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = document.createElement('span');
+    line.className = 'type-line';
+    line.innerHTML = lines[i] + (i < lines.length - 1 ? '<br>' : '');
+    box.appendChild(line);
+    scrollLog();
+    // บรรทัดยาวใช้เวลานานกว่า (เหมือนพิมพ์) · บรรทัดว่างผ่านเร็ว
+    const len = line.textContent.trim().length;
+    await new Promise((r) => setTimeout(r, len ? Math.min(1100, 250 + len * 12) : 120));
   }
-  const cards = ['ดวงดาว ✦ ความหวังกำลังกลับมา', 'ดวงอาทิตย์ ☀ ความสำเร็จและความสุข', 'กงล้อแห่งโชคชะตา ☸ จุดเปลี่ยนที่ดี', 'จักรพรรดินี 🌸 ความอุดมสมบูรณ์', 'ฤๅษี 🏮 ถอยมาทบทวนสักนิด'];
-  out.push(`**ไพ่ทาโรต์สำหรับคำถามนี้: ${cards[q.length % cards.length]}**`);
-  out.push('สรุป: ค่อย ๆ ไปทีละก้าว ฟังใจตัวเอง แล้วเรื่องที่ถามจะคลี่คลายในทางที่ดีค่ะ ✦');
-  return `${out.join('\n')}\n\n(โหมดตัวอย่าง — ${why})`;
+  bubble.outerHTML = aiBubble(reply); // ใส่ปุ่มฟังเสียงตอนพิมพ์เสร็จ
+}
+
+// ---------- คำตอบตัวอย่าง (ใช้เมื่อยังไม่ได้เชื่อม AI บนเซิร์ฟเวอร์) ----------
+// ตอบตามเรื่องที่ถาม (ความรัก / งาน / เงิน / สุขภาพ / สี-เลขมงคล / คู่ / เรียน / ครอบครัว) จากดวงวันนี้และข้อมูลเกิดจริง
+const Q_TOPICS = [
+  ['lucky', /สี|เลข|นำโชค|มงคล/],
+  ['couple', /เข้ากัน|คู่|แฟน.*(?:กับ|เขา)|ฉันกับ/],
+  ['love', /รัก|แฟน|โสด|หัวใจ|คนคุย|แต่งงาน|เนื้อคู่/],
+  ['work', /งาน|อาชีพ|เปลี่ยนงาน|เลื่อน|หัวหน้า|ธุรกิจ|สัมภาษณ์|สมัคร/],
+  ['money', /เงิน|การเงิน|หนี้|ลงทุน|รวย|โชคลาภ|หวย|รายได้/],
+  ['health', /สุขภาพ|ป่วย|นอน|เหนื่อย|ร่างกาย/],
+  ['study', /เรียน|สอบ|ทุน|มหาลัย/],
+  ['family', /ครอบครัว|พ่อ|แม่|ลูก|บ้าน|ญาติ/],
+];
+const AREA_OF = { love: 'ความรัก', couple: 'ความรัก', work: 'การงาน', money: 'การเงิน', health: 'สุขภาพ', study: 'การงาน', family: 'ภาพรวม' };
+const WHEN_OF = (q) => (/ปีนี้|ปีหน้า|ทั้งปี/.test(q) ? 'ปีนี้' : /เดือน/.test(q) ? 'เดือนนี้' : /สัปดาห์|อาทิตย์/.test(q) ? 'สัปดาห์นี้' : 'ช่วงนี้');
+const VERDICT = {
+  5: 'ดวงเปิดทางเต็มที่ เป็นจังหวะที่ดีมากสำหรับเรื่องนี้',
+  4: 'แนวโน้มไปในทางที่ดี มีแรงหนุน ขอแค่ไม่ประมาท',
+  3: 'ยังก้ำกึ่ง มีทั้งโอกาสและบททดสอบ ผลขึ้นกับการตัดสินใจของคุณ',
+  2: 'ยังไม่ใช่จังหวะที่ดีที่สุด ควรชะลอและเตรียมตัวก่อน',
+  1: 'ช่วงนี้ควรระวังเป็นพิเศษ ถอยมาตั้งหลักก่อนจะดีกว่า',
+};
+function demoReply(q, u, why = 'ยังไม่ได้เชื่อม AI จริงบนเซิร์ฟเวอร์') {
+  const note = `\n\n(คำตอบตัวอย่าง · ${why})`;
+  if (!u.birthdate) return `อยากดูให้ตรงตัวคุณจริง ๆ แม่หมอต้องรู้วันเกิดก่อนค่ะ เพิ่มวันเกิดในหน้าบัญชีแล้วถามใหม่ได้เลยนะคะ ✦${note}`;
+  const topic = (Q_TOPICS.find(([, re]) => re.test(q)) || ['general'])[0];
+  const r = computeDaily(u);
+  const c = r.color;
+  const { m, d, date } = birthParts(u);
+  const [zName, , zEl] = zodiacOf(m, d);
+  const born = DAY_COLORS[date.getDay()];
+  const life = lifeNumber(u);
+  const when = WHEN_OF(q);
+  const star = Object.fromEntries(r.scores);
+  const area = AREA_OF[topic] || 'ภาพรวม';
+  const n = star[area] || star['ภาพรวม'];
+  const tip = (AREA_TIP[area] || AREA_TIP.การงาน || ['', ''])[n >= 4 ? 0 : 1];
+  const out = [];
+
+  if (topic === 'lucky') {
+    out.push(`**สีมงคลประจำตัว (เกิดวัน${born.day})** — สี${born.birth}คือสีประจำวันเกิด เสริมงานด้วยสี${born.work} เสริมเงินด้วยสี${born.money} เสริมเสน่ห์ด้วยสี${born.love} และควรเลี่ยงสี${born.avoid}ในวันสำคัญ`);
+    out.push(`**สีมงคลวันนี้ (วัน${c.day})** — งานสี${c.work} · เงินสี${c.money} · รักสี${c.love} · ⚠️ เลี่ยงสี${c.avoid}`);
+    out.push(`**เลขนำโชค** — เลขชีวิตของคุณคือ ${life} (${NUM_MEANING[life][0]}) ส่วนเลขนำโชควันนี้คือ ${r.lucky.join(' · ')}`);
+    out.push(`**วิธีใช้** — เลือกเลขเหล่านี้เป็นเลขลงท้ายรหัส เบอร์ หรือวันนัดสำคัญ และพกของสี${c.money}ติดตัวในวันที่ต้องเจรจาเรื่องเงิน`);
+    out.push(`สรุป: สีและเลขเป็นตัวช่วยเสริมความมั่นใจ ใช้คู่กับความตั้งใจของคุณ แล้วจังหวะดีจะมาหาเองค่ะ ✦`);
+    return out.join('\n') + note;
+  }
+  if (topic === 'couple') {
+    const match = { ไฟ: 'ลม', ลม: 'ไฟ', ดิน: 'น้ำ', น้ำ: 'ดิน' }[zEl];
+    out.push(`**พื้นดวงของคุณ** — ราศี${zName} ธาตุ${zEl} ${ELEMENT_TIP[zEl]}`);
+    out.push(`**ดวงความรักวันนี้ ${'★'.repeat(star.ความรัก)}${'☆'.repeat(5 - star.ความรัก)}** — ${AREA_TIP.ความรัก[star.ความรัก >= 4 ? 0 : 1]}`);
+    out.push(`**คนที่เข้ากันง่าย** — ธาตุ${zEl}ไปได้ดีกับธาตุ${match}และธาตุเดียวกัน ถ้าเขาเป็นธาตุอื่นก็ไม่ใช่ว่าไปกันไม่ได้ แค่ต้องเรียนรู้จังหวะกันมากขึ้น`);
+    out.push(`**อยากรู้ให้ชัด** — เพิ่มวันเกิดของเขาใน “ดวงคนใกล้ตัว” แม่หมอจะเทียบราศี ธาตุ และเลขชีวิตของทั้งคู่ให้แบบละเอียดค่ะ`);
+    out.push(`สรุป: ความเข้ากันไม่ได้อยู่ที่ดวงอย่างเดียว ${star.ความรัก >= 4 ? 'ช่วงนี้ดวงรักเปิด เหมาะเปิดใจคุยกันตรง ๆ' : 'ช่วงนี้ใจเย็นและฟังกันให้มาก แล้วความสัมพันธ์จะแน่นขึ้น'} ✦`);
+    return out.join('\n') + note;
+  }
+
+  const LEAD = {
+    love: `**ดวงความรัก${when}**`, work: `**ดวงการงาน${when}**`, money: `**ดวงการเงิน${when}**`, health: `**ดวงสุขภาพ${when}**`,
+    study: `**ดวงการเรียน${when}**`, family: `**ดวงครอบครัว${when}**`, general: `**ภาพรวมดวง${when}**`,
+  };
+  out.push(`${LEAD[topic]} ${'★'.repeat(n)}${'☆'.repeat(5 - n)} — ${VERDICT[n]}`);
+  out.push(`**พื้นดวง** — ราศี${zName} ธาตุ${zEl} ${ELEMENT_TIP[zEl]} · เลขชีวิต ${life} ${NUM_MEANING[life][1]}`);
+  const SPECIFIC = {
+    love: `${tip} · ไพ่ ${r.card[0]} บอกว่า${r.card[2]}`,
+    work: `${tip} · ทักษาวันนี้ตกเป็น${r.taksa.name} ${r.taksa.tip}${/เปลี่ยนงาน|ลาออก/.test(q) ? (n >= 4 ? ' ถ้ามีที่ใหม่ที่ชัดเจนแล้ว จังหวะนี้ขยับได้' : ' ยังไม่ควรลาออกตอนนี้ หาที่ใหม่ให้ได้ก่อนแล้วค่อยตัดสินใจ') : ''}`,
+    money: `${tip} · เลขนำโชคของคุณช่วงนี้คือ ${r.lucky.join(' ')}${/ลงทุน|หุ้น|คริปโต/.test(q) ? ' เรื่องลงทุนก้อนใหญ่ให้ศึกษาข้อมูลและปรึกษาผู้รู้ก่อนเสมอ' : ''}`,
+    health: `${tip} · เรื่องอาการเจ็บป่วยจริงควรปรึกษาแพทย์ ดวงเป็นแค่แนวทางให้ดูแลตัวเองค่ะ`,
+    study: `${(AREA_TIP.การงาน)[n >= 4 ? 0 : 1].replace('งาน', 'การเรียน')} · เลขประจำวัน ${r.number.n} ${r.number.title} ${r.number.text}`,
+    family: `ไพ่ ${r.card[0]} บอกว่า${r.card[2]} · ทักษาวันนี้ตกเป็น${r.taksa.name} ${r.taksa.tip}`,
+    general: `${r.summary.split(' · ')[0]}`,
+  };
+  out.push(`**สิ่งที่ดวงบอก** — ${SPECIFIC[topic]}`);
+  const COLOR = { love: c.love, money: c.money, work: c.work, study: c.work, health: born.birth, family: born.birth, general: c.money };
+  out.push(`**ทางเสริมดวง** — ใส่หรือพกของสี${COLOR[topic]} · ใช้เลข ${r.lucky[0]} เป็นเลขโปรด · ⚠️ เลี่ยงสี${c.avoid}ในวันสำคัญ`);
+  out.push(`สรุป: ${n >= 4 ? `${when}เป็นจังหวะของคุณ กล้าลงมือแล้วผลจะออกมาดี` : n === 3 ? `ค่อย ๆ ไปทีละก้าว เตรียมตัวให้พร้อม แล้วทางจะชัดขึ้นเอง` : `ถอยมาตั้งหลักก่อน ดูแลใจให้นิ่ง อีกไม่นานจังหวะดีจะเวียนมา`} ✦`);
+  return out.join('\n') + note;
 }
 
 // ---------- ปุ่มกลางเมนูล่าง ----------

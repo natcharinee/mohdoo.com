@@ -15,7 +15,20 @@ const SEERS = SEER_DATA.map((d) => {
 });
 // บนเว็บ: ส่งคำถามแล้วรอหมอดูตอบเป็นข้อความเท่านั้น (ราคามาตรฐาน)
 // คุยสดแบบเรียลไทม์ (โทร / วิดีโอคอล) ใช้บนแอปหมอดู.com · ราคาตามที่หมอดูตั้งบนแพลตฟอร์มเดิม (1 เหรียญ = 1 บาท ชั่วคราว)
-const seerTiers = () => [{ label: 'ถาม 1 เรื่อง (ตอบเป็นข้อความ)', price: CATEGORY_PRICE }];
+// ราคาถาม 1 เรื่อง: หมอดูแต่ละท่านตั้งเอง (จากระบบหลังบ้าน) · ยังไม่ตั้ง = ราคากลาง
+let SEER_PRICES = {};
+const seerPrice = (s) => SEER_PRICES[s.id] || CATEGORY_PRICE;
+const seerTiers = (s) => [{ label: 'ถาม 1 เรื่อง (ตอบเป็นข้อความ)', price: seerPrice(s) }];
+async function loadSeerPrices() {
+  if (typeof serverReady !== 'undefined') await serverReady;
+  if (!window.SERVER) return;
+  try {
+    const r = await srv('seers/prices');
+    const changed = JSON.stringify(r.prices || {}) !== JSON.stringify(SEER_PRICES);
+    SEER_PRICES = r.prices || {};
+    if (changed && seersPanel.classList.contains('open')) renderSeers();
+  } catch (_) {}
+}
 // ลิงก์ดาวน์โหลดแอปอยู่ที่ APP_LINKS ใน common.js (ใช้ร่วมกันทุกหน้า)
 function appCard(s) {
   const btn = (os, icon, label) => APP_LINKS[os]
@@ -28,16 +41,34 @@ function appCard(s) {
       <div class="app-dls">${btn('ios', '', 'App Store')}${btn('android', '▶', 'Google Play')}</div>
     </div>`;
 }
-const SEER_FILTERS = ['ทั้งหมด', ...CATEGORIES.map((c) => c.name)];
+// เลือกหมอดูตาม “เรื่องที่อยากรู้” (แบบหมวดดวงที่เว็บดูดวงไทยนิยม: ความรัก การงาน การเงิน สุขภาพ …)
+// แต่ละเรื่องจับคู่กับศาสตร์ที่ใช้อ่านเรื่องนั้นได้ดี → หมอดูที่มีศาสตร์เหล่านี้จะขึ้นในรายการ
+const SEER_TOPICS = [
+  ['ทั้งหมด', '✦', null],
+  ['ดวงชะตาชีวิต', '🌟', ['astrology', 'palm-face', 'psychic']],
+  ['ความรัก · คู่ครอง', '💞', ['cards', 'astrology', 'psychic']],
+  ['การงาน · ธุรกิจ', '💼', ['astrology', 'numbers', 'cards']],
+  ['การเงิน · โชคลาภ', '💰', ['numbers', 'fengshui', 'astrology']],
+  ['สุขภาพ', '🌿', ['astrology', 'palm-face']],
+  ['ครอบครัว', '👨‍👩‍👧', ['astrology', 'psychic', 'cards']],
+  ['บ้าน · ฮวงจุ้ย', '🏯', ['fengshui', 'numbers']],
+];
+const topicCats = (name) => (SEER_TOPICS.find(([n]) => n === name) || [])[2];
+// ชื่อที่ลูกค้าคุ้นเคย (ใช้ค้นหา เช่น พิมพ์ “เบอร์มือถือ” แล้วเจอหมอดูที่ดูหมายเลขโทรศัพท์)
+const SKILL_LABEL = { 'หมายเลขโทรศัพท์': 'ดูเบอร์มือถือ', 'ชื่อ สกุล': 'ชื่อ-สกุล · เปลี่ยนชื่อ', 'เลขบัตรประชาชน': 'เลขบัตรประชาชน', 'ดูดวงลายมือ': 'ดูลายมือ', 'ลายเซ็น': 'ลายเซ็นมงคล', 'บ้านเลขที่': 'บ้านเลขที่มงคล', 'ใบไม้': 'เสี่ยงทายใบไม้' };
+const skillLabel = (n) => SKILL_LABEL[n] || n;
+const seerMatches = (s, f) => f === 'ทั้งหมด' || (topicCats(f) ? topicCats(f).some((c) => s.catIds.includes(c)) : s.types.includes(f));
 
 const seerAvatar = (s, cls = '') =>
   `<span class="seer-av photo ${cls}"><img src="${s.img}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('i'),{textContent:'${s.name.replace(/'/g, '').charAt(0)}'}))"></span>`;
-const seerCard = (s) => `<button class="seer-row" data-seer="${s.id}">
+// ศาสตร์ที่ตรงกับคำค้นหา → ขึ้นก่อนและเน้นสีทอง
+const qHit = (t, q) => typeof q === 'string' && !!q && `${t} ${skillLabel(t)}`.toLowerCase().includes(q.toLowerCase());
+const seerCard = (s, q = '') => `<button class="seer-row" data-seer="${s.id}">
     ${seerAvatar(s)}
     <span class="seer-txt"><b translate="no">${esc(s.name)}</b>
-      <small>เด่นเรื่อง ${s.strong.slice(0, 2).join(' · ')}</small>
-      <small class="seer-sci">${s.types.slice(0, 3).join(' · ')}${s.types.length > 3 ? ' …' : ''}</small></span>
-    <span class="seer-price"><small>เริ่ม</small>${CATEGORY_PRICE} ฿</span>
+      <small>เด่นเรื่อง ${s.strong.join(', ')}</small>
+      <span class="seer-sci">${[...s.types].sort((a, b) => qHit(b, q) - qHit(a, q)).map((t) => `<i class="${qHit(t, q) ? 'hit' : ''}">${esc(qHit(t, q) ? skillLabel(t) : t)}</i>`).join('')}</span></span>
+    <span class="seer-price"><small>ถาม 1 เรื่อง</small>${seerPrice(s).toLocaleString('th-TH')} ฿</span>
   </button>`;
 
 // ---------- หน้าแท็บหมอดู ----------
@@ -47,27 +78,42 @@ function renderSeers() {
   const body = seersPanel.querySelector('.panel-body');
   const featured = [...SEERS].sort((a, b) => b.types.length - a.types.length).slice(0, 6);
   const list = SEERS.filter((s) =>
-    (seerFilter === 'ทั้งหมด' || s.strong.includes(seerFilter)) &&
-    (!seerQuery || `${s.name} ${s.strong.join(' ')} ${s.types.join(' ')}`.toLowerCase().includes(seerQuery.toLowerCase())));
+    seerMatches(s, seerFilter) &&
+    (!seerQuery || `${s.name} ${s.strong.join(' ')} ${s.types.join(' ')} ${s.types.map(skillLabel).join(' ')}`.toLowerCase().includes(seerQuery.toLowerCase())));
+  const search = `<label class="seer-search"><span>🔍</span><input id="seerQ" type="search" placeholder="ค้นหาหมอดู หรือเรื่องที่อยากดู เช่น ไพ่ทาโรต์ เบอร์มือถือ" value="${esc(seerQuery)}"></label>`;
+  // กำลังค้นหา → แสดงผลลัพธ์ทันทีใต้ช่องค้นหา (ไม่ต้องเลื่อนหา)
+  if (seerQuery) {
+    body.innerHTML = `${search}
+      <div class="sec-head"><h3>ผลการค้นหา “${esc(seerQuery)}”</h3><span class="sec-note">${list.length} ท่าน</span></div>
+      <div class="seer-list">${list.length ? list.map((s) => seerCard(s, seerQuery)).join('')
+        : `<div class="seer-noresult"><p>ไม่พบหมอดูที่ตรงกับ “${esc(seerQuery)}”</p><small>ลองค้นด้วยคำอื่น เช่น ความรัก ไพ่ทาโรต์ เบอร์มือถือ ชื่อ ฮวงจุ้ย</small>
+          <button class="btn-ghost" data-clear-q>ดูหมอดูทั้งหมด</button></div>`}</div>`;
+    bindSearch(body);
+    return;
+  }
   body.innerHTML = `
-    <label class="seer-search"><span>🔍</span><input id="seerQ" type="search" placeholder="ค้นหาหมอดู หรือศาสตร์ เช่น ไพ่ทาโรต์" value="${esc(seerQuery)}"></label>
+    ${search}
 
-    <div class="sec-head"><h3>หมอดูบนแอป</h3><span class="sec-note">${SEERS.length} ท่าน</span></div>
+    <div class="sec-head"><h3>หมอดูแนะนำ ✦</h3><span class="sec-note">คัดมาให้คุณ</span></div>
     <div class="hscroll seer-feat">${featured.map((s) => `<button class="feat-card" data-seer="${s.id}">
         ${seerAvatar(s, 'big')}
         <b translate="no">${esc(s.name)}</b><small>เด่นเรื่อง${s.strong[0]}</small>
         <span class="feat-meta">${s.types.length} ศาสตร์</span>
       </button>`).join('')}</div>
 
-    <div class="sec-head"><h3>เลือกตามเรื่องที่เด่น</h3></div>
-    <div class="strong-chips">${SEER_FILTERS.map((f) => `<button class="chip-s ${f === seerFilter ? 'on' : ''}" data-strong="${f}">${f}</button>`).join('')}</div>
-
-    <div class="sec-head"><h3>${seerFilter === 'ทั้งหมด' ? 'หมอดูทั้งหมด' : `เด่นเรื่อง${seerFilter}`}</h3><span class="sec-note">${list.length} ท่าน</span></div>
-    <div class="seer-list">${list.length ? list.map(seerCard).join('') : '<p class="pf-empty">ไม่พบหมอดูที่ตรงกับการค้นหา</p>'}</div>
-
     <div class="sec-head"><h3>เลือกตามศาสตร์</h3></div>
     <div class="cat-grid">${CATEGORIES.map((c) =>
-      `<button class="cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small><em>${c.types.length} ประเภท ›</em></button>`).join('')}</div>`;
+      `<button class="cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small><em>${c.types.length} ประเภท ›</em></button>`).join('')}</div>
+
+    <div class="sec-head"><h3>เลือกตามเรื่องที่อยากรู้</h3></div>
+    <div class="strong-chips">${SEER_TOPICS.map(([f, icon]) => `<button class="chip-s ${f === seerFilter ? 'on' : ''}" data-strong="${f}"><span>${icon}</span>${f}</button>`).join('')}</div>
+
+    <div class="sec-head"><h3>${seerFilter === 'ทั้งหมด' ? 'หมอดูทั้งหมด' : `หมอดูเรื่อง${skillLabel(seerFilter)}`}</h3><span class="sec-note">${list.length} ท่าน</span></div>
+    <div class="seer-list">${list.length ? list.map((x) => seerCard(x)).join('') : '<p class="pf-empty">ไม่พบหมอดูที่ตรงกับการค้นหา</p>'}</div>
+`;
+  bindSearch(body);
+}
+function bindSearch(body) {
   const q = body.querySelector('#seerQ');
   q.addEventListener('input', () => {
     seerQuery = q.value.trim();
@@ -80,11 +126,13 @@ function renderSeers() {
 seersPanel.addEventListener('click', (e) => {
   const f = e.target.closest('[data-strong]');
   if (f) { seerFilter = f.dataset.strong; renderSeers(); return; }
+  if (e.target.closest('[data-clear-q]')) { seerQuery = ''; renderSeers(); return; }
   const s = e.target.closest('[data-seer]');
   if (s) openSeer(s.dataset.seer);
 });
-$('tabSeers').addEventListener('click', renderSeers);
+$('tabSeers').addEventListener('click', () => { renderSeers(); loadSeerPrices(); });
 renderSeers();
+addEventListener('DOMContentLoaded', loadSeerPrices); // รอ server-sync.js โหลดก่อน
 
 // ---------- โปรไฟล์หมอดู ----------
 const seerPanel = makePanel('seerPanel', 'โปรไฟล์หมอดู');

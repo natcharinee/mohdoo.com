@@ -1,0 +1,18 @@
+{
+  "rewrites": [
+    { "source": "/api/v1/:path*", "destination": "/api/v1?p=:path*" }
+  ],
+  "functions": {
+    "api/v1.js": {
+      "includeFiles": "{services-data,categories-data,shop-data,seers-data}.js",
+      "maxDuration": 30
+    }
+  },
+  "crons": [
+    { "path": "/api/v1/cron/daily", "schedule": "0 23 * * *" }
+  ],
+  "headers": [
+    { "source": "/admin.html", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }, { "key": "X-Frame-Options", "value": "DENY" }] },
+    { "source": "/sw.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+  ]
+}

@@ -2,20 +2,17 @@
 // สัดส่วนตามแผนธุรกิจ: ดูดวง 80% · ขายของ 20% → ร้านค้าเป็นส่วนเสริมในแท็บนี้
 // ราคาสินค้าเป็นราคาตัวอย่าง (ยังไม่มีสต็อกและระบบจัดส่งจริง)
 
-const SHOP_ITEMS = [
-  { id: 'birth-bracelet', icon: '📿', name: 'สร้อยข้อมือหินสีประจำวันเกิด', desc: 'เลือกสีหินตามวันเกิดของคุณให้อัตโนมัติ', price: 299, personal: true },
-  { id: 'amethyst', icon: '💜', name: 'กำไลหินอเมทิสต์', desc: 'โทนม่วงสงบ นิยมพกเพื่อสมาธิและความรัก', price: 390 },
-  { id: 'coin', icon: '🪙', name: 'เหรียญมงคลพกติดตัว', desc: 'ลายพระจันทร์ ดาว และอักขระมงคล', price: 199 },
-  { id: 'candle-set', icon: '🕯️', name: 'ชุดธูปเทียนไหว้พระประจำวันเกิด', desc: 'จำนวนธูปและสีเทียนตามวันเกิด', price: 159, personal: true },
-  { id: 'cloth', icon: '🧧', name: 'ผ้ามงคลลายยันต์', desc: 'ผ้าแขวนหรือพกติดตัว ลายยันต์และดาวนพเคราะห์', price: 250 },
-  { id: 'wallpaper', icon: '🖼️', name: 'วอลเปเปอร์มงคลประจำเดือน', desc: 'ไฟล์ดิจิทัล ออกแบบตามสีมงคลของคุณ ส่งทางแชท', price: 49, digital: true },
-];
+// รายการสินค้าอยู่ใน shop-data.js (ใช้ร่วมกับเซิร์ฟเวอร์เพื่อคิดราคา)
 
 const mongkolPanel = makePanel('mongkolPanel', 'มงคล');
 const mongkolBody = mongkolPanel.querySelector('.panel-body');
 
 let mkTab = 'service';
 function renderMongkol() {
+  if (Date.now() - (renderMongkol.at || 0) > 60e3) { // โหลดสต๊อกใหม่ (ไม่เกินนาทีละครั้ง) แล้ววาดใหม่
+    renderMongkol.at = Date.now();
+    loadShopStock().then(() => { if (window.SERVER) renderMongkol(); });
+  }
   const u = currentUser();
   const day = u && u.birthdate ? DAY_COLORS[birthParts(u).date.getDay()] : null;
   const merit = SERVICES.filter((s) => s.group === 'merit');
@@ -35,7 +32,7 @@ function renderMongkol() {
         <ol>
           <li><span class="ms-ico">📝</span><em>1</em><b>จองและแจ้งชื่อ</b><small>ใส่ชื่อผู้รับบุญ คำอธิษฐาน และเลือกสถานที่</small></li>
           <li><span class="ms-ico">🛕</span><em>2</em><b>ทีมทำพิธีแทนคุณ</b><small>ทำพิธีที่วัดหรือสถานที่จริงตามที่เลือก</small></li>
-          <li><span class="ms-ico">📸</span><em>3</em><b>รับรูปและวิดีโอยืนยัน</b><small>ส่งให้ภายใน 3 วัน ดูได้ใน “ประวัติการดูดวง”</small></li>
+          <li><span class="ms-ico">📸</span><em>3</em><b>รับรูปและวิดีโอยืนยัน</b><small>ส่งให้ภายใน 3 วัน ดูได้ใน “ประวัติบริการมงคล”</small></li>
         </ol>
       </section>
       <div class="sec-head"><h3>ทำบุญ · แก้ดวงออนไลน์</h3><span class="sec-note">ค่าบริการ ${baht(SERVICE_PRICE)}</span></div>
@@ -60,7 +57,7 @@ function renderMongkol() {
         <article class="mk-item">
           <span class="mk-pi">${p.icon}</span>
           <div class="mk-it"><b>${esc(p.name)}</b><small>${esc(p.personal && day ? `${p.desc} · ของคุณ: สี${day.birth}` : p.desc)}</small></div>
-          <div class="mk-buy"><b>${baht(p.price)}</b><button class="btn-ghost" data-shop="${p.id}">สั่งซื้อ</button></div>
+          <div class="mk-buy"><b>${baht(p.price)}</b>${stockBadge(p)}<button class="btn-ghost" data-shop="${p.id}" ${!p.digital && shopStock[p.id] === 0 ? 'disabled' : ''}>${!p.digital && shopStock[p.id] === 0 ? 'สินค้าหมด' : 'สั่งซื้อ'}</button></div>
         </article>`).join('')}</div>
     </section>
 
@@ -109,16 +106,31 @@ function placesHTML() {
   </section>`;
 }
 
+// สต๊อกจากระบบหลังบ้าน (ไม่มีในรายการ = ไม่จำกัด) · โหมดทดลองไม่มีสต๊อก
+let shopStock = {};
+async function loadShopStock() {
+  if (typeof serverReady !== 'undefined') await serverReady;
+  if (!window.SERVER) return shopStock;
+  try { shopStock = (await srv('shop/stock')).stock || {}; } catch (_) {}
+  return shopStock;
+}
+const stockBadge = (p) => {
+  const q = shopStock[p.id];
+  if (p.digital || q == null) return '';
+  return q > 0 && q <= 5 ? `<em class="mk-stock">เหลือ ${q} ชิ้น</em>` : ''; // หมดแล้ว → ปุ่มขึ้น “สินค้าหมด” แทน
+};
 function shopItem(p) {
   const u = currentUser();
   const day = u && u.birthdate ? DAY_COLORS[birthParts(u).date.getDay()] : null;
   return {
     key: `shop:${p.id}`, icon: p.icon, title: p.name,
     sub: p.personal && day ? `${p.desc} · สีของคุณ: สี${day.birth}` : p.desc,
-    tiers: [{ label: '1 ชิ้น', price: p.price }],
+    tiers: [{ label: p.digital ? '1 ไฟล์' : 'ราคาต่อชิ้น', price: p.price }],
+    qtyPick: !p.digital, shopId: p.id, // เลือกจำนวนได้ (ไม่เกินสต๊อกจากระบบหลังบ้าน)
+    ship: !p.digital, shop: true, // จ่ายแล้วกรอกที่อยู่จัดส่งทันที
     next: { kind: 'form', fields: p.digital ? [{ name: 'note', label: 'ขอเพิ่มเติม (ถ้ามี)', type: 'textarea', placeholder: 'เช่น อยากได้โทนสีม่วง' }] : SHIP_FIELDS },
     done: p.digital
-      ? { ...AFTER.shop, text: 'ทีมจะส่งไฟล์ให้ภายใน 24 ชั่วโมงใน “ประวัติการดูดวง”', steps: ['รับคำสั่งซื้อ', 'ออกแบบตามสีมงคลของคุณ', 'ส่งไฟล์ให้ดาวน์โหลด'] }
+      ? { ...AFTER.shop, text: 'ทีมจะส่งไฟล์ให้ภายใน 24 ชั่วโมงใน “ประวัติการซื้อสินค้า”', steps: ['รับคำสั่งซื้อ', 'ออกแบบตามสีมงคลของคุณ', 'ส่งไฟล์ให้ดาวน์โหลด'] }
       : AFTER.shop,
   };
 }
