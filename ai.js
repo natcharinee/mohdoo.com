@@ -11,7 +11,7 @@ function addMonth(ts) {
   return d.getTime();
 }
 // คำเตือน (เลี่ยง… / ระวัง…) เป็นสีแดงให้เห็นชัด
-const warnMark = (html) => html.replace(/((?:ต้อง|ควร)?(?:เลี่ยง|ระวัง)[^\s·()<.,]*)/g, '<span class="warn">⚠️ $1</span>');
+const warnMark = (html) => ((window.LANG || 'th') !== 'th' ? html : html.replace(/((?:ต้อง|ควร)?(?:เลี่ยง|ระวัง)[^\s·()<.,]*)/g, '<span class="warn">⚠️ $1</span>'));
 const aiRenewFrom = (u) => (u && u.aiUntil && u.aiUntil > Date.now() ? u.aiUntil : Date.now());
 const AI_SUGGEST = ['ดวงความรักเดือนนี้เป็นอย่างไร', 'ควรเปลี่ยนงานช่วงนี้ไหม', 'สีมงคลและเลขนำโชคของฉัน', 'ดวงการเงินปีนี้', 'ฉันกับเขาเข้ากันได้ไหม'];
 
@@ -193,8 +193,8 @@ function renderChat(u) {
     <button class="cc-link" data-open-circle><span>👨‍👩‍👧</span><b>ดวงคนใกล้ตัววันนี้</b><small>แฟน · ครอบครัว · เพื่อน</small><em>›</em></button>
     <p class="ai-sub">✦ สงสัยเรื่องไหน ถามแม่หมอ AI ต่อได้เลย</p>
     <div class="ai-log" id="aiLog">
-      ${aiBubble(`สวัสดีค่ะ คุณ${u.first || u.name} ✦ แม่หมอ AI พร้อมดูดวงให้แล้ว อยากรู้เรื่องไหนถามได้เลยนะคะ${u.birthdate ? '' : '\nเพิ่มวันเกิดในหน้าบัญชี จะได้วิเคราะห์ได้แม่นขึ้นค่ะ'}`)}
-      ${chat.map((m) => (m.role === 'user' ? `<div class="bubble me">${fmtMsg(m.content)}</div>` : aiBubble(m.content))).join('')}
+      ${aiBubble(`สวัสดีค่ะ คุณ${displayName(u)} ✦ แม่หมอ AI พร้อมดูดวงให้แล้ว อยากรู้เรื่องไหนถามได้เลยนะคะ${u.birthdate ? '' : '\nเพิ่มวันเกิดในหน้าบัญชี จะได้วิเคราะห์ได้แม่นขึ้นค่ะ'}`)}
+      ${chat.map((m) => (m.role === 'user' ? `<div class="bubble me" translate="no">${fmtMsg(m.content)}</div>` : aiBubble(m.content))).join('')}
     </div>
     <div class="ai-chips" id="aiChips">${AI_SUGGEST.map((s) => `<button data-ask="${s}">${s}</button>`).join('')}</div>
     <form class="ai-input" id="aiForm">
@@ -313,7 +313,7 @@ async function ask(text) {
   u.aiChat = [...(u.aiChat || []), { role: 'user', content: q }].slice(-50);
   persistUser(u);
   const log = $('aiLog');
-  log.insertAdjacentHTML('beforeend', `<div class="bubble me">${fmtMsg(q)}</div><div class="bubble ai typing" id="aiTyping"><span class="t-dots"><i></i><i></i><i></i></span><small class="t-step">${THINK_STEPS[0]}</small></div>`);
+  log.insertAdjacentHTML('beforeend', `<div class="bubble me" translate="no">${fmtMsg(q)}</div><div class="bubble ai typing" id="aiTyping"><span class="t-dots"><i></i><i></i><i></i></span><small class="t-step">${THINK_STEPS[0]}</small></div>`);
   scrollLog();
   // แม่หมอ “ค้นดวง” สักครู่ก่อนตอบ: ข้อความสถานะเปลี่ยนไปเรื่อย ๆ + ใช้เวลาอย่างน้อย 4–7 วินาที (คำถามยาวคิดนานขึ้น)
   let step = 0;
@@ -331,7 +331,7 @@ async function ask(text) {
       headers: { 'Content-Type': 'application/json', 'X-AI-Code': u.aiCode || '' },
       body: JSON.stringify({
         messages: u.aiChat.slice(-20),
-        profile: { first: u.first, last: u.last, birthdate: u.birthdate, birthtime: u.birthtime, birthplace: u.birthplace,
+        profile: { first: displayName(u), last: displayName(u, true).split(' ').slice(1).join(' '), birthdate: u.birthdate, birthtime: u.birthtime, birthplace: u.birthplace,
           gender: u.gender, relation: u.relation, interests: u.interests, today: new Date().toISOString().slice(0, 10),
           file: typeof fortuneFileText === 'function' ? fortuneFileText(u) : '', lang: window.LANG || 'th' },
       }),

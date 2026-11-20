@@ -203,8 +203,8 @@ function applyUser() {
   document.body.classList.toggle('member', !!u);
   if (u) {
     if (typeof avatarInner === 'function') $('avatarBtn').innerHTML = avatarInner(u);
-    else $('avatarBtn').textContent = u.name.trim().charAt(0).toUpperCase() || '✦';
-    $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">สวัสดี</span> <b class="hello-name" translate="no">${(window.LANG || 'th') === 'th' ? 'คุณ' : ''}${escapeHTML(u.name)}</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย<i class="fl r"></i></small>`;
+    else $('avatarBtn').textContent = displayName(u).charAt(0).toUpperCase() || '✦';
+    $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">สวัสดี</span> <b class="hello-name" translate="no">${(window.LANG || 'th') === 'th' ? 'คุณ' : ''}${escapeHTML(displayName(u))}</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>วันนี้อยากรู้เรื่องอะไร เลือกบริการหรือศาสตร์ด้านล่างได้เลย<i class="fl r"></i></small>`;
   } else {
     $('avatarBtn').textContent = '👤';
     $('hello').innerHTML = `<span class="hello-line"><span class="hello-hi">ยินดีต้อนรับสู่</span> <b class="hello-name">หมอดู.com</b><i class="hello-spark">✦</i></span><small><i class="fl"></i>เลือกดูดวงที่สนใจได้เลย สมัครด้วยเบอร์โทรตอนเริ่มดูดวง<i class="fl r"></i></small>`;
@@ -393,6 +393,7 @@ $('infoForm').addEventListener('submit', (e) => {
   const first = String(d.get('first')).trim();
   finishAuth({
     phone: pendingPhone, name: first, first, last: String(d.get('last')).trim(),
+    firstEn: String(d.get('firstEn') || '').trim(), lastEn: String(d.get('lastEn') || '').trim(),
     birthdate: String(d.get('birthdate')), birthtime: String(d.get('birthtime') || ''),
     created: Date.now(), coupons: [], history: [], wheelSpun: false,
     ...(window.SERVER && typeof srvLast !== 'undefined' && srvLast ? { role: srvLast.role, seerId: srvLast.seer_id || null } : {}),

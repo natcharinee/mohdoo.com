@@ -161,7 +161,7 @@ $('screen').appendChild(slipEl);
 
 function slipHTML(s) {
   const u = currentUser() || {};
-  const name = [u.first || u.name, u.last].filter(Boolean).join(' ');
+  const name = displayName(u, true);
   const d = new Date(s.at || Date.now());
   const today = typeof computeDaily === 'function' ? computeDaily(u, d) : null;
   const lucky = s.lucky || (today ? { color: today.color.money, nums: today.lucky } : null);
@@ -176,7 +176,7 @@ function slipHTML(s) {
     <div class="sl-item">
       <small>${esc(s.service)}</small>
       <b>${esc(s.title)}</b>
-      ${s.question ? `<p>“${esc(s.question)}”</p>` : ''}
+      ${s.question ? `<p translate="no">“${esc(s.question)}”</p>` : ''}
       ${name ? `<em>สำหรับคุณ <span translate="no">${esc(name)}</span></em>` : ''}
     </div>
     ${s.cardsLine ? `<p class="sl-cards">${esc(s.cardsLine)}</p>` : ''}
@@ -420,7 +420,7 @@ async function aiSlipText(s, h) {
       method: 'POST', signal: ctrl.signal,
       headers: { 'Content-Type': 'application/json', 'X-AI-Code': u.aiCode || '' },
       body: JSON.stringify({ order_no: h.no || '', kind: h.kind, service: s.service, title: s.title, question: s.question, score: s.score, detail: slipDetail(s, h),
-        profile: { first: u.first || u.name, birthdate: u.birthdate, lang: window.LANG || 'th' } }),
+        profile: { first: displayName(u), birthdate: u.birthdate, lang: window.LANG || 'th' } }),
     });
     clearTimeout(t);
     if (!r.ok) return null;

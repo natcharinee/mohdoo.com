@@ -162,3 +162,13 @@ function appCTA(text = 'บริการนี้ใช้ผ่านแอ�
     .observe(document.documentElement, { childList: true, subtree: true });
   document.addEventListener('DOMContentLoaded', () => scan(document));
 })();
+
+// ===== ชื่อที่แสดงตามภาษา: เลือก EN / 中文 → ใช้ชื่อภาษาอังกฤษ (ถ้ากรอกไว้) · ไม่กรอก = ชื่อภาษาไทย =====
+// (การคำนวณเลขศาสตร์จากชื่อยังใช้ชื่อภาษาไทยเสมอ)
+function displayName(u, full = false) {
+  if (!u) return '';
+  const en = (window.LANG || 'th') !== 'th' && u.firstEn;
+  const first = en ? u.firstEn : (u.first || u.name || '');
+  const last = en ? (u.lastEn || '') : (u.last || '');
+  return (full ? [first, last].filter(Boolean).join(' ') : first).trim();
+}

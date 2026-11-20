@@ -403,7 +403,7 @@ async function seerJob(no) {
         <li><small>ชื่อ</small><b translate="no">${esc(c.first || '—')}</b></li>
         <li><small>วันเกิด</small><b>${bd || '—'}${c.birthtime ? ` · ${esc(c.birthtime)} น.` : ''}</b></li>
         ${c.birthplace ? `<li><small>สถานที่เกิด</small><b>${esc(c.birthplace)}</b></li>` : ''}${c.gender ? `<li><small>เพศ</small><b>${esc(c.gender)}</b></li>` : ''}
-        ${j.form.map((f) => `<li><small>${esc(f.label)}</small><b>${esc(f.value)}</b></li>`).join('')}
+        ${j.form.map((f) => `<li><small>${esc(f.label)}</small><b translate="no">${esc(f.value)}</b></li>`).join('')}
       </ul>
       ${j.photos.length ? `<div class="proof-media">${j.photos.map((p) => `<a href="${esc(p.url)}" target="_blank" rel="noopener"><img src="${esc(p.url)}" alt="${esc(SLOT[p.slot] || 'รูป')}"></a>`).join('')}</div>` : ''}
     </section>

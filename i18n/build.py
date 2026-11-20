@@ -11,12 +11,14 @@ import glob, json, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TH = '฀-๿'
 SEG = re.compile(r"[" + TH + r"A-Za-z0-9 .,:;!?()%/–\-·…“”+&×~]+")
-SKIP_FILES = {'seers-data.js'}  # ชื่อหมอดูเป็นชื่อเฉพาะ ไม่แปล
+SKIP_FILES = {'seers-data.js', 'admin.js', 'admin.html', 'dev-server.mjs'}  # ชื่อหมอดูเป็นชื่อเฉพาะ · หลังบ้านใช้ภาษาไทยอย่างเดียว
 
 
 def segments():
     out = set()
-    for f in sorted(glob.glob(os.path.join(ROOT, '*.js')) + glob.glob(os.path.join(ROOT, '*.html'))):
+    # ข้อความจากเซิร์ฟเวอร์ที่ลูกค้าเห็น (สถานะคำสั่งซื้อ การแจ้งเตือน) อยู่ใน api/v1.js และ api/_lib/catalog.js
+    server = [os.path.join(ROOT, 'api', 'v1.js'), os.path.join(ROOT, 'api', '_lib', 'catalog.js')]
+    for f in sorted(glob.glob(os.path.join(ROOT, '*.js')) + glob.glob(os.path.join(ROOT, '*.html'))) + server:
         if os.path.basename(f) in SKIP_FILES or os.path.basename(f) == 'i18n.js':
             continue
         s = open(f, encoding='utf-8').read()

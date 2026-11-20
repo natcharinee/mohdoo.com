@@ -66,7 +66,8 @@ function renderProfile() {
   const hist = (u.history || []).filter((h) => !isPurchase(h) && !isMerit(h));
   const merits = (u.history || []).filter(isMerit);
   const buys = (u.history || []).filter(isPurchase);
-  const fullName = [u.first || u.name, u.last].filter(Boolean).join(' ');
+  const fullName = displayName(u, true);
+  const needEn = (window.LANG || 'th') !== 'th' && !u.firstEn; // ภาษาอื่นแต่ยังไม่มีชื่ออังกฤษ
   const cell = (label, value, extra = '') =>
     `<div class="pf-cell"><small>${label}</small><b class="${value ? '' : 'muted'}">${value || 'ยังไม่ระบุ'}</b>${extra}</div>`;
 
@@ -74,6 +75,7 @@ function renderProfile() {
     <div class="pf-hero">
       <button class="pf-avatar ${typeof hasAvatarArt === 'function' && hasAvatarArt(u) ? 'has-art' : ''}" data-avatar aria-label="เปลี่ยนรูปโปรไฟล์">${typeof avatarInner === 'function' ? avatarInner(u) : esc((u.first || u.name || '✦').charAt(0).toUpperCase())}<span class="pf-cam" aria-hidden="true">📷</span></button>
       <h3 translate="no">${esc(fullName)}</h3>
+      ${needEn ? '<button class="pf-en-name" id="pfEnName">+ เพิ่มชื่อภาษาอังกฤษ</button>' : ''}
       ${u.phone ? `<p>📱 ${esc(prettyPhone(u.phone))}</p>` : u.email ? `<p>${esc(u.email)}</p>` : ''}
       ${u.created ? `<p class="pf-since">สมาชิกตั้งแต่ ${thDate(u.created)}</p>` : ''}
       <button class="btn-ghost pf-edit" id="pfEdit">✎ แก้ไขข้อมูล</button>
@@ -228,7 +230,7 @@ function histLine(h) {
   if (h.kind === 'tarot') return esc(h.cards.map((c) => `${c.th}${c.rev ? ' (กลับหัว)' : ''}`).join(' · '));
   if (h.kind === 'siamsi') return esc(`${h.lv} · ${h.verse}`);
   if (h.kind === 'daily') return esc(`${h.report.mood} · ${h.report.scores.map(([l, n]) => `${l} ${n}★`).slice(1).join(' ')}`);
-  if (h.kind === 'ask') return esc(`“${h.question}” · รู้ผลทันที`);
+  if (h.kind === 'ask') return `<span translate="no">“${esc(h.question)}”</span> · รู้ผลทันที`;
   if (h.kind === 'order') return esc(`${h.status} · ${h.label} · ${Number(h.amount).toLocaleString('th-TH')} ฿`);
   return 'ผลคำทำนายจากข้อมูลส่วนตัวของคุณ';
 }
@@ -254,6 +256,7 @@ profileBody.addEventListener('click', (e) => {
   const cp = t.closest('[data-coupon]');
   if (cp) { useCoupon(cp.dataset.coupon); setTimeout(renderProfile, 400); return; }
   if (t.closest('[data-avatar]')) { openAvatarPicker(); return; }
+  if (t.closest('#pfEnName')) { openEdit(); setTimeout(() => editPanel.querySelector('[name="firstEn"]')?.focus(), 350); return; }
   const more = t.closest('[data-hist-more]');
   if (more) { // ขยาย/ย่อรายการ โดยไม่เลื่อนหน้าหนี
     const key = more.dataset.histMore;
@@ -294,7 +297,7 @@ function openHistory(id) {
     openPanel('readingPanel');
   } else {
     $('readingTitle').textContent = h.title;
-    const q = h.question ? `<p class="hist-q">“${esc(h.question)}”</p>` : '';
+    const q = h.question ? `<p class="hist-q" translate="no">“${esc(h.question)}”</p>` : '';
     let body = '';
     if (h.kind === 'tarot') {
       body = h.cards.map((c) => `<div class="hist-card">
@@ -316,7 +319,7 @@ function openHistory(id) {
           <li><small>${isPurchase(h) ? 'จำนวน' : 'แพ็กเกจ'}</small><b>${esc(h.label)}</b></li>
           <li><small>ยอดชำระ</small><b>${Number(h.amount).toLocaleString('th-TH')} ฿</b></li>
           <li><small>เลขที่คำสั่งซื้อ</small><b>${esc(h.no)}</b></li>
-          ${(h.fields || []).filter(([k]) => h.data[k]).map(([k, label]) => `<li><small>${esc(label)}</small><b>${esc(h.data[k])}</b></li>`).join('')}
+          ${(h.fields || []).filter(([k]) => h.data[k]).map(([k, label]) => `<li><small>${esc(label)}</small><b translate="no">${esc(h.data[k])}</b></li>`).join('')}
         </ul>`;
     } else if (h.kind === 'siamsi') {
       body = `<p class="reading-lead">ใบที่ ${h.no} · <b>${esc(h.lv)}</b></p>
@@ -343,6 +346,10 @@ function openEdit() {
         <label>นามสกุล<input name="last" value="${esc(u.last || '')}"></label>
       </div>
       <div class="two">
+        <label><span>ชื่อภาษาอังกฤษ <small>(แสดงเมื่อเลือก EN / 中文)</small></span><input name="firstEn" lang="en" placeholder="First name" value="${esc(u.firstEn || '')}"></label>
+        <label>นามสกุลภาษาอังกฤษ<input name="lastEn" lang="en" placeholder="Last name" value="${esc(u.lastEn || '')}"></label>
+      </div>
+      <div class="two">
         <label>วันเกิด<input type="date" name="birthdate" value="${esc(u.birthdate || '')}"></label>
         <label>เวลาเกิด<input type="time" name="birthtime" value="${esc(u.birthtime || '')}"></label>
       </div>
@@ -362,6 +369,7 @@ function openEdit() {
     const cur = currentUser();
     Object.assign(cur, {
       first: String(f.get('first')).trim(), last: String(f.get('last')).trim(),
+      firstEn: String(f.get('firstEn') || '').trim(), lastEn: String(f.get('lastEn') || '').trim(),
       birthdate: String(f.get('birthdate')), birthtime: String(f.get('birthtime')),
       birthplace: String(f.get('birthplace')).trim(), gender: String(f.get('gender')), relation: String(f.get('relation')),
       interests: f.getAll('interests').map(String),

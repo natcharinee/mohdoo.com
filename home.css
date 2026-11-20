@@ -2125,3 +2125,4 @@ p.avoid-tag { display: flex; width: fit-content; margin: 8px auto 0; }
 .seer-noresult p { color: var(--text); }
 .seer-noresult small { color: var(--muted); font-size: .78rem; }
 .seer-noresult .btn-ghost { width: auto; padding: 8px 18px; margin-top: 6px; }
+.pf-en-name { margin: 2px auto 4px; padding: 3px 12px; border-radius: 99px; font-size: .74rem; color: var(--gold-2); border: 1px dashed rgba(245, 201, 107, .5); background: transparent; cursor: pointer; }
