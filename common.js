@@ -106,3 +106,14 @@ function toast(msg) {
   toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
 }
 
+
+// ---------- แอปหมอดู.com: บริการที่ใช้ผ่านแอปเท่านั้น (คุยสดกับหมอดู · ฮวงจุ้ยลงพื้นที่) ----------
+// ใส่ลิงก์ดาวน์โหลดเมื่อได้ลิงก์จริง · ว่างไว้ = แสดงว่าเร็ว ๆ นี้
+const APP_LINKS = { ios: '', android: '' };
+function appCTA(text = 'บริการนี้ใช้ผ่านแอปหมอดู.com') {
+  const btn = (os, icon, label) => (APP_LINKS[os]
+    ? `<a class="app-dl" href="${APP_LINKS[os]}" target="_blank" rel="noopener"><span>${icon}</span>${label}</a>`
+    : `<span class="app-dl off"><span>${icon}</span>${label}</span>`);
+  return `<div class="app-cta"><p>📱 ${text}${APP_LINKS.ios || APP_LINKS.android ? '' : ' · ลิงก์ดาวน์โหลดจะเปิดให้เร็ว ๆ นี้'}</p>
+    <div class="app-dls">${btn('ios', '', 'App Store')}${btn('android', '▶', 'Google Play')}</div></div>`;
+}

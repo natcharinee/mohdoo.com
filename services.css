@@ -103,3 +103,12 @@
 .book-head h2 { line-height: 1.65; padding-top: .1em; }
 .world-banner { background: linear-gradient(110deg, rgba(94, 231, 255, .2), rgba(123, 77, 255, .3) 60%, rgba(245, 201, 107, .18)); }
 .world-banner + .free-banner { margin-top: 14px; }
+
+/* ===== บริการบนแอป ===== */
+.badge-s.app { color: #d8c4ff; border-color: rgba(216, 196, 255, .5); background: rgba(216, 196, 255, .1); font-style: normal; }
+.app-cta { margin-top: 14px; padding: 14px; border-radius: 16px; text-align: center; background: linear-gradient(150deg, rgba(240, 200, 120, .12), rgba(76, 38, 150, .25)); border: 1px solid rgba(240, 200, 120, .35); }
+.app-cta p { margin: 0 0 10px; font-size: .86rem; color: var(--gold-2, #ffe7a8); }
+.app-dls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.app-dl { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 10px; border-radius: 12px; font-size: .88rem; font-weight: 500;
+  color: #fff; background: #0b0618; border: 1px solid rgba(255, 255, 255, .25); text-decoration: none; }
+.app-dl.off { opacity: .55; cursor: default; }

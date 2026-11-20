@@ -57,7 +57,7 @@ function render(list) {
   }
   list.forEach((s, i) => {
     const el = document.createElement('article');
-    el.className = `svc ${s.open ? '' : 'is-soon'}`;
+    el.className = `svc ${s.open || s.app ? '' : 'is-soon'}`;
     el.style.setProperty('--delay', `${i * 0.05}s`);
     const free = s.prices.length > 0 && s.prices.every((p) => p.price === 0);
     const lowest = s.prices.filter((p) => p.price != null).sort((a, b) => a.price - b.price)[0];
@@ -76,7 +76,7 @@ function render(list) {
           <h3>${s.name}</h3>
           <div class="svc-badges">
             ${free ? '<span class="badge-s free">ฟรี</span>' : ''}
-            ${s.open ? '' : '<span class="badge-s soon">เร็ว ๆ นี้</span>'}
+            ${s.open ? '' : s.app ? '<span class="badge-s app">📱 บนแอป</span>' : '<span class="badge-s soon">เร็ว ๆ นี้</span>'}
           </div>
         </div>
       </div>
@@ -101,7 +101,12 @@ function openBook(id) {
   const s = SERVICES.find((x) => x.id === id);
   $('bookIcon').textContent = s.icon;
   $('bookName').textContent = s.name;
-  $('bookSoon').hidden = s.open;
+  $('bookSoon').hidden = s.open || !!s.app;
+  // บริการบนแอป (คุยสด / ลงพื้นที่) → ไม่มีจองบนเว็บ แสดงปุ่มดาวน์โหลดแอปแทน
+  $('bookApp').hidden = !s.app;
+  $('bookApp').innerHTML = s.app ? appCTA() : '';
+  $('bookGo').hidden = !!s.app;
+  $('bookTiers').hidden = !!s.app;
   $('bookAbout').textContent = s.about;
   $('bookGet').textContent = s.get;
   $('bookNote').hidden = !s.note;

@@ -43,6 +43,10 @@
   "1 spot",
   "1处"
  ],
+ "1 ชั้น": [
+  "1 floor",
+  "1层"
+ ],
  "1 ชิ้น": [
   "1 piece",
   "1件"
@@ -75,6 +79,10 @@
   "1 room",
   "1个房间"
  ],
+ "1 ห้องนอน": [
+  "1 bedroom",
+  "一室"
+ ],
  "1 เบอร์": [
   "1 number",
   "1个号码"
@@ -95,9 +103,25 @@
   "1 plot",
   "1块地"
  ],
+ "2 ชั้น": [
+  "2 floors",
+  "2层"
+ ],
+ "2 ห้องนอน": [
+  "2 bedrooms",
+  "两室"
+ ],
+ "3 ชั้นขึ้นไป": [
+  "3+ floors",
+  "3层以上"
+ ],
  "3 ตัวเลือก": [
   "3 options",
   "3个选项"
+ ],
+ "3 ห้องนอนขึ้นไป": [
+  "3+ bedrooms",
+  "三室以上"
  ],
  "30 นาที": [
   "30 minutes",
@@ -523,6 +547,14 @@
   "ขชงบปแเู้",
   "ขชงบปแเู้"
  ],
+ "ขนาดที่ดิน": [
+  "Land size",
+  "土地面积"
+ ],
+ "ขนาดห้อง": [
+  "Room size",
+  "房型"
+ ],
  "ขยัน มั่นคง เชื่อถือได้ ทำอะไรเป็นขั้นเป็นตอน": [
   "Diligent, steady, reliable, methodical",
   "勤奋、稳重、可靠、做事有条不紊"
@@ -550,6 +582,10 @@
  "ของคุณ…": [
   "…",
   "…"
+ ],
+ "ของหรือสัตว์มงคลที่มี": [
+  "Lucky items or animals you have",
+  "您拥有的吉祥物或吉祥动物"
  ],
  "ขอนแก่น": [
   "Khon Kaen",
@@ -1447,6 +1483,10 @@
   "A written palm reading on 1 topic, such as career or relationships, noting which lines it reads from",
   "针对1个主题（如事业或感情）的文字手相解读，并说明依据哪条掌纹"
  ],
+ "คำอ่านอิงหลักฮวงจุ้ยจีนเบื้องต้น ตอบกลับเป็นข้อความภายใน 24 ชั่วโมง": [
+  "Readings follow basic Chinese feng shui principles; reply in writing within 24 hours",
+  "依据中国风水基本原则解读，24小时内文字回复"
+ ],
  "คำอ่านและคำแนะนำ 1 จุด": [
   "Reading and advice for 1 spot",
   "1处位置的解读与建议"
@@ -1815,6 +1855,10 @@
   "A good moment to start a new job, apply for work, or negotiate what you've long waited for.",
   "适合开始新工作、求职，或洽谈期待已久的事。"
  ],
+ "จังหวัด / ทำเล": [
+  "Province / location",
+  "省份 / 地段"
+ ],
  "จัดกลุ่มตัวอักษรตามวันเกิดเป็น บริวาร อายุ เดช ศรี มูละ อุตสาหะ มนตรี และกาลกิณี แล้วเลือกอักษรมงคลมาตั้งชื่อ": [
   "Letters are grouped by your day of birth into Boriwan, Ayu, Det, Si, Mula, Utsaha, Montri and Kalakini, then auspicious letters are chosen for the name",
   "按出生星期将字母分为随从、寿命、权威、吉祥、根基、勤奋、贵人与凶煞八组，再选吉祥字母取名"
@@ -1867,6 +1911,10 @@
   "From your Fortune File",
   "来自你的命理档案"
  ],
+ "จำนวนชั้น": [
+  "Number of floors",
+  "楼层数"
+ ],
  "จำนวนธูปและสีเทียนตามวันเกิด": [
   "Number of incense sticks and candle colours by birth day",
   "依出生日决定香支数量与蜡烛颜色"
@@ -1910,6 +1958,10 @@
  "จุดถ่ายภาพที่ควรติดตาม": [
   "Photo spot worth following",
   "值得关注的拍照点"
+ ],
+ "จุดที่อยากให้ดู": [
+  "Spot to read",
+  "想看的位置"
  ],
  "จุดวางของหรือสัตว์มงคล": [
   "Placement of items or auspicious animals",
@@ -2002,6 +2054,10 @@
  "ชัยชนะ · ความมุ่งมั่น · การควบคุม": [
   "Victory · Determination · Control",
   "胜利 · 决心 · 掌控"
+ ],
+ "ชั้นและเลขห้อง": [
+  "Floor and room number",
+  "楼层与房号"
  ],
  "ชาย": [
   "Male",
@@ -2114,6 +2170,10 @@
  "ชื่อและนามสกุลปัจจุบัน": [
   "Current name and surname",
   "现用姓名"
+ ],
+ "ชื่อและวันเกิดของคนที่เกี่ยวข้อง (ถ้ามี)": [
+  "Names and birth dates of people involved (optional)",
+  "相关人员姓名与生日（如有）"
  ],
  "ชื่อใหม่ 5 ตัวเลือก": [
   "5 new name options",
@@ -2246,6 +2306,10 @@
  "ซิกิดี": [
   "Sikidy",
   "西基迪（Sikidy）"
+ ],
+ "ซินแสลงดูพื้นที่จริง แจ้งประเภทสถานที่ ขนาด และจังหวัด นัดวันและรับใบเสนอราคาผ่านแอป": [
+  "A feng shui master visits the actual site. Share the type of place, size and province; book a date and get a quote in the app",
+  "风水师实地勘察。告知场所类型、面积和省份，通过App预约日期并获取报价"
  ],
  "ญาณหยั่งรู้ · ความลับ · จิตใต้สำนึก": [
   "Intuition · Secrets · The subconscious",
@@ -2635,6 +2699,10 @@
   "Tarot Reading",
   "塔罗牌占卜"
  ],
+ "ด้านหน้าหันไปทิศไหน": [
+  "Which direction does the front face?",
+  "正面朝向哪个方向？"
+ ],
  "ตรวจดวงด้วยญาณทิพย์ ตรวจกรรม และสิ่งศักดิ์สิทธิ์": [
   "Psychic insight into karma and sacred influences",
   "以天眼通查看运势、业力与神灵"
@@ -2767,6 +2835,10 @@
   "Work diligently—neither slow nor quickly rich",
   "勤勉做事不急富"
  ],
+ "ตั้งใจใช้ทำอะไร": [
+  "Intended use",
+  "计划用途"
+ ],
  "ตาทิพย์": [
   "Clairvoyance",
   "天眼通"
@@ -2794,6 +2866,10 @@
  "ตำบลศรีภูมิ อำเภอเมืองเชียงใหม่ เชียงใหม่": [
   "Si Phum Subdistrict, Mueang Chiang Mai District, Chiang Mai",
   "清迈府直辖县诗蓬区"
+ ],
+ "ตำแหน่งโต๊ะหรือห้องที่อยากให้ดู": [
+  "Desk or room to read",
+  "想看的座位或房间"
  ],
  "ตีความความฝันและลางบอกเหตุ ดี-ร้าย": [
   "Interpret dreams and omens, good or bad",
@@ -3147,13 +3223,49 @@
   "A misfortune-removal ritual suited to your chart, such as releasing fish, offering Sangkhathan, or the coffin merit ritual, as advised by the fortune teller from your birth date",
   "根据您的命盘举行消灾仪式，如放生鱼、供僧礼包或躺棺功德，由占卜师依您的出生日期建议"
  ],
+ "ทำร้าน / ธุรกิจ": [
+  "Shop / business",
+  "开店 / 经营"
+ ],
  "ทิศของอาคาร": [
   "Building orientation",
   "建筑朝向"
  ],
+ "ทิศตะวันตก": [
+  "West",
+  "西"
+ ],
+ "ทิศตะวันตกเฉียงเหนือ": [
+  "Northwest",
+  "西北"
+ ],
+ "ทิศตะวันตกเฉียงใต้": [
+  "Southwest",
+  "西南"
+ ],
+ "ทิศตะวันออก": [
+  "East",
+  "东"
+ ],
+ "ทิศตะวันออกเฉียงเหนือ": [
+  "Northeast",
+  "东北"
+ ],
+ "ทิศตะวันออกเฉียงใต้": [
+  "Southeast",
+  "东南"
+ ],
  "ทิศหน้าบ้าน/หน้าร้าน": [
   "Facing direction of the house/shop",
   "房屋/店面朝向"
+ ],
+ "ทิศเหนือ": [
+  "North",
+  "北"
+ ],
+ "ทิศใต้": [
+  "South",
+  "南"
  ],
  "ทิเบต": [
   "Tibet",
@@ -3411,6 +3523,10 @@
   "Child's surname",
   "孩子的姓氏"
  ],
+ "นามสกุลปัจจุบัน": [
+  "Current surname",
+  "现用姓氏"
+ ],
  "นำข้อมูลเกิดมาจัดตารางฐานและอ่านตามหลักที่ผู้ให้บริการใช้": [
   "Your birth data is set into a base chart and read according to the provider's method",
   "将出生资料排成基础命盘，按服务者所用方法解读"
@@ -3456,8 +3572,8 @@
   "细水流向大海，循序渐进终达彼岸"
  ],
  "บนแอป": [
-  "in the app",
-  "在App中"
+  "in app",
+  "App内"
  ],
  "บริการ": [
   "Services",
@@ -3474,6 +3590,10 @@
  "บริการนี้ยังไม่เปิดให้จอง จะแจ้งเตือนเมื่อเปิด": [
   "This service isn't open for booking yet — we'll notify you when it opens",
   "此服务尚未开放预约，开放时将通知你"
+ ],
+ "บริการนี้ใช้ผ่านแอปหมอดู.com": [
+  "This service is available in the Mohdoo.com app",
+  "此服务请通过 Mohdoo.com App 使用"
  ],
  "บริการมงคล": [
   "Blessing Services",
@@ -3530,6 +3650,10 @@
  "บันทึกรูปใบผลดวงแล้ว": [
   "Fortune slip saved",
   "运势单已保存"
+ ],
+ "บันได": [
+  "Stairs",
+  "楼梯"
  ],
  "บาดแผลกำลังสมานตัว ค่อย ๆ ปล่อยความเจ็บปวดไป": [
   "Wounds are healing; slowly let the pain go",
@@ -3651,6 +3775,10 @@
   "A new door opens and waits; step through without fear",
   "新门已开，勇敢迈入勿惧"
  ],
+ "ประตูหน้าบ้าน": [
+  "Front door",
+  "大门"
+ ],
  "ประตูแห่งโชคชะตา": [
   "The Gateway of Destiny",
   "命运之门"
@@ -3679,6 +3807,10 @@
   "Type of residence",
   "住所类型"
  ],
+ "ประเภทธุรกิจ": [
+  "Type of business",
+  "业务类型"
+ ],
  "ปรับสมดุลบ้านและสิ่งแวดล้อม เสริมความเป็นสิริมงคล": [
   "Balance home and surroundings for greater auspiciousness",
   "调和住宅与环境，增添吉祥"
@@ -3698,6 +3830,10 @@
  "ปลาว่ายทวนน้ำ แข็งแรงขึ้นทุกวัน": [
   "The fish swims upstream, growing stronger every day",
   "鱼儿逆流而上，日益强壮"
+ ],
+ "ปลูกบ้าน": [
+  "Build a house",
+  "建房"
  ],
  "ปล่อยปลา": [
   "Release fish",
@@ -3863,9 +3999,33 @@
   "A 12-palace star chart, read in detail one area of life at a time",
   "十二宫星盘，逐一细看人生各方面"
  ],
+ "ผังที่ดินหรือรูปโดยรอบ": [
+  "Land plan or surrounding photos",
+  "土地图或周边照片"
+ ],
+ "ผังบ้านแต่ละชั้น หรือรูปหน้าบ้าน": [
+  "Floor plan of each level, or a photo of the house front",
+  "每层平面图或房屋正面照片"
+ ],
  "ผังพื้นที่": [
   "Floor plan",
   "平面图"
+ ],
+ "ผังร้านหรือรูปหน้าร้าน (เห็นทางเข้าและเคาน์เตอร์)": [
+  "Shop plan or storefront photo (showing entrance and counter)",
+  "店铺平面图或门面照片（可见入口和柜台）"
+ ],
+ "ผังสำนักงานหรือรูปพื้นที่ทำงาน": [
+  "Office plan or workspace photo",
+  "办公室平面图或工作区照片"
+ ],
+ "ผังหรือรูปพื้นที่ (เห็นทางเข้า หน้าต่าง และจุดสำคัญ)": [
+  "Plan or photo of the space (showing entrance, windows and key points)",
+  "空间平面图或照片（可见入口、窗户和重点位置）"
+ ],
+ "ผังห้องหรือรูปห้อง (เห็นประตูและหน้าต่าง)": [
+  "Room plan or photo (showing door and windows)",
+  "房间平面图或照片（可见门窗）"
  ],
  "ผูกดวงจากวัน เดือน ปี และเวลาเกิด": [
   "Chart cast from your day, month, year and time of birth",
@@ -3914,6 +4074,10 @@
  "ผู้รู้ (ออมเบียซี) จัดเมล็ดพืชเป็นตารางสัญลักษณ์ 16 แบบ แล้วอ่านเพื่อหาสาเหตุของปัญหาและวันมงคล": [
   "A diviner (ombiasy) arranges seeds into a grid of 16 symbols, then reads it to find the cause of problems and auspicious days",
   "智者（ombiasy）将种子排成16种符号的方阵，解读以找出问题根源与吉日"
+ ],
+ "ผู้อยู่อาศัยหลัก (ชื่อ · วันเกิด)": [
+  "Main residents (name · birth date)",
+  "主要居住者（姓名 · 生日）"
  ],
  "ผู้ใหญ่เห็นฝีมือ มีโอกาสก้าวหน้าชัดเจน": [
   "Seniors see your skill; clear chances for advancement",
@@ -4467,6 +4631,10 @@
   "South",
   "南部"
  ],
+ "ภาพจุดที่อยากให้ดู": [
+  "Photo of the spot to read",
+  "想看位置的照片"
+ ],
  "ภาพถ้วยกาแฟหลังคว่ำ (ถ้าเปิดบริการ)": [
   "Photo of the overturned coffee cup (if the service is open)",
   "倒扣后的咖啡杯照片（如服务开放）"
@@ -4782,6 +4950,10 @@
  "มุกดาหาร": [
   "Mukdahan",
   "穆达汉"
+ ],
+ "มุมทำงาน": [
+  "Work corner",
+  "工作区"
  ],
  "มุ่งมั่นไปข้างหน้า ชนะอุปสรรคได้": [
   "Press forward and overcome obstacles",
@@ -5483,6 +5655,10 @@
   "Space photo / floor plan",
   "空间照片 / 户型图"
  ],
+ "รูปพื้นที่ที่จะวาง": [
+  "Photo of where it will be placed",
+  "摆放位置照片"
+ ],
  "รูปยังไม่ชัดพอให้อ่าน": [
   "The photo isn't clear enough to read",
   "照片不够清晰，无法解读"
@@ -5498,6 +5674,10 @@
  "รูปเก่า": [
   "Older photo",
   "旧照片"
+ ],
+ "รูปเพิ่มเติม": [
+  "Additional photo",
+  "补充照片"
  ],
  "รูปแบบ: ขีดจุดบนทรายหรือกระดาษ": [
   "Format: dots marked on sand or paper",
@@ -5602,6 +5782,10 @@
  "ฤๅษี": [
   "The Hermit",
   "隐士"
+ ],
+ "ลงทุน": [
+  "Investment",
+  "投资"
  ],
  "ลงแรงแต่ผลไม่คุ้ม ลองทบทวนทิศทาง": [
   "Effort without worthwhile results; reconsider your direction",
@@ -5730,6 +5914,10 @@
  "ลำพูน": [
   "Lamphun",
   "南奔"
+ ],
+ "ลิงก์ดาวน์โหลดจะเปิดให้เร็ว ๆ นี้": [
+  "download links coming soon",
+  "下载链接即将开放"
  ],
  "ลิงก์ดาวน์โหลดแอปหมอดู.com จะเปิดให้เร็ว ๆ นี้": [
   "Mohdoo.com app download links are coming soon",
@@ -6751,6 +6939,10 @@
   "Very bright",
   "非常光明"
  ],
+ "สตูดิโอ": [
+  "Studio",
+  "开间"
+ ],
  "สถานการณ์ตอนนี้": [
   "Right now",
   "当前状况"
@@ -6878,6 +7070,10 @@
  "สรุป: ค่อย ๆ ไปทีละก้าว ฟังใจตัวเอง แล้วเรื่องที่ถามจะคลี่คลายในทางที่ดีค่ะ": [
   "In short: take it one step at a time, listen to your heart, and your question will resolve for the better.",
   "总结：一步一步来，倾听内心，你所问之事自会往好的方向化解。"
+ ],
+ "สรุปทั้งหลังพร้อมทำเครื่องหมายบนผัง ตอบกลับเป็นข้อความ": [
+  "Whole-house summary marked on the floor plan, replied in writing",
+  "整栋房屋总结并在平面图上标注，以文字回复"
  ],
  "สรุปทำเล 1 แปลงตามศาสตร์": [
   "Summary of 1 plot of land by the science",
@@ -7759,6 +7955,22 @@
   "Clairaudience",
   "天耳通"
  ],
+ "ห้องครัว": [
+  "Kitchen",
+  "厨房"
+ ],
+ "ห้องนอน": [
+  "Bedroom",
+  "卧室"
+ ],
+ "ห้องนั่งเล่น": [
+  "Living room",
+  "客厅"
+ ],
+ "ห้องน้ำ": [
+  "Bathroom",
+  "卫生间"
+ ],
  "องค์กวนอิมและพบโชคธรรมเจดีย์": [
   "Guan Yin statue and Phop Chok Tham Chedi",
   "观音像与逢运法塔"
@@ -7814,6 +8026,10 @@
  "อยากรู้เรื่องไหนเป็นพิเศษ": [
   "Anything in particular you want to know?",
   "特别想了解哪方面？"
+ ],
+ "อยากเสริมเรื่องไหนเป็นพิเศษ": [
+  "What would you like to boost most?",
+  "最想加强哪方面？"
  ],
  "อยากให้ช่วยดูเรื่องไหนเป็นพิเศษ": [
   "Anything in particular you'd like us to look at?",
@@ -8883,6 +9099,10 @@
   "Chiang Mai",
   "清迈"
  ],
+ "เช่น 100 ตารางวา": [
+  "e.g. 400 sq m (100 sq wah)",
+  "例如 400平方米（100平方哇）"
+ ],
  "เช่น 1กข 1234": [
   "e.g. 1AB 1234",
   "例如 1AB 1234"
@@ -8894,6 +9114,10 @@
  "เช่น กรุงเทพมหานคร": [
   "e.g. Bangkok",
   "例如 曼谷"
+ ],
+ "เช่น การเงิน สุขภาพคนในบ้าน ความสัมพันธ์ ยอดขาย": [
+  "e.g. money, family health, relationships, sales",
+  "例如 财运、家人健康、感情、销售"
  ],
  "เช่น การเงินของครอบครัว ค้าขาย สุขภาพ": [
   "e.g. family finances, trade, health",
@@ -8907,6 +9131,10 @@
   "e.g. How will my upcoming new job go?",
   "例如：即将开始的新工作会如何？"
  ],
+ "เช่น ชั้น 12 ห้อง 1205": [
+  "e.g. floor 12, room 1205",
+  "例如 12楼 1205室"
+ ],
  "เช่น ช่วงนี้งานติดขัด มีเรื่องขัดแย้งบ่อย": [
   "e.g. work has been stuck lately, frequent conflicts",
   "例如 最近工作不顺、常有争执"
@@ -8919,9 +9147,29 @@
   "e.g. east",
   "例如 东方"
  ],
+ "เช่น นนทบุรี ติดถนนใหญ่": [
+  "e.g. Nonthaburi, on a main road",
+  "例如 暖武里，临大路"
+ ],
+ "เช่น ปี่เซียะ กวนอิม ตู้ปลา": [
+  "e.g. Pixiu, Guan Yin statue, aquarium",
+  "例如 貔貅、观音像、鱼缸"
+ ],
+ "เช่น พ่อ 5 ม.ค. 2510 · แม่ 2 ส.ค. 2513": [
+  "e.g. Father 5 Jan 1967 · Mother 2 Aug 1970",
+  "例如 父亲 1967年1月5日 · 母亲 1970年8月2日"
+ ],
  "เช่น มี.ค. – เม.ย. 2570": [
   "e.g. Mar – Apr 2570",
   "例如 2570年3月–4月"
+ ],
+ "เช่น ร้านกาแฟ ร้านเสื้อผ้า คลินิก": [
+  "e.g. café, clothing store, clinic",
+  "例如 咖啡店、服装店、诊所"
+ ],
+ "เช่น สื่อถึงความมั่นคง อ่านง่าย มีพยัญชนะมงคล": [
+  "e.g. conveys stability, easy to read, auspicious letters",
+  "例如 寓意稳定、易读、含吉祥字母"
  ],
  "เช่น อยากได้ชื่อที่แปลว่าความสำเร็จ ออกเสียงง่าย": [
   "e.g. a name meaning success, easy to pronounce",
@@ -8930,6 +9178,10 @@
  "เช่น อยากได้โทนสีม่วง": [
   "e.g. I'd like purple tones",
   "例如 想要紫色调"
+ ],
+ "เช่น เจ้าบ่าว 3 มี.ค. 2537 · เจ้าสาว 9 ก.ค. 2538": [
+  "e.g. Groom 3 Mar 1994 · Bride 9 Jul 1995",
+  "例如 新郎 1994年3月3日 · 新娘 1995年7月9日"
  ],
  "เช่น เรื่องงานช่วงนี้จะเป็นอย่างไร": [
   "e.g. How will work go for me these days?",
@@ -8942,6 +9194,10 @@
  "เช่น แต่งงาน ขึ้นบ้านใหม่ เปิดร้าน": [
   "e.g. wedding, housewarming, shop opening",
   "例如 结婚、乔迁、开店"
+ ],
+ "เช่น โต๊ะผู้จัดการ ห้องประชุม": [
+  "e.g. manager’s desk, meeting room",
+  "例如 经理桌、会议室"
  ],
  "เซียนแปะโรงสี": [
   "Sian Pae Rong Si",
@@ -10387,6 +10643,10 @@
   "Predicts using planetary positions and special points on the chart",
   "利用星盘上的行星位置与特殊点进行预测"
  ],
+ "ใช้บริการบนแอป": [
+  "Use in the app",
+  "在App中使用"
+ ],
  "ใช้ปฏิทินจันทรคติเขมรและปีนักษัตร 12 ปี ดูพื้นดวงและหาฤกษ์มงคล เช่น งานแต่งและขึ้นบ้านใหม่ อาจารย์มักให้คำแนะนำร่วมกับพิธีทางพุทธ": [
   "Uses the Khmer lunar calendar and the 12-year Chinese zodiac to read core destiny and find auspicious times for weddings and housewarmings; masters often give advice alongside Buddhist rites",
   "以高棉农历与十二生肖看命格并择吉时，如婚礼与乔迁；师傅常结合佛教仪式给予建议"
@@ -10518,6 +10778,10 @@
  "ใบเสนอราคาก่อนยืนยัน": [
   "Quotation before confirmation",
   "确认前提供报价单"
+ ],
+ "ใบเสนอราคาก่อนยืนยัน แล้วนัดวันลงพื้นที่": [
+  "A quote before you confirm, then a site-visit date",
+  "确认前先报价，再预约实地勘察日期"
  ],
  "ใบใช้ได้": [
   "valid",
@@ -10918,6 +11182,10 @@
  "ไม่เปิดเป็นบริการออนไลน์ เก็บไว้เป็นข้อมูลเพื่อการเรียนรู้": [
   "Not offered as an online service; kept as information for learning",
   "不提供线上服务，仅作为了解资料"
+ ],
+ "ไม่แน่ใจ (ให้ดูจากรูป)": [
+  "Not sure (read from the photo)",
+  "不确定（请从照片判断）"
  ],
  "ไม่ใช่การชำระเงินจริง": [
   "Not a real payment",

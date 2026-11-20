@@ -15,12 +15,16 @@ const FORM_FIELDS = {
     { name: 'current', label: 'ชื่อปัจจุบัน', prefill: 'first', required: true },
     { name: 'wish', label: 'อยากได้ชื่อแนวไหน', type: 'textarea', placeholder: 'เช่น เสริมการงาน ความหมายดี ไม่ยาวเกินไป' },
   ],
-  surname: [{ name: 'wish', label: 'ความหมายหรือแนวเสียงที่ต้องการ', type: 'textarea', required: true }],
+  surname: [
+    { name: 'current', label: 'นามสกุลปัจจุบัน', prefill: 'last' },
+    { name: 'wish', label: 'ความหมายหรือแนวเสียงที่ต้องการ', type: 'textarea', required: true, placeholder: 'เช่น สื่อถึงความมั่นคง อ่านง่าย มีพยัญชนะมงคล' },
+  ],
   phone: [{ name: 'numbers', label: 'เบอร์ที่ต้องการวิเคราะห์ (ถ้าเทียบ 3 เบอร์ ใส่บรรทัดละเบอร์)', type: 'textarea', required: true, placeholder: '08x-xxx-xxxx' }],
   plate: [{ name: 'plates', label: 'ทะเบียนรถ (ถ้าเทียบ 3 ชุด ใส่บรรทัดละชุด)', type: 'textarea', required: true, placeholder: 'เช่น 1กข 1234' }],
   auspicious: [
     { name: 'event', label: 'ประเภทงาน', required: true, placeholder: 'เช่น แต่งงาน ขึ้นบ้านใหม่ เปิดร้าน' },
     { name: 'range', label: 'ช่วงวันที่สะดวก', required: true, placeholder: 'เช่น มี.ค. – เม.ย. 2570' },
+    { name: 'people', label: 'ชื่อและวันเกิดของคนที่เกี่ยวข้อง (ถ้ามี)', type: 'textarea', placeholder: 'เช่น เจ้าบ่าว 3 มี.ค. 2537 · เจ้าสาว 9 ก.ค. 2538' },
   ],
   palm: [
     { name: 'palmL', label: 'ภาพฝ่ามือซ้ายที่เห็นเส้นชัด', type: 'file', slot: 'palmL', required: true },
@@ -31,11 +35,18 @@ const FORM_FIELDS = {
     { name: 'face', label: 'ภาพใบหน้าตรง ไม่สวมแว่น เห็นหน้าผากถึงคาง', type: 'file', slot: 'face', required: true },
     { name: 'topic', label: 'อยากรู้เรื่องไหน', type: 'select', options: ['ภาพรวม', 'ความรัก', 'การงาน', 'การเงิน', 'สุขภาพ'] },
   ],
-  fengshui: [
-    { name: 'photo', label: 'ภาพหรือผังพื้นที่', type: 'file', slot: 'place', required: true },
-    { name: 'direction', label: 'หน้าบ้าน/หน้าร้านหันทิศไหน', placeholder: 'เช่น ทิศตะวันออก' },
-  ],
+  fengshui: fsFields([{ name: 'spot', label: 'จุดที่อยากให้ดู', type: 'select', options: ['ประตูหน้าบ้าน', 'ห้องนอน', 'มุมทำงาน', 'ห้องนั่งเล่น', 'ห้องครัว', 'ห้องน้ำ', 'บันได', 'อื่น ๆ'] }], 'ภาพจุดที่อยากให้ดู'),
 };
+// ---------- ฮวงจุ้ย: รูป/ผัง + ทิศ + ข้อมูลเฉพาะของแต่ละแบบ ----------
+function fsFields(extra = [], photoLabel = 'ผังหรือรูปพื้นที่ (เห็นทางเข้า หน้าต่าง และจุดสำคัญ)') {
+  return [
+    { name: 'photo', label: photoLabel, type: 'file', slot: 'place', required: true },
+    { name: 'photo2', label: 'รูปเพิ่มเติม', type: 'file', slot: 'place2' },
+    { name: 'direction', label: 'ด้านหน้าหันไปทิศไหน', type: 'select', options: ['ไม่แน่ใจ (ให้ดูจากรูป)', 'ทิศเหนือ', 'ทิศตะวันออกเฉียงเหนือ', 'ทิศตะวันออก', 'ทิศตะวันออกเฉียงใต้', 'ทิศใต้', 'ทิศตะวันตกเฉียงใต้', 'ทิศตะวันตก', 'ทิศตะวันตกเฉียงเหนือ'] },
+    ...extra,
+    { name: 'wish', label: 'อยากเสริมเรื่องไหนเป็นพิเศษ', type: 'textarea', placeholder: 'เช่น การเงิน สุขภาพคนในบ้าน ความสัมพันธ์ ยอดขาย' },
+  ];
+}
 // สถานที่ทำพิธี: ดึงจาก places-data.js (160 แห่ง แยกตามภาค) · เลือกจากหน้ามงคลแล้วจะถูกเลือกไว้ให้ในฟอร์ม
 const PLACE_PICK = 'ให้ทีมเลือกสถานที่ที่เหมาะกับดวง';
 const placeLabel = (p) => `${p.name} · ${p.prov}`;
@@ -45,6 +56,12 @@ const placeGroups = (keep = () => true) => PLACE_REGIONS
 const MERIT_PLACES = [PLACE_PICK];
 const CHONG_PLACES = ['ให้ทีมเลือกสถานที่'];
 Object.assign(FORM_FIELDS, {
+  'fs-condo': fsFields([{ name: 'floor', label: 'ชั้นและเลขห้อง', placeholder: 'เช่น ชั้น 12 ห้อง 1205' }, { name: 'size', label: 'ขนาดห้อง', type: 'select', options: ['สตูดิโอ', '1 ห้องนอน', '2 ห้องนอน', '3 ห้องนอนขึ้นไป'] }], 'ผังห้องหรือรูปห้อง (เห็นประตูและหน้าต่าง)'),
+  'fs-house': fsFields([{ name: 'floors', label: 'จำนวนชั้น', type: 'select', options: ['1 ชั้น', '2 ชั้น', '3 ชั้นขึ้นไป'] }, { name: 'residents', label: 'ผู้อยู่อาศัยหลัก (ชื่อ · วันเกิด)', type: 'textarea', placeholder: 'เช่น พ่อ 5 ม.ค. 2510 · แม่ 2 ส.ค. 2513' }], 'ผังบ้านแต่ละชั้น หรือรูปหน้าบ้าน'),
+  'fs-shop': fsFields([{ name: 'business', label: 'ประเภทธุรกิจ', required: true, placeholder: 'เช่น ร้านกาแฟ ร้านเสื้อผ้า คลินิก' }], 'ผังร้านหรือรูปหน้าร้าน (เห็นทางเข้าและเคาน์เตอร์)'),
+  'fs-office': fsFields([{ name: 'seat', label: 'ตำแหน่งโต๊ะหรือห้องที่อยากให้ดู', placeholder: 'เช่น โต๊ะผู้จัดการ ห้องประชุม' }], 'ผังสำนักงานหรือรูปพื้นที่ทำงาน'),
+  'fs-land': fsFields([{ name: 'location', label: 'จังหวัด / ทำเล', required: true, placeholder: 'เช่น นนทบุรี ติดถนนใหญ่' }, { name: 'size', label: 'ขนาดที่ดิน', placeholder: 'เช่น 100 ตารางวา' }, { name: 'plan', label: 'ตั้งใจใช้ทำอะไร', type: 'select', options: ['ปลูกบ้าน', 'ทำร้าน / ธุรกิจ', 'ลงทุน', 'อื่น ๆ'] }], 'ผังที่ดินหรือรูปโดยรอบ'),
+  'fs-placement': fsFields([{ name: 'item', label: 'ของหรือสัตว์มงคลที่มี', required: true, placeholder: 'เช่น ปี่เซียะ กวนอิม ตู้ปลา' }], 'รูปพื้นที่ที่จะวาง'),
   idcard: [{ name: 'idnum', label: 'เลขบัตรประชาชน 13 หลัก (ระบบเก็บเฉพาะผลรวมและเลขท้าย 4 หลัก)', mask: 'idcard', required: true,
     inputmode: 'numeric', pattern: '[0-9 -]{13,17}', placeholder: 'x-xxxx-xxxxx-xx-x' }],
   couple: [

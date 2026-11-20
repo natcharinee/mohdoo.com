@@ -101,7 +101,7 @@ function pkgRow(id, optName = '') {
   const tiers = p.prices.map((t) => `<li><span>${esc(t.label)}</span><b>${t.price == null ? 'ตามใบเสนอราคา' : baht(t.price)}</b></li>`).join('');
   const title = optName && !p.name.includes(optName) ? `${p.name} · ${optName}` : p.name;
   return `<div class="w-pkg">
-    <div class="w-pkg-head"><span>${p.icon}</span><b>${esc(title)}</b>${p.open ? '<em class="badge-s open">จองได้</em>' : '<em class="badge-s soon">รอเปิดจอง</em>'}</div>
+    <div class="w-pkg-head"><span>${p.icon}</span><b>${esc(title)}</b>${p.open ? '<em class="badge-s open">จองได้</em>' : p.app ? '<em class="badge-s app">📱 บนแอป</em>' : '<em class="badge-s soon">รอเปิดจอง</em>'}</div>
     <p class="w-pkg-get">${esc(p.get)}</p>
     <ul class="w-tiers">${tiers}<li><span>เวลาส่งผล</span><b class="${p.delivery ? '' : 'tbd'}">${esc(p.delivery || 'รอระบุ')}</b></li></ul>
     <div class="w-pkg-actions">
@@ -231,7 +231,7 @@ function openPackage(id) {
   $('wdBody').innerHTML = `
     ${from ? `<button class="wc-back" data-back-sci="${from.id}">‹ ${esc(from.th)}</button>` : ''}
     <div class="book-head"><div class="book-icon">${p.icon}</div><h2 id="wdTitle">${esc(p.name)}</h2>
-      <p class="w-intl">${p.open ? '<span class="badge-s open">เปิดจอง</span>' : '<span class="badge-s soon">รอเปิดจอง</span>'}</p></div>
+      <p class="w-intl">${p.open ? '<span class="badge-s open">เปิดจอง</span>' : p.app ? '<span class="badge-s app">📱 ใช้บริการบนแอป</span>' : '<span class="badge-s soon">รอเปิดจอง</span>'}</p></div>
     <dl class="book-detail">
       <dt>รายละเอียด</dt><dd>${esc(p.about)}</dd>
       <dt>สิ่งที่ได้รับ</dt><dd>${esc(p.get)}</dd>
@@ -245,6 +245,7 @@ function openPackage(id) {
     </dl>
     ${p.open
       ? `<button class="btn-gold full" data-book="${p.id}" data-title="${esc(p.name)}">จองบริการ ›</button>`
+      : p.app ? appCTA()
       : '<button class="btn-ghost full" data-notify>แจ้งเตือนฉันเมื่อเปิดจอง</button>'}
     <p class="book-foot">ผู้ให้บริการ ขอบเขต เวลาส่ง และราคาจริงรอทีมยืนยัน · โหมดทดลอง ยังไม่มีการเก็บเงินจริง</p>`;
   if (!dlg.open) dlg.showModal();

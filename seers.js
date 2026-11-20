@@ -16,8 +16,7 @@ const SEERS = SEER_DATA.map((d) => {
 // บนเว็บ: ส่งคำถามแล้วรอหมอดูตอบเป็นข้อความเท่านั้น (ราคามาตรฐาน)
 // คุยสดแบบเรียลไทม์ (โทร / วิดีโอคอล) ใช้บนแอปหมอดู.com · ราคาตามที่หมอดูตั้งบนแพลตฟอร์มเดิม (1 เหรียญ = 1 บาท ชั่วคราว)
 const seerTiers = () => [{ label: 'ถาม 1 เรื่อง (ตอบเป็นข้อความ)', price: CATEGORY_PRICE }];
-// ลิงก์ดาวน์โหลดแอป (ใส่เมื่อได้ลิงก์จริง · ว่างไว้ = ปุ่มแจ้งว่าเร็ว ๆ นี้)
-const APP_LINKS = { ios: '', android: '' };
+// ลิงก์ดาวน์โหลดแอปอยู่ที่ APP_LINKS ใน common.js (ใช้ร่วมกันทุกหน้า)
 function appCard(s) {
   const btn = (os, icon, label) => APP_LINKS[os]
     ? `<a class="app-dl" href="${APP_LINKS[os]}" target="_blank" rel="noopener"><span>${icon}</span>${label}</a>`
