@@ -231,6 +231,15 @@
           </nav>
 
           <!-- ===== Bottom sheet: เข้าสู่ระบบ / สมัคร ===== -->
+          <!-- รายละเอียดเงื่อนไข / นโยบาย (เปิดจากช่องติ๊กตอนสมัคร) -->
+          <dialog class="policy-dialog" id="policyDialog" aria-labelledby="policyTitle">
+            <header><h2 id="policyTitle"></h2><button type="button" class="policy-x" data-policy-close aria-label="ปิด">✕</button></header>
+            <iframe id="policyFrame" title="รายละเอียดเอกสาร" src="about:blank"></iframe>
+            <footer>
+              <button type="button" class="btn-ghost" data-policy-close>ปิด</button>
+              <button type="button" class="btn-gold" id="policyAgree">อ่านแล้ว ยอมรับ ✓</button>
+            </footer>
+          </dialog>
           <div class="sheet-backdrop" id="sheetBackdrop"></div>
           <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true">
             <span class="grabber"></span>
@@ -297,7 +306,12 @@
                   <input type="time" name="birthtime">
                 </label>
               </div>
-              <label class="check"><input type="checkbox" required> <span>ยอมรับ<a href="terms.html" target="_blank" rel="noopener">เงื่อนไขการใช้บริการ</a> และรับทราบ<a href="privacy.html" target="_blank" rel="noopener">นโยบายความเป็นส่วนตัว</a></span></label>
+              <div class="consents">
+                <label class="check"><input type="checkbox" name="agreeTerms" required> <span>ฉันยอมรับ<b>เงื่อนไขการใช้บริการ</b></span>
+                  <a class="consent-read" href="terms.html" data-policy="terms">อ่านรายละเอียด</a></label>
+                <label class="check"><input type="checkbox" name="agreePrivacy" required> <span>ฉันได้อ่านและรับทราบ<b>นโยบายความเป็นส่วนตัว</b></span>
+                  <a class="consent-read" href="privacy.html" data-policy="privacy">อ่านรายละเอียด</a></label>
+              </div>
               <button class="btn-gold full" type="submit">สมัครและเปิดดวง</button>
             </form>
 

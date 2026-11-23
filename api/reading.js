@@ -72,6 +72,7 @@ export default async function handler(req, res) {
 
   let body;
   try { body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {}; } catch (_) { return res.status(400).json({ error: 'bad_request' }); }
+  if (!(Number(body.photo_consent_at) > 0)) return res.status(403).json({ error: 'photo_consent_required' }); // ต้องยินยอมก่อนส่งรูปให้ AI อ่าน
   if (!(await aiAllowed(req, { need: 'order', orderNo: body.order_no, kinds: ['photo'] }))) return res.status(401).json({ error: 'invalid_code' }); // จ่ายแล้ว (คำสั่งซื้อ/สมาชิก) หรือรหัสทดลอง
   const kind = KINDS[body.kind] ? body.kind : null;
   const images = (Array.isArray(body.images) ? body.images : []).slice(0, MAX_IMAGES).map(parseImage).filter(Boolean);

@@ -279,7 +279,12 @@ on('POST', 'orders/:no/intake', async (req, res, { no }) => {
   o.form = cleanForm(b.form);
   o.fields = cleanFields(b.fields);
   o.photos = [];
-  for (const p of (Array.isArray(b.photos) ? b.photos : []).slice(0, 6)) {
+  const photos = (Array.isArray(b.photos) ? b.photos : []).slice(0, 6);
+  // รูปใบหน้า/ฝ่ามือ: ต้องได้ความยินยอมโดยชัดแจ้งในการส่งครั้งนี้ (PDPA · นโยบายความเป็นส่วนตัวข้อ 3)
+  const consentAt = Number(b.photo_consent_at) || 0;
+  if (photos.length && !(consentAt > Date.now() - 864e5 && consentAt <= Date.now() + 60e3)) fail(400, 'photo_consent_required');
+  if (photos.length) o.photo_consent_at = consentAt;
+  for (const p of photos) {
     const f = await saveFile(p.data, { folder: 'photo', owner: u.id });
     o.photos.push({ slot: str(p.slot, 20), url: f.url });
   }

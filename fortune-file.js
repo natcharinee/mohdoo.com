@@ -195,11 +195,12 @@ async function aiReadPhotos(kind, slots, topic) {
     const r = await fetch('/api/reading', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-AI-Code': u.aiCode || '' },
-      body: JSON.stringify({ order_no: (typeof order !== 'undefined' && order && order.no) || '', kind, topic, images,
+      body: JSON.stringify({ order_no: (typeof order !== 'undefined' && order && order.no) || '', kind, topic, images, photo_consent_at: u.photoConsent || 0,
         profile: { first: u.first || u.name, birthdate: u.birthdate, gender: u.gender, file: fortuneFileText(u), lang: window.LANG || 'th' } }),
     });
     if (r.ok) { const j = await r.json(); return { status: j.unclear ? 'unclear' : 'ok', ...j }; }
     if (r.status === 401) return { status: 'nocode' };
+    if (r.status === 403) return { status: 'noconsent' };
     if (r.status === 429) return { status: 'busy' };
     return { status: 'offline' };
   } catch (_) { return { status: 'offline' }; } // เปิดในเครื่อง / ไม่มีเซิร์ฟเวอร์ AI
@@ -233,7 +234,7 @@ async function runPhotoReading({ histId, kind, slots, topic, retry }) {
     $('retryPhoto').addEventListener('click', retry);
   } else {
     // AI ยังไม่พร้อม → ส่งต่อให้หมอดูตอบตามปกติ (ไม่มีคำอ่านปลอม)
-    const why = { nocode: 'ยังไม่ได้กรอกรหัสทดลองใช้ AI (กรอกได้ในหน้า “ดูดวงประจำวัน”)', busy: 'ตอนนี้มีคนใช้ AI เยอะมาก',
+    const why = { noconsent: 'ยังไม่ได้ติ๊กยินยอมให้ใช้รูป', nocode: 'ยังไม่ได้กรอกรหัสทดลองใช้ AI (กรอกได้ในหน้า “ดูดวงประจำวัน”)', busy: 'ตอนนี้มีคนใช้ AI เยอะมาก',
       offline: 'ยังไม่ได้เชื่อม AI บนเซิร์ฟเวอร์', nophoto: 'ไม่พบรูปในแฟ้มดวง' }[r.status];
     updateHistory(histId, { status: 'รอหมอดูตอบ', note: `ส่งรูปให้หมอดูแล้ว ตอบภายใน 24 ชั่วโมง · ${why}` });
     $('payBody').innerHTML = `<div class="pay-ok"><span class="ok-ring">✦</span><h3>ส่งรูปให้หมอดูแล้ว</h3>

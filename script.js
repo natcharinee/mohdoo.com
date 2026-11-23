@@ -396,10 +396,47 @@ $('infoForm').addEventListener('submit', (e) => {
     firstEn: String(d.get('firstEn') || '').trim(), lastEn: String(d.get('lastEn') || '').trim(),
     birthdate: String(d.get('birthdate')), birthtime: String(d.get('birthtime') || ''),
     created: Date.now(), coupons: [], history: [], wheelSpun: false,
+    // หลักฐานการยอมรับเอกสาร (PDPA) · version = วันที่ของฉบับที่แสดงตอนสมัคร
+    consents: { terms: Date.now(), privacy: Date.now(), version: POLICY_VERSION },
     ...(window.SERVER && typeof srvLast !== 'undefined' && srvLast ? { role: srvLast.role, seerId: srvLast.seer_id || null } : {}),
   }, true);
   e.target.reset();
 });
+
+// ---------- รายละเอียดเงื่อนไข / นโยบายความเป็นส่วนตัว (ป๊อปอัปจากช่องติ๊กตอนสมัคร) ----------
+const POLICY_VERSION = '2026-11-draft'; // เปลี่ยนเมื่อแก้เนื้อหาเอกสาร
+const POLICY = {
+  terms: { title: 'เงื่อนไขการใช้บริการ', href: 'terms.html', box: 'agreeTerms' },
+  privacy: { title: 'นโยบายความเป็นส่วนตัว', href: 'privacy.html', box: 'agreePrivacy' },
+};
+let policyOpen = null;
+function openPolicy(key) {
+  const p = POLICY[key];
+  const dlg = $('policyDialog');
+  if (!p || !dlg || typeof dlg.showModal !== 'function') { window.open(p ? p.href : 'privacy.html', '_blank', 'noopener'); return; }
+  policyOpen = key;
+  $('policyTitle').textContent = p.title;
+  $('policyFrame').src = `${p.href}?embed=1`;
+  dlg.showModal();
+}
+function closePolicy() {
+  $('policyDialog').close();
+}
+$('infoForm').addEventListener('click', (e) => {
+  const a = e.target.closest('[data-policy]');
+  if (!a) return;
+  e.preventDefault(); // กดลิงก์ ไม่ใช่ติ๊กช่อง
+  openPolicy(a.dataset.policy);
+});
+$('policyDialog')?.addEventListener('click', (e) => {
+  if (e.target.closest('[data-policy-close]') || e.target === e.currentTarget) closePolicy(); // ปุ่มปิด หรือกดพื้นหลัง
+});
+$('policyAgree')?.addEventListener('click', () => {
+  const box = policyOpen && $('infoForm')[POLICY[policyOpen].box];
+  if (box) box.checked = true;
+  closePolicy();
+});
+$('policyDialog')?.addEventListener('close', () => { $('policyFrame').src = 'about:blank'; policyOpen = null; });
 
 function finishAuth(user, isNew) {
   persistUser(user);

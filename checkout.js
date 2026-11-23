@@ -545,7 +545,9 @@ function renderIntake(fields) {
     <form class="form" id="intakeForm">
       ${u.birthdate ? '' : '<label>วันเกิดของคุณ<input type="date" name="birthdate" required></label>'}
       ${fields.map((f) => `<label>${f.label}${f.required ? '' : ' <small>(ไม่บังคับ)</small>'}${input(f)}</label>`).join('')}
-      ${fields.some((f) => f.slot) ? '<p class="pf-note">📷 รูปจะเก็บไว้ใน “แฟ้มดวง” ของคุณ ใช้ดูดวงครั้งต่อไปและรายงานดวงประจำวัน ลบได้ทุกเมื่อในหน้าบัญชี</p>' : ''}
+      ${fields.some((f) => f.slot) ? `<p class="pf-note">📷 รูปจะเก็บไว้ใน “แฟ้มดวง” ของคุณ ใช้ดูดวงครั้งต่อไปและรายงานดวงประจำวัน ลบได้ทุกเมื่อในหน้าบัญชี</p>
+      <label class="pf-consent"><input type="checkbox" name="photoConsent" required>
+        <span>ฉันยินยอมให้หมอดู.com ใช้รูป${PHOTO_KINDS[order.item.key] === 'face' ? 'ใบหน้า' : 'ฝ่ามือ'}ของฉันเพื่ออ่าน${PHOTO_KINDS[order.item.key] === 'face' ? 'โหงวเฮ้ง' : 'ลายมือ'}ตามคำสั่งซื้อนี้เท่านั้น ไม่ใช้ระบุตัวตน และถอนความยินยอมหรือลบรูปได้ทุกเมื่อ · <a href="privacy.html#sensitive" target="_blank" rel="noopener">อ่านนโยบาย</a></span></label>` : ''}
       <button class="btn-gold full" type="submit">${order.item.next.instant ? '✦ ดูคำตอบเลย' : order.item.done ? 'ยืนยัน ›' : 'ส่งให้หมอดู ›'}</button>
     </form>`;
   $('intakeForm').addEventListener('submit', async (e) => {
@@ -572,6 +574,9 @@ function renderIntake(fields) {
       const d = (data[f.name] || '').replace(/\D/g, '');
       data[f.name] = `•••••••••${d.slice(-4)} · ผลรวม ${[...d].reduce((a, b) => a + +b, 0)}`;
     });
+    // ความยินยอมใช้รูป (ขอทุกครั้งที่ส่งรูป) · ไม่ใช่ข้อมูลคำสั่งซื้อ
+    const consentAt = data.photoConsent ? Date.now() : 0;
+    delete data.photoConsent;
     const done = order.item.done;
     const keepAddr = !!data.saveAddr; // ช่องจำที่อยู่ ไม่ใช่ข้อมูลคำสั่งซื้อ
     delete data.saveAddr;
@@ -582,12 +587,13 @@ function renderIntake(fields) {
       btn.disabled = true;
       try {
         await srvIntake(order.no, {
-          form: data, fields: fields.map((f) => [f.name, f.label]),
+          form: data, fields: fields.map((f) => [f.name, f.label]), photo_consent_at: consentAt || undefined,
           photos: shots.map((s) => ({ slot: s.slot, data: s.src || (cur.photos || {})[s.slot] })).filter((x) => x.data),
         });
       } catch (err) { toast(err.message); btn.disabled = false; delete form.dataset.busy; return; }
     }
     if (data.birthdate) cur.birthdate = data.birthdate;
+    if (consentAt) cur.photoConsent = consentAt;
     if (order.item.ship) { // จำที่อยู่จัดส่ง (ติ๊กไว้)
       if (keepAddr) cur.shipAddr = { receiver: data.receiver, tel: data.tel, address: data.address };
     }

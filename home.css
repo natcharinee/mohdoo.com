@@ -1051,6 +1051,8 @@ body.app-ui .hello small { font-size: .85rem; }
 .pf-consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; padding: 12px; border-radius: 14px; font-size: .8rem; line-height: 1.6; color: var(--text);
   background: rgba(245, 201, 107, .08); border: 1px dashed var(--gold); cursor: pointer; }
 .pf-consent input { margin-top: 4px; accent-color: var(--gold); }
+.form label.pf-consent { flex-direction: row; color: var(--text); background: rgba(245, 201, 107, .08); border: 1px solid rgba(245, 201, 107, .25); }
+.pf-consent a { color: var(--gold-2); }
 .pf-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
 .pf-ph { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; min-width: 0; }
 .ph-box { width: 100%; aspect-ratio: 3 / 4; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; overflow: hidden;

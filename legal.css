@@ -117,3 +117,9 @@ html { scroll-behavior: smooth; }
   .legal table { font-size: 13.5px; }
   .legal th, .legal td { min-width: 130px; }
 }
+
+/* ---------- เปิดในป๊อปอัปตอนสมัคร (?embed=1) ---------- */
+.embed .legal-page .topbar, .embed .legal .links, .embed .legal-page .nebula { display: none; }
+.embed .legal { padding-top: 8px; }
+.embed .legal h1 { display: none; } /* ชื่อเอกสารอยู่ที่หัวป๊อปอัปแล้ว */
+.embed .legal h2 { scroll-margin-top: 12px; }
