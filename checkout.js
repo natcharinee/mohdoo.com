@@ -503,6 +503,14 @@ function proceed() {
   }
 }
 
+// ข้อความขอความยินยอมตามชนิดรูปที่ส่ง (ใบหน้า · ฝ่ามือ · สถานที่สำหรับฮวงจุ้ย)
+function photoConsentText(fields) {
+  const slots = fields.map((f) => f.slot).filter(Boolean);
+  if (slots.some((x) => x.startsWith('place'))) return 'ฉันยินยอมให้หมอดู.com ใช้รูปบ้านหรือสถานที่ที่ส่งมา เพื่อดูฮวงจุ้ยตามคำสั่งซื้อนี้เท่านั้น (ควรเลี่ยงรูปที่เห็นหน้าคน เลขที่บ้าน หรือเอกสารส่วนตัว) และขอลบรูปได้ทุกเมื่อ';
+  const face = slots.includes('face');
+  return `ฉันยินยอมให้หมอดู.com ใช้รูป${face ? 'ใบหน้า' : 'ฝ่ามือ'}ของฉันเพื่ออ่าน${face ? 'โหงวเฮ้ง' : 'ลายมือ'}ตามคำสั่งซื้อนี้เท่านั้น ไม่ใช้ระบุตัวตน และถอนความยินยอมหรือลบรูปได้ทุกเมื่อ`;
+}
+
 // ---------- ขั้นที่ 3 (บริการที่ต้องให้หมอดูตอบ): กรอกข้อมูล ----------
 function renderIntake(fields) {
   const u = currentUser();
@@ -551,7 +559,7 @@ function renderIntake(fields) {
       ${fields.map((f) => `<label>${f.label}${f.required ? '' : ' <small>(ไม่บังคับ)</small>'}${input(f)}</label>`).join('')}
       ${fields.some((f) => f.slot) ? `<p class="pf-note">📷 รูปจะเก็บไว้ใน “แฟ้มดวง” ของคุณ ใช้ดูดวงครั้งต่อไปและรายงานดวงประจำวัน ลบได้ทุกเมื่อในหน้าบัญชี</p>
       <label class="pf-consent"><input type="checkbox" name="photoConsent" required>
-        <span>ฉันยินยอมให้หมอดู.com ใช้รูป${PHOTO_KINDS[order.item.key] === 'face' ? 'ใบหน้า' : 'ฝ่ามือ'}ของฉันเพื่ออ่าน${PHOTO_KINDS[order.item.key] === 'face' ? 'โหงวเฮ้ง' : 'ลายมือ'}ตามคำสั่งซื้อนี้เท่านั้น ไม่ใช้ระบุตัวตน และถอนความยินยอมหรือลบรูปได้ทุกเมื่อ · <a href="privacy.html#sensitive" target="_blank" rel="noopener">อ่านนโยบาย</a></span></label>` : ''}
+        <span>${photoConsentText(fields)} · <a href="privacy.html#sensitive" target="_blank" rel="noopener">อ่านนโยบาย</a></span></label>` : ''}
       <button class="btn-gold full" type="submit">${order.item.next.instant ? '✦ ดูคำตอบเลย' : order.item.done ? 'ยืนยัน ›' : 'ส่งให้หมอดู ›'}</button>
     </form>`;
   $('intakeForm').addEventListener('submit', async (e) => {

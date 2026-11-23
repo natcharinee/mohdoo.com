@@ -130,6 +130,8 @@ async function viewDash() {
       <a class="kpi" href="#orders/paid"><small>จ่ายแล้ว ยังไม่กรอกข้อมูล</small><b>${s.queue.paid_no_intake}</b><em>อาจต้องติดต่อลูกค้า</em></a>
       <div class="kpi"><small>ลูกค้าทั้งหมด</small><b>${s.users.total.toLocaleString('th-TH')}</b><em>วันนี้ +${s.users.today}</em></div>
       <div class="kpi"><small>สมาชิก AI รายเดือน</small><b>${s.users.ai}</b><em>ยังไม่หมดอายุ</em></div>
+      ${s.aiCost ? `<div class="kpi ${s.aiCost.today.usd >= s.aiCost.alert ? 'alert' : ''}" title="ประมาณจากจำนวนโทเคน ไม่ใช่ใบแจ้งหนี้จริง"><small>ค่า AI วันนี้ (ประมาณ)</small><b>$${s.aiCost.today.usd.toFixed(2)}</b>
+        <em>${s.aiCost.today.calls} ครั้ง · 7 วัน $${s.aiCost.d7.usd.toFixed(2)} · แจ้งเตือนที่ $${s.aiCost.alert}${s.aiCost.cap ? ` · เพดาน $${s.aiCost.cap}` : ''}</em></div>` : ''}
     </div>
     <div class="grid2">
       <section class="card"><h3>ยอดขาย 14 วัน</h3>

@@ -6,6 +6,8 @@ import { chatAccess, chatCount } from './_lib/aigate.js';
 import { VOICE } from './_lib/voice.js';
 import { chartText } from '../lib/calc/chart.js';
 import { loadKB } from './_lib/kb.js';
+import { aiBudgetOk, recordAI } from './_lib/aiusage.js';
+import { rateLimit } from './_lib/http.js';
 
 const MAX_TURNS = 20;      // ส่งประวัติแชทย้อนหลังไม่เกิน 20 ข้อความ
 const MAX_CHARS = 1500;    // ความยาวสูงสุดต่อข้อความ
@@ -73,6 +75,10 @@ export default async function handler(req, res) {
   const access = await chatAccess(req); // สมาชิกรายวัน/รายเดือน หรือรหัสทดลองของทีม
   if (!access.ok) return res.status(401).json({ error: 'invalid_code' });
   if (access.quota && !access.quota.left) return res.status(429).json({ error: 'daily_limit', quota: access.quota });
+  // กันยิงถี่ (สแปม/บอท): ไม่เกิน 6 คำถามต่อนาทีต่อคน
+  try { rateLimit(`chat:${access.user ? access.user.id : req.headers['x-forwarded-for'] || 'team'}`, 6, 60e3); } catch (_) { return res.status(429).json({ error: 'busy' }); }
+  // เกินเพดานค่าใช้จ่าย AI รายวัน (MOHDOO_AI_CAP_USD) → ตอบสุภาพ ไม่นับโควตาลูกค้า
+  if (!(await aiBudgetOk())) return res.status(200).json({ reply: 'ขออภัยค่ะ ตอนนี้แม่หมอ AI มีคนถามเยอะเป็นพิเศษ พักรับคำถามชั่วคราว ลองใหม่อีกครั้งภายหลังนะคะ 🙏', quota: access.quota || null });
   await loadKB(); // ตำราดูดวงล่าสุดที่ทีมแก้ในหลังบ้าน
   const history = (Array.isArray(body.messages) ? body.messages : [])
     .filter((m) => (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
@@ -101,6 +107,7 @@ export default async function handler(req, res) {
       messages,
     });
 
+    await recordAI('chat', response.model || CHAT_MODEL, response.usage);
     if (response.stop_reason === 'refusal') {
       return res.status(200).json({ reply: 'ขออภัยค่ะ แม่หมอ AI ตอบคำถามนี้ไม่ได้ ลองถามในมุมอื่นดูนะคะ 🙏' });
     }

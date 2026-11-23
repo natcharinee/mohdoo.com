@@ -3,6 +3,7 @@
 //   → { reading, summary }   หรือ { unclear: true, reading } ถ้ารูปไม่ชัด/ไม่ใช่ส่วนที่ขอ
 // สิทธิ์ใช้: ลูกค้าที่จ่ายแล้ว (ดู _lib/aigate.js) หรือรหัสทดลอง MOHDOO_AI_CODE · ต้องตั้ง ANTHROPIC_API_KEY
 import Anthropic from '@anthropic-ai/sdk';
+import { aiBudgetOk, recordAI } from './_lib/aiusage.js';
 import { aiAllowed } from './_lib/aigate.js';
 import { VOICE } from './_lib/voice.js';
 import { palmGuide } from './_lib/palm-guide.js';
@@ -75,6 +76,7 @@ export default async function handler(req, res) {
   let body;
   try { body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {}; } catch (_) { return res.status(400).json({ error: 'bad_request' }); }
   if (!(Number(body.photo_consent_at) > 0)) return res.status(403).json({ error: 'photo_consent_required' }); // ต้องยินยอมก่อนส่งรูปให้ AI อ่าน
+  if (!(await aiBudgetOk())) return res.status(503).json({ error: 'ai_budget' }); // เกินเพดานค่าใช้จ่ายรายวัน → หน้าเว็บใช้ทางสำรอง
   if (!(await aiAllowed(req, { need: 'order', orderNo: body.order_no, kinds: ['photo'] }))) return res.status(401).json({ error: 'invalid_code' }); // จ่ายแล้ว (คำสั่งซื้อ/สมาชิก) หรือรหัสทดลอง
   const kind = KINDS[body.kind] ? body.kind : null;
   const images = (Array.isArray(body.images) ? body.images : []).slice(0, MAX_IMAGES).map(parseImage).filter(Boolean);
@@ -107,6 +109,7 @@ export default async function handler(req, res) {
       ],
     });
 
+    await recordAI('reading', response.model || 'claude-opus-5-5', response.usage);
     if (response.stop_reason === 'refusal') {
       return res.status(200).json({ unclear: true, reading: 'ขออภัยค่ะ แม่หมอ AI อ่านรูปนี้ไม่ได้ ลองส่งรูปใหม่ที่เห็นเฉพาะฝ่ามือหรือใบหน้าชัด ๆ นะคะ 🙏' });
     }

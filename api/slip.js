@@ -3,6 +3,7 @@
 //   → { verse: [4 วรรค], topics: [{ label, text } × 4], overall }
 // สิทธิ์ใช้: ลูกค้าที่จ่ายแล้ว (ดู _lib/aigate.js) หรือรหัสทดลอง MOHDOO_AI_CODE · ต้องตั้ง ANTHROPIC_API_KEY
 import Anthropic from '@anthropic-ai/sdk';
+import { aiBudgetOk, recordAI } from './_lib/aiusage.js';
 import { aiAllowed } from './_lib/aigate.js';
 import { VOICE } from './_lib/voice.js';
 import { chartText } from '../lib/calc/chart.js';
@@ -63,6 +64,7 @@ export default async function handler(req, res) {
 
   let body;
   try { body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {}; } catch (_) { return res.status(400).json({ error: 'bad_request' }); }
+  if (!(await aiBudgetOk())) return res.status(503).json({ error: 'ai_budget' }); // เกินเพดานค่าใช้จ่ายรายวัน → หน้าเว็บใช้ทางสำรอง
   if (!(await aiAllowed(req, { need: 'order', orderNo: body.order_no }))) return res.status(401).json({ error: 'invalid_code' }); // จ่ายแล้ว (คำสั่งซื้อ/สมาชิก) หรือรหัสทดลอง
   const detail = String(body.detail || '').slice(0, 3000);
   if (!detail.trim()) return res.status(400).json({ error: 'bad_request' });
@@ -91,6 +93,7 @@ export default async function handler(req, res) {
         ...(REPLY_LANG[p.lang] ? [{ role: 'system', content: REPLY_LANG[p.lang] }] : []),
       ],
     });
+    await recordAI('slip', response.model || 'claude-opus-5-5', response.usage);
     if (response.stop_reason === 'refusal') return res.status(422).json({ error: 'refused' });
     const text = response.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n');
     const slip = parseSlip(text);

@@ -4,6 +4,7 @@
 import { config } from './_lib/config.js';
 import { db, newId } from './_lib/db.js';
 import { HttpError, fail, send, bodyOf, str, int, ipOf, rateLimit } from './_lib/http.js';
+import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
 import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, DEMO_CODE } from './_lib/auth.js';
 import { priceOf, catalog, addMonth, KIND_NAME } from './_lib/catalog.js';
 import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from './_lib/pay.js';
@@ -529,7 +530,10 @@ on('GET', 'admin/stats', async (req) => {
   const { rows: users } = await store.list('user', { limit: 50000 });
   const stock = await stockMap();
   const lowStock = catalog().SHOP_ITEMS.filter((p) => stock[p.id] != null && stock[p.id] <= 3).map((p) => ({ id: p.id, name: p.name, icon: p.icon, qty: stock[p.id] }));
-  return { lowStock,
+  // ค่าใช้จ่าย AI (ประมาณการ) วันนี้และ 7 วัน
+  const aiDays = await Promise.all([...Array(7)].map((_, k) => aiDay(bkkDay(now - k * 864e5))));
+  const aiCost = { today: aiDays[0], d7: { usd: Math.round(aiDays.reduce((a, d) => a + d.usd, 0) * 100) / 100, calls: aiDays.reduce((a, d) => a + d.calls, 0) }, alert: ALERT_USD, cap: CAP_USD };
+  return { lowStock, aiCost,
     today: { orders: paid.filter((o) => o.paid_at >= day0).length, revenue: sum(paid.filter((o) => o.paid_at >= day0)) },
     d7: { orders: paid.filter((o) => o.paid_at >= now - 7 * 864e5).length, revenue: sum(paid.filter((o) => o.paid_at >= now - 7 * 864e5)) },
     d30: { orders: paid.filter((o) => o.paid_at >= now - 30 * 864e5).length, revenue: sum(paid.filter((o) => o.paid_at >= now - 30 * 864e5)),
