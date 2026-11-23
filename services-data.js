@@ -33,6 +33,13 @@ const SERVICES = [
     prices: [{ label: 'ถาม 1 เรื่อง · รับใบผลดวงทันที', price: SERVICE_PRICE }],
   },
   {
+    id: 'iching', icon: '☯️', name: 'เสี่ยงทายอี้จิง', open: true, phase: 1,
+    about: 'ตั้งคำถาม 1 เรื่อง ระบบโยนเหรียญ 3 เหรียญ 6 ครั้งให้ได้ 1 ใน 64 ฉบับ พร้อมเส้นเปลี่ยนที่บอกทิศทางของเรื่อง',
+    get: 'ฉบับอี้จิงของคุณ เส้นเปลี่ยน และคำอธิบายตอบคำถาม เป็นใบผลดวงทันที',
+    prices: [{ label: 'ถาม 1 เรื่อง · รับใบผลดวงทันที', price: SERVICE_PRICE }],
+    note: 'ความหมายอ้างอิงคัมภีร์อี้จิงฉบับแปลของ James Legge (1899) เรียบเรียงเป็นภาษาไทย',
+  },
+  {
     id: 'babyname', icon: '👶', name: 'ตั้งชื่อลูก', open: true, phase: 1,
     about: 'เลือกชื่อจากความหมาย เสียงอ่าน นามสกุล และความชอบ หากเกิดแล้วและต้องการอิงศาสตร์วันเกิด ให้ระบุวันเกิดตามหลักที่เลือก',
     get: 'ชื่อ 5 ตัวเลือก พร้อมคำอ่าน ความหมาย และเหตุผล แก้ได้ 1 รอบตามโจทย์เดิม',
@@ -225,7 +232,7 @@ const TOPICS = [
 const ALL_TOPICS = TOPICS.map((t) => t.id);
 const PKG_META = {
   'love-free': { topics: ['love'], delivery: 'ทันที' }, 'daily-free': { topics: ['life'], delivery: 'ทันที' },
-  'siamsi': { topics: ['life'], delivery: 'ทันที' }, 'fortune': { topics: ALL_TOPICS }, 'tarot-ask': { topics: ALL_TOPICS },
+  'siamsi': { topics: ['life'], delivery: 'ทันที' }, 'fortune': { topics: ALL_TOPICS }, 'iching': { topics: ALL_TOPICS }, 'tarot-ask': { topics: ALL_TOPICS },
   'thai-30': { topics: ALL_TOPICS }, 'chart-30': { topics: ALL_TOPICS }, 'couple': { topics: ['love', 'family'] },
   'babyname': { topics: ['family'] }, 'rename': { topics: ['life', 'work'] }, 'surname': { topics: ['family', 'life'] },
   'name-check': { topics: ['life', 'work'] },

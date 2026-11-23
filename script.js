@@ -90,7 +90,7 @@ function openCat(id) {
   $('catBody').innerHTML = `
     <div class="cat-hero"><span class="cat-ico big">${c.icon}</span><div><h3>${c.name}</h3><p>${c.desc}</p></div></div>
     <ul class="type-list">
-      ${c.types.map((t, i) => `<li><button class="type-row" data-cat="${c.id}" data-type="${i}">
+      ${c.types.map((t, i) => [t, i]).filter(([t]) => typeOn(t)).map(([t, i]) => `<li><button class="type-row" data-cat="${c.id}" data-type="${i}">
         <span class="type-ico">${t.icon}</span><span class="type-txt"><b>${t.name}</b><small>${t.desc}</small></span><span class="chev">›</span>
       </button></li>`).join('')}
     </ul>`;
@@ -99,6 +99,7 @@ function openCat(id) {
 function openType(catId, idx) {
   const c = CATEGORIES.find((x) => x.id === catId);
   const t = c.types[idx];
+  if (!t || t.off) return toast('ประเภทนี้ยังไม่เปิดให้บริการ');
   $('typeBody').innerHTML = `
     <div class="cat-hero"><span class="cat-ico big">${t.icon}</span><div><p class="crumb">${c.name}</p><h3>${t.name}</h3><p>${t.desc}</p></div></div>
     <div class="buy-row"><div><small>ราคาเริ่มต้น</small><b>${(() => { const it = itemFromType(catId, idx); const p = it.tiers.filter((x) => x.price != null).map((x) => x.price); return p.length ? `${Math.min(...p).toLocaleString('th-TH')} ฿` : 'สอบถาม'; })()}</b></div>

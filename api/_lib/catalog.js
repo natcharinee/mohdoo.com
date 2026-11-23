@@ -73,6 +73,7 @@ export function priceOf({ key, tier = 0, donation, qty }) {
     const [catId, idx] = key.split(':');
     const t = c.CATEGORIES.find((x) => x.id === catId)?.types[+idx];
     if (!t) fail(400, 'unknown_item');
+    if (t.off) fail(400, 'unavailable'); // ประเภทที่ซ่อนไว้ (ไพ่สำรับเฉพาะ · จิตสัมผัส)
     it = { key, kind: 'ask', title: t.name, icon: t.icon, label: ASK_LABEL, price: c.CATEGORY_PRICE };
   } else {
     const s = c.SERVICES.find((x) => x.id === key);

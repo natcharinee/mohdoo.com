@@ -10,7 +10,7 @@ import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from '
 import { saveFile, readLocalFile } from './_lib/storage.js';
 import { notify, savePush } from './_lib/notify.js';
 import { kbOverrides, kbDoc, saveKB } from './_lib/kb.js';
-import { KB_TABLES, DEFAULT_KB, PAIR_LEVELS } from '../lib/calc/kb.js';
+import { KB_TABLES, DEFAULT_KB, PAIR_LEVELS, KB_SCHEMA } from '../lib/calc/kb.js';
 
 export const STATUS = {
   pending: 'รอชำระเงิน', paid: 'ชำระแล้ว · รอกรอกข้อมูล', submitted: 'รอหมอดูตอบ', in_progress: 'กำลังดำเนินการ',
@@ -820,7 +820,7 @@ on('GET', 'admin/kb', async (req) => {
     docs[id] = d ? { data: d.data, reviewed: !!d.reviewed, note: d.note || '', updated_at: d.updated_at, updated_by: d.updated_by,
       versions: (d.versions || []).map((v) => ({ at: v.at, by: v.by, reviewed: v.reviewed, note: v.note, size: v.data.length })) } : null;
   }
-  return { tables: KB_TABLES, defaults: DEFAULT_KB, levels: PAIR_LEVELS, docs };
+  return { tables: KB_TABLES, defaults: DEFAULT_KB, levels: PAIR_LEVELS, schema: KB_SCHEMA, docs };
 });
 on('POST', 'admin/kb/:id', async (req, res, { id }) => {
   const u = await needRole(req, ['staff', 'admin']);

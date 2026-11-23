@@ -10,6 +10,7 @@ const serverReady = fetch('/api/v1/health', { cache: 'no-store' })
   .catch(() => null);
 
 const SRV_ERR = {
+  unavailable: 'ประเภทนี้ยังไม่เปิดให้บริการ',
   wrong_code: 'รหัส OTP ไม่ถูกต้อง', code_expired: 'รหัสหมดอายุแล้ว กด “ขอรหัสใหม่”', too_many_tries: 'ใส่รหัสผิดหลายครั้ง กรุณาขอรหัสใหม่',
   bad_phone: 'เบอร์โทรไม่ถูกต้อง', too_many_requests: 'ทำรายการถี่เกินไป รอสักครู่แล้วลองใหม่', sms_failed: 'ส่ง SMS ไม่สำเร็จ ลองใหม่อีกครั้ง',
   otp_not_configured: 'ระบบ OTP ยังไม่พร้อม', payment_not_configured: 'ระบบชำระเงินยังไม่พร้อม', payment_failed: 'สร้าง QR ไม่สำเร็จ ลองใหม่อีกครั้ง',

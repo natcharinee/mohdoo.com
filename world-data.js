@@ -50,7 +50,7 @@ const WORLD_SCIENCES = [
   { id: 'iching', th: 'อี้จิง', intl: 'I Ching · Yijing', region: 'จีน', regions: ['china'], methods: ['lots'],
     desc: 'ตั้งคำถามแล้วเสี่ยงทายเพื่อได้ “กว้า” 1 ใน 64 แบบ จากนั้นอ่านคำอธิบายตามคัมภีร์อี้จิงเพื่อหาแนวทางของเรื่องนั้น',
     forms: 'รูปแบบการเสี่ยง: โยนเหรียญ 3 เหรียญ หรือก้านยาร์โรว์ · หากผู้ให้บริการใช้สำรับไพ่จริงจะแสดงชื่อว่า “ไพ่อี้จิง”',
-    needs: ['คำถาม 1 เรื่อง'], packages: ['fortune'] },
+    needs: ['คำถาม 1 เรื่อง'], packages: ['iching'] },
   { id: 'mianxiang', th: 'โหงวเฮ้ง', intl: 'Mian Xiang · Chinese Face Reading', region: 'จีน', regions: ['china'], methods: ['face'],
     desc: 'อ่านลักษณะใบหน้า เช่น หน้าผาก คิ้ว ตา จมูก ปาก ตามตำราจีน เพื่อบอกนิสัยและแนวโน้มชีวิต',
     needs: ['ภาพใบหน้าตรงตามมุมที่ผู้เชี่ยวชาญกำหนด'], packages: ['face'] },
@@ -101,7 +101,7 @@ const WORLD_SCIENCES = [
     ] } },
   { id: 'brahma-cards', th: 'ไพ่พรหมญาณ', intl: 'Phrom Yan Cards', region: 'ไทย', regions: ['thailand'], methods: ['cards'],
     desc: 'ไพ่พยากรณ์ของไทย ใช้ความหมายตามชุดไพ่และแนวทางของผู้พยากรณ์ อ่านภาพรวมหรือตอบคำถามเฉพาะเรื่อง',
-    needs: ['คำถาม 1 เรื่อง'], packages: ['fortune'] },
+    needs: ['คำถาม 1 เรื่อง'], packages: [] },
   { id: 'siamsi', th: 'เซียมซี', intl: 'Kau Cim · Fortune Sticks', region: 'ไทยและชุมชนจีน', regions: ['thailand', 'china'], methods: ['lots'],
     desc: 'เขย่ากระบอกไม้เซียมซีจนไม้หล่นออกมา 1 ไม้ แล้วอ่านใบคำทำนายตามหมายเลข นิยมในวัดไทยและศาลเจ้าจีน',
     forms: 'รูปแบบ: เขย่ากระบอกเซียมซี · หมอดู.com ใช้ชุดคำทำนายภาษาไทย 28 ใบ',
@@ -154,7 +154,7 @@ const WORLD_SCIENCES = [
   // ---------- ยังไม่ระบุภูมิภาค (รอข้อมูลยืนยัน) ----------
   { id: 'oracle', th: 'ไพ่ออราเคิล', intl: 'Oracle Cards', region: 'หลายภูมิภาค', regions: [], methods: ['cards'],
     desc: 'ไพ่ที่แต่ละสำรับมีระบบความหมายของตัวเอง ผู้ให้บริการระบุสำรับและแนวทางการอ่านก่อนเปิดไพ่',
-    needs: ['คำถาม 1 เรื่อง'], packages: ['tarot-ask'] },
+    needs: ['คำถาม 1 เรื่อง'], packages: [] },
   { id: 'intuitive', th: 'จิตสัมผัส', intl: 'Intuitive Reading', region: 'หลายภูมิภาค', regions: [], methods: ['lots'],
     desc: 'การอ่านดวงตามแนวทางและความเชื่อของผู้ให้บริการแต่ละราย ระบบจะแสดงแนวทางและขอบเขตที่ผู้ให้บริการระบุก่อนเปิดแพ็กเกจ',
     needs: ['คำถามหรือเรื่องที่ต้องการปรึกษา'] },
@@ -217,10 +217,10 @@ WORLD_SCIENCES.forEach((s) => { s.topics = [...new Set((s.good || []).map((g) =>
 const NAV_CATEGORIES = [
   { id: 'cards', icon: '🃏', name: 'ไพ่ทำนาย', desc: 'เปิดไพ่ตอบคำถาม เห็นภาพเรื่องความรัก การงาน และทางเลือก', subs: [
     { name: 'ไพ่ทาโรต์หรือไพ่ยิปซี', sci: ['tarot'], pkg: ['tarot-ask', 'love-free', 'daily-free'] },
-    { name: 'ไพ่ออราเคิล', sci: ['oracle'], pkg: ['tarot-ask'] },
-    { name: 'ไพ่เลอนอร์ม็อง', sci: ['lenormand'], pkg: ['tarot-ask'] },
-    { name: 'ไพ่พรหมญาณ', sci: ['brahma-cards'], pkg: ['tarot-ask'] },
-    { name: 'ไพ่เฉพาะสำรับ', sci: [], pkg: ['tarot-ask'], note: 'ผู้ให้บริการระบุสำรับที่ใช้บนแพ็กเกจ' } ] },
+    { name: 'ไพ่ออราเคิล', sci: ['oracle'], pkg: [] }, // ซ่อนการขายชั่วคราว: รอหมอดูที่มีสำรับจริง
+    { name: 'ไพ่เลอนอร์ม็อง', sci: ['lenormand'], pkg: [] }, // ยังไม่มีตำรา 36 ใบ · แพ็กเกจทาโรต์ไม่ใช่ศาสตร์เดียวกัน
+    { name: 'ไพ่พรหมญาณ', sci: ['brahma-cards'], pkg: [] }, // ซ่อนการขายชั่วคราว: รอหมอดูที่มีสำรับจริง
+    { name: 'ไพ่เฉพาะสำรับ', sci: [], pkg: [], note: 'เปิดเมื่อมีหมอดูที่มีสำรับจริงพร้อมรับงาน' } ] },
   { id: 'astrology', icon: '🪐', name: 'โหราศาสตร์และผังดวง', desc: 'ใช้วัน เวลา และสถานที่เกิด ดูพื้นดวงและจังหวะชีวิต', subs: [
     { name: 'โหราศาสตร์ไทย', sci: ['thai-astro'], pkg: ['thai-30', 'fortune'] },
     { name: 'โหราศาสตร์ตะวันตก', sci: ['western'], pkg: ['chart-30', 'fortune'] },
@@ -264,7 +264,7 @@ const NAV_CATEGORIES = [
   { id: 'divination', icon: '🎋', name: 'เสี่ยงทาย', desc: 'เสี่ยงเซียมซี ใบทำนาย หรือลูกเต๋า ขอคำตอบเร็ว ๆ', subs: [
     { name: 'เซียมซี', sci: ['siamsi'], pkg: ['siamsi'] },
     { name: 'โอมิคุจิ', sci: ['omikuji'], pkg: [] },
-    { name: 'อี้จิง', sci: ['iching'], pkg: ['fortune'] },
+    { name: 'อี้จิง', sci: ['iching'], pkg: ['iching'] },
     { name: 'ลูกเต๋าพยากรณ์', sci: ['sho-mo'], pkg: [] } ] },
   { id: 'intuitive-reading', icon: '👁️', name: 'จิตสัมผัส', desc: 'แสดงแนวทางและขอบเขตที่ผู้ให้บริการระบุ ก่อนเปิดแพ็กเกจ', subs: [
     { name: 'จิตสัมผัส', sci: ['intuitive'], pkg: [] } ] },

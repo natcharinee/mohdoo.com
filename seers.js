@@ -103,7 +103,7 @@ function renderSeers() {
 
     <div class="sec-head"><h3>เลือกตามศาสตร์</h3></div>
     <div class="cat-grid">${CATEGORIES.map((c) =>
-      `<button class="cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small><em>${c.types.length} ประเภท ›</em></button>`).join('')}</div>
+      `<button class="cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small><em>${c.types.filter(typeOn).length} ประเภท ›</em></button>`).join('')}</div>
 
     <div class="sec-head"><h3>เลือกตามเรื่องที่อยากรู้</h3></div>
     <div class="strong-chips">${SEER_TOPICS.map(([f, icon]) => `<button class="chip-s ${f === seerFilter ? 'on' : ''}" data-strong="${f}"><span>${icon}</span>${f}</button>`).join('')}</div>

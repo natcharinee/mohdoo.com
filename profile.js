@@ -17,7 +17,7 @@ const seersPanel = makePanel('seersPanel', 'หมอดู');
 seersPanel.querySelector('.panel-body').innerHTML = `
   <div class="cat-hero"><span class="cat-ico big">🔮</span><div><h3>เลือกหมอดูตามศาสตร์</h3><p>เลือกหมวด แล้วเลือกประเภทที่สนใจ เพื่อดูรายชื่อหมอดูที่เปิดรับคิว</p></div></div>
   <div class="cat-grid">${CATEGORIES.map((c) =>
-    `<button class="cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small><em>${c.types.length} ประเภท ›</em></button>`).join('')}</div>`;
+    `<button class="cat" data-cat="${c.id}"><span class="cat-ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small><em>${c.types.filter(typeOn).length} ประเภท ›</em></button>`).join('')}</div>`;
 seersPanel.addEventListener('click', (e) => { const b = e.target.closest('[data-cat]'); if (b) openCat(b.dataset.cat); });
 $('tabSeers').addEventListener('click', () => {
   closeAllPanels();

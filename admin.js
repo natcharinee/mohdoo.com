@@ -512,7 +512,7 @@ async function viewKB(arg) {
     <div class="tabs">${ids.map((k) => `<button data-kb="${k}" class="${k === id ? 'on' : ''}">${esc(r.tables[k])}</button>`).join('')}</div>
     <div class="grid2">
       <section class="card"><h3>${esc(r.tables[id])}</h3><p>${status}</p>
-        <div class="guide small" style="margin:8px 0 12px">${KB_HELP[id]}</div>
+        <div class="guide small" style="margin:8px 0 12px">${esc(KB_HELP[id] || r.schema?.[id]?.help || '')}</div>
         <form id="kbForm"><div class="tscroll" id="kbTable"></div>
           ${id === 'pairs' ? '<button type="button" class="btn sm" id="kbAdd" style="margin-top:8px">+ เพิ่มคู่เลข</button>' : ''}
           <label class="check" style="margin-top:14px"><input type="checkbox" name="reviewed" ${doc?.reviewed ? 'checked' : ''}> หมอดู/โหรของทีมตรวจตารางนี้แล้ว</label>
@@ -525,8 +525,7 @@ async function viewKB(arg) {
       <div class="stack">
         <section class="card"><h3>ทดลองกับตารางที่กำลังแก้</h3>
           <p class="muted small">ยังไม่บันทึก ใช้ทดลองดูผลก่อนได้</p>
-          ${id === 'pairs' ? '<label>เบอร์โทร / ทะเบียน<input id="kbTry" placeholder="เช่น 0891456959 หรือ 1กข 9999"></label>'
-            : '<label>ชื่อ นามสกุล<input id="kbTry" placeholder="เช่น ปิยะ ทองดี"></label><label>วันเกิด<input id="kbTryDate" type="date" value="1990-08-15"></label>'}
+          ${KB_TRY[id] || KB_TRY.planets}
           <pre class="guide small" id="kbOut" style="white-space:pre-wrap;margin-top:10px">${calc ? 'พิมพ์เพื่อดูผล' : 'โหลดชุดคำนวณไม่ได้'}</pre>
         </section>
         <section class="card"><h3>ประวัติเวอร์ชัน</h3>
@@ -550,6 +549,16 @@ async function viewKB(arg) {
       table.innerHTML = `<table class="table"><tr><th>ดาว</th><th>สีประจำดาว</th><th>อักษรประจำดาว</th></tr>
         ${rows.map((x, i) => `<tr><td>${x.n} · ${esc(x.name)}</td><td><input data-i="${i}" data-k="color" value="${esc(x.color)}" maxlength="40"></td>
           <td><input data-i="${i}" data-k="letters" value="${esc(x.letters)}" maxlength="60"></td></tr>`).join('')}</table>`;
+    } else if (r.schema?.[id]) {
+      // ตารางแบบทั่วไป: คอลัมน์ล็อก = ข้อความธรรมดา · ข้อความยาว = textarea · ตัวเลข = number
+      const sc = r.schema[id];
+      const cell = (x, i, c) => c.fixed ? esc(x[c.k])
+        : c.num ? `<input type="number" data-i="${i}" data-k="${c.k}" value="${esc(x[c.k])}" min="${c.num[0]}" max="${c.num[1]}" style="width:64px">`
+        : c.long ? `<textarea data-i="${i}" data-k="${c.k}" maxlength="${c.max}" rows="${sc.single ? 26 : 2}" style="min-height:${sc.single ? '520px' : '54px'}">${esc(x[c.k])}</textarea>`
+        : `<input data-i="${i}" data-k="${c.k}" value="${esc(x[c.k])}" maxlength="${c.max}">`;
+      const cols = sc.cols.filter((c) => !(sc.single && c.fixed));
+      table.innerHTML = `<table class="table">${sc.single ? '' : `<tr>${cols.map((c) => `<th>${esc(c.label)}</th>`).join('')}</tr>`}
+        ${rows.map((x, i) => `<tr>${cols.map((c) => `<td>${cell(x, i, c)}</td>`).join('')}</tr>`).join('')}</table>`;
     } else {
       table.innerHTML = `<table class="table"><tr><th>ค่า</th><th>อักษรที่มีค่านี้</th></tr>
         ${rows.map((x, i) => `<tr><td>${x.v}</td><td><input data-i="${i}" data-k="chars" value="${esc(x.chars)}" maxlength="60"></td></tr>`).join('')}</table>`;
@@ -566,12 +575,22 @@ async function viewKB(arg) {
     const out = $('kbOut');
     const v = calc.validateTable(id, rows);
     if (!v.ok) { out.textContent = `⚠️ ${v.error}`; return; }
-    const val = $('kbTry').value.trim();
-    if (!val) { out.textContent = 'พิมพ์เพื่อดูผล'; return; }
+    const val = ($('kbTry')?.value || '').trim();
+    if (id === 'palm') { out.textContent = `ตำรายาว ${v.data[0].text.length.toLocaleString('th-TH')} ตัวอักษร · ส่งให้แม่หมอ AI ทุกครั้งที่อ่านลายมือ/ข้อมือ`; return; }
+    if (!val && !['mahabote', 'mansions', 'stars'].includes(id)) { out.textContent = 'พิมพ์เพื่อดูผล'; return; }
     const live = Object.fromEntries(ids.map((k) => [k, r.docs[k] ? { data: r.docs[k].data } : undefined]).filter(([, x]) => x));
     calc.setKB({ ...live, [id]: { data: v.data } });
     try {
-      if (id === 'pairs') {
+      if (id === 'iching') {
+        const res = calc.castCoins(`ทดลอง|${val}`);
+        out.textContent = calc.ichingText(res);
+      } else if (id === 'mahabote') {
+        const [y, m, d] = ($('kbTryDate').value || '1990-08-15').split('-').map(Number);
+        out.textContent = calc.mahaboteText(calc.mahabote(y, m, d));
+      } else if (id === 'mansions' || id === 'stars') {
+        const y = Number($('kbTryYear').value) || 1990;
+        out.textContent = calc.fengshuiText(y, $('kbTrySex').value === 'ชาย', new Date().getFullYear());
+      } else if (id === 'pairs') {
         const isPlate = /[ก-ฮ]/.test(val);
         const res = isPlate ? calc.analyzePlate(val) : calc.analyzeNumber(val, 'phone');
         out.textContent = res ? `${calc.numberText(res)}\nระดับดวง: ${res.score}/5` : 'ไม่มีตัวเลข';
@@ -583,8 +602,8 @@ async function viewKB(arg) {
       }
     } finally { calc.setKB(live); }
   }
-  $('kbTry').addEventListener('input', tryIt);
-  $('kbTryDate')?.addEventListener('input', tryIt);
+  view.querySelectorAll('#kbTry, #kbTryDate, #kbTryYear, #kbTrySex').forEach((x) => x.addEventListener('input', tryIt));
+  tryIt();
 
   view.querySelectorAll('[data-kb]').forEach((b) => b.addEventListener('click', () => { location.hash = `kb/${b.dataset.kb}`; }));
   const showErr = (m) => { $('kbErr').textContent = m; $('kbErr').hidden = !m; };
@@ -610,6 +629,16 @@ async function viewKB(arg) {
     toast('ย้อนกลับแล้ว ✓'); route();
   })));
 }
+const KB_TRY = {
+  pairs: '<label>เบอร์โทร / ทะเบียน<input id="kbTry" placeholder="เช่น 0891456959 หรือ 1กข 9999"></label>',
+  planets: '<label>ชื่อ นามสกุล<input id="kbTry" placeholder="เช่น ปิยะ ทองดี"></label><label>วันเกิด<input id="kbTryDate" type="date" value="1990-08-15"></label>',
+  iching: '<label>คำถามทดลอง (คำถามเดิมได้ฉบับเดิม)<input id="kbTry" placeholder="เช่น ควรย้ายงานปีนี้ไหม"></label>',
+  mahabote: '<label>วันเกิด<input id="kbTryDate" type="date" value="1990-08-15"></label>',
+  mansions: '<label>ปีเกิด (ค.ศ. ตามปีจีน)<input id="kbTryYear" type="number" value="1990"></label><label>เพศ<select id="kbTrySex"><option>ชาย</option><option>หญิง</option></select></label>',
+  palm: '<p class="muted small">ตำรานี้ไม่มีช่องทดลอง ลองอัปโหลดรูปฝ่ามือผ่านหน้าเว็บหลังบันทึก</p>',
+};
+KB_TRY.values = KB_TRY.planets;
+KB_TRY.stars = KB_TRY.mansions;
 const KB_HELP = {
   pairs: 'ใช้วิเคราะห์เบอร์โทร (7 หลักท้าย) ทะเบียนรถ และบ้านเลขที่ · ระดับดวงคิดจากสัดส่วนคู่ดีกับคู่ควรระวัง คู่สุดท้ายมีน้ำหนัก 1.5 เท่า · ความหมายจะส่งให้แม่หมอ AI ใช้อธิบาย (AI ไม่แต่งความหมายของคู่ที่ไม่มีในตาราง)',
   planets: 'ใช้ทำทักษาและดูอักษรกาลกิณีในชื่อ · อักษร 1 ตัวอยู่ได้ดาวเดียว · สีใช้เป็นสีประจำวันเกิดและสีกาลกิณีในผลคำนวณ',

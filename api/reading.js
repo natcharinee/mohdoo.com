@@ -5,13 +5,15 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { aiAllowed } from './_lib/aigate.js';
 import { VOICE } from './_lib/voice.js';
+import { palmGuide } from './_lib/palm-guide.js';
+import { loadKB } from './_lib/kb.js';
 
 const MAX_IMAGES = 4;
 const MAX_IMAGE_CHARS = 2_000_000; // base64 ต่อรูป (~1.5 MB) — หน้าเว็บย่อรูปเหลือด้านยาว 480px อยู่แล้ว
 const MEDIA = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif']);
 
 const KINDS = {
-  palm: { name: 'ลายมือ', guide: `อ่านตามตำราลายมือ (ไทย/จีน/ตะวันตก) จากสิ่งที่เห็นในรูปจริง:
+  palm: { name: 'ลายมือ', guide: `อ่านตาม "ตำราลายมือของหมอดู.com" ในข้อความระบบเป็นหลัก จากสิ่งที่เห็นในรูปจริง:
 - รูปทรงมือและนิ้ว (ธาตุของมือ)
 - เส้นหลัก: เส้นชีวิต เส้นสมอง เส้นหัวใจ เส้นวาสนา และเส้นอื่นที่เห็นชัด (เส้นอาทิตย์ เส้นแต่งงาน)
 - เนินใต้นิ้วที่เด่น
@@ -87,6 +89,7 @@ export default async function handler(req, res) {
   });
   content.push({ type: 'text', text: `ช่วยอ่าน${KINDS[kind].name}จากรูปด้านบน เรื่องที่อยากรู้: ${topic}\n\nแนวทาง:\n${KINDS[kind].guide}` });
 
+  if (kind === 'palm' || kind === 'wrist') await loadKB(); // ตำราลายมือล่าสุดที่ทีมแก้ในหลังบ้าน
   try {
     const response = await client.beta.messages.create({
       model: 'claude-opus-5-5',
@@ -94,7 +97,10 @@ export default async function handler(req, res) {
       betas: ['server-side-fallback-2026-07-01'],
       fallbacks: 'default', // ถ้าโมเดลหลักปฏิเสธ ให้เซิร์ฟเวอร์ลองโมเดลสำรองอัตโนมัติ
       output_config: { effort: 'medium' }, // อ่านรูปต้องพิจารณาละเอียดกว่าแชท
-      system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
+      // ลายมือ/ข้อมือ: แนบตำราลายมือเป็นข้อความระบบส่วนที่สอง (คงที่ → cache ได้)
+      system: kind === 'palm' || kind === 'wrist'
+        ? [{ type: 'text', text: SYSTEM_PROMPT }, { type: 'text', text: palmGuide(), cache_control: { type: 'ephemeral' } }]
+        : [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
       messages: [
         { role: 'user', content },
         { role: 'system', content: `ข้อมูลผู้ถาม:\n${profileText(body.profile)}${REPLY_LANG[lang] || ''}` },

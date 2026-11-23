@@ -422,7 +422,7 @@ async function aiSlipText(s, h) {
       method: 'POST', signal: ctrl.signal,
       headers: { 'Content-Type': 'application/json', 'X-AI-Code': u.aiCode || '' },
       body: JSON.stringify({ order_no: h.no || '', kind: h.kind, service: s.service, title: s.title, question: s.question, score: s.score, detail: slipDetail(s, h),
-        profile: { first: displayName(u), birthdate: u.birthdate, birthtime: u.birthtime, birthplace: u.birthplace, lang: window.LANG || 'th' } }),
+        profile: { first: displayName(u), birthdate: u.birthdate, birthtime: u.birthtime, birthplace: u.birthplace, gender: u.gender, lang: window.LANG || 'th' } }),
     });
     clearTimeout(t);
     if (!r.ok) return null;

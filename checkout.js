@@ -22,9 +22,12 @@ const FORM_FIELDS = {
   phone: [{ name: 'numbers', label: 'เบอร์ที่ต้องการวิเคราะห์ (ถ้าเทียบ 3 เบอร์ ใส่บรรทัดละเบอร์)', type: 'textarea', required: true, placeholder: '08x-xxx-xxxx' }],
   plate: [{ name: 'plates', label: 'ทะเบียนรถ (ถ้าเทียบ 3 ชุด ใส่บรรทัดละชุด)', type: 'textarea', required: true, placeholder: 'เช่น 1กข 1234' }],
   auspicious: [
-    { name: 'event', label: 'ประเภทงาน', required: true, placeholder: 'เช่น แต่งงาน ขึ้นบ้านใหม่ เปิดร้าน' },
-    { name: 'range', label: 'ช่วงวันที่สะดวก', required: true, placeholder: 'เช่น มี.ค. – เม.ย. 2570' },
-    { name: 'people', label: 'ชื่อและวันเกิดของคนที่เกี่ยวข้อง (ถ้ามี)', type: 'textarea', placeholder: 'เช่น เจ้าบ่าว 3 มี.ค. 2537 · เจ้าสาว 9 ก.ค. 2538' },
+    { name: 'event', label: 'ประเภทงาน', type: 'select', required: true, options: ['แต่งงาน / หมั้น', 'ขึ้นบ้านใหม่', 'เปิดร้าน / เริ่มธุรกิจ', 'ออกรถ', 'เซ็นสัญญา', 'บวช', 'อื่น ๆ'] },
+    { name: 'from', label: 'สะดวกตั้งแต่วันที่', type: 'date', required: true },
+    { name: 'to', label: 'ถึงวันที่ (ไม่เกิน 120 วัน)', type: 'date', required: true },
+    { name: 'name2', label: 'ชื่อเล่นอีกฝ่าย / คนที่เกี่ยวข้อง (ถ้ามี)', placeholder: 'เช่น เจ้าสาว หรือหุ้นส่วน' },
+    { name: 'birth2', label: 'วันเกิดของคนนั้น (ถ้ามี)', type: 'date' },
+    { name: 'people', label: 'รายละเอียดเพิ่มเติม (ถ้ามี)', type: 'textarea', placeholder: 'เช่น อยากได้วันเสาร์-อาทิตย์ หรือมีคนเกี่ยวข้องมากกว่า 2 คน' },
   ],
   palm: [
     { name: 'palmL', label: 'ภาพฝ่ามือซ้ายที่เห็นเส้นชัด', type: 'file', slot: 'palmL', required: true },
@@ -147,6 +150,7 @@ function itemFromService(id, title) {
 function itemFromType(catId, idx) {
   const c = CATEGORIES.find((x) => x.id === catId);
   const t = c.types[idx];
+  if (!t || t.off) return null; // ซ่อนไว้: ไม่ขาย
   if (t.service === 'tarot') {
     return { key: 'tarot', icon: t.icon, title: t.name, sub: 'เลือกรูปแบบการเปิดไพ่ แล้วสับและจั่วไพ่ด้วยตัวเอง',
       tiers: [{ label: 'เปิดไพ่ 1 ครั้ง', price: CATEGORY_PRICE }], next: { kind: 'frame', href: 'tarot.html' } };
@@ -644,5 +648,5 @@ addEventListener('message', (e) => {
 // 2) รายการหมวดหมู่ → ประเภท: ปุ่ม “ดูดวงประเภทนี้”
 $('typeBody').addEventListener('click', (e) => {
   const b = e.target.closest('[data-buy]');
-  if (b) { const [cat, idx] = b.dataset.buy.split('|'); startCheckout(itemFromType(cat, +idx)); }
+  if (b) { const [cat, idx] = b.dataset.buy.split('|'); const it = itemFromType(cat, +idx); if (it) startCheckout(it); else toast('ประเภทนี้ยังไม่เปิดให้บริการ'); }
 });
