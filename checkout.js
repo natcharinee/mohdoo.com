@@ -227,7 +227,7 @@ function renderSummary() {
     ${donates(item) ? donationHTML() : ''}
     <div class="pay-total"><span>ยอดชำระ</span><b id="payTotal">${baht(orderTotal())}</b></div>
     <button class="btn-gold full" id="toQR">ชำระเงินด้วย QR ›</button>
-    <p class="pay-note">${item.ship ? 'ชำระแล้วกรอกที่อยู่จัดส่ง · ร้านจัดส่งภายใน 3–5 วันทำการ' : item.shop ? 'ชำระแล้วแจ้งรายละเอียด · ทีมส่งไฟล์ให้ภายใน 24 ชั่วโมง' : donates(item) ? 'ชำระแล้วกรอกข้อมูลสำหรับทำพิธี · ส่งรูปและวิดีโอยืนยันภายใน 3 วัน' : `ชำระแล้วจึงเริ่มบริการ · ${item.next.instant ? 'ขั้นต่อไปพิมพ์คำถาม แล้วรับใบผลดวงตอบคำถามทันที' : item.next.kind === 'form' ? 'ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย' : item.next.kind === 'ai' ? 'ใช้ได้ทันทีหลังชำระ' : 'ขั้นต่อไปเริ่มดูดวงได้ทันที'}`}</p>`;
+    <p class="pay-note"><a href="refund.html" target="_blank" rel="noopener">นโยบายคืนเงิน</a> · ${item.ship ? 'ชำระแล้วกรอกที่อยู่จัดส่ง · ร้านจัดส่งภายใน 3–5 วันทำการ' : item.shop ? 'ชำระแล้วแจ้งรายละเอียด · ทีมส่งไฟล์ให้ภายใน 24 ชั่วโมง' : donates(item) ? 'ชำระแล้วกรอกข้อมูลสำหรับทำพิธี · ส่งรูปและวิดีโอยืนยันภายใน 3 วัน' : `ชำระแล้วจึงเริ่มบริการ · ${item.next.instant ? 'ขั้นต่อไปพิมพ์คำถาม แล้วรับใบผลดวงตอบคำถามทันที' : item.next.kind === 'form' ? 'ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย' : item.next.kind === 'ai' ? 'ใช้ได้ทันทีหลังชำระ' : 'ขั้นต่อไปเริ่มดูดวงได้ทันที'}`}</p>`;
   $('payBody').querySelectorAll('input[name="ptier"]').forEach((r) => r.addEventListener('change', () => {
     order.tier = +r.value;
     updateTotal();

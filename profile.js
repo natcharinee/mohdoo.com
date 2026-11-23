@@ -125,7 +125,8 @@ function renderProfile() {
     ${histSection('shop', 'ประวัติการซื้อสินค้า', 'รายการ', buys, (h) => esc(buyLine(h)), '📦', 'ยังไม่มีการสั่งซื้อ วัตถุมงคลที่สั่งจะแสดงสถานะและเลขพัสดุที่นี่')}
 
     <button class="btn-ghost full pf-logout" id="pfLogout">ออกจากระบบ</button>
-    <p class="pf-note">ข้อมูลของคุณใช้เพื่อการทำนายเท่านั้น (ตัวอย่าง: เก็บไว้ในเบราว์เซอร์นี้)</p>`;
+    <p class="pf-note">ข้อมูลของคุณใช้เพื่อการทำนายเท่านั้น · <a href="privacy.html">นโยบายความเป็นส่วนตัว</a> · <a href="terms.html">เงื่อนไขการใช้</a> · <a href="refund.html">นโยบายคืนเงิน</a></p>
+    <p class="pf-note"><button type="button" class="pf-delete" id="pfDelete" style="background:none;border:0;color:#ff8fa6;text-decoration:underline;cursor:pointer;font:inherit">ลบบัญชีและข้อมูลของฉัน</button></p>`;
 }
 
 // ---------- หมอดูประจำตัว: รูปร่างกายสำหรับโหงวเฮ้ง / ลายมือ ----------
@@ -239,6 +240,7 @@ profileBody.addEventListener('click', (e) => {
   const t = e.target;
   if (t.closest('#pfEdit, [data-edit]')) return openEdit();
   if (t.closest('#pfLogout')) return logout();
+  if (t.closest('#pfDelete')) return deleteAccount();
   const del = t.closest('[data-photo-del]');
   if (del) {
     const u = currentUser(); const slot = del.dataset.photoDel;
@@ -391,3 +393,22 @@ addEventListener('message', (e) => {
   addHistory(e.data.entry);
   if ($('profilePanel').classList.contains('open')) renderProfile();
 });
+
+// ---------- ลบบัญชี (PDPA): ลบโปรไฟล์ ประวัติ รูป และการแจ้งเตือน · คำสั่งซื้อเหลือเฉพาะยอดเงินสำหรับทำบัญชี ----------
+async function deleteAccount() {
+  const u = currentUser();
+  if (!u) return;
+  if (!confirm('ลบบัญชีและข้อมูลทั้งหมดของคุณ?\n\nข้อมูลเกิด ประวัติการดูดวง รูป และการแจ้งเตือนจะถูกลบถาวร กู้คืนไม่ได้\nสมาชิกดูดวงรายวันที่เหลืออยู่จะหายไปด้วย')) return;
+  if (!confirm('ยืนยันอีกครั้ง: ลบบัญชีถาวร')) return;
+  try {
+    if (window.SERVER && typeof srv === 'function') await srv('me', { method: 'DELETE' });
+  } catch (e) { toast(e.message || 'ลบบัญชีไม่สำเร็จ ลองใหม่อีกครั้ง'); return; }
+  try {
+    const all = accounts();
+    if (u.phone) delete all[u.phone];
+    localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(all));
+    localStorage.removeItem(USER_KEY);
+  } catch (_) {}
+  logout();
+  toast('ลบบัญชีและข้อมูลของคุณแล้ว');
+}

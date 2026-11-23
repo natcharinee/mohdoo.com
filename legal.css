@@ -1,0 +1,119 @@
+/* ===== หน้าเอกสาร: นโยบายความเป็นส่วนตัว · เงื่อนไขการใช้ · นโยบายคืนเงิน ===== */
+
+/* เลื่อนทั้งหน้าแบบปกติ (หน้าหลักล็อกความสูงไว้สำหรับฉากเปิด) */
+html:has(body.legal-page), body.legal-page { height: auto; }
+body.legal-page { overflow-y: visible; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .legal-page .nebula { animation: none; } }
+
+/* ---------- แถบบน: ติดด้านบน กระจกฝ้า ---------- */
+.legal-page .topbar {
+  position: sticky; top: 0; z-index: 20;
+  gap: 12px; padding: 12px clamp(16px, 4vw, 40px);
+  background: rgba(7, 4, 26, .72);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(245, 201, 107, .14);
+}
+.legal-page .logo { font-size: 1.6rem; white-space: nowrap; }
+.legal-nav { gap: 4px; padding: 4px; border-radius: 999px; background: rgba(30, 16, 70, .6); border: 1px solid rgba(245, 201, 107, .16); }
+.legal-nav .nav-link {
+  color: var(--muted); text-decoration: none; font-size: 14px; white-space: nowrap;
+  padding: 6px 14px; border-radius: 999px; transition: color .2s, background .2s;
+}
+.legal-nav .nav-link:hover { color: var(--gold-2); }
+.legal-nav .nav-link[aria-current="page"] {
+  color: #1a0f3a; font-weight: 500;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+}
+
+/* ---------- เนื้อหา ---------- */
+.legal {
+  position: relative; z-index: 5; max-width: 800px; margin: 0 auto;
+  padding: 28px 20px 80px; text-align: left; line-height: 1.85;
+}
+.legal h1 {
+  font-size: clamp(28px, 6vw, 40px); line-height: 1.3; font-weight: 600; margin: 18px 0 6px;
+  background: linear-gradient(120deg, var(--gold-2), var(--gold) 60%, #e9a94a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.legal .meta { color: var(--muted); font-size: 14px; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid rgba(245, 201, 107, .16); }
+.legal h2 {
+  display: flex; align-items: baseline; gap: 10px;
+  font-size: 20px; color: var(--gold-2); margin: 44px 0 12px; font-weight: 500; line-height: 1.5;
+  scroll-margin-top: 84px;
+}
+.legal h2::before { content: ''; flex: none; width: 4px; height: 1.05em; align-self: center; border-radius: 2px; background: linear-gradient(var(--gold), var(--magenta)); }
+.legal h3 { font-size: 16px; color: var(--text); margin: 20px 0 4px; font-weight: 500; }
+.legal p, .legal li { color: var(--text); font-size: 15.5px; font-weight: 300; }
+.legal p + p { margin-top: 10px; }
+.legal strong { font-weight: 500; color: #fff; }
+.legal ul, .legal ol { padding-left: 22px; margin: 8px 0; }
+.legal li { margin: 6px 0; }
+.legal li::marker { color: var(--gold); }
+.legal a { color: var(--gold-2); text-decoration: underline; text-decoration-color: rgba(245, 201, 107, .4); text-underline-offset: 3px; }
+.legal a:hover { text-decoration-color: var(--gold-2); }
+
+/* กล่องเน้น */
+.legal .box {
+  border: 1px solid rgba(245, 201, 107, .22); border-radius: 16px; padding: 16px 18px; margin: 14px 0;
+  background: linear-gradient(160deg, rgba(123, 77, 255, .16), rgba(30, 16, 70, .55));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+.legal .box p:first-child, .legal .box ul:first-child { margin-top: 0; }
+
+/* สารบัญ */
+.legal .toc {
+  list-style: none; counter-reset: toc; padding: 14px; margin: 8px 0 10px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px;
+  border: 1px solid rgba(245, 201, 107, .18); border-radius: 16px; background: rgba(30, 16, 70, .5);
+}
+.legal .toc li { counter-increment: toc; margin: 0; }
+.legal .toc a {
+  display: flex; gap: 10px; align-items: baseline; padding: 6px 10px; border-radius: 10px;
+  color: var(--text); text-decoration: none; font-size: 14.5px; line-height: 1.55; transition: background .2s, color .2s;
+}
+.legal .toc a::before { content: counter(toc); flex: none; min-width: 1.6em; color: var(--gold); font-weight: 500; font-size: 13px; }
+.legal .toc a:hover { background: rgba(245, 201, 107, .1); color: var(--gold-2); }
+
+/* ตาราง: มุมมน แถวสลับสี เลื่อนแนวนอนได้บนจอแคบ */
+.legal .table-wrap {
+  margin: 12px 0; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid rgba(245, 201, 107, .2); border-radius: 14px; background: rgba(20, 10, 50, .55);
+}
+.legal table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.legal th, .legal td { padding: 10px 12px; vertical-align: top; text-align: left; font-weight: 300; line-height: 1.7; }
+.legal th { color: var(--gold-2); font-weight: 500; background: rgba(123, 77, 255, .18); white-space: nowrap; }
+.legal td { border-top: 1px solid rgba(245, 201, 107, .1); }
+.legal td:first-child { color: var(--gold-2); font-weight: 400; }
+.legal tr:nth-child(odd) td { background: rgba(255, 255, 255, .02); }
+
+/* ช่องที่ต้องเติม · ป้ายฉบับร่าง */
+.legal mark.fill { background: rgba(245, 201, 107, .18); color: var(--gold-2); padding: 1px 6px; border-radius: 6px; border: 1px dashed rgba(245, 201, 107, .45); }
+.legal .draft {
+  display: flex; gap: 10px; align-items: flex-start;
+  border: 1px dashed rgba(255, 107, 138, .7); color: #ffc2cf; background: rgba(255, 107, 138, .08);
+  border-radius: 12px; padding: 10px 14px; font-size: 14px; line-height: 1.6;
+}
+.legal .draft::before { content: '✎'; color: #ff8aa3; }
+
+/* ลิงก์ท้ายหน้า */
+.legal .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 48px; padding-top: 22px; border-top: 1px solid rgba(245, 201, 107, .16); }
+.legal .links a {
+  text-decoration: none; font-size: 14px; color: var(--gold-2);
+  padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(245, 201, 107, .3); background: rgba(30, 16, 70, .55);
+  transition: background .2s, border-color .2s;
+}
+.legal .links a:hover { background: rgba(245, 201, 107, .12); border-color: var(--gold); }
+
+/* ---------- มือถือ ---------- */
+@media (max-width: 640px) {
+  .legal-page .topbar { flex-direction: column; align-items: stretch; gap: 10px; padding: 10px 16px; }
+  .legal-page .logo { font-size: 1.45rem; justify-content: center; }
+  .legal-nav { justify-content: space-between; }
+  .legal-nav .nav-link { flex: 1; text-align: center; padding: 6px 8px; font-size: 13px; }
+  .legal { padding: 18px 16px 64px; }
+  .legal h2 { font-size: 18px; margin-top: 36px; scroll-margin-top: 120px; }
+  .legal .toc { grid-template-columns: 1fr; }
+  .legal table { font-size: 13.5px; }
+  .legal th, .legal td { min-width: 130px; }
+}
