@@ -89,7 +89,7 @@ export default async function handler(req, res) {
   try {
     const response = await client.beta.messages.create({
       model: 'claude-opus-5-5',
-      max_tokens: 16000,
+      max_tokens: 8000, // ผลจริง + การคิดระดับ medium ใช้ไม่ถึงครึ่ง · กันคำตอบยาวผิดปกติ
       betas: ['server-side-fallback-2026-07-01'],
       fallbacks: 'default', // ถ้าโมเดลหลักปฏิเสธ ให้เซิร์ฟเวอร์ลองโมเดลสำรองอัตโนมัติ
       output_config: { effort: 'medium' }, // อ่านรูปต้องพิจารณาละเอียดกว่าแชท

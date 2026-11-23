@@ -9,6 +9,8 @@ import { priceOf, catalog, addMonth, KIND_NAME } from './_lib/catalog.js';
 import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from './_lib/pay.js';
 import { saveFile, readLocalFile } from './_lib/storage.js';
 import { notify, savePush } from './_lib/notify.js';
+import { kbOverrides, kbDoc, saveKB } from './_lib/kb.js';
+import { KB_TABLES, DEFAULT_KB, PAIR_LEVELS } from '../lib/calc/kb.js';
 
 export const STATUS = {
   pending: 'รอชำระเงิน', paid: 'ชำระแล้ว · รอกรอกข้อมูล', submitted: 'รอหมอดูตอบ', in_progress: 'กำลังดำเนินการ',
@@ -797,6 +799,40 @@ on('GET', 'admin/catalog', async (req) => {
   const c = catalog();
   const stock = await stockMap();
   return { stock, services: c.SERVICES.map((s) => ({ id: s.id, name: s.name, icon: s.icon, open: s.open, app: !!s.app, group: s.group || '', prices: s.prices })), shop: c.SHOP_ITEMS, price: c.SERVICE_PRICE };
+});
+
+// ---------- ตำราดูดวง: ตารางที่ใช้คำนวณ (คู่เลข · อักษรประจำดาว · ค่าอักษร) ----------
+// หน้าเว็บดึงไปใช้คำนวณ · ทีมงาน/ผู้ดูแลแก้ได้ในหลังบ้าน (เก็บย้อนหลัง 20 เวอร์ชัน)
+on('GET', 'kb', async () => {
+  const o = await kbOverrides();
+  return { kb: Object.fromEntries(Object.entries(o).map(([id, d]) => [id, { data: d.data, reviewed: d.reviewed }])) };
+});
+on('GET', 'admin/kb', async (req) => {
+  await needRole(req, ['staff', 'admin']);
+  const docs = {};
+  for (const id of Object.keys(KB_TABLES)) {
+    const d = await kbDoc(id);
+    docs[id] = d ? { data: d.data, reviewed: !!d.reviewed, note: d.note || '', updated_at: d.updated_at, updated_by: d.updated_by,
+      versions: (d.versions || []).map((v) => ({ at: v.at, by: v.by, reviewed: v.reviewed, note: v.note, size: v.data.length })) } : null;
+  }
+  return { tables: KB_TABLES, defaults: DEFAULT_KB, levels: PAIR_LEVELS, docs };
+});
+on('POST', 'admin/kb/:id', async (req, res, { id }) => {
+  const u = await needRole(req, ['staff', 'admin']);
+  const b = bodyOf(req);
+  const r = await saveKB(id, { data: b.reset ? null : b.data, reviewed: b.reviewed, note: b.reset ? 'คืนค่าเริ่มต้น' : b.note }, u.name || u.phone);
+  if (!r.ok) fail(400, 'bad_kb', { message: r.error });
+  return { ok: true, updated_at: r.doc.updated_at };
+});
+on('POST', 'admin/kb/:id/restore', async (req, res, { id }) => {
+  const u = await needRole(req, ['staff', 'admin']);
+  const at = Number(bodyOf(req).at);
+  const d = await kbDoc(id);
+  const v = (d?.versions || []).find((x) => x.at === at);
+  if (!v) fail(404, 'version_not_found');
+  const r = await saveKB(id, { data: v.data, reviewed: v.reviewed, note: `ย้อนกลับเป็นเวอร์ชัน ${new Date(at).toISOString().slice(0, 16)}` }, u.name || u.phone);
+  if (!r.ok) fail(400, 'bad_kb', { message: r.error });
+  return { ok: true };
 });
 
 // =====================================================================

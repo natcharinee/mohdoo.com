@@ -979,6 +979,8 @@ body.app-ui .table-svg { height: 214px; bottom: auto; }
   background: radial-gradient(circle at 35% 30%, #fff6d8, var(--gold) 60%, var(--gold-3)); }
 .daily-note { margin-top: 10px; text-align: center; font-size: .66rem; color: var(--muted); opacity: .8; }
 .ai-sub { font-size: .82rem; color: var(--gold-2); margin: 4px 2px 8px; }
+.ai-quota { font-size: .78rem; color: var(--muted, #b8a9d6); text-align: right; margin: 6px 4px 4px; }
+.ai-quota.low { color: var(--gold-2); font-weight: 600; }
 @media (min-width: 700px) {
   .daily { padding: 22px; }
   .daily-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }

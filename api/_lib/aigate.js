@@ -37,3 +37,31 @@ export async function aiAllowed(req, { need, orderNo, kinds }) {
   }
   return member; // สมาชิกรายเดือนใช้ใบผลดวงประจำวันได้
 }
+
+// ===== แชทแม่หมอ AI: จำกัดคำถามต่อวันแบบ fair use (สมาชิกรายวัน/รายเดือน) =====
+// นับต่อผู้ใช้ต่อวัน (เวลาไทย) · รหัสทดลองของทีม (X-AI-Code) ไม่นับ
+// ตั้งจำนวนได้ที่ MOHDOO_CHAT_DAILY (ค่าเริ่มต้น 30 คำถาม/วัน)
+export const CHAT_DAILY = Math.max(1, parseInt(process.env.MOHDOO_CHAT_DAILY, 10) || 30);
+const bkkDay = () => new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);
+const quota = (used) => ({ used, limit: CHAT_DAILY, left: Math.max(0, CHAT_DAILY - used) });
+
+// → { ok:false } | { ok:true, team:true } | { ok:true, user, quota }
+export async function chatAccess(req) {
+  if (codeAllowed(req.headers['x-ai-code'])) return { ok: true, team: true };
+  let u = null;
+  try { u = await sessionUser(req); } catch (_) { return { ok: false }; }
+  if (!u || !((u.ai_until || 0) > Date.now())) return { ok: false };
+  const store = await db();
+  const doc = await store.get('aiuse', `${u.id}:${bkkDay()}`);
+  return { ok: true, user: u, quota: quota(doc?.count || 0) };
+}
+
+// นับหลังตอบสำเร็จเท่านั้น (ถามแล้ว AI ล่ม ไม่เสียสิทธิ์)
+export async function chatCount(user) {
+  const store = await db();
+  const id = `${user.id}:${bkkDay()}`;
+  const doc = (await store.get('aiuse', id)) || { id, user_id: user.id, day: bkkDay(), count: 0, created_at: Date.now() };
+  doc.count += 1;
+  await store.put('aiuse', doc);
+  return quota(doc.count);
+}

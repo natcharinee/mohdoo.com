@@ -1,5 +1,5 @@
 // ===== เซิร์ฟเวอร์สำหรับพัฒนาในเครื่อง: หน้าเว็บ + /api/* แบบเดียวกับ Vercel =====
-// ใช้: npm run dev   (ค่าเริ่มต้น: OTP_DEMO=1 PAY_DEMO=1 · รหัส OTP ทดลอง 123456 · ข้อมูลอยู่ใน .data/)
+// ใช้: npm run dev   (ค่าเริ่มต้น: OTP_DEMO=1 PAY_DEMO=1 ADMIN_PHONES=+66812345678 · รหัส OTP ทดลอง 123456 · ข้อมูลอยู่ใน .data/)
 // ADMIN_PHONES=+66812345678 npm run dev  → เบอร์นี้เข้า admin.html ได้
 import http from 'node:http';
 import fs from 'node:fs';
@@ -7,6 +7,7 @@ import path from 'node:path';
 
 process.env.OTP_DEMO ??= '1';
 process.env.PAY_DEMO ??= '1';
+process.env.ADMIN_PHONES ??= '+66812345678'; // เครื่องตัวเองเท่านั้น: เบอร์ 0812345678 เข้าหลังบ้านได้ (บน Vercel ตั้งเองใน Environment Variables)
 const PORT = +(process.env.PORT || 5174);
 const ROOT = process.cwd();
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.ico': 'image/x-icon', '.md': 'text/plain; charset=utf-8' };

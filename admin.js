@@ -1,5 +1,5 @@
 // ===== หลังบ้าน หมอดู.com =====
-// ภาพรวม · คำสั่งซื้อ (ตอบคำถาม / อัปเดตขั้นตอน / แนบรูปยืนยัน / เลขพัสดุ / คืนเงิน) · ลูกค้า · ประกาศ · ตั้งค่าระบบ
+// ภาพรวม · คำสั่งซื้อ (ตอบคำถาม / อัปเดตขั้นตอน / แนบรูปยืนยัน / เลขพัสดุ / คืนเงิน) · ลูกค้า · ประกาศ · ตำราดูดวง · ตั้งค่าระบบ
 // สิทธิ์: admin ทำได้ทุกอย่าง · staff ไม่เปลี่ยนสิทธิ์/ไม่คืนเงิน/ไม่ประกาศ · seer เห็นเฉพาะงานดูดวงที่ต้องตอบ
 const $ = (id) => document.getElementById(id);
 const view = $('view');
@@ -42,7 +42,7 @@ async function api(path, { method = 'GET', body, keep } = {}) {
   const r = await fetch(`/api/v1/${path}`, { method, signal, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined, credentials: 'same-origin' });
   const j = await r.json().catch(() => ({}));
   if (r.status === 401 && !path.startsWith('auth/')) { showLogin(); throw new Error('login'); }
-  if (!r.ok) { const e = new Error(ERR[j.error] || j.error || 'เกิดข้อผิดพลาด'); e.code = j.error; e.data = j; throw e; }
+  if (!r.ok) { const e = new Error(j.message || ERR[j.error] || j.error || 'เกิดข้อผิดพลาด'); e.code = j.error; e.data = j; throw e; }
   return j;
 }
 const run = (fn) => async (...a) => { try { await fn(...a); } catch (e) { if (e.message !== 'login' && e.name !== 'AbortError') toast(e.message); } };
@@ -110,7 +110,7 @@ function route() {
   routeCtl?.abort();
   routeCtl = new AbortController();
   view.innerHTML = '<p class="empty">กำลังโหลด…</p>';
-  const views = { stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings };
+  const views = { stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings, kb: viewKB };
   run((views[v] || viewOrders))(decodeURIComponent(arg || ''));
   scrollTo(0, 0);
 }
@@ -493,6 +493,128 @@ async function viewBroadcast() {
     toast(`แจ้งดวงวันนี้ ${r.daily} คน · เตือนต่ออายุ ${r.reminded} · ปิด QR หมดอายุ ${r.expired}`);
   }));
 }
+
+// ---------- ตำราดูดวง: ตารางที่ระบบใช้คำนวณ (คู่เลข · อักษรและสีประจำดาว · ค่าอักษรเลขศาสตร์) ----------
+// แก้แล้วกดบันทึก มีผลกับหน้าเว็บและแม่หมอ AI ภายใน 1 นาที · เก็บย้อนหลัง 20 เวอร์ชัน
+async function viewKB(arg) {
+  const r = await api('admin/kb');
+  const ids = Object.keys(r.tables);
+  const id = ids.includes(arg) ? arg : ids[0];
+  const doc = r.docs[id];
+  const rows = structuredClone(doc ? doc.data : r.defaults[id]);
+  const calc = await import('/lib/calc/browser.js').then(() => window.MohdooCalc).catch(() => null);
+  const LV = r.levels;
+  const status = doc
+    ? `${doc.reviewed ? '<span class="chip ok">หมอดูตรวจแล้ว</span>' : '<span class="chip warn">ร่าง · ยังไม่ผ่านการตรวจ</span>'} <span class="muted small">แก้ล่าสุด ${dt(doc.updated_at)} โดย ${esc(doc.updated_by || '-')}</span>`
+    : '<span class="chip warn">ใช้ค่าเริ่มต้นของระบบ · ยังไม่ผ่านการตรวจ</span>';
+  view.innerHTML = `
+    <div class="head"><h1>ตำราดูดวง</h1><span class="muted small">ตารางที่ระบบใช้คำนวณ · บันทึกแล้วมีผลกับหน้าเว็บและแม่หมอ AI ภายใน 1 นาที</span></div>
+    <div class="tabs">${ids.map((k) => `<button data-kb="${k}" class="${k === id ? 'on' : ''}">${esc(r.tables[k])}</button>`).join('')}</div>
+    <div class="grid2">
+      <section class="card"><h3>${esc(r.tables[id])}</h3><p>${status}</p>
+        <div class="guide small" style="margin:8px 0 12px">${KB_HELP[id]}</div>
+        <form id="kbForm"><div class="tscroll" id="kbTable"></div>
+          ${id === 'pairs' ? '<button type="button" class="btn sm" id="kbAdd" style="margin-top:8px">+ เพิ่มคู่เลข</button>' : ''}
+          <label class="check" style="margin-top:14px"><input type="checkbox" name="reviewed" ${doc?.reviewed ? 'checked' : ''}> หมอดู/โหรของทีมตรวจตารางนี้แล้ว</label>
+          <label>บันทึกการแก้ไข (ไม่บังคับ)<input name="note" maxlength="200" placeholder="เช่น ปรับคู่ 78 ตามตำราอาจารย์..."></label>
+          <p class="err" id="kbErr" hidden></p>
+          <div class="row" style="margin-top:10px"><button class="btn primary">บันทึกตาราง</button>
+            <button type="button" class="btn ghost" id="kbReset">คืนค่าเริ่มต้นของระบบ</button></div>
+        </form>
+      </section>
+      <div class="stack">
+        <section class="card"><h3>ทดลองกับตารางที่กำลังแก้</h3>
+          <p class="muted small">ยังไม่บันทึก ใช้ทดลองดูผลก่อนได้</p>
+          ${id === 'pairs' ? '<label>เบอร์โทร / ทะเบียน<input id="kbTry" placeholder="เช่น 0891456959 หรือ 1กข 9999"></label>'
+            : '<label>ชื่อ นามสกุล<input id="kbTry" placeholder="เช่น ปิยะ ทองดี"></label><label>วันเกิด<input id="kbTryDate" type="date" value="1990-08-15"></label>'}
+          <pre class="guide small" id="kbOut" style="white-space:pre-wrap;margin-top:10px">${calc ? 'พิมพ์เพื่อดูผล' : 'โหลดชุดคำนวณไม่ได้'}</pre>
+        </section>
+        <section class="card"><h3>ประวัติเวอร์ชัน</h3>
+          ${doc?.versions?.length ? `<table class="table">${doc.versions.map((v) => `<tr><td>${dt(v.at)}<span class="sub">${esc(v.by || '-')}${v.note ? ` · ${esc(v.note)}` : ''}</span></td>
+            <td>${v.reviewed ? '<span class="chip ok">ตรวจแล้ว</span>' : '<span class="chip">ร่าง</span>'}</td>
+            <td><button class="btn sm ghost" data-restore="${v.at}">ย้อนกลับ</button></td></tr>`).join('')}</table>` : '<p class="muted small">ยังไม่มีเวอร์ชันก่อนหน้า</p>'}
+        </section>
+      </div>
+    </div>`;
+
+  const table = $('kbTable');
+  const draw = () => {
+    if (id === 'pairs') {
+      table.innerHTML = `<table class="table"><tr><th>คู่เลข</th><th>ระดับ</th><th>ความหมาย</th><th></th></tr>
+        ${rows.map((x, i) => `<tr><td><input data-i="${i}" data-k="pair" value="${esc(x.pair)}" maxlength="2" inputmode="numeric" style="width:64px"></td>
+          <td><select data-i="${i}" data-k="level">${Object.entries(LV).map(([k, l]) => `<option value="${k}" ${x.level === k ? 'selected' : ''}>${l}</option>`).join('')}</select></td>
+          <td><input data-i="${i}" data-k="text" value="${esc(x.text)}" maxlength="120"></td>
+          <td><button type="button" class="btn sm ghost" data-del="${i}" aria-label="ลบ">✕</button></td></tr>`).join('')}</table>
+        <p class="muted small">คู่กลับหน้า-หลัง (เช่น 41) ใช้ความหมายของ 14 อัตโนมัติ ถ้าต้องการความหมายต่างกันให้เพิ่มแยก · คู่ที่ไม่มีในตาราง = กลาง ๆ</p>`;
+    } else if (id === 'planets') {
+      table.innerHTML = `<table class="table"><tr><th>ดาว</th><th>สีประจำดาว</th><th>อักษรประจำดาว</th></tr>
+        ${rows.map((x, i) => `<tr><td>${x.n} · ${esc(x.name)}</td><td><input data-i="${i}" data-k="color" value="${esc(x.color)}" maxlength="40"></td>
+          <td><input data-i="${i}" data-k="letters" value="${esc(x.letters)}" maxlength="60"></td></tr>`).join('')}</table>`;
+    } else {
+      table.innerHTML = `<table class="table"><tr><th>ค่า</th><th>อักษรที่มีค่านี้</th></tr>
+        ${rows.map((x, i) => `<tr><td>${x.v}</td><td><input data-i="${i}" data-k="chars" value="${esc(x.chars)}" maxlength="60"></td></tr>`).join('')}</table>`;
+    }
+  };
+  draw();
+  table.addEventListener('input', (e) => { const t = e.target; if (t.dataset.k) { rows[+t.dataset.i][t.dataset.k] = t.value; tryIt(); } });
+  table.addEventListener('click', (e) => { const b = e.target.closest('[data-del]'); if (b) { rows.splice(+b.dataset.del, 1); draw(); tryIt(); } });
+  $('kbAdd')?.addEventListener('click', () => { rows.push({ pair: '', level: 'good', text: '' }); draw(); table.querySelector(`[data-i="${rows.length - 1}"]`)?.focus(); });
+
+  // ทดลอง: ใช้ตารางที่กำลังแก้ (ถ้าผ่านการตรวจ) แล้วคืนค่าที่ใช้จริงทันที
+  function tryIt() {
+    if (!calc) return;
+    const out = $('kbOut');
+    const v = calc.validateTable(id, rows);
+    if (!v.ok) { out.textContent = `⚠️ ${v.error}`; return; }
+    const val = $('kbTry').value.trim();
+    if (!val) { out.textContent = 'พิมพ์เพื่อดูผล'; return; }
+    const live = Object.fromEntries(ids.map((k) => [k, r.docs[k] ? { data: r.docs[k].data } : undefined]).filter(([, x]) => x));
+    calc.setKB({ ...live, [id]: { data: v.data } });
+    try {
+      if (id === 'pairs') {
+        const isPlate = /[ก-ฮ]/.test(val);
+        const res = isPlate ? calc.analyzePlate(val) : calc.analyzeNumber(val, 'phone');
+        out.textContent = res ? `${calc.numberText(res)}\nระดับดวง: ${res.score}/5` : 'ไม่มีตัวเลข';
+      } else {
+        const [first, ...last] = val.split(/\s+/);
+        const c = calc.computeChart({ birthdate: $('kbTryDate').value });
+        const n = calc.analyzeName(first, last.join(' '), c ? c.thai.planet : null);
+        out.textContent = n ? `${c ? `เกิดวัน${c.thai.astroDay} · กาลกิณี ${c.thai.taksa[7].planet} (${c.thai.taksa[7].letters})\n` : ''}${calc.nameText(n)}${n.score ? `\nระดับดวง: ${n.score}/5` : ''}` : '';
+      }
+    } finally { calc.setKB(live); }
+  }
+  $('kbTry').addEventListener('input', tryIt);
+  $('kbTryDate')?.addEventListener('input', tryIt);
+
+  view.querySelectorAll('[data-kb]').forEach((b) => b.addEventListener('click', () => { location.hash = `kb/${b.dataset.kb}`; }));
+  const showErr = (m) => { $('kbErr').textContent = m; $('kbErr').hidden = !m; };
+  $('kbForm').addEventListener('submit', run(async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const data = id === 'pairs' ? rows.filter((x) => x.pair || x.text) : rows;
+    if (calc) { const v = calc.validateTable(id, data); if (!v.ok) { showErr(v.error); return; } }
+    showErr('');
+    try {
+      await api(`admin/kb/${id}`, { method: 'POST', body: { data, reviewed: f.reviewed.checked, note: f.note.value } });
+    } catch (err) { showErr(err.data?.message || err.message); return; }
+    toast('บันทึกตารางแล้ว ✓ มีผลภายใน 1 นาที'); route();
+  }));
+  $('kbReset').addEventListener('click', run(async () => {
+    if (!confirm('คืนค่าเริ่มต้นของระบบ? ตารางปัจจุบันจะเก็บไว้ในประวัติเวอร์ชัน ย้อนกลับได้')) return;
+    await api(`admin/kb/${id}`, { method: 'POST', body: { reset: true } });
+    toast('คืนค่าเริ่มต้นแล้ว'); route();
+  }));
+  view.querySelectorAll('[data-restore]').forEach((b) => b.addEventListener('click', run(async () => {
+    if (!confirm('ย้อนกลับเป็นเวอร์ชันนี้? ตารางปัจจุบันจะเก็บไว้ในประวัติ')) return;
+    await api(`admin/kb/${id}/restore`, { method: 'POST', body: { at: +b.dataset.restore } });
+    toast('ย้อนกลับแล้ว ✓'); route();
+  })));
+}
+const KB_HELP = {
+  pairs: 'ใช้วิเคราะห์เบอร์โทร (7 หลักท้าย) ทะเบียนรถ และบ้านเลขที่ · ระดับดวงคิดจากสัดส่วนคู่ดีกับคู่ควรระวัง คู่สุดท้ายมีน้ำหนัก 1.5 เท่า · ความหมายจะส่งให้แม่หมอ AI ใช้อธิบาย (AI ไม่แต่งความหมายของคู่ที่ไม่มีในตาราง)',
+  planets: 'ใช้ทำทักษาและดูอักษรกาลกิณีในชื่อ · อักษร 1 ตัวอยู่ได้ดาวเดียว · สีใช้เป็นสีประจำวันเกิดและสีกาลกิณีในผลคำนวณ',
+  values: 'ใช้คิดผลรวมชื่อ-นามสกุล และค่าตัวอักษรบนป้ายทะเบียน · อักษร 1 ตัวมีได้ค่าเดียว · อักษรที่ไม่มีในตาราง = 0',
+};
 
 // ---------- ตั้งค่าระบบ ----------
 async function viewSettings() {

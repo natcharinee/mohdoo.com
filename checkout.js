@@ -599,7 +599,9 @@ function renderIntake(fields) {
       const filled = fields.filter((f) => f.name !== 'topic' && f.name !== 'question' && data[f.name] && f.type !== 'file').map((f) => `${f.label}: ${data[f.name]}`);
       const askId = addHistory({ kind: 'ask', svc: order.item.key, icon: order.item.icon, title: order.item.title,
         topic: data.topic || 'ภาพรวม', question: data.question || filled.join(' · ').slice(0, 160), data, fields: fields.map((f) => [f.name, f.label]),
-        no: order.no, amount: order.amount, label: order.label });
+        no: order.no, amount: order.amount, label: order.label,
+        // ระดับดวงจากผลคำนวณ ณ เวลาที่ถาม (บันทึกไว้ เปิดซ้ำได้ผลเดิมแม้แก้ข้อมูลเกิดภายหลัง)
+        calc: window.MohdooCalc ? window.MohdooCalc.askScore({ svc: order.item.key, topic: data.topic, data, at: Date.now() }, currentUser() || {}) || undefined : undefined });
       const h = (currentUser().history || []).find((x) => x.id === askId);
       closePanel('payPanel');
       if (h) openSlip(h);

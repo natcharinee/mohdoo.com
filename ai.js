@@ -197,6 +197,7 @@ function renderChat(u) {
       ${chat.map((m) => (m.role === 'user' ? `<div class="bubble me" translate="no">${fmtMsg(m.content)}</div>` : aiBubble(m.content))).join('')}
     </div>
     <div class="ai-chips" id="aiChips">${AI_SUGGEST.map((s) => `<button data-ask="${s}">${s}</button>`).join('')}</div>
+    <p class="ai-quota" id="aiQuota" hidden></p>
     <form class="ai-input" id="aiForm">
       ${Recognition ? '<button type="button" class="ai-mic" id="aiMic" aria-label="กดพูดถาม" aria-pressed="false">🎙️</button>' : ''}
       <textarea name="q" rows="1" maxlength="1500" placeholder="พิมพ์หรือกดไมค์เพื่อพูด…" required></textarea>
@@ -221,6 +222,25 @@ function renderChat(u) {
   form.addEventListener('submit', (e) => { e.preventDefault(); ask(ta.value); ta.value = ''; ta.style.height = 'auto'; });
   aiBody.querySelectorAll('[data-hist-daily]').forEach((b) => b.addEventListener('click', () => openHistory(b.dataset.histDaily)));
   $('aiChips').addEventListener('click', (e) => { const b = e.target.closest('[data-ask]'); if (b) ask(b.dataset.ask); });
+  loadQuota(u);
+}
+
+// ---------- จำนวนคำถามที่เหลือวันนี้ (fair use) ----------
+function showQuota(q) {
+  const el = $('aiQuota');
+  if (!el) return;
+  if (!q) { el.hidden = true; return; }
+  el.hidden = false;
+  el.classList.toggle('low', q.left <= 3);
+  el.textContent = q.left > 0
+    ? `วันนี้ถามได้อีก ${q.left} จาก ${q.limit} คำถาม`
+    : `วันนี้ใช้ครบ ${q.limit} คำถามแล้ว พรุ่งนี้ถามต่อได้ค่ะ`;
+}
+async function loadQuota(u) {
+  try {
+    const r = await fetch('/api/chat', { headers: { 'X-AI-Code': u.aiCode || '' } });
+    if (r.ok) showQuota((await r.json()).quota);
+  } catch (_) { /* เปิดในเครื่องแบบไม่มีเซิร์ฟเวอร์ */ }
 }
 const fmtMsg = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
 // คำตอบของแม่หมอ + ปุ่มฟังเสียง
@@ -336,8 +356,14 @@ async function ask(text) {
           file: typeof fortuneFileText === 'function' ? fortuneFileText(u) : '', lang: window.LANG || 'th' },
       }),
     });
-    if (r.ok) reply = (await r.json()).reply;
-    else if (r.status === 429) reply = 'ตอนนี้มีคนถามเยอะมาก รอสักครู่แล้วลองใหม่นะคะ 🙏';
+    if (r.ok) { const d = await r.json(); reply = d.reply; showQuota(d.quota); }
+    else if (r.status === 429) {
+      const d = await r.json().catch(() => ({}));
+      if (d.error === 'daily_limit') {
+        showQuota(d.quota);
+        reply = `วันนี้คุณถามแม่หมอครบ ${d.quota?.limit || ''} คำถามแล้วค่ะ ✦ พักใจก่อน พรุ่งนี้มาถามต่อได้เลยนะคะ\nระหว่างนี้รับใบผลดวงวันนี้ หรือดูดวงคนใกล้ตัวด้านบนได้ค่ะ`;
+      } else reply = 'ตอนนี้มีคนถามเยอะมาก รอสักครู่แล้วลองใหม่นะคะ 🙏';
+    }
     else if (r.status === 401) {
       // ไม่มีรหัส / รหัสผิด → ตอบแบบตัวอย่าง และบอกให้กรอกรหัส
       reply = demoReply(q, u, u.aiCode ? 'รหัสทดลองใช้ AI ไม่ถูกต้อง' : 'ยังไม่ได้กรอกรหัสทดลองใช้ AI');

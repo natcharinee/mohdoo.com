@@ -48,10 +48,12 @@ function slipFromEntry(h) {
   const base = { icon: h.icon || '✦', title: h.title, question: h.question || '', at: h.at,
     no: (h.kind === 'order' || h.kind === 'ask') && h.no ? h.no : `MD-${String(h.id).slice(-6).toUpperCase()}` };
   if (h.kind === 'ask') {
-    // ถามคำถาม 40 บาท: ระดับดวงคงที่ต่อคำถาม (เปิดดูซ้ำได้ผลเดิม)
-    const score = ASK_SCORES[seedOf(`${h.id}|${h.question}`) % ASK_SCORES.length];
+    // ถามคำถาม 40 บาท: ระดับดวงจากผลคำนวณ (lib/calc/score.js) ที่บันทึกไว้ตอนถาม → เปิดดูซ้ำได้ผลเดิม
+    // ประวัติเก่าที่ยังไม่มีผลคำนวณ: คำนวณจากข้อมูลตอนนี้ · ถ้าไม่มีวันเกิดหรือโหลดชุดคำนวณไม่ได้ ใช้วิธีเดิม
+    const calc = h.calc || (window.MohdooCalc ? window.MohdooCalc.askScore(h, currentUser() || {}) : null);
+    const score = calc ? calc.score : ASK_SCORES[seedOf(`${h.id}|${h.question}`) % ASK_SCORES.length];
     const asked = !!(h.data ? h.data.question : h.question);
-    return { ...base, service: asked ? h.title : 'ผลวิเคราะห์ทันที', title: asked ? `ถามเรื่อง${askTopic(h.topic)}` : h.title, topic: h.topic, score, summary: askAnswer(h, score) };
+    return { ...base, service: asked ? h.title : 'ผลวิเคราะห์ทันที', title: asked ? `ถามเรื่อง${askTopic(h.topic)}` : h.title, topic: h.topic, score, calc, summary: askAnswer(h, score) };
   }
   if (h.kind === 'tarot') {
     const ups = h.cards.filter((c) => !c.rev).length / h.cards.length;
@@ -407,7 +409,7 @@ function slipDetail(s, h) {
     const info = Object.entries(h.data || {}).filter(([k, v]) => v && !['topic', 'question'].includes(k) && !String(v).startsWith('📷')).map(([k, v]) => `${label[k] || k}: ${v}`);
     return [`ศาสตร์/บริการที่ลูกค้าเลือก: ${h.title} (ตอบตามหลักของศาสตร์นี้)`, `เรื่องที่ถาม: ${h.topic || 'ภาพรวม'}`,
       h.data && h.data.question ? `คำถาม: ${h.data.question}` : '', info.length ? `ข้อมูลที่ลูกค้ากรอกให้วิเคราะห์:\n${info.join('\n')}` : '',
-      `ระดับดวงจากการเสี่ยงทาย: ${s.score}/5`].filter(Boolean).join('\n');
+      s.calc && window.MohdooCalc ? window.MohdooCalc.scoreText(s.calc) : `ระดับดวงจากการเสี่ยงทาย: ${s.score}/5`].filter(Boolean).join('\n');
   }
   return `${s.title}\n${s.blocks.map((b) => `${b.tag}: ${b.title} — ${b.text}`).join('\n')}`;
 }
@@ -420,7 +422,7 @@ async function aiSlipText(s, h) {
       method: 'POST', signal: ctrl.signal,
       headers: { 'Content-Type': 'application/json', 'X-AI-Code': u.aiCode || '' },
       body: JSON.stringify({ order_no: h.no || '', kind: h.kind, service: s.service, title: s.title, question: s.question, score: s.score, detail: slipDetail(s, h),
-        profile: { first: displayName(u), birthdate: u.birthdate, lang: window.LANG || 'th' } }),
+        profile: { first: displayName(u), birthdate: u.birthdate, birthtime: u.birthtime, birthplace: u.birthplace, lang: window.LANG || 'th' } }),
     });
     clearTimeout(t);
     if (!r.ok) return null;

@@ -150,3 +150,7 @@ dialog img:not([src]), dialog video:not([src]) { display: none; }
   .kv { grid-template-columns: 105px 1fr; }
   .table .hide-m { display: none; }
 }
+
+/* ตำราดูดวง */
+.check { display: flex; align-items: center; gap: 8px; color: var(--text, inherit); }
+.check input { width: auto; }

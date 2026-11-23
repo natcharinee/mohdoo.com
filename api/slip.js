@@ -5,6 +5,8 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { aiAllowed } from './_lib/aigate.js';
 import { VOICE } from './_lib/voice.js';
+import { chartText } from '../lib/calc/chart.js';
+import { loadKB } from './_lib/kb.js';
 
 // คงที่ทั้งหมดเพื่อให้ prompt caching ทำงาน · ข้อมูลการดูดวงอยู่ใน messages
 const SYSTEM_PROMPT = `คุณคือ "แม่หมอ" ของ หมอดู.com ทำหน้าที่เขียน "ใบผลดวง" ให้ลูกค้าเก็บไว้ ลักษณะเหมือนใบเซียมซีของวัด: มีกลอนคำทำนาย แล้วตามด้วยคำทำนายรายเรื่อง
@@ -65,19 +67,21 @@ export default async function handler(req, res) {
   const detail = String(body.detail || '').slice(0, 3000);
   if (!detail.trim()) return res.status(400).json({ error: 'bad_request' });
   const p = body.profile || {};
+  await loadKB(); // ตำราดูดวงล่าสุดที่ทีมแก้ในหลังบ้าน
   const info = [
     `บริการ: ${String(body.service || '').slice(0, 60)} · ${String(body.title || '').slice(0, 80)}`,
     body.score && `ระดับดวง: ${LEVEL[body.score] || ''} (${Number(body.score)}/5)`,
     body.question && `คำถามของลูกค้า: ${String(body.question).slice(0, 200)}`,
     p.first && `ชื่อลูกค้า: ${String(p.first).slice(0, 40)}`,
     p.birthdate && `วันเกิด: ${String(p.birthdate).slice(0, 10)}`,
+    chartText(p), // ปีนักษัตร ราศี ทักษา ฯลฯ ที่ระบบคำนวณแล้ว
     `ผลการดูดวง:\n${detail}`,
   ].filter(Boolean).join('\n');
 
   try {
     const response = await client.beta.messages.create({
       model: 'claude-opus-5-5',
-      max_tokens: 16000,
+      max_tokens: 8000, // ผลจริง + การคิดระดับ medium ใช้ไม่ถึงครึ่ง · กันคำตอบยาวผิดปกติ
       betas: ['server-side-fallback-2026-07-01'],
       fallbacks: 'default', // ถ้าโมเดลหลักปฏิเสธ ให้เซิร์ฟเวอร์ลองโมเดลสำรองอัตโนมัติ
       output_config: { effort: 'medium' }, // งานเขียนกลอน ต้องการความประณีตกว่าแชท
