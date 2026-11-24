@@ -130,7 +130,7 @@ function route() {
   routeCtl?.abort();
   routeCtl = new AbortController();
   view.innerHTML = '<p class="empty">กำลังโหลด…</p>';
-  const views = { stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings, kb: viewKB };
+  const views = { audit: viewAudit, stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings, kb: viewKB };
   run((views[v] || viewOrders))(decodeURIComponent(arg || ''));
   scrollTo(0, 0);
 }
@@ -343,6 +343,57 @@ async function shrink(file, max) {
 
 // ---------- ลูกค้า ----------
 const uq = { q: '', role: '', ai: false, offset: 0 };
+
+// ---------- ประวัติการทำงานของทีมงาน (ผู้ดูแลเท่านั้น) ----------
+const aq = { action: '', q: '', offset: 0 };
+const AUDIT_CHIP = { refund: 'bad', cancel: 'bad', block: 'bad', role: 'warn', mark_paid: 'warn', ai_days: 'warn', broadcast: 'warn', export: 'warn', seer_profile_delete: 'bad', seer_app_delete: 'bad', login: '' };
+const DETAIL_KEY = { from: 'จาก', to: 'เป็น', amount: 'จำนวน', reason: 'เหตุผล', days: 'วัน', until: 'ถึง', price: 'ราคา', status: 'สถานะ', sent: 'ส่งถึง', target: 'กลุ่ม', rows: 'จำนวนแถว', phone: 'เบอร์', text: 'ข้อความ', body: 'ข้อความ', changed: 'แก้', hidden: 'ซ่อน', ip: 'IP', note: 'หมายเหตุ', paid: 'จ่ายแล้ว', provider: 'ช่องทาง', reset: 'คืนค่าเริ่มต้น', reviewed: 'ตรวจแล้ว', version: 'เวอร์ชัน', self: 'หมอดูตั้งเอง', seer_id: 'โปรไฟล์' };
+function auditDetail(a) {
+  const fmt = (k, v) => {
+    if (a.action === 'stock' && v === null) return 'ไม่จำกัด';
+    if (v === null || v === undefined || v === '') return '—';
+    if (typeof v === 'boolean') return v ? 'ใช่' : 'ไม่';
+    if (k === 'amount' || k === 'price') return baht(v);
+    if (k === 'until' || k === 'version') return dt(v);
+    if (k === 'from' || k === 'to') return ROLE[v] || String(v);
+    if (k === 'target') return v === 'ai' ? 'สมาชิก AI' : 'ลูกค้าทุกคน';
+    if (Array.isArray(v)) return v.join(', ');
+    return String(v);
+  };
+  return Object.entries(a.detail || {}).filter(([, v]) => v !== undefined).map(([k, v]) => `<span class="nowrap">${esc(DETAIL_KEY[k] || k)}: <b>${esc(fmt(k, v))}</b></span>`).join(' · ');
+}
+const auditTarget = (t) => {
+  if (!t || !t.type) return '<span class="muted">—</span>';
+  const href = t.type === 'order' ? `#order/${t.id}` : t.type === 'user' ? `#user/${t.id}` : t.type === 'seer' || t.type === 'seerapp' ? '#seers' : t.type === 'kb' ? '#kb' : t.type === 'item' ? '#stock' : '';
+  const label = esc(t.label || t.id || '—') + (t.type === 'order' ? ` <span class="muted small">${esc(t.id)}</span>` : '');
+  return href ? `<a href="${href}">${label}</a>` : label;
+};
+async function viewAudit(arg = '') {
+  const user = arg.startsWith('user:') ? arg.slice(5) : '';
+  const params = new URLSearchParams({ limit: 50, offset: aq.offset });
+  if (aq.action) params.set('action', aq.action);
+  if (aq.q) params.set('q', aq.q);
+  if (user) params.set('user', user);
+  const r = await api(`admin/audit?${params}`);
+  view.innerHTML = `
+    <div class="head"><h1>ประวัติการทำงาน</h1><span class="muted small">ใครทำอะไร เมื่อไร · เก็บย้อนหลัง 1 ปี · ผู้ดูแลระบบเท่านั้นที่เห็นหน้านี้</span></div>
+    ${user ? `<p class="small" style="margin-bottom:10px">กรองเฉพาะบัญชี <a href="#user/${esc(user)}">${esc(r.items[0]?.target?.label || user)}</a> · <a href="#audit">ดูทั้งหมด</a></p>` : ''}
+    <form class="row" id="aFilter" style="margin-bottom:12px">
+      <input class="grow" name="q" value="${esc(aq.q)}" placeholder="ค้นหา ชื่อทีมงาน ลูกค้า เลขคำสั่งซื้อ">
+      <select name="action" style="width:auto"><option value="">ทุกการกระทำ</option>${Object.entries(r.actions).map(([k, v]) => `<option value="${k}" ${k === aq.action ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select>
+      <button class="btn">ค้นหา</button>
+    </form>
+    ${r.items.length ? `<div class="tscroll"><table class="table audit"><tr><th>เวลา</th><th>ใคร</th><th>ทำอะไร</th><th>กับ</th><th>รายละเอียด</th></tr>
+      ${r.items.map((a) => `<tr><td class="nowrap">${dt(a.created_at)}</td><td>${esc(a.who)}<span class="sub">${esc(ROLE[a.role] || a.role || '')}</span></td>
+        <td><span class="chip ${AUDIT_CHIP[a.action] ?? ''}">${esc(r.actions[a.action] || a.action)}</span></td>
+        <td>${auditTarget(a.target)}</td><td class="small">${auditDetail(a) || '<span class="muted">—</span>'}</td></tr>`).join('')}</table></div>
+      <div class="pager"><span>${aq.offset + 1}–${aq.offset + r.items.length} จาก ${r.total}</span>
+      <span class="row"><button class="btn sm" id="aPrev" ${aq.offset ? '' : 'disabled'}>‹ ก่อนหน้า</button><button class="btn sm" id="aNext" ${aq.offset + 50 < r.total ? '' : 'disabled'}>ถัดไป ›</button></span></div>`
+    : '<p class="empty">ยังไม่มีประวัติในเงื่อนไขนี้</p>'}`;
+  $('aFilter').addEventListener('submit', (e) => { e.preventDefault(); aq.q = e.target.q.value.trim(); aq.action = e.target.action.value; aq.offset = 0; route(); });
+  $('aPrev')?.addEventListener('click', () => { aq.offset = Math.max(0, aq.offset - 50); route(); });
+  $('aNext')?.addEventListener('click', () => { aq.offset += 50; route(); });
+}
 async function viewUsers() {
   const params = new URLSearchParams({ limit: 30, offset: uq.offset });
   if (uq.q) params.set('q', uq.q);
@@ -375,7 +426,8 @@ async function viewUser(id) {
   const spent = orders.filter((o) => o.paid_at && o.status !== 'refunded').reduce((a, o) => a + o.amount, 0);
   view.innerHTML = `
     <a class="back" href="#users">‹ กลับไปรายชื่อ</a>
-    <div class="head" style="margin-top:8px"><h1>${esc([p.first || u.name, p.last].filter(Boolean).join(' ') || u.phone)}</h1><span class="chip">${ROLE[u.role]}</span>${u.blocked ? '<span class="chip bad">ระงับบัญชี</span>' : ''}</div>
+    <div class="head" style="margin-top:8px"><h1>${esc([p.first || u.name, p.last].filter(Boolean).join(' ') || u.phone)}</h1><span class="chip">${ROLE[u.role]}</span>${u.blocked ? '<span class="chip bad">ระงับบัญชี</span>' : ''}
+      ${can('admin') ? `<a class="btn sm ghost" href="#audit/user:${esc(u.id)}">🛡️ ประวัติการทำงานกับบัญชีนี้</a>` : ''}</div>
     <div class="kpis">
       <div class="kpi"><small>ยอดใช้จ่ายรวม</small><b>${baht(spent)}</b><em>${orders.length} คำสั่งซื้อ</em></div>
       <div class="kpi"><small>ประวัติดูดวง</small><b>${hist.length}</b><em>รายการในแฟ้มดวง</em></div>

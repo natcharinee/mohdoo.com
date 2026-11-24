@@ -195,3 +195,8 @@ dialog img:not([src]), dialog video:not([src]) { display: none; }
 .pchip-on { display: inline-flex; align-items: center; gap: 4px; padding: 3px 4px 3px 11px; border-radius: 99px; background: var(--pick); border: 1px solid var(--violet2); font-size: 13px; }
 .pchip-on button { width: 22px; height: 22px; border-radius: 50%; border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; }
 .pchip-on button:hover, .pchip-on button:focus-visible { background: var(--hover); color: var(--text); }
+
+/* ===== ประวัติการทำงาน ===== */
+.nowrap { white-space: nowrap; }
+.table.audit td { vertical-align: top; }
+.table.audit .chip { white-space: nowrap; font-size: 12px; }

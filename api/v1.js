@@ -32,6 +32,28 @@ function pubOrder(o) {
   };
 }
 const pubUser = (u) => ({ id: u.id, phone: u.phone, role: u.role, seer_id: u.seer_id || null, name: u.name, ai_until: u.ai_until || 0, profile: u.profile, created_at: u.created_at });
+// ---------- ประวัติการทำงานของทีมงาน (audit log) · ดูได้ที่หลังบ้าน → ประวัติการทำงาน (ผู้ดูแลเท่านั้น) ----------
+// บันทึกว่าใครทำอะไรกับใคร เมื่อไร · บันทึกไม่สำเร็จจะไม่ทำให้งานหลักล้ม · เก็บ 1 ปี (ลบเก่าในงานประจำวัน)
+export const AUDIT_ACTIONS = {
+  login: 'เข้าสู่ระบบหลังบ้าน', role: 'เปลี่ยนสิทธิ์', block: 'ระงับบัญชี', unblock: 'ยกเลิกการระงับ', kick: 'ให้ออกจากระบบทุกเครื่อง',
+  ai_days: 'ให้/ปรับสมาชิก AI', seer_link: 'เชื่อมโปรไฟล์หมอดู', user_note: 'บันทึกในบัญชีลูกค้า',
+  mark_paid: 'ยืนยันรับเงินเอง', refund: 'คืนเงิน', cancel: 'ยกเลิกคำสั่งซื้อ',
+  seer_invite: 'เพิ่มหมอดู', seer_price: 'ตั้งราคาหมอดู', seer_profile: 'แก้โปรไฟล์หมอดู', seer_profile_new: 'เพิ่มโปรไฟล์หมอดู',
+  seer_profile_reset: 'คืนค่าโปรไฟล์หมอดู', seer_profile_delete: 'ลบโปรไฟล์หมอดู', seer_app: 'ตรวจใบสมัครหมอดู', seer_app_delete: 'ลบใบสมัครหมอดู',
+  broadcast: 'ส่งประกาศ', export: 'ส่งออกข้อมูลคำสั่งซื้อ', stock: 'แก้สต๊อก', kb: 'แก้ตำราดูดวง', kb_restore: 'ย้อนเวอร์ชันตำรา', cron: 'สั่งงานประจำวันเอง',
+};
+const AUDIT_DAYS = 365;
+async function audit(staff, action, target = {}, detail = {}) {
+  try {
+    await (await db()).put('audit', {
+      id: newId('a'), created_at: Date.now(), action, status: action, // status = ช่องค้นหาตามประเภทการกระทำ
+      by: staff?.id || 'system', who: staff ? staff.name || staff.phone : 'ระบบ', role: staff?.role || '',
+      target: { type: target.type || '', id: target.id || '', label: str(target.label, 80) }, user_id: target.type === 'user' ? target.id : null,
+      detail,
+    });
+  } catch (e) { console.error('[audit]', e); }
+}
+const userLabel = (u) => u.name || u.profile?.first || u.phone;
 const log = (o, by, action, extra = {}) => { (o.log ||= []).push({ at: Date.now(), by: by ? by.id : 'system', who: by ? by.name || by.phone : 'ระบบ', action, ...extra }); };
 
 async function orderNo(store) {
@@ -199,6 +221,7 @@ on('POST', 'auth/verify', async (req, res) => {
   const { user, isNew } = await userForPhone(phone);
   if (user.blocked) fail(403, 'blocked');
   startSession(res, user);
+  if (BACKOFFICE.includes(user.role)) await audit(user, 'login', { type: 'user', id: user.id, label: userLabel(user) }, { ip: ipOf(req) });
   return { isNew, user: pubUser(user) };
 });
 on('POST', 'auth/logout', async (req, res) => { endSession(res); return { ok: true }; });
@@ -436,6 +459,7 @@ async function runDaily() {
     }
   }
   await cleanRate().catch((e) => console.error('[cleanRate]', e));
+  await store.delWhere('audit', { before: now - AUDIT_DAYS * 864e5 }).catch((e) => console.error('[audit clean]', e));
   return { ok: true, expired, daily, reminded };
 }
 
@@ -505,6 +529,7 @@ on('POST', 'seer/price', async (req) => {
   const u = await needSeer(req);
   if (!u.seer_id) fail(400, 'no_seer_profile');
   const price = await setSeerPrice(u.seer_id, bodyOf(req).price, u.name || u.phone);
+  await audit(u, 'seer_price', { type: 'seer', id: u.seer_id, label: catalog().SEER_ALL.find((x) => x.id === u.seer_id)?.name }, { price, self: true });
   return { ok: true, price };
 });
 on('GET', 'seer/jobs', async (req) => {
@@ -700,6 +725,7 @@ on('POST', 'admin/orders/:no', async (req, res, { no }) => {
     case 'mark-paid': // ลูกค้าโอนเข้าบัญชีโดยตรง → ผู้ดูแลยืนยันเอง
       if (staff.role !== 'admin') fail(403, 'forbidden');
       await markPaid(o, staff, 'manual');
+      await audit(staff, 'mark_paid', { type: 'order', id: o.no, label: o.title }, { amount: o.amount });
       return { order: adminOrder(await getOrder(o.no)) };
     case 'cancel':
       if (o.status !== 'pending' && staff.role !== 'admin') fail(403, 'forbidden');
@@ -729,6 +755,8 @@ on('POST', 'admin/orders/:no', async (req, res, { no }) => {
   }
   log(o, staff, act, act === 'status' || act === 'step' ? { to: o.status, step: o.step } : {});
   await saveOrder(o);
+  if (act === 'refund') await audit(staff, 'refund', { type: 'order', id: o.no, label: o.title }, { amount: o.refund.amount, reason: o.refund.reason, provider: o.refund.provider });
+  if (act === 'cancel') await audit(staff, 'cancel', { type: 'order', id: o.no, label: o.title }, { amount: o.amount, paid: !!o.paid_at, reason: str(b.reason, 200) });
   if (msg) await notify(o.user_id, { ...msg, order_no: o.no });
   return { order: adminOrder(o) };
 });
@@ -780,6 +808,7 @@ on('POST', 'admin/seers/price', async (req) => {
   const sid = str(b.seer_id, 40);
   if (!catalog().SEER_ALL.some((x) => x.id === sid)) fail(400, 'unknown_seer');
   const price = await setSeerPrice(sid, b.price, staff.name || staff.phone);
+  await audit(staff, 'seer_price', { type: 'seer', id: sid, label: catalog().SEER_ALL.find((x) => x.id === sid)?.name }, { price });
   return { ok: true, price };
 });
 // ---------- โปรไฟล์หมอดูบนหน้าเว็บ (ชื่อ รูป ศาสตร์ที่ถนัด ค่าโทรบนแอป) ----------
@@ -813,7 +842,9 @@ async function saveSeerProfile(staff, id, b) {
 }
 on('POST', 'admin/seer-profiles', async (req) => {
   const staff = await needRole(req, ['admin']);
-  return { ok: true, profile: await saveSeerProfile(staff, null, bodyOf(req)) };
+  const profile = await saveSeerProfile(staff, null, bodyOf(req));
+  await audit(staff, 'seer_profile_new', { type: 'seer', id: profile.id, label: profile.name });
+  return { ok: true, profile };
 });
 on('POST', 'admin/seer-profiles/:id', async (req, res, { id }) => {
   const staff = await needRole(req, ['admin']);
@@ -830,9 +861,13 @@ on('POST', 'admin/seer-profiles/:id', async (req, res, { id }) => {
     await (await db()).del('seerprof', sid);
     resetSeerProfiles(); resetHumanOpen();
     await syncSeerProfiles(await db());
+    await audit(staff, b.delete === true ? 'seer_profile_delete' : 'seer_profile_reset', { type: 'seer', id: sid, label: cur.name });
     return { ok: true, profile: catalog().SEER_ALL.find((x) => x.id === sid) || null };
   }
-  return { ok: true, profile: await saveSeerProfile(staff, sid, b) };
+  const profile = await saveSeerProfile(staff, sid, b);
+  const changed = ['name', 'img', 'cats', 'callCoin', 'callMin', 'hidden'].filter((k) => JSON.stringify(cur[k]) !== JSON.stringify(profile[k]));
+  await audit(staff, 'seer_profile', { type: 'seer', id: sid, label: profile.name }, { changed, ...(changed.includes('hidden') ? { hidden: profile.hidden } : {}) });
+  return { ok: true, profile };
 });
 // ลงชื่อหมอดูไว้ก่อน (ใช้ทั้งปุ่ม "เพิ่มหมอดู" และตอนอนุมัติใบสมัคร)
 async function inviteSeer(staff, { phone: rawPhone, name, seer_id }) {
@@ -854,6 +889,7 @@ async function inviteSeer(staff, { phone: rawPhone, name, seer_id }) {
 on('POST', 'admin/seers', async (req) => {
   const staff = await needRole(req, ['admin']);
   const u = await inviteSeer(staff, bodyOf(req));
+  await audit(staff, 'seer_invite', { type: 'user', id: u.id, label: userLabel(u) }, { phone: u.phone, seer_id: u.seer_id });
   return { ok: true, registered: !!u.profile };
 });
 
@@ -908,6 +944,7 @@ on('POST', 'admin/seer-apps/:id', async (req, res, { id }) => {
   if (b.delete === true) { // ผู้สมัครขอลบข้อมูล (PDPA)
     if (staff.role !== 'admin') fail(403, 'forbidden');
     await store.del('seerapp', app.id);
+    await audit(staff, 'seer_app_delete', { type: 'seerapp', id: app.id, label: app.alias || app.name });
     return { ok: true, deleted: true };
   }
   const who = staff.name || staff.phone;
@@ -929,9 +966,20 @@ on('POST', 'admin/seer-apps/:id', async (req, res, { id }) => {
   }
   app.updated_at = Date.now();
   await store.put('seerapp', app);
+  if (b.status !== undefined) await audit(staff, 'seer_app', { type: 'seerapp', id: app.id, label: app.alias || app.name }, { status: app.status, seer_id: app.status === 'approved' ? b.seer_id : undefined });
   return { ok: true, app };
 });
 
+on('GET', 'admin/audit', async (req) => {
+  await needRole(req, ['admin']);
+  const q = req.query || {};
+  const f = { limit: Math.min(int(q.limit) || 50, 200), offset: int(q.offset) || 0, q: str(q.q, 60) || undefined };
+  if (q.action && AUDIT_ACTIONS[q.action]) f.status = q.action;
+  if (q.user) f.user_id = str(q.user, 40);
+  if (q.by) f.where = { by: str(q.by, 40) };
+  const { rows, total } = await (await db()).list('audit', f);
+  return { items: rows, total, actions: AUDIT_ACTIONS };
+});
 on('GET', 'admin/users', async (req) => {
   await needRole(req, ['staff', 'admin']);
   const q = req.query || {};
@@ -958,6 +1006,7 @@ on('POST', 'admin/users/:id', async (req, res, { id }) => {
   const u = await store.get('user', str(id, 40));
   if (!u) fail(404, 'not_found');
   const b = bodyOf(req);
+  const before = { role: u.role, seer_id: u.seer_id || null, blocked: !!u.blocked, ai_until: u.ai_until || 0 };
   if (b.role !== undefined) {
     if (staff.role !== 'admin' || !ROLES.includes(b.role)) fail(403, 'forbidden');
     if (u.id === staff.id && b.role !== 'admin') fail(400, 'cannot_demote_self');
@@ -980,23 +1029,31 @@ on('POST', 'admin/users/:id', async (req, res, { id }) => {
   u.updated_at = Date.now();
   await store.put('user', u);
   resetHumanOpen();
+  const t = { type: 'user', id: u.id, label: userLabel(u) };
+  if (u.role !== before.role) await audit(staff, 'role', t, { from: before.role, to: u.role });
+  if ((u.seer_id || null) !== before.seer_id) await audit(staff, 'seer_link', t, { from: before.seer_id, to: u.seer_id || null });
+  if (!!u.blocked !== before.blocked) await audit(staff, u.blocked ? 'block' : 'unblock', t);
+  if (b.ai_days !== undefined) await audit(staff, 'ai_days', t, { days: int(b.ai_days), until: u.ai_until });
+  if (b.logout) await audit(staff, 'kick', t);
+  if (b.note) await audit(staff, 'user_note', t, { text: str(b.note, 200) });
   return { ok: true };
 });
 
 on('POST', 'admin/broadcast', async (req) => {
-  await needRole(req, ['admin']);
+  const staff = await needRole(req, ['admin']);
   const b = bodyOf(req);
   const title = str(b.title, 80); const body = str(b.body, 300);
   if (!title || !body) fail(400, 'empty');
   const { rows } = await (await db()).list('user', { limit: 50000 });
   const target = rows.filter((u) => u.profile && !u.blocked && (b.target !== 'ai' || (u.ai_until || 0) > Date.now()));
   for (const u of target) await notify(u.id, { title, body, link: str(b.link, 200) });
+  await audit(staff, 'broadcast', { type: 'broadcast', label: title }, { body, target: b.target === 'ai' ? 'ai' : 'all', sent: target.length });
   return { ok: true, sent: target.length };
 });
-on('POST', 'admin/cron/daily', async (req) => { await needRole(req, ['admin']); return runDaily(); });
+on('POST', 'admin/cron/daily', async (req) => { const staff = await needRole(req, ['admin']); await audit(staff, 'cron'); return runDaily(); });
 
 on('GET', 'admin/export/orders', async (req, res) => {
-  await needRole(req, ['staff', 'admin']);
+  const staff = await needRole(req, ['staff', 'admin']);
   const q = req.query || {};
   const since = q.days ? Date.now() - Math.min(int(q.days) || 30, 3650) * 864e5 : 0;
   const { rows } = await (await db()).list('order', { since, limit: 100000, asc: true });
@@ -1008,6 +1065,7 @@ on('GET', 'admin/export/orders', async (req, res) => {
   };
   const head = ['เลขที่', 'วันที่สั่ง', 'วันที่ชำระ', 'สถานะ', 'ประเภท', 'รายการ', 'แพ็กเกจ', 'ค่าบริการ', 'เงินทำบุญ', 'ยอดรวม', 'ลูกค้า', 'เบอร์', 'ชำระผ่าน', 'คืนเงิน'];
   const th = (t) => (t ? new Date(t).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }) : '');
+  await audit(staff, 'export', { type: 'export', label: 'คำสั่งซื้อ (CSV)' }, { days: q.days ? int(q.days) : 'all', rows: rows.length }); // มีเบอร์/ชื่อลูกค้า = ข้อมูลส่วนบุคคล
   const lines = rows.map((o) => [o.no, th(o.created_at), th(o.paid_at), STATUS[o.status], KIND_NAME[o.kind], o.title, o.label, o.price, o.donation || 0, o.amount, o.name, o.phone, o.pay?.provider, o.refund?.amount || ''].map(cell).join(','));
   send(res, 200, `﻿${[head.map(cell).join(','), ...lines].join('\r\n')}`, {
     'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': `attachment; filename="mohdoo-orders-${new Date().toISOString().slice(0, 10)}.csv"`,
@@ -1020,11 +1078,13 @@ on('POST', 'admin/stock', async (req) => {
   const p = catalog().SHOP_ITEMS.find((x) => x.id === str(b.id, 40));
   if (!p || p.digital) fail(400, 'unknown_item');
   const store = await db();
-  if (b.qty === null || b.qty === '') { await store.del('stock', p.id); return { ok: true, qty: null }; } // ไม่จำกัด
+  const prevQty = (await store.get('stock', p.id))?.qty ?? null;
+  if (b.qty === null || b.qty === '') { await store.del('stock', p.id); await audit(staff, 'stock', { type: 'item', id: p.id, label: p.name }, { from: prevQty, to: null }); return { ok: true, qty: null }; } // ไม่จำกัด
   const q = int(b.qty);
   if (!(q >= 0 && q <= 100000)) fail(400, 'bad_qty');
   const prev = await store.get('stock', p.id);
   await store.put('stock', { id: p.id, qty: q, rev: (prev?.rev || 0) + 1, updated_at: Date.now(), updated_by: staff.name || staff.phone, created_at: prev?.created_at || Date.now() });
+  await audit(staff, 'stock', { type: 'item', id: p.id, label: p.name }, { from: prevQty, to: q });
   return { ok: true, qty: q };
 });
 on('GET', 'admin/catalog', async (req) => {
@@ -1055,6 +1115,7 @@ on('POST', 'admin/kb/:id', async (req, res, { id }) => {
   const b = bodyOf(req);
   const r = await saveKB(id, { data: b.reset ? null : b.data, reviewed: b.reviewed, note: b.reset ? 'คืนค่าเริ่มต้น' : b.note }, u.name || u.phone);
   if (!r.ok) fail(400, 'bad_kb', { message: r.error });
+  await audit(u, 'kb', { type: 'kb', id: str(id, 40), label: KB_TABLES[id] || id }, { reset: !!b.reset, reviewed: !!b.reviewed, note: str(b.note, 200) });
   return { ok: true, updated_at: r.doc.updated_at };
 });
 on('POST', 'admin/kb/:id/restore', async (req, res, { id }) => {
@@ -1065,6 +1126,7 @@ on('POST', 'admin/kb/:id/restore', async (req, res, { id }) => {
   if (!v) fail(404, 'version_not_found');
   const r = await saveKB(id, { data: v.data, reviewed: v.reviewed, note: `ย้อนกลับเป็นเวอร์ชัน ${new Date(at).toISOString().slice(0, 16)}` }, u.name || u.phone);
   if (!r.ok) fail(400, 'bad_kb', { message: r.error });
+  await audit(u, 'kb_restore', { type: 'kb', id: str(id, 40), label: KB_TABLES[id] || id }, { version: at });
   return { ok: true };
 });
 
