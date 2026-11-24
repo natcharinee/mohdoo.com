@@ -20,6 +20,7 @@ export function addMonth(ts) {
 export const DONATION = { min: 20, max: 100000 };
 // ปุ่ม 1 ดูดวง: ทุกบริการที่กรอกข้อมูล (ยกเว้นมงคลและอ่านรูป) → แม่หมอ AI ตอบทันที (ตรงกับ askNow ใน checkout.js) · หมอดูตอบเฉพาะ seer:…
 export const ASK_LABEL = 'ถาม 1 เรื่อง · รับใบผลดวงทันที';
+export const HUMAN_LABEL = 'ถาม 1 เรื่อง · หมอดูจริงตอบภายใน 24 ชม.';
 
 // ขั้นตอนติดตามงาน (ตรงกับ AFTER ใน checkout.js)
 export const STEPS = {
@@ -37,7 +38,7 @@ function load() {
   const root = process.cwd();
   const files = ['services-data.js', 'categories-data.js', 'shop-data.js', 'seers-data.js'];
   const code = `${files.map((f) => fs.readFileSync(path.join(root, f), 'utf8')).join('\n;\n')}
-    ;({ SERVICE_PRICE, SERVICES, CATEGORY_PRICE, CATEGORIES, SHOP_ITEMS, SEER_IDS: SEER_DATA.map((s) => ({ id: s.id, name: s.name })) })`;
+    ;({ SERVICE_PRICE, SERVICES, CATEGORY_PRICE, CATEGORIES, SHOP_ITEMS, SEER_IDS: SEER_DATA.map((s) => ({ id: s.id, name: s.name, cats: s.cats || [] })) })`;
   cache = vm.runInNewContext(code, {}, { timeout: 2000 });
   return cache;
 }
@@ -53,7 +54,8 @@ function fromService(s, tierIdx) {
 
 // key จากหน้าเว็บ (ตรงกับ item.key ใน checkout.js)
 export const MAX_QTY = 20;
-export function priceOf({ key, tier = 0, donation, qty }) {
+// opts.humanOpen = Set ของ "หมวด|ลำดับ" ที่ตอนนี้มีหมอดูจริงพร้อมรับงาน (ดู humanOpen() ใน v1.js)
+export function priceOf({ key, tier = 0, donation, qty }, opts = {}) {
   const c = load();
   key = str(key, 60);
   tier = int(tier) || 0;
@@ -73,8 +75,12 @@ export function priceOf({ key, tier = 0, donation, qty }) {
     const [catId, idx] = key.split(':');
     const t = c.CATEGORIES.find((x) => x.id === catId)?.types[+idx];
     if (!t) fail(400, 'unknown_item');
-    if (t.off) fail(400, 'unavailable'); // ประเภทที่ซ่อนไว้ (ไพ่สำรับเฉพาะ · จิตสัมผัส)
-    it = { key, kind: 'ask', title: t.name, icon: t.icon, label: ASK_LABEL, price: c.CATEGORY_PRICE };
+    const need = `${catId}|${+idx}`;
+    if (t.off) {
+      // ศาสตร์ที่ AI ตอบไม่ได้ (ไพ่สำรับเฉพาะ · จิตสัมผัส): ขายได้เฉพาะตอนมีหมอดูจริงที่ลงทะเบียนศาสตร์นี้ไว้
+      if (!t.human || !opts.humanOpen?.has(need)) fail(400, 'unavailable');
+      it = { key, kind: 'reading', title: t.name, icon: t.icon, label: HUMAN_LABEL, price: c.CATEGORY_PRICE, need };
+    } else it = { key, kind: 'ask', title: t.name, icon: t.icon, label: ASK_LABEL, price: c.CATEGORY_PRICE };
   } else {
     const s = c.SERVICES.find((x) => x.id === key);
     if (!s) fail(400, 'unknown_item');

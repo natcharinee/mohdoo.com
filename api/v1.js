@@ -137,6 +137,7 @@ on('GET', 'health', async () => {
   return {
     ok: true, version: 1, db: store.kind, otp: config.otp, pay: config.pay, storage: config.storage,
     push: config.vapid ? config.vapid.pub : null, ai: config.ai, demo_code: config.otp === 'demo' ? DEMO_CODE : undefined,
+    human_open: [...(await humanOpen())], // ศาสตร์ที่ตอนนี้มีหมอดูจริงรับงาน (หน้าเว็บใช้เปิดประเภทที่ซ่อนไว้)
   };
 });
 
@@ -181,6 +182,7 @@ on('PUT', 'me', async (req) => {
   u.name = str(rest.name || rest.first, 60);
   u.updated_at = Date.now();
   await (await db()).put('user', u);
+  if (u.role === 'seer') resetHumanOpen(); // หมอดูสมัครครบ → ศาสตร์ของท่านเปิดขายได้
   return { ok: true, updated_at: u.updated_at };
 });
 on('DELETE', 'me', async (req, res) => {
@@ -233,7 +235,7 @@ on('POST', 'orders', async (req) => {
   const u = await needUser(req);
   rateLimit(`order:${u.id}`, 30, 10 * 60e3);
   const b = bodyOf(req);
-  const it = priceOf(b);
+  const it = priceOf(b, { humanOpen: await humanOpen() });
   const store = await db();
   // หมอดูตั้งราคาเองได้ (ถาม 1 เรื่อง) · ไม่ได้ตั้ง = ราคากลาง
   if (it.seer) {
@@ -397,15 +399,30 @@ function seerCanSee(u, o) {
   if (!SEER_KINDS.includes(o.kind) || !o.form) return false;
   if (o.assignee) return o.assignee === u.id;
   if (o.seer) return o.seer === u.seer_id;
+  if (o.need && u.role === 'seer') return seerCats(u).includes(o.need); // ศาสตร์เฉพาะ: เห็นเฉพาะหมอดูที่ลงทะเบียนศาสตร์นี้
   return true;
 }
+const seerCats = (u) => catalog().SEER_IDS.find((x) => x.id === u.seer_id)?.cats || [];
+// ศาสตร์ที่ AI ตอบไม่ได้ จะเปิดขายเมื่อมีบัญชีหมอดูที่สมัครครบแล้ว ไม่ถูกระงับ และโปรไฟล์ลงทะเบียนศาสตร์นั้นไว้
+let humanCache = { at: 0, set: new Set() };
+async function humanOpen() {
+  if (Date.now() - humanCache.at < 60e3) return humanCache.set;
+  const set = new Set();
+  try {
+    const human = new Set(catalog().CATEGORIES.flatMap((c) => c.types.map((t, i) => (t.off && t.human ? `${c.id}|${i}` : null))).filter(Boolean));
+    for (const u of await seerUsers()) if (u.profile) seerCats(u).forEach((k) => human.has(k) && set.add(k));
+  } catch (_) { /* ฐานข้อมูลยังไม่พร้อม → ถือว่ายังไม่เปิด */ }
+  humanCache = { at: Date.now(), set };
+  return set;
+}
+const resetHumanOpen = () => { humanCache.at = 0; };
 async function seerUsers() {
   const { rows } = await (await db()).list('user', { status: 'seer', limit: 1000 });
   return rows.filter((u) => !u.blocked);
 }
 async function notifySeers(o) {
   const all = await seerUsers();
-  const to = o.seer ? all.filter((u) => u.seer_id === o.seer) : all;
+  const to = o.seer ? all.filter((u) => u.seer_id === o.seer) : o.need ? all.filter((u) => seerCats(u).includes(o.need)) : all;
   for (const s of to) await notify(s.id, { title: 'มีคำถามใหม่รอตอบ 🔮', body: `${o.title} · แตะเพื่อดูคำถาม`, link: '#seer', order_no: o.no, seer_job: true });
 }
 async function needSeer(req) {
@@ -689,7 +706,12 @@ on('GET', 'admin/seers', async (req) => {
     open: open.filter((o) => seerCanSee(u, o)).length,
     answered: await store.count('order', { where: { answered_by: u.id } }),
   })));
-  return { seers, profiles: catalog().SEER_IDS, base: catalog().CATEGORY_PRICE };
+  // ศาสตร์ที่ต้องใช้หมอดูจริง: มีกี่ท่านพร้อมรับงาน (0 = ยังซ่อนจากหน้าเว็บ)
+  const ready = rows.filter((u) => u.profile && !u.blocked);
+  const human = catalog().CATEGORIES.flatMap((c) => c.types.map((t, i) => (t.off && t.human ? { key: `${c.id}|${i}`, cat: c.name, name: t.name, icon: t.icon,
+    seers: ready.filter((u) => seerCats(u).includes(`${c.id}|${i}`)).map((u) => u.name || u.phone),
+    profiles: catalog().SEER_IDS.filter((p) => p.cats.includes(`${c.id}|${i}`)).map((p) => p.name) } : null))).filter(Boolean);
+  return { seers, profiles: catalog().SEER_IDS.map(({ id, name }) => ({ id, name })), base: catalog().CATEGORY_PRICE, human };
 });
 on('POST', 'admin/seers/price', async (req) => {
   const staff = await needRole(req, ['admin']);
@@ -714,6 +736,7 @@ on('POST', 'admin/seers', async (req) => {
   if (!u.profile) u.name = str(b.name, 60) || u.name;
   u.updated_at = Date.now();
   await store.put('user', u);
+  resetHumanOpen();
   return { ok: true, registered: !!u.profile };
 });
 
@@ -761,6 +784,7 @@ on('POST', 'admin/users/:id', async (req, res, { id }) => {
   if (b.note) (u.notes ||= []).push({ at: Date.now(), by: staff.name || staff.phone, text: str(b.note, 1000) });
   u.updated_at = Date.now();
   await store.put('user', u);
+  resetHumanOpen();
   return { ok: true };
 });
 

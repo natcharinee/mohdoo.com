@@ -130,6 +130,7 @@ const AFTER = {
 // 4 มงคล                          → บริการทำแทน (ค่าบริการ + เงินทำบุญ) และวัตถุมงคล (จัดส่งตามที่อยู่)
 const askNow = (s) => !s.link && s.group !== 'merit' && !['palm', 'face'].includes(s.id);
 const ASK_LABEL = 'ถาม 1 เรื่อง · รับใบผลดวงทันที';
+const HUMAN_LABEL = 'ถาม 1 เรื่อง · หมอดูจริงตอบภายใน 24 ชม.';
 const ASK_FIELDS = [
   { name: 'topic', label: 'เรื่องที่อยากถาม', type: 'select', options: ['การงาน', 'การเงิน', 'ความรัก', 'สุขภาพ', 'การเรียน', 'ครอบครัว', 'อื่น ๆ'] },
   { name: 'question', label: 'คำถามของคุณ', type: 'textarea', required: true, placeholder: 'เล่าสถานการณ์สั้น ๆ แล้วถามสิ่งที่อยากรู้' },
@@ -150,7 +151,11 @@ function itemFromService(id, title) {
 function itemFromType(catId, idx) {
   const c = CATEGORIES.find((x) => x.id === catId);
   const t = c.types[idx];
-  if (!t || t.off) return null; // ซ่อนไว้: ไม่ขาย
+  if (!t || !typeOn(t)) return null; // ซ่อนไว้: ไม่ขาย
+  if (t.off) { // ศาสตร์ที่ต้องใช้หมอดูจริง (เปิดเพราะมีหมอดูลงทะเบียนศาสตร์นี้) → ส่งคำถาม รอหมอดูตอบ
+    return { key: `${catId}:${idx}`, icon: t.icon, title: t.name, sub: `${c.name} · หมอดูจริงที่ชำนาญ${t.name}ตอบเป็นข้อความภายใน 24 ชม.`,
+      tiers: [{ label: HUMAN_LABEL, price: CATEGORY_PRICE }], next: { kind: 'form', fields: ASK_FIELDS } };
+  }
   if (t.service === 'tarot') {
     return { key: 'tarot', icon: t.icon, title: t.name, sub: 'เลือกรูปแบบการเปิดไพ่ แล้วสับและจั่วไพ่ด้วยตัวเอง',
       tiers: [{ label: 'เปิดไพ่ 1 ครั้ง', price: CATEGORY_PRICE }], next: { kind: 'frame', href: 'tarot.html' } };

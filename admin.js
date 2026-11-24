@@ -401,7 +401,7 @@ async function viewUser(id) {
 
 // ---------- หมอดู: ลงชื่อไว้ก่อน → สมัครที่หน้าเว็บด้วยเบอร์นี้ได้สิทธิ์หมอดูทันที ----------
 async function viewSeers() {
-  const { seers, profiles, base } = await api('admin/seers');
+  const { seers, profiles, base, human = [] } = await api('admin/seers');
   const opts = (sel) => `<option value="">— ไม่เชื่อม (รับเฉพาะงานทั่วไป) —</option>${profiles.map((x) => `<option value="${esc(x.id)}" ${x.id === sel ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}`;
   view.innerHTML = `
     <div class="head"><h1>หมอดู</h1><span class="muted small">หมอดูตอบคำถามที่หน้าเว็บ (บัญชี → งานตอบคำถาม) ไม่ต้องเข้าหลังบ้าน</span></div>
@@ -421,7 +421,16 @@ async function viewSeers() {
         <td>${!x.seer_id ? '<span class="muted small">เชื่อมโปรไฟล์ก่อน</span>' : can('admin') ? `<form class="row" data-price="${x.seer_id}" style="flex-wrap:nowrap" onclick="event.stopPropagation()"><input name="p" type="number" min="20" max="10000" value="${x.price || ''}" placeholder="${base}" style="width:84px"><button class="btn sm">บันทึก</button></form>` : baht(x.price || base)}</td>
         <td>${x.blocked ? '<span class="chip bad">ระงับ</span>' : x.registered ? `<span class="chip ok">สมัครแล้ว</span><span class="sub">เข้าล่าสุด ${dt(x.last_login)}</span>` : `<span class="chip warn">รอสมัครที่หน้าเว็บ</span><span class="sub">เพิ่มเมื่อ ${dt(x.invited_at)}</span>`}</td>
         <td class="num">${x.open ? `<b style="color:var(--warn)">${x.open}</b>` : 0}</td><td class="num">${x.answered}</td></tr>`).join('')}
-    </table></div>` : '<p class="empty">ยังไม่มีหมอดู · เพิ่มชื่อและเบอร์ด้านบน</p>'}`;
+    </table></div>` : '<p class="empty">ยังไม่มีหมอดู · เพิ่มชื่อและเบอร์ด้านบน</p>'}
+    ${human.length ? `<section class="card" style="margin-top:16px"><h3>ศาสตร์ที่ต้องใช้หมอดูจริง</h3>
+      <p class="muted small">แม่หมอ AI ไม่ตอบศาสตร์เหล่านี้ จะเปิดขายบนหน้าเว็บเองเมื่อมีหมอดูอย่างน้อย 1 ท่านที่สมัครครบ ไม่ถูกระงับ และเชื่อมกับโปรไฟล์ที่ลงทะเบียนศาสตร์นั้น · งานจะส่งให้เฉพาะหมอดูที่ชำนาญศาสตร์นั้น</p>
+      <div class="tscroll"><table class="table">
+        <tr><th>ศาสตร์</th><th>สถานะ</th><th>หมอดูที่พร้อมรับงาน</th><th class="hide-m">โปรไฟล์ที่ลงทะเบียนศาสตร์นี้</th></tr>
+        ${human.map((h) => `<tr><td>${h.icon} ${esc(h.name)}<span class="sub">${esc(h.cat)}</span></td>
+          <td>${h.seers.length ? '<span class="chip ok">เปิดขาย</span>' : '<span class="chip warn">ซ่อนอยู่</span>'}</td>
+          <td>${h.seers.length ? esc(h.seers.join(', ')) : '<span class="muted small">ยังไม่มี</span>'}</td>
+          <td class="hide-m small">${h.profiles.length ? esc(h.profiles.join(', ')) : '<span class="muted">ไม่มีโปรไฟล์ไหนลงทะเบียน</span>'}</td></tr>`).join('')}
+      </table></div></section>` : ''}`;
   $('seerForm')?.addEventListener('submit', run(async (e) => {
     e.preventDefault();
     const f = e.target;

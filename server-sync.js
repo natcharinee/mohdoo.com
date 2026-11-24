@@ -6,8 +6,21 @@ window.SERVER = null;
 const serverReady = fetch('/api/v1/health', { cache: 'no-store' })
   .then((r) => (r.ok ? r.json() : null))
   // ใช้ระบบหลังบ้านเมื่อพร้อมจริงเท่านั้น (ตั้งค่า OTP และการชำระเงินแล้ว) · ยังไม่ตั้ง = โหมดทดลองในเบราว์เซอร์เหมือนเดิม
-  .then((j) => { window.SERVER = j && j.ok && j.otp !== 'off' && j.pay !== 'off' ? j : null; return window.SERVER; })
+  .then((j) => { window.SERVER = j && j.ok && j.otp !== 'off' && j.pay !== 'off' ? j : null; if (window.SERVER) setHumanOpen(j.human_open); return window.SERVER; })
   .catch(() => null);
+
+// ศาสตร์ที่ต้องใช้หมอดูจริง: เปิด/ปิดตามที่เซิร์ฟเวอร์บอก แล้วอัปเดตจำนวนประเภทที่แสดงบนการ์ดหมวด
+function setHumanOpen(list) {
+  if (!Array.isArray(list) || typeof HUMAN_OPEN === 'undefined') return;
+  const next = list.filter((k) => typeof k === 'string');
+  if (next.length === HUMAN_OPEN.size && next.every((k) => HUMAN_OPEN.has(k))) return;
+  HUMAN_OPEN.clear(); next.forEach((k) => HUMAN_OPEN.add(k));
+  try { localStorage.setItem('mohdoo_human_open', JSON.stringify(next)); } catch (_) {}
+  document.querySelectorAll('.cat[data-cat] em').forEach((em) => {
+    const c = CATEGORIES.find((x) => x.id === em.closest('[data-cat]').dataset.cat);
+    if (c) em.textContent = `${c.types.filter(typeOn).length} ประเภท ›`;
+  });
+}
 
 const SRV_ERR = {
   unavailable: 'ประเภทนี้ยังไม่เปิดให้บริการ',
