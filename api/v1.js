@@ -6,7 +6,7 @@ import { db, newId } from './_lib/db.js';
 import { HttpError, fail, send, bodyOf, str, int, ipOf, rateLimit } from './_lib/http.js';
 import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
 import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, DEMO_CODE } from './_lib/auth.js';
-import { priceOf, catalog, addMonth, KIND_NAME } from './_lib/catalog.js';
+import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles } from './_lib/catalog.js';
 import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from './_lib/pay.js';
 import { saveFile, readLocalFile } from './_lib/storage.js';
 import { notify, savePush } from './_lib/notify.js';
@@ -333,7 +333,9 @@ async function setSeerPrice(seerId, price, by) {
   await store.put('seerprice', { id: seerId, price: p, updated_at: Date.now(), updated_by: by, created_at: prev?.created_at || Date.now() });
   return p;
 }
-on('GET', 'seers/prices', async () => ({ prices: await seerPrices(), base: catalog().CATEGORY_PRICE }));
+on('GET', 'seers/prices', async () => ({ prices: await seerPrices(), base: catalog().CATEGORY_PRICE, profiles: publicSeers() }));
+// โปรไฟล์หมอดูที่แสดงบนหน้าเว็บ (แท็บหมอดู) · ไม่รวมที่ซ่อนไว้
+const publicSeers = () => catalog().SEER_IDS.map(({ id, name, img, cats, callCoin, callMin }) => ({ id, name, img, cats, callCoin, callMin }));
 
 // ---------- Omise webhook ----------
 on('POST', 'webhooks/omise', async (req) => {
@@ -348,6 +350,11 @@ on('POST', 'webhooks/omise', async (req) => {
 
 // ---------- ไฟล์ในเครื่อง (โหมดพัฒนา) ----------
 on('GET', 'files/:name', async (req, res, { name }) => {
+  if (name.startsWith('seerimg-')) { // รูปโปรไฟล์หมอดู = ข้อมูลสาธารณะ
+    const f = readLocalFile(name);
+    send(res, 200, f.buf, { 'Content-Type': f.type, 'Cache-Control': 'public, max-age=86400' });
+    return undefined;
+  }
   const u = await needUser(req);
   const f = readLocalFile(name);
   if (f.owner !== u.id && !STAFF.includes(u.role)) fail(404, 'not_found');
@@ -448,7 +455,7 @@ async function jobView(u, o) {
 on('GET', 'seer/me', async (req) => {
   const u = await needSeer(req);
   const prices = await seerPrices();
-  const prof = catalog().SEER_IDS.find((x) => x.id === u.seer_id);
+  const prof = catalog().SEER_ALL.find((x) => x.id === u.seer_id);
   return { seer_id: u.seer_id || null, seer_name: prof?.name || '', price: (u.seer_id && prices[u.seer_id]) || null, base: catalog().CATEGORY_PRICE, limits: SEER_PRICE };
 });
 on('POST', 'seer/price', async (req) => {
@@ -695,7 +702,7 @@ on('GET', 'admin/seers', async (req) => {
   await needRole(req);
   const store = await db();
   const { rows } = await store.list('user', { status: 'seer', limit: 1000 });
-  const names = Object.fromEntries(catalog().SEER_IDS.map((x) => [x.id, x.name]));
+  const names = Object.fromEntries(catalog().SEER_ALL.map((x) => [x.id, x.name]));
   const { rows: open } = await store.list('order', { status: OPEN_JOB, limit: 5000 });
   const prices = await seerPrices();
   const seers = await Promise.all(rows.map(async (u) => ({
@@ -711,21 +718,73 @@ on('GET', 'admin/seers', async (req) => {
   const human = catalog().CATEGORIES.flatMap((c) => c.types.map((t, i) => (t.off && t.human ? { key: `${c.id}|${i}`, cat: c.name, name: t.name, icon: t.icon,
     seers: ready.filter((u) => seerCats(u).includes(`${c.id}|${i}`)).map((u) => u.name || u.phone),
     profiles: catalog().SEER_IDS.filter((p) => p.cats.includes(`${c.id}|${i}`)).map((p) => p.name) } : null))).filter(Boolean);
-  return { seers, profiles: catalog().SEER_IDS.map(({ id, name }) => ({ id, name })), base: catalog().CATEGORY_PRICE, human };
+  return { seers, profiles: catalog().SEER_ALL.map(({ id, name, hidden }) => ({ id, name, hidden })), all: catalog().SEER_ALL, cats: catalog().CATEGORIES.map((c) => ({ id: c.id, name: c.name, icon: c.icon, types: c.types.map((t) => t.name) })), base: catalog().CATEGORY_PRICE, human };
 });
 on('POST', 'admin/seers/price', async (req) => {
   const staff = await needRole(req, ['admin']);
   const b = bodyOf(req);
   const sid = str(b.seer_id, 40);
-  if (!catalog().SEER_IDS.some((x) => x.id === sid)) fail(400, 'unknown_seer');
+  if (!catalog().SEER_ALL.some((x) => x.id === sid)) fail(400, 'unknown_seer');
   const price = await setSeerPrice(sid, b.price, staff.name || staff.phone);
   return { ok: true, price };
+});
+// ---------- โปรไฟล์หมอดูบนหน้าเว็บ (ชื่อ รูป ศาสตร์ที่ถนัด ค่าโทรบนแอป) ----------
+// โปรไฟล์ตั้งต้นใน seers-data.js แก้ได้ (บันทึกทับในฐานข้อมูล) ซ่อนได้ และคืนค่าเดิมได้ · ลบได้เฉพาะโปรไฟล์ที่เพิ่มในหลังบ้าน
+const validCats = (list) => {
+  const all = new Set(catalog().CATEGORIES.flatMap((c) => c.types.map((_, i) => `${c.id}|${i}`)));
+  return [...new Set((Array.isArray(list) ? list : []).map((k) => str(k, 40)))].filter((k) => all.has(k)).slice(0, 40);
+};
+async function saveSeerProfile(staff, id, b) {
+  const store = await db();
+  const cur = id ? catalog().SEER_ALL.find((x) => x.id === id) : null;
+  if (id && !cur) fail(404, 'not_found');
+  const prev = id ? await store.get('seerprof', id) : null;
+  const doc = { ...(prev || {}), id: id || newId('sp'), created_at: prev?.created_at || Date.now() };
+  if (b.name !== undefined) { doc.name = str(b.name, 60); if (!doc.name) fail(400, 'empty'); }
+  else if (!id) fail(400, 'empty');
+  if (b.cats !== undefined) doc.cats = validCats(b.cats);
+  if (b.hidden !== undefined) doc.hidden = b.hidden === true;
+  for (const k of ['callCoin', 'callMin']) if (b[k] !== undefined) doc[k] = Math.max(0, Math.min(100000, int(b[k]) || 0));
+  if (b.image) doc.img = (await saveFile(b.image, { folder: 'seerimg', owner: staff.id })).url;
+  else if (b.img !== undefined) {
+    const u = str(b.img, 500);
+    if (u && !/^(https:\/\/|\/api\/v1\/files\/seerimg-)/.test(u)) fail(400, 'bad_img');
+    doc.img = u;
+  }
+  doc.updated_at = Date.now(); doc.updated_by = staff.name || staff.phone;
+  await store.put('seerprof', doc);
+  resetSeerProfiles(); resetHumanOpen();
+  await syncSeerProfiles(store);
+  return catalog().SEER_ALL.find((x) => x.id === doc.id);
+}
+on('POST', 'admin/seer-profiles', async (req) => {
+  const staff = await needRole(req, ['admin']);
+  return { ok: true, profile: await saveSeerProfile(staff, null, bodyOf(req)) };
+});
+on('POST', 'admin/seer-profiles/:id', async (req, res, { id }) => {
+  const staff = await needRole(req, ['admin']);
+  const b = bodyOf(req);
+  const sid = str(id, 40);
+  const cur = catalog().SEER_ALL.find((x) => x.id === sid);
+  if (!cur) fail(404, 'not_found');
+  if (b.reset === true || b.delete === true) {
+    if (b.delete === true && cur.base) fail(400, 'base_profile'); // โปรไฟล์ตั้งต้น: ใช้ซ่อนแทน
+    if (b.delete === true) {
+      const { rows } = await (await db()).list('user', { status: 'seer', limit: 1000 });
+      if (rows.some((u) => u.seer_id === sid)) fail(400, 'in_use');
+    }
+    await (await db()).del('seerprof', sid);
+    resetSeerProfiles(); resetHumanOpen();
+    await syncSeerProfiles(await db());
+    return { ok: true, profile: catalog().SEER_ALL.find((x) => x.id === sid) || null };
+  }
+  return { ok: true, profile: await saveSeerProfile(staff, sid, b) };
 });
 // ลงชื่อหมอดูไว้ก่อน (ใช้ทั้งปุ่ม "เพิ่มหมอดู" และตอนอนุมัติใบสมัคร)
 async function inviteSeer(staff, { phone: rawPhone, name, seer_id }) {
   const phone = normPhone(rawPhone);
   const sid = str(seer_id, 40);
-  if (sid && !catalog().SEER_IDS.some((x) => x.id === sid)) fail(400, 'unknown_seer');
+  if (sid && !catalog().SEER_ALL.some((x) => x.id === sid)) fail(400, 'unknown_seer');
   const store = await db();
   let u = await store.byKey('user', phone);
   if (u && ['staff', 'admin'].includes(u.role)) fail(400, 'is_staff');
@@ -784,7 +843,7 @@ on('GET', 'admin/seer-apps', async (req) => {
   const { rows, total } = await (await db()).list('seerapp', { status: APP_STATUS[st] ? st : undefined, limit: 200 });
   const counts = {};
   for (const k of Object.keys(APP_STATUS)) counts[k] = await (await db()).count('seerapp', { status: k });
-  return { apps: rows, total, counts, status: APP_STATUS, types: typeNames(), profiles: catalog().SEER_IDS.map(({ id, name }) => ({ id, name })) };
+  return { apps: rows, total, counts, status: APP_STATUS, types: typeNames(), profiles: catalog().SEER_ALL.map(({ id, name }) => ({ id, name })) };
 });
 on('POST', 'admin/seer-apps/:id', async (req, res, { id }) => {
   const staff = await needRole(req, ['staff', 'admin']);
@@ -803,7 +862,12 @@ on('POST', 'admin/seer-apps/:id', async (req, res, { id }) => {
     if (!APP_STATUS[b.status]) fail(400, 'bad_state');
     if (b.status === 'approved') {
       if (staff.role !== 'admin') fail(403, 'forbidden');
-      const u = await inviteSeer(staff, { phone: app.phone, name: app.alias || app.name, seer_id: b.seer_id });
+      let sid = b.seer_id;
+      if (sid === 'new') { // สร้างโปรไฟล์บนเว็บจากใบสมัคร (ชื่อที่ใช้ + ศาสตร์ที่ถนัด) แก้รายละเอียด/รูปต่อได้ที่หน้าหมอดู
+        const prof = await saveSeerProfile(staff, null, { name: app.alias || app.name, cats: app.cats || [], hidden: false });
+        sid = prof.id;
+      }
+      const u = await inviteSeer(staff, { phone: app.phone, name: app.alias || app.name, seer_id: sid });
       app.user_id = u.id;
     }
     app.status = b.status;
@@ -829,7 +893,7 @@ on('GET', 'admin/users/:id', async (req, res, { id }) => {
   const u = await store.get('user', str(id, 40));
   if (!u) fail(404, 'not_found');
   const { rows } = await store.list('order', { user_id: u.id, limit: 200 });
-  return { user: { ...pubUser(u), blocked: !!u.blocked, last_login: u.last_login, notes: u.notes || [], seer_id: u.seer_id || null }, orders: rows.map(adminOrder), seers: catalog().SEER_IDS };
+  return { user: { ...pubUser(u), blocked: !!u.blocked, last_login: u.last_login, notes: u.notes || [], seer_id: u.seer_id || null }, orders: rows.map(adminOrder), seers: catalog().SEER_ALL };
 });
 on('POST', 'admin/users/:id', async (req, res, { id }) => {
   const staff = await needRole(req, ['staff', 'admin']);
@@ -845,7 +909,7 @@ on('POST', 'admin/users/:id', async (req, res, { id }) => {
   if (b.seer_id !== undefined) { // เชื่อมบัญชีกับโปรไฟล์หมอดู (รับงานที่ลูกค้าเลือกท่านนี้)
     if (staff.role !== 'admin') fail(403, 'forbidden');
     const sid = str(b.seer_id, 40);
-    if (sid && !catalog().SEER_IDS.some((x) => x.id === sid)) fail(400, 'unknown_seer');
+    if (sid && !catalog().SEER_ALL.some((x) => x.id === sid)) fail(400, 'unknown_seer');
     u.seer_id = sid || null;
   }
   if (b.ai_days !== undefined) { // ให้/ต่ออายุสมาชิก AI (ชดเชยลูกค้า)
@@ -950,6 +1014,7 @@ export default async function handler(req, res) {
     const p = String(req.query.p || url.pathname.replace(/^\/api\/v1\/?/, '')).replace(/^\/+|\/+$/g, '');
     delete req.query.p;
     const method = req.method === 'HEAD' ? 'GET' : req.method;
+    try { await syncSeerProfiles(await db()); } catch (_) { /* ฐานข้อมูลยังไม่พร้อม → ใช้ข้อมูลจาก seers-data.js */ }
     let found = false;
     for (const r of routes) {
       const m = r.re.exec(p);

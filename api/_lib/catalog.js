@@ -38,11 +38,41 @@ function load() {
   const root = process.cwd();
   const files = ['services-data.js', 'categories-data.js', 'shop-data.js', 'seers-data.js'];
   const code = `${files.map((f) => fs.readFileSync(path.join(root, f), 'utf8')).join('\n;\n')}
-    ;({ SERVICE_PRICE, SERVICES, CATEGORY_PRICE, CATEGORIES, SHOP_ITEMS, SEER_IDS: SEER_DATA.map((s) => ({ id: s.id, name: s.name, cats: s.cats || [] })) })`;
+    ;({ SERVICE_PRICE, SERVICES, CATEGORY_PRICE, CATEGORIES, SHOP_ITEMS, SEER_BASE: SEER_DATA })`;
   cache = vm.runInNewContext(code, {}, { timeout: 2000 });
+  applySeerEdits(cache, []);
   return cache;
 }
 export const catalog = () => load();
+
+// ---------- โปรไฟล์หมอดู: ค่าตั้งต้นจาก seers-data.js + ที่ผู้ดูแลแก้/เพิ่มในหลังบ้าน (คอลเลกชัน seerprof) ----------
+// SEER_ALL = ทุกโปรไฟล์ (รวมที่ซ่อน) ใช้ในหลังบ้าน · SEER_IDS = เฉพาะที่แสดงบนเว็บ (ใช้ขาย/ส่งงาน)
+export const SEER_FIELDS = ['name', 'img', 'cats', 'callCoin', 'callMin', 'hidden'];
+function applySeerEdits(c, edits) {
+  const byId = new Map(edits.map((e) => [e.id, e]));
+  const fromBase = c.SEER_BASE.map((b) => {
+    const e = byId.get(b.id);
+    const out = { id: b.id, name: b.name, img: b.img || '', cats: b.cats || [], callCoin: b.callCoin || 0, callMin: b.callMin || 0, hidden: false, base: true, edited: !!e };
+    if (e) for (const k of SEER_FIELDS) if (e[k] !== undefined) out[k] = e[k];
+    return out;
+  });
+  const baseIds = new Set(c.SEER_BASE.map((b) => b.id));
+  const added = edits.filter((e) => !baseIds.has(e.id)).sort((a, b) => (a.created_at || 0) - (b.created_at || 0))
+    .map((e) => ({ id: e.id, name: e.name, img: e.img || '', cats: e.cats || [], callCoin: e.callCoin || 0, callMin: e.callMin || 0, hidden: !!e.hidden, base: false, edited: true }));
+  c.SEER_ALL = [...fromBase, ...added];
+  c.SEER_IDS = c.SEER_ALL.filter((s) => !s.hidden);
+}
+// เรียกต้นคำขอ (v1.js) · อ่านจากฐานข้อมูลใหม่ทุก 30 วินาที หรือทันทีหลังผู้ดูแลแก้ (resetSeerProfiles)
+const seerSync = { at: 0, p: null };
+export async function syncSeerProfiles(store) {
+  if (Date.now() - seerSync.at < 30_000) return;
+  seerSync.p ||= store.list('seerprof', { limit: 1000 }).then(({ rows }) => {
+    applySeerEdits(load(), rows);
+    seerSync.at = Date.now();
+  }).finally(() => { seerSync.p = null; });
+  await seerSync.p;
+}
+export const resetSeerProfiles = () => { seerSync.at = 0; };
 
 function fromService(s, tierIdx) {
   if (!s.open || s.app) fail(400, 'service_closed');

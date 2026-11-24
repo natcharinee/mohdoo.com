@@ -1,18 +1,20 @@
 // ===== แท็บ “หมอดู”: รวมหมอดูบนแพลตฟอร์ม (ข้อมูลจริงจาก seers-data.js) =====
 
 // แปลงข้อมูลดิบ → ศาสตร์ที่ใช้ (ชื่อประเภท) และหมวดที่เด่น (เรียงตามจำนวนประเภทที่ลงไว้)
-const SEERS = SEER_DATA.map((d) => {
+// ข้อมูลตั้งต้นจาก seers-data.js · เมื่อเซิร์ฟเวอร์พร้อม แทนด้วยรายชื่อล่าสุดที่ผู้ดูแลแก้ในหลังบ้าน (loadSeerPrices)
+const buildSeers = (list) => list.map((d) => {
   const types = [], count = {};
   d.cats.forEach((key) => {
     const [catId, idx] = key.split('|');
     const c = CATEGORIES.find((x) => x.id === catId);
-    if (!c) return;
+    if (!c || !c.types[+idx]) return;
     types.push(c.types[+idx].name);
     count[c.name] = (count[c.name] || 0) + 1;
   });
   const strong = Object.keys(count).sort((a, b) => count[b] - count[a]);
   return { ...d, types, strong, catIds: [...new Set(d.cats.map((k) => k.split('|')[0]))] };
 });
+let SEERS = buildSeers(SEER_DATA);
 // บนเว็บ: ส่งคำถามแล้วรอหมอดูตอบเป็นข้อความเท่านั้น (ราคามาตรฐาน)
 // คุยสดแบบเรียลไทม์ (โทร / วิดีโอคอล) ใช้บนแอปหมอดู.com · ราคาตามที่หมอดูตั้งบนแพลตฟอร์มเดิม (1 เหรียญ = 1 บาท ชั่วคราว)
 // ราคาถาม 1 เรื่อง: หมอดูแต่ละท่านตั้งเอง (จากระบบหลังบ้าน) · ยังไม่ตั้ง = ราคากลาง
@@ -24,8 +26,12 @@ async function loadSeerPrices() {
   if (!window.SERVER) return;
   try {
     const r = await srv('seers/prices');
-    const changed = JSON.stringify(r.prices || {}) !== JSON.stringify(SEER_PRICES);
+    let changed = JSON.stringify(r.prices || {}) !== JSON.stringify(SEER_PRICES);
     SEER_PRICES = r.prices || {};
+    if (Array.isArray(r.profiles) && JSON.stringify(r.profiles) !== JSON.stringify(SEERS.map(({ id, name, img, cats, callCoin, callMin }) => ({ id, name, img, cats, callCoin, callMin })))) {
+      SEERS = buildSeers(r.profiles);
+      changed = true;
+    }
     if (changed && seersPanel.classList.contains('open')) renderSeers();
   } catch (_) {}
 }
@@ -59,8 +65,11 @@ const SKILL_LABEL = { 'หมายเลขโทรศัพท์': 'ดู�
 const skillLabel = (n) => SKILL_LABEL[n] || n;
 const seerMatches = (s, f) => f === 'ทั้งหมด' || (topicCats(f) ? topicCats(f).some((c) => s.catIds.includes(c)) : s.types.includes(f));
 
-const seerAvatar = (s, cls = '') =>
-  `<span class="seer-av photo ${cls}"><img src="${s.img}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('i'),{textContent:'${s.name.replace(/'/g, '').charAt(0)}'}))"></span>`;
+// ไม่มีรูป / โหลดรูปไม่ได้ → แสดงอักษรแรกของชื่อแทน (ชื่อ/ลิงก์รูปแก้ได้จากหลังบ้าน จึงต้อง escape)
+const seerInitial = (s) => esc([...String(s.name || '?')][0]);
+const seerAvatar = (s, cls = '') => s.img
+  ? `<span class="seer-av photo ${cls}"><img src="${esc(s.img)}" alt="" loading="lazy" data-initial="${seerInitial(s)}" onerror="this.replaceWith(Object.assign(document.createElement('i'),{textContent:this.dataset.initial}))"></span>`
+  : `<span class="seer-av photo ${cls}"><i>${seerInitial(s)}</i></span>`;
 // ศาสตร์ที่ตรงกับคำค้นหา → ขึ้นก่อนและเน้นสีทอง
 const qHit = (t, q) => typeof q === 'string' && !!q && `${t} ${skillLabel(t)}`.toLowerCase().includes(q.toLowerCase());
 const seerCard = (s, q = '') => `<button class="seer-row" data-seer="${s.id}">

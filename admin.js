@@ -423,16 +423,111 @@ function appsHTML(r, opts) {
           <input name="note" class="grow" maxlength="1000" placeholder="บันทึก เช่น โทรคุยแล้ว นัดทดลองตอบ">
           <button class="btn sm" name="do" value="note">บันทึก</button>
           ${a.status === 'new' ? '<button class="btn sm" name="do" value="contacted">ติดต่อแล้ว</button>' : ''}
-          ${a.status !== 'approved' && can('admin') ? `<select name="seer_id" title="โปรไฟล์หมอดูบนเว็บ">${opts('')}</select><button class="btn primary sm" name="do" value="approved">อนุมัติเป็นหมอดู</button>` : ''}
+          ${a.status !== 'approved' && can('admin') ? `<select name="seer_id" title="โปรไฟล์หมอดูบนเว็บ"><option value="new" selected>＋ สร้างโปรไฟล์บนเว็บจากใบสมัครนี้</option>${opts('')}</select><button class="btn primary sm" name="do" value="approved">อนุมัติเป็นหมอดู</button>` : ''}
           ${a.status !== 'rejected' && a.status !== 'approved' ? '<button class="btn ghost sm" name="do" value="rejected">ไม่ผ่าน</button>' : ''}
           ${can('admin') ? '<button class="btn ghost sm" name="do" value="delete" title="ผู้สมัครขอลบข้อมูล">ลบใบสมัคร</button>' : ''}
         </form>
       </div></details>`).join('') : '<p class="empty">ไม่มีใบสมัครในหมวดนี้</p>'}
   </section>`;
 }
+// ---------- โปรไฟล์หมอดูบนหน้าเว็บ (แท็บ "หมอดู") ----------
+const profAv = (p, cls = '') => `<span class="prof-av ${cls}">${p.img ? `<img src="${esc(p.img)}" alt="" loading="lazy">` : esc([...String(p.name || '?')][0])}</span>`;
+function profilesHTML(all) {
+  const shown = all.filter((p) => !p.hidden).length;
+  return `<section class="card" style="margin-top:16px">
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:4px">
+      <h3 style="margin:0">โปรไฟล์หมอดูบนหน้าเว็บ <span class="muted small">แสดง ${shown} · ซ่อน ${all.length - shown}</span></h3>
+      ${can('admin') ? '<button class="btn sm" id="profNew">＋ เพิ่มโปรไฟล์</button>' : ''}</div>
+    <p class="muted small">สิ่งที่ลูกค้าเห็นในแท็บ "หมอดู" บนหน้าเว็บ (ชื่อ รูป ศาสตร์ที่ถนัด) · ซ่อน = ไม่แสดงบนเว็บ ลูกค้าเลือกท่านนี้ไม่ได้ และไม่ได้รับงานศาสตร์เฉพาะ · เปลี่ยนแล้วหน้าเว็บอัปเดตภายใน 1 นาที</p>
+    <div class="prof-grid">${all.map((p) => `<button type="button" class="prof-item ${p.hidden ? 'off' : ''}" data-prof="${esc(p.id)}" ${can('admin') ? '' : 'disabled'}>
+      ${profAv(p)}<b>${esc(p.name)}</b>
+      <small>${p.cats.length} ศาสตร์${p.hidden ? ' · <span style="color:var(--warn)">ซ่อน</span>' : ''}${!p.base ? ' · เพิ่มในหลังบ้าน' : p.edited ? ' · แก้แล้ว' : ''}</small></button>`).join('')}</div>
+    <div id="profEdit"></div>
+  </section>`;
+}
+// ย่อรูปเหลือด้านยาวไม่เกิน 480px ก่อนอัปโหลด (รูปโปรไฟล์แสดงเล็ก ไม่ต้องใช้ไฟล์ใหญ่)
+async function shrinkImage(file, max = 480) {
+  const img = await createImageBitmap(file);
+  const r = Math.min(1, max / Math.max(img.width, img.height));
+  const c = Object.assign(document.createElement('canvas'), { width: Math.round(img.width * r), height: Math.round(img.height * r) });
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+  return c.toDataURL('image/jpeg', 0.86);
+}
+function openProfile(p, cats) {
+  const box = $('profEdit');
+  const isNew = !p;
+  p ||= { id: '', name: '', img: '', cats: [], callCoin: 0, callMin: 0, hidden: false, base: false, edited: false };
+  const has = new Set(p.cats);
+  box.innerHTML = `<form class="prof-form stack" id="profForm">
+    <h3>${isNew ? 'เพิ่มโปรไฟล์หมอดู' : `แก้โปรไฟล์: ${esc(p.name)}`}</h3>
+    <div class="row" style="align-items:center;gap:14px">
+      <span id="profPrev">${profAv(p, 'big')}</span>
+      <div class="stack" style="gap:6px">
+        <label class="btn sm" style="justify-self:start">เลือกรูป…<input type="file" name="file" accept="image/jpeg,image/png,image/webp" hidden></label>
+        ${p.img ? '<label class="row small" style="display:flex;gap:6px"><input type="checkbox" name="noimg" style="width:auto"> ลบรูป (แสดงอักษรแรกของชื่อแทน)</label>' : ''}
+        <span class="muted small">รูปสี่เหลี่ยมจัตุรัส หน้าชัด ระบบย่อให้อัตโนมัติ</span>
+      </div>
+    </div>
+    <div class="row">
+      <label class="grow">ชื่อที่แสดงบนเว็บ<input name="name" required maxlength="60" value="${esc(p.name)}" placeholder="เช่น อ.วิน ดูดวงทะลุมิติ"></label>
+      <label>ค่าโทรบนแอป (บาท)<input name="callCoin" type="number" min="0" max="100000" value="${p.callCoin || ''}" placeholder="0 = ไม่แสดง" style="width:130px"></label>
+      <label>ต่อกี่นาที<input name="callMin" type="number" min="0" max="600" value="${p.callMin || ''}" style="width:100px"></label>
+    </div>
+    <div class="stack" style="gap:8px"><b class="small">ศาสตร์ที่ถนัด <span class="muted" id="profCount">(${has.size})</span></b>
+      ${cats.map((c) => `<fieldset class="prof-cats"><legend>${c.icon} ${esc(c.name)}</legend>${c.types.map((t, i) => {
+        const k = `${c.id}|${i}`;
+        return `<label class="pchip"><input type="checkbox" name="cat" value="${esc(k)}" ${has.has(k) ? 'checked' : ''}><span>${esc(t)}</span></label>`;
+      }).join('')}</fieldset>`).join('')}
+    </div>
+    <label class="row small" style="display:flex;gap:6px"><input type="checkbox" name="hidden" ${p.hidden ? 'checked' : ''} style="width:auto"> ซ่อนจากหน้าเว็บ (พักรับงาน)</label>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <button class="btn primary" name="do" value="save">${isNew ? 'เพิ่มโปรไฟล์' : 'บันทึก'}</button>
+      <button type="button" class="btn ghost" id="profCancel">ยกเลิก</button>
+      ${p.base && p.edited ? '<button class="btn ghost" name="do" value="reset" title="กลับไปใช้ข้อมูลเดิมจากระบบ">คืนค่าเดิม</button>' : ''}
+      ${!isNew && !p.base ? '<button class="btn danger" name="do" value="delete">ลบโปรไฟล์</button>' : ''}
+    </div>
+    ${p.base ? '<p class="muted small">โปรไฟล์ตั้งต้นของระบบ ลบไม่ได้ ใช้ "ซ่อน" แทน</p>' : ''}
+  </form>`;
+  const f = $('profForm');
+  let image = null;
+  f.file.addEventListener('change', run(async () => {
+    const file = f.file.files[0];
+    if (!file) return;
+    image = await shrinkImage(file);
+    $('profPrev').innerHTML = profAv({ ...p, img: image }, 'big');
+    if (f.noimg) f.noimg.checked = false;
+  }));
+  f.addEventListener('change', (e) => { if (e.target.name === 'cat') $('profCount').textContent = `(${f.querySelectorAll('[name=cat]:checked').length})`; });
+  $('profCancel').addEventListener('click', () => { box.innerHTML = ''; });
+  f.addEventListener('submit', run(async (e) => {
+    e.preventDefault();
+    const act = e.submitter?.value || 'save';
+    const url = isNew ? 'admin/seer-profiles' : `admin/seer-profiles/${encodeURIComponent(p.id)}`;
+    if (act === 'delete') {
+      if (!confirm(`ลบโปรไฟล์ "${p.name}" ถาวร?`)) return;
+      await api(url, { method: 'POST', body: { delete: true } });
+      toast('ลบโปรไฟล์แล้ว'); route(); return;
+    }
+    if (act === 'reset') {
+      if (!confirm('คืนค่าโปรไฟล์นี้เป็นข้อมูลเดิมของระบบ? (ชื่อ รูป ศาสตร์ที่แก้ไว้จะหาย)')) return;
+      await api(url, { method: 'POST', body: { reset: true } });
+      toast('คืนค่าเดิมแล้ว'); route(); return;
+    }
+    const body = { name: f.name.value.trim(), cats: [...f.querySelectorAll('[name=cat]:checked')].map((x) => x.value),
+      callCoin: +f.callCoin.value || 0, callMin: +f.callMin.value || 0, hidden: f.hidden.checked };
+    if (!body.cats.length && !confirm('ยังไม่ได้เลือกศาสตร์เลย บันทึกต่อไหม?')) return;
+    if (image) body.image = image;
+    else if (f.noimg?.checked) body.img = '';
+    await api(url, { method: 'POST', body });
+    toast(isNew ? 'เพิ่มโปรไฟล์แล้ว ✓' : 'บันทึกแล้ว ✓');
+    route();
+  }));
+  box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  f.name.focus({ preventScroll: true });
+}
 async function viewSeers() {
-  const [{ seers, profiles, base, human = [] }, apps] = await Promise.all([api('admin/seers'), api(`admin/seer-apps?status=${appQ}`)]);
-  const opts = (sel) => `<option value="">— ไม่เชื่อม (รับเฉพาะงานทั่วไป) —</option>${profiles.map((x) => `<option value="${esc(x.id)}" ${x.id === sel ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}`;
+  const [{ seers, profiles, all = [], cats = [], base, human = [] }, apps] = await Promise.all([api('admin/seers'), api(`admin/seer-apps?status=${appQ}`)]);
+  const opts = (sel) => `<option value="">— ไม่เชื่อม (รับเฉพาะงานทั่วไป) —</option>${profiles.map((x) => `<option value="${esc(x.id)}" ${x.id === sel ? 'selected' : ''}>${esc(x.name)}${x.hidden ? ' (ซ่อน)' : ''}</option>`).join('')}`;
   view.innerHTML = `
     <div class="head"><h1>หมอดู</h1><span class="muted small">หมอดูตอบคำถามที่หน้าเว็บ (บัญชี → งานตอบคำถาม) ไม่ต้องเข้าหลังบ้าน</span></div>
     ${appsHTML(apps, opts)}
@@ -461,7 +556,10 @@ async function viewSeers() {
           <td>${h.seers.length ? '<span class="chip ok">เปิดขาย</span>' : '<span class="chip warn">ซ่อนอยู่</span>'}</td>
           <td>${h.seers.length ? esc(h.seers.join(', ')) : '<span class="muted small">ยังไม่มี</span>'}</td>
           <td class="hide-m small">${h.profiles.length ? esc(h.profiles.join(', ')) : '<span class="muted">ไม่มีโปรไฟล์ไหนลงทะเบียน</span>'}</td></tr>`).join('')}
-      </table></div></section>` : ''}`;
+      </table></div></section>` : ''}
+    ${profilesHTML(all)}`;
+  $('profNew')?.addEventListener('click', () => openProfile(null, cats));
+  view.querySelectorAll('[data-prof]').forEach((b) => b.addEventListener('click', () => openProfile(all.find((p) => p.id === b.dataset.prof), cats)));
   $('seerForm')?.addEventListener('submit', run(async (e) => {
     e.preventDefault();
     const f = e.target;
