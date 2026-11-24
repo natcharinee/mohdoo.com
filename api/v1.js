@@ -721,11 +721,10 @@ on('POST', 'admin/seers/price', async (req) => {
   const price = await setSeerPrice(sid, b.price, staff.name || staff.phone);
   return { ok: true, price };
 });
-on('POST', 'admin/seers', async (req) => {
-  const staff = await needRole(req, ['admin']);
-  const b = bodyOf(req);
-  const phone = normPhone(b.phone);
-  const sid = str(b.seer_id, 40);
+// ลงชื่อหมอดูไว้ก่อน (ใช้ทั้งปุ่ม "เพิ่มหมอดู" และตอนอนุมัติใบสมัคร)
+async function inviteSeer(staff, { phone: rawPhone, name, seer_id }) {
+  const phone = normPhone(rawPhone);
+  const sid = str(seer_id, 40);
   if (sid && !catalog().SEER_IDS.some((x) => x.id === sid)) fail(400, 'unknown_seer');
   const store = await db();
   let u = await store.byKey('user', phone);
@@ -733,11 +732,86 @@ on('POST', 'admin/seers', async (req) => {
   if (!u) u = { id: newId('u'), phone, name: '', profile: null, ai_until: 0, created_at: Date.now(), invited_at: Date.now(), invited_by: staff.id };
   u.role = 'seer';
   u.seer_id = sid || u.seer_id || null;
-  if (!u.profile) u.name = str(b.name, 60) || u.name;
+  if (!u.profile) u.name = str(name, 60) || u.name;
   u.updated_at = Date.now();
   await store.put('user', u);
   resetHumanOpen();
+  return u;
+}
+on('POST', 'admin/seers', async (req) => {
+  const staff = await needRole(req, ['admin']);
+  const u = await inviteSeer(staff, bodyOf(req));
   return { ok: true, registered: !!u.profile };
+});
+
+// ---------- ใบสมัครหมอดู: หน้าเว็บ seer-apply.html ส่งมา (ไม่ต้องเข้าสู่ระบบ) → ผู้ดูแลตรวจ → อนุมัติ = ลงชื่อหมอดูให้ ----------
+const APP_STATUS = { new: 'ใบสมัครใหม่', contacted: 'ติดต่อแล้ว', approved: 'อนุมัติแล้ว', rejected: 'ไม่ผ่าน' };
+const typeKeys = () => new Set(catalog().CATEGORIES.flatMap((c) => c.types.map((t, i) => `${c.id}|${i}`)));
+const typeNames = () => Object.fromEntries(catalog().CATEGORIES.flatMap((c) => c.types.map((t, i) => [`${c.id}|${i}`, t.name])));
+on('POST', 'seer-apply', async (req) => {
+  const b = bodyOf(req);
+  if (str(b.website, 200)) return { ok: true }; // ช่องดักบอท (มนุษย์มองไม่เห็น)
+  rateLimit(`apply-ip:${ipOf(req)}`, 20, 60 * 60e3); // มือถือไทยใช้ IP ร่วมกัน จึงไม่ตั้งต่ำเกินไป
+  const phone = normPhone(b.phone);
+  const name = str(b.name, 80), about = str(b.about, 2000);
+  const keys = typeKeys();
+  const cats = [...new Set((Array.isArray(b.cats) ? b.cats : []).map((k) => str(k, 30)).filter((k) => keys.has(k)))].slice(0, 40);
+  if (!name || !cats.length || about.length < 20) fail(400, 'empty');
+  if (b.consent !== true) fail(400, 'consent_required');
+  rateLimit(`apply-phone:${phone}`, 5, 24 * 3600e3); // นับเฉพาะใบที่กรอกครบ
+  const years = int(b.years);
+  const store = await db();
+  const u = await store.byKey('user', phone);
+  if (u && STAFF.includes(u.role)) fail(409, 'already_seer');
+  const prev = await store.byKey('seerapp', phone);
+  const app = prev && ['new', 'contacted'].includes(prev.status) ? prev : { id: newId('sa'), phone, status: 'new', created_at: Date.now(), notes: [] };
+  Object.assign(app, {
+    name, alias: str(b.alias, 60), line: str(b.line, 60),
+    cats, years: years >= 0 && years <= 80 ? years : null, about, sample: str(b.sample, 2000), links: str(b.links, 300),
+    consent_at: Date.now(), updated_at: Date.now(),
+  });
+  await store.put('seerapp', app);
+  if (!prev || prev.id !== app.id) {
+    const { rows: admins } = await store.list('user', { status: 'admin', limit: 50 });
+    for (const a of admins) await notify(a.id, { title: 'มีใบสมัครหมอดูใหม่ 🔮', body: `${name}${app.alias ? ` (${app.alias})` : ''} · ${cats.length} ศาสตร์`, link: '/admin.html#seers' });
+  }
+  return { ok: true, updated: !!prev && prev.id === app.id };
+});
+on('GET', 'admin/seer-apps', async (req) => {
+  await needRole(req, ['staff', 'admin']);
+  const q = req.query || {};
+  const st = str(q.status, 20);
+  const { rows, total } = await (await db()).list('seerapp', { status: APP_STATUS[st] ? st : undefined, limit: 200 });
+  const counts = {};
+  for (const k of Object.keys(APP_STATUS)) counts[k] = await (await db()).count('seerapp', { status: k });
+  return { apps: rows, total, counts, status: APP_STATUS, types: typeNames(), profiles: catalog().SEER_IDS.map(({ id, name }) => ({ id, name })) };
+});
+on('POST', 'admin/seer-apps/:id', async (req, res, { id }) => {
+  const staff = await needRole(req, ['staff', 'admin']);
+  const store = await db();
+  const app = await store.get('seerapp', str(id, 40));
+  if (!app) fail(404, 'not_found');
+  const b = bodyOf(req);
+  if (b.delete === true) { // ผู้สมัครขอลบข้อมูล (PDPA)
+    if (staff.role !== 'admin') fail(403, 'forbidden');
+    await store.del('seerapp', app.id);
+    return { ok: true, deleted: true };
+  }
+  const who = staff.name || staff.phone;
+  if (b.note) (app.notes ||= []).push({ at: Date.now(), who, text: str(b.note, 1000) });
+  if (b.status !== undefined) {
+    if (!APP_STATUS[b.status]) fail(400, 'bad_state');
+    if (b.status === 'approved') {
+      if (staff.role !== 'admin') fail(403, 'forbidden');
+      const u = await inviteSeer(staff, { phone: app.phone, name: app.alias || app.name, seer_id: b.seer_id });
+      app.user_id = u.id;
+    }
+    app.status = b.status;
+    app.reviewed_at = Date.now(); app.reviewed_by = who;
+  }
+  app.updated_at = Date.now();
+  await store.put('seerapp', app);
+  return { ok: true, app };
 });
 
 on('GET', 'admin/users', async (req) => {

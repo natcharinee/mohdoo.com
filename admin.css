@@ -154,3 +154,9 @@ dialog img:not([src]), dialog video:not([src]) { display: none; }
 /* ตำราดูดวง */
 .check { display: flex; align-items: center; gap: 8px; color: var(--text, inherit); }
 .check input { width: auto; }
+
+/* ใบสมัครหมอดู */
+.app-item { border-top: 1px solid var(--line); padding: 10px 0; }
+.app-item summary { cursor: pointer; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.app-item[open] summary { margin-bottom: 4px; }
+.app-act select { max-width: 220px; }

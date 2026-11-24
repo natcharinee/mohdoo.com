@@ -130,3 +130,42 @@ html { scroll-behavior: smooth; }
 .legal.notfound { text-align: center; padding-top: 12vh; }
 .legal.notfound .nf-orb { font-size: 72px; line-height: 1; filter: drop-shadow(0 0 24px rgba(180, 140, 255, .55)); }
 .legal.notfound .links { justify-content: center; }
+
+/* ---------- ใบสมัครหมอดู (seer-apply.html) ---------- */
+.apply .perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0 18px; }
+.apply .perks .box { margin: 0; }
+.apply .perks b { color: var(--gold-2); font-weight: 500; }
+.apply .perks p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.apply .urgent { border-color: rgba(255, 138, 163, .45); }
+.apply .urgent-list { color: var(--gold-2); font-size: 14.5px; }
+.apply-form { gap: 16px; margin-top: 12px; }
+.apply-form .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+.apply-form textarea {
+  font: inherit; color: var(--text); padding: 11px 14px; border-radius: 12px; resize: vertical;
+  background: rgba(0, 0, 0, .35); border: 1px solid rgba(245, 201, 107, .2); outline: none; color-scheme: dark;
+}
+.apply-form textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245, 201, 107, .18); }
+.apply-form .cats { border: 1px solid rgba(245, 201, 107, .2); border-radius: 16px; padding: 12px 16px 16px; }
+.apply-form legend { padding: 0 6px; color: var(--muted); font-size: .9rem; }
+.apply-form .cat-group > p { font-size: 14px; color: var(--gold-2); margin: 10px 0 6px; }
+.apply-form .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.apply-form .chip-check { flex-direction: row; cursor: pointer; }
+.apply-form .chip-check input { position: absolute; opacity: 0; pointer-events: none; }
+.apply-form .chip-check span {
+  font-size: 14px; color: var(--text); padding: 6px 12px; border-radius: 999px;
+  border: 1px solid rgba(245, 201, 107, .25); background: rgba(30, 16, 70, .55); transition: background .2s, border-color .2s;
+}
+.apply-form .chip-check em { font-style: normal; font-size: 11px; color: #ff8fa6; margin-left: 2px; }
+.apply-form .chip-check input:checked + span { background: rgba(245, 201, 107, .2); border-color: var(--gold); color: #fff; }
+.apply-form .chip-check input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
+.apply-form .check { font-size: 14px; color: var(--text); align-items: flex-start; }
+.apply-form .check input { margin-top: 4px; flex: none; }
+.apply-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.apply-form .err { color: #ff8fa6; font-size: 14px; }
+.apply-form .btn-gold { align-self: flex-start; }
+.apply-form .btn-gold:disabled { opacity: .6; cursor: wait; }
+.apply .done { border-color: rgba(120, 230, 160, .45); }
+@media (max-width: 640px) {
+  .apply .perks, .apply-form .grid2 { grid-template-columns: 1fr; }
+  .apply-form .btn-gold { align-self: stretch; text-align: center; }
+}

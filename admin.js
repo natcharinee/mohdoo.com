@@ -400,11 +400,42 @@ async function viewUser(id) {
 }
 
 // ---------- หมอดู: ลงชื่อไว้ก่อน → สมัครที่หน้าเว็บด้วยเบอร์นี้ได้สิทธิ์หมอดูทันที ----------
+let appQ = 'new';
+const APP_CHIP = { new: 'warn', contacted: '', approved: 'ok', rejected: 'bad' };
+function appsHTML(r, opts) {
+  const { apps, counts, status, types } = r;
+  const tabs = [['new', status.new], ['contacted', status.contacted], ['approved', status.approved], ['rejected', status.rejected], ['', 'ทั้งหมด']];
+  return `<section class="card" style="margin-bottom:16px">
+    <h3>ใบสมัครหมอดู ${counts.new ? `<span class="chip warn">ใหม่ ${counts.new}</span>` : ''}</h3>
+    <p class="muted small">มาจากหน้า <a href="seer-apply.html" target="_blank">ร่วมเป็นหมอดูกับเรา</a> · ติดต่อผู้สมัครทาง LINE หรือโทร ทดลองให้ตอบคำถาม แล้วกดอนุมัติ = ลงชื่อหมอดูให้เบอร์นี้ (หมอดูสมัครที่หน้าเว็บด้วยเบอร์นี้ได้สิทธิ์ทันที)</p>
+    <div class="tabs">${tabs.map(([k, l]) => `<button data-app-st="${k}" class="${k === appQ ? 'on' : ''}">${esc(l)}${k && counts[k] ? ` (${counts[k]})` : ''}</button>`).join('')}</div>
+    ${apps.length ? apps.map((a) => `<details class="app-item">
+      <summary><b>${esc(a.alias || a.name)}</b>${a.alias ? ` <span class="muted small">${esc(a.name)}</span>` : ''} · ${esc(a.phone)}
+        <span class="chip ${APP_CHIP[a.status] || ''}">${esc(status[a.status] || a.status)}</span> <span class="muted small">${dt(a.created_at)}</span></summary>
+      <div class="stack" style="margin-top:10px">
+        <p class="small">${a.line ? `LINE: <b>${esc(a.line)}</b> · ` : ''}${a.years != null ? `ประสบการณ์ ${a.years} ปี · ` : ''}${a.links ? `ผลงาน: ${esc(a.links)}` : ''}</p>
+        <p class="small"><b>ศาสตร์:</b> ${a.cats.map((k) => esc(types[k] || k)).join(' · ')}</p>
+        <p class="small" style="white-space:pre-wrap"><b>แนะนำตัว:</b> ${esc(a.about)}</p>
+        ${a.sample ? `<p class="small" style="white-space:pre-wrap"><b>ตัวอย่างคำทำนาย:</b> ${esc(a.sample)}</p>` : ''}
+        ${(a.notes || []).length ? `<div class="notes">${a.notes.map((n) => `<p>${esc(n.text)}<small>${esc(n.who)} · ${dt(n.at)}</small></p>`).join('')}</div>` : ''}
+        ${a.reviewed_by ? `<p class="muted small">ดำเนินการล่าสุดโดย ${esc(a.reviewed_by)} · ${dt(a.reviewed_at)}</p>` : ''}
+        <form class="row app-act" data-app="${esc(a.id)}" style="flex-wrap:wrap;gap:8px">
+          <input name="note" class="grow" maxlength="1000" placeholder="บันทึก เช่น โทรคุยแล้ว นัดทดลองตอบ">
+          <button class="btn sm" name="do" value="note">บันทึก</button>
+          ${a.status === 'new' ? '<button class="btn sm" name="do" value="contacted">ติดต่อแล้ว</button>' : ''}
+          ${a.status !== 'approved' && can('admin') ? `<select name="seer_id" title="โปรไฟล์หมอดูบนเว็บ">${opts('')}</select><button class="btn primary sm" name="do" value="approved">อนุมัติเป็นหมอดู</button>` : ''}
+          ${a.status !== 'rejected' && a.status !== 'approved' ? '<button class="btn ghost sm" name="do" value="rejected">ไม่ผ่าน</button>' : ''}
+          ${can('admin') ? '<button class="btn ghost sm" name="do" value="delete" title="ผู้สมัครขอลบข้อมูล">ลบใบสมัคร</button>' : ''}
+        </form>
+      </div></details>`).join('') : '<p class="empty">ไม่มีใบสมัครในหมวดนี้</p>'}
+  </section>`;
+}
 async function viewSeers() {
-  const { seers, profiles, base, human = [] } = await api('admin/seers');
+  const [{ seers, profiles, base, human = [] }, apps] = await Promise.all([api('admin/seers'), api(`admin/seer-apps?status=${appQ}`)]);
   const opts = (sel) => `<option value="">— ไม่เชื่อม (รับเฉพาะงานทั่วไป) —</option>${profiles.map((x) => `<option value="${esc(x.id)}" ${x.id === sel ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}`;
   view.innerHTML = `
     <div class="head"><h1>หมอดู</h1><span class="muted small">หมอดูตอบคำถามที่หน้าเว็บ (บัญชี → งานตอบคำถาม) ไม่ต้องเข้าหลังบ้าน</span></div>
+    ${appsHTML(apps, opts)}
     ${can('admin') ? `<form class="card stack" id="seerForm" style="margin-bottom:16px">
       <h3>เพิ่มหมอดู</h3>
       <div class="row">
@@ -445,6 +476,26 @@ async function viewSeers() {
     toast(r.price ? `ตั้งราคา ${baht(r.price)} แล้ว` : `กลับไปใช้ราคากลาง ${baht(base)}`);
   })));
   view.querySelectorAll('tr[data-href]').forEach((tr) => tr.addEventListener('click', () => { location.hash = tr.dataset.href; }));
+  view.querySelectorAll('[data-app-st]').forEach((b) => b.addEventListener('click', () => { appQ = b.dataset.appSt; route(); }));
+  view.querySelectorAll('form[data-app]').forEach((f) => f.addEventListener('submit', run(async (e) => {
+    e.preventDefault();
+    const act = e.submitter?.value || 'note';
+    if (act === 'delete') {
+      if (!confirm('ลบใบสมัครนี้ถาวร? (ใช้เมื่อผู้สมัครขอลบข้อมูล)')) return;
+      await api(`admin/seer-apps/${f.dataset.app}`, { method: 'POST', body: { delete: true } });
+      toast('ลบใบสมัครแล้ว'); route(); return;
+    }
+    const body = { note: f.note.value.trim() || undefined };
+    if (act !== 'note') body.status = act;
+    if (act === 'approved') {
+      body.seer_id = f.seer_id?.value || '';
+      if (!confirm('อนุมัติและลงชื่อเบอร์นี้เป็นหมอดู?')) return;
+    }
+    if (act === 'note' && !body.note) return toast('พิมพ์บันทึกก่อน');
+    await api(`admin/seer-apps/${f.dataset.app}`, { method: 'POST', body });
+    toast({ note: 'บันทึกแล้ว', contacted: 'ย้ายไป "ติดต่อแล้ว"', approved: 'อนุมัติแล้ว · ลงชื่อหมอดูให้เบอร์นี้แล้ว ✓', rejected: 'ย้ายไป "ไม่ผ่าน"' }[act]);
+    route();
+  })));
 }
 
 // ---------- สินค้า: สต๊อกวัตถุมงคล (เว้นว่าง = ไม่จำกัด) ----------
