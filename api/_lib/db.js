@@ -14,6 +14,9 @@ const cols = (doc, coll) => ({
 const matchQ = (doc, q) => !q || JSON.stringify(doc).toLowerCase().includes(q.toLowerCase());
 
 // ---------- ไฟล์ JSON ----------
+// MOHDOO_DB_LAG_MS (ทดสอบเท่านั้น): หน่วงการอ่านให้เหมือนฐานข้อมูลจริงที่อยู่คนละเครื่อง → คำขอที่มาพร้อมกันได้แทรกกันจริง
+const lagMs = Number(process.env.MOHDOO_DB_LAG_MS) || 0;
+const lag = () => (lagMs ? new Promise((r) => setTimeout(r, Math.random() * lagMs)) : null);
 function fileStore() {
   const file = path.join(config.dataDir, 'db.json');
   let data = {};
@@ -35,9 +38,16 @@ function fileStore() {
   });
   return {
     kind: 'file',
-    async get(coll, id) { const d = c(coll)[id]; return d ? structuredClone(d) : null; },
+    async get(coll, id) { await lag(); const d = c(coll)[id]; return d ? structuredClone(d) : null; },
     async byKey(coll, k) { const d = Object.values(c(coll)).find((x) => cols(x, coll).k === k); return d ? structuredClone(d) : null; },
-    async put(coll, doc) { c(coll)[doc.id] = structuredClone(doc); save(); return doc; },
+    async put(coll, doc) { await lag(); c(coll)[doc.id] = structuredClone(doc); save(); return doc; },
+    // เขียนเฉพาะเมื่อเวอร์ชันในฐานข้อมูลยังเป็น rev เดิม (ไม่มีใครแก้แทรก) · คืน false ถ้ามีคนแก้ไปก่อน
+    async putIf(coll, doc, rev) {
+      await lag();
+      const cur = c(coll)[doc.id]; // ตรวจกับเขียนติดกัน (ไม่มี await คั่น) = ทำในครั้งเดียว เหมือน UPDATE ... WHERE ของ Postgres
+      if (cur && (cur.rev || 0) !== rev) return false;
+      c(coll)[doc.id] = structuredClone(doc); save(); return true;
+    },
     async del(coll, id) { delete c(coll)[id]; save(); },
     async list(coll, f = {}) {
       const all = filter(coll, f).sort((a, b) => (f.asc ? 1 : -1) * (cols(a, coll).created_at - cols(b, coll).created_at));
@@ -78,6 +88,15 @@ async function pgStore() {
         VALUES (${coll}, ${doc.id}, ${x.k}, ${x.user_id}, ${x.status}, ${x.created_at}, ${doc}::jsonb)
         ON CONFLICT (coll, id) DO UPDATE SET k = EXCLUDED.k, user_id = EXCLUDED.user_id, status = EXCLUDED.status, data = EXCLUDED.data`;
       return doc;
+    },
+    async putIf(coll, doc, rev) {
+      const x = cols(doc, coll);
+      const r = await sql`INSERT INTO docs (coll, id, k, user_id, status, created_at, data)
+        VALUES (${coll}, ${doc.id}, ${x.k}, ${x.user_id}, ${x.status}, ${x.created_at}, ${doc}::jsonb)
+        ON CONFLICT (coll, id) DO UPDATE SET k = EXCLUDED.k, user_id = EXCLUDED.user_id, status = EXCLUDED.status, data = EXCLUDED.data
+        WHERE COALESCE((docs.data->>'rev')::int, 0) = ${rev}
+        RETURNING 1`;
+      return r.length > 0;
     },
     async del(coll, id) { await sql`DELETE FROM docs WHERE coll = ${coll} AND id = ${id}`; },
     async list(coll, f = {}) {

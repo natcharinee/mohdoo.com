@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
+  <!-- ตั้งโหมดสี (มืด/สว่าง) ก่อนแสดงหน้า กันจอกระพริบ -->
+  <script>try { if (localStorage.getItem('admin-theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (_) {}</script>
 </head>
 <body>
   <!-- เข้าสู่ระบบ: เบอร์ทีมงาน → OTP -->
@@ -47,7 +49,7 @@
         <a href="#kb" data-v="kb" data-r="staff admin"><i>📜</i>ตำราดูดวง</a>
         <a href="#settings" data-v="settings" data-r="staff admin"><i>⚙️</i>ตั้งค่าระบบ</a>
       </nav>
-      <div class="me"><span id="meName"></span><small id="meRole"></small><button class="btn ghost sm" id="logout">ออกจากระบบ</button></div>
+      <div class="me"><span id="meName"></span><small id="meRole"></small><div class="theme-seg" role="group" aria-label="โหมดสี"><button type="button" data-theme-set="dark">🌙 มืด</button><button type="button" data-theme-set="light">☀️ สว่าง</button></div><button class="btn ghost sm" id="logout">ออกจากระบบ</button></div>
     </aside>
     <main class="main" id="view"></main>
   </div>

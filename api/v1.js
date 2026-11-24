@@ -5,7 +5,7 @@ import { config } from './_lib/config.js';
 import { db, newId } from './_lib/db.js';
 import { HttpError, fail, send, bodyOf, str, int, ipOf, rateLimit } from './_lib/http.js';
 import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
-import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, DEMO_CODE } from './_lib/auth.js';
+import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, BACKOFFICE, DEMO_CODE } from './_lib/auth.js';
 import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles } from './_lib/catalog.js';
 import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from './_lib/pay.js';
 import { saveFile, readLocalFile } from './_lib/storage.js';
@@ -51,26 +51,49 @@ async function ownOrder(req, no) {
   if (o.user_id !== u.id) fail(404, 'order_not_found');
   return { u, o };
 }
-async function saveOrder(o) { o.updated_at = Date.now(); await (await db()).put('order', o); return o; }
+// บันทึกคำสั่งซื้อแบบกันเขียนทับ: rev = เลขเวอร์ชัน ถ้ามีคน/ระบบอื่นแก้ไปก่อน → 409 conflict (ให้โหลดใหม่แล้วทำอีกครั้ง)
+const stockBack = new WeakMap(); // สต๊อกที่รอคืน · คืนจริงหลังบันทึกคำสั่งซื้อสำเร็จเท่านั้น (กันคืนซ้ำ)
+async function saveOrder(o) {
+  const prev = o.rev || 0;
+  o.rev = prev + 1; o.updated_at = Date.now();
+  if (!(await (await db()).putIf('order', o, prev))) { o.rev = prev; stockBack.delete(o); fail(409, 'conflict'); }
+  const back = stockBack.get(o);
+  if (back) { stockBack.delete(o); await adjustStock(back.id, back.qty); }
+  return o;
+}
+// แก้คำสั่งซื้อที่อาจชนกับระบบอื่น (webhook / งานประจำวัน / หน้าเว็บลูกค้า): ชนกัน → โหลดใหม่แล้วลองอีกครั้ง
+async function withOrder(o, fn) {
+  for (let i = 0; ; i++) {
+    try { return await fn(o); } catch (e) {
+      if (e.status !== 409 || i >= 2) throw e;
+      o = await getOrder(o.no);
+    }
+  }
+}
 
 // ---------- สต๊อกวัตถุมงคล: ไม่มีข้อมูล = ไม่จำกัด · จองตอนสร้าง QR · คืนเมื่อ QR หมดอายุหรือยกเลิกก่อนส่ง ----------
+// ปรับสต๊อกแบบกันขายเกิน: อ่าน → ตรวจ → เขียนเฉพาะเมื่อไม่มีใครแก้แทรก (ไม่งั้นอ่านใหม่แล้วลองอีก)
+async function adjustStock(id, delta) {
+  const store = await db();
+  for (let i = 0; i < 8; i++) {
+    const d = await store.get('stock', id);
+    if (!d || d.qty == null) return null; // ไม่จำกัดจำนวน
+    if (d.qty + delta < 0) fail(409, 'out_of_stock', { left: d.qty });
+    const rev = d.rev || 0;
+    if (await store.putIf('stock', { ...d, qty: d.qty + delta, rev: rev + 1, updated_at: Date.now() }, rev)) return d.qty + delta;
+  }
+  fail(503, 'busy');
+}
 async function takeStock(o) {
   if (o.kind !== 'shop') return;
-  const store = await db();
-  const d = await store.get('stock', o.item_id);
-  if (d && d.qty != null) {
-    if (d.qty < o.qty) fail(409, 'out_of_stock', { left: d.qty });
-    d.qty -= o.qty; d.updated_at = Date.now();
-    await store.put('stock', d);
-  }
+  await adjustStock(o.item_id, -o.qty);
   o.stock_held = true;
 }
+// ทำเครื่องหมายว่าคืนสต๊อกแล้ว · คืนจริงตอน saveOrder สำเร็จ
 async function releaseStock(o) {
   if (!o.stock_held || o.stock_released) return;
-  const store = await db();
-  const d = await store.get('stock', o.item_id);
-  if (d && d.qty != null) { d.qty += o.qty; d.updated_at = Date.now(); await store.put('stock', d); }
   o.stock_released = true;
+  stockBack.set(o, { id: o.item_id, qty: o.qty });
 }
 async function stockMap() {
   const { rows } = await (await db()).list('stock', { limit: 500 });
@@ -78,28 +101,39 @@ async function stockMap() {
 }
 
 // ชำระเงินสำเร็จ → เปลี่ยนสถานะตามประเภทงาน
-async function markPaid(o, by, via) {
+// webhook กับหน้าเว็บลูกค้าอาจยืนยันพร้อมกัน → ชนกันแล้วโหลดใหม่ จะเห็นว่าจ่ายแล้ว ไม่ทำซ้ำ
+const markPaid = (o, by, via) => withOrder(o, (x) => markPaidOnce(x, by, via));
+async function markPaidOnce(o, by, via) {
   if (o.status !== 'pending' && o.status !== 'expired') return o;
   const store = await db();
   o.status = 'paid';
   o.paid_at = Date.now();
   log(o, by, 'paid', { via });
   if (o.kind === 'instant') o.status = 'done';
+  let u = null;
   if (o.kind === 'ai') {
-    const u = await store.get('user', o.user_id);
-    if (u) {
-      u.ai_until = addMonth(Math.max(u.ai_until || 0, Date.now())); // ต่อจากวันหมดอายุเดิมถ้ายังไม่หมด
-      u.ai_reminded = 0;
-      await store.put('user', u);
-      o.ai_until = u.ai_until;
-    }
+    u = await store.get('user', o.user_id);
+    if (u) o.ai_until = addMonth(Math.max(u.ai_until || 0, Date.now())); // ต่อจากวันหมดอายุเดิมถ้ายังไม่หมด
     o.status = 'done';
   }
-  await saveOrder(o);
+  await saveOrder(o); // บันทึกคำสั่งซื้อก่อน แล้วค่อยต่ออายุสมาชิก (ชนกันจะไม่ต่อซ้ำ)
+  if (u) { u.ai_until = o.ai_until; u.ai_reminded = 0; await store.put('user', u); }
   await notify(o.user_id, { title: 'ชำระเงินสำเร็จ ✓', body: `${o.title} · ${o.amount.toLocaleString('th-TH')} ฿ · ${o.no}`, order_no: o.no });
+  await notifyTeam(o).catch((e) => console.error('[notifyTeam]', e)); // แจ้งทีมไม่สำเร็จ ไม่ให้กระทบการชำระเงิน
   return o;
 }
-async function refreshPayment(o) {
+// งานที่ต้องใช้คน (หมอดูตอบ · อ่านรูป · บริการมงคล · ส่งสินค้า/ไฟล์) → แจ้งทีมงานและผู้ดูแลทุกคน
+// ดูเองทันที / สมาชิก AI / ถามแล้วรู้ผลทันที ระบบทำให้อัตโนมัติ ไม่ต้องแจ้ง
+const TEAM_KINDS = { reading: 'งานหมอดูตอบ', photo: 'งานอ่านรูป', merit: 'บริการมงคล', shop: 'สินค้าต้องจัดส่ง', digital: 'สินค้าดิจิทัล' };
+async function notifyTeam(o) {
+  if (!TEAM_KINDS[o.kind]) return 0;
+  const store = await db();
+  const team = (await Promise.all(BACKOFFICE.map((r) => store.list('user', { status: r, limit: 200 })))).flatMap((x) => x.rows).filter((u) => !u.blocked);
+  for (const u of team) await notify(u.id, { title: `คำสั่งซื้อใหม่ · ${TEAM_KINDS[o.kind]} 🧾`, body: `${o.title} · ${o.amount.toLocaleString('th-TH')} ฿ · ${o.no}`, link: `/admin.html#order/${o.no}` });
+  return team.length;
+}
+const refreshPayment = (o) => withOrder(o, refreshPaymentOnce);
+async function refreshPaymentOnce(o) {
   if (o.status !== 'pending') return o;
   if (o.pay?.provider === 'omise') {
     const s = await paymentStatus(o.pay).catch(() => 'pending');
@@ -192,6 +226,7 @@ on('DELETE', 'me', async (req, res) => {
   const { rows } = await store.list('order', { user_id: u.id, limit: 5000 });
   for (const o of rows) {
     o.phone = ''; o.name = 'บัญชีที่ลบแล้ว'; o.form = null; o.photos = []; o.user_deleted = true;
+    o.rev = (o.rev || 0) + 1; // หน้าหลังบ้านที่เปิดค้างไว้จะบันทึกทับ (คืนข้อมูลส่วนตัว) ไม่ได้
     await store.put('order', o);
   }
   await store.delWhere('notif', { user_id: u.id });
@@ -375,8 +410,10 @@ async function runDaily() {
   let expired = 0; let daily = 0; let reminded = 0;
   const { rows: pend } = await store.list('order', { status: 'pending', limit: 2000 });
   for (const o of pend) {
-    if (o.pay?.provider === 'omise') { await refreshPayment(o); continue; }
-    if ((o.pay?.expires_at || 0) < now - 60e3) { o.status = 'expired'; await releaseStock(o); await saveOrder(o); expired += 1; }
+    try {
+      if (o.pay?.provider === 'omise') { await refreshPayment(o); continue; }
+      if ((o.pay?.expires_at || 0) < now - 60e3) { o.status = 'expired'; await releaseStock(o); await saveOrder(o); expired += 1; }
+    } catch (e) { if (e.status !== 409) throw e; } // ลูกค้า/ทีมงานแก้พร้อมกัน → ข้ามไป รอบหน้าค่อยดูใหม่
   }
   const { rows: users } = await store.list('user', { limit: 20000 });
   for (const u of users) {
@@ -650,6 +687,7 @@ on('POST', 'admin/orders/:no', async (req, res, { no }) => {
     case 'assign':
       if (b.to === 'me' || staff.role === 'seer') { o.assignee = staff.id; o.assignee_name = staff.name || staff.phone; } else {
         const t = b.to ? await (await db()).get('user', str(b.to, 40)) : null;
+        if (b.to && (!t || !STAFF.includes(t.role) || t.blocked)) fail(400, 'not_team'); // มอบหมายได้เฉพาะทีมงาน/หมอดู
         o.assignee = t ? t.id : null; o.assignee_name = t ? t.name || t.phone : null;
       }
       break;
@@ -664,9 +702,19 @@ on('POST', 'admin/orders/:no', async (req, res, { no }) => {
       msg = isPaid ? { title: `ยกเลิกคำสั่งซื้อ ${o.no}`, body: str(b.reason, 200) || 'ทีมงานจะติดต่อกลับเรื่องการคืนเงิน' } : null;
       break;
     case 'refund': {
-      if (staff.role !== 'admin' || !o.paid_at || o.status === 'refunded') fail(400, 'bad_state');
+      if (staff.role !== 'admin' || !o.paid_at || o.status === 'refunded' || o.refund) fail(400, 'bad_state');
       const amt = Math.min(o.amount, int(b.amount) || o.amount);
-      o.refund = { at: Date.now(), amount: amt, reason: str(b.reason, 200), by: staff.id, ...(await refundPayment(o.pay, amt)) };
+      // 1) จองการคืนเงินไว้ในคำสั่งซื้อก่อน (ถ้ามีคนแก้แทรก จะหยุดตรงนี้ ยังไม่มีเงินออก) · กันกดคืนซ้ำ
+      o.refund = { at: Date.now(), amount: amt, reason: str(b.reason, 200), by: staff.id, pending: true };
+      await saveOrder(o);
+      // 2) คืนเงินจริง · ไม่สำเร็จ → ยกเลิกการจอง ให้กดใหม่ได้
+      let r;
+      try { r = await refundPayment(o.pay, amt); } catch (e) {
+        o.refund = null;
+        await saveOrder(o).catch(() => {});
+        throw e;
+      }
+      o.refund = { ...o.refund, ...r, pending: false };
       o.status = 'refunded';
       msg = { title: 'คืนเงินแล้ว', body: `${o.no} · ${amt.toLocaleString('th-TH')} ฿` };
       break;
@@ -883,8 +931,11 @@ on('GET', 'admin/users', async (req) => {
   const q = req.query || {};
   const f = { limit: Math.min(int(q.limit) || 30, 200), offset: int(q.offset) || 0, q: str(q.q, 60) || undefined };
   if (q.role) f.status = str(q.role, 20);
-  let { rows, total } = await (await db()).list('user', f);
-  if (q.ai) { rows = rows.filter((u) => (u.ai_until || 0) > Date.now()); total = rows.length; }
+  let rows, total;
+  if (q.ai) { // กรองสมาชิก AI จากลูกค้าทั้งหมดก่อน แล้วค่อยแบ่งหน้า (ไม่ใช่กรองแค่หน้าที่ดึงมา)
+    const all = (await (await db()).list('user', { ...f, limit: 50000, offset: 0 })).rows.filter((u) => (u.ai_until || 0) > Date.now());
+    total = all.length; rows = all.slice(f.offset, f.offset + f.limit);
+  } else ({ rows, total } = await (await db()).list('user', f));
   return { users: rows.map((u) => ({ id: u.id, phone: u.phone, name: u.name || u.profile?.name || '', role: u.role, ai_until: u.ai_until || 0, created_at: u.created_at, last_login: u.last_login, blocked: !!u.blocked, history: (u.profile?.history || []).length })), total };
 });
 on('GET', 'admin/users/:id', async (req, res, { id }) => {
@@ -943,7 +994,12 @@ on('GET', 'admin/export/orders', async (req, res) => {
   const q = req.query || {};
   const since = q.days ? Date.now() - Math.min(int(q.days) || 30, 3650) * 864e5 : 0;
   const { rows } = await (await db()).list('order', { since, limit: 100000, asc: true });
-  const cell = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  // ข้อความที่ขึ้นต้นด้วย = + - @ (หรือ tab/ขึ้นบรรทัด) Excel จะตีความเป็นสูตร → ใส่ ' นำหน้า (ตัวเลขติดลบยังเป็นตัวเลข)
+  const cell = (v) => {
+    let t = String(v ?? '');
+    if (typeof v !== 'number' && /^[=+\-@\t\r]/.test(t)) t = `'${t}`;
+    return `"${t.replace(/"/g, '""')}"`;
+  };
   const head = ['เลขที่', 'วันที่สั่ง', 'วันที่ชำระ', 'สถานะ', 'ประเภท', 'รายการ', 'แพ็กเกจ', 'ค่าบริการ', 'เงินทำบุญ', 'ยอดรวม', 'ลูกค้า', 'เบอร์', 'ชำระผ่าน', 'คืนเงิน'];
   const th = (t) => (t ? new Date(t).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }) : '');
   const lines = rows.map((o) => [o.no, th(o.created_at), th(o.paid_at), STATUS[o.status], KIND_NAME[o.kind], o.title, o.label, o.price, o.donation || 0, o.amount, o.name, o.phone, o.pay?.provider, o.refund?.amount || ''].map(cell).join(','));
@@ -962,7 +1018,7 @@ on('POST', 'admin/stock', async (req) => {
   const q = int(b.qty);
   if (!(q >= 0 && q <= 100000)) fail(400, 'bad_qty');
   const prev = await store.get('stock', p.id);
-  await store.put('stock', { id: p.id, qty: q, updated_at: Date.now(), updated_by: staff.name || staff.phone, created_at: prev?.created_at || Date.now() });
+  await store.put('stock', { id: p.id, qty: q, rev: (prev?.rev || 0) + 1, updated_at: Date.now(), updated_by: staff.name || staff.phone, created_at: prev?.created_at || Date.now() });
   return { ok: true, qty: q };
 });
 on('GET', 'admin/catalog', async (req) => {

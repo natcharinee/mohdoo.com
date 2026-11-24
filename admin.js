@@ -35,6 +35,7 @@ const ERR = {
   wait: 'รอสักครู่ก่อนขอรหัสใหม่', bad_phone: 'เบอร์โทรไม่ถูกต้อง', bad_state: 'สถานะงานตอนนี้ทำรายการนี้ไม่ได้', empty: 'กรุณากรอกข้อมูล',
   file_too_large: 'ไฟล์ใหญ่เกิน 8 MB', bad_file: 'ชนิดไฟล์ไม่รองรับ (รูป JPG/PNG/WebP หรือวิดีโอ MP4/MOV)', too_many_requests: 'ทำรายการถี่เกินไป รอสักครู่',
   otp_not_configured: 'ยังไม่ได้ตั้งค่าระบบ OTP', bad_price: 'ราคาต้องอยู่ระหว่าง 20–10,000 บาท', bad_qty: 'จำนวนไม่ถูกต้อง', is_staff: 'เบอร์นี้เป็นทีมงาน/ผู้ดูแลอยู่แล้ว', unknown_seer: 'ไม่พบโปรไฟล์หมอดูนี้', cannot_demote_self: 'ลดสิทธิ์ตัวเองไม่ได้',
+  conflict: 'มีคนแก้รายการนี้ไปก่อนคุณ · โหลดข้อมูลล่าสุดให้แล้ว ตรวจแล้วทำอีกครั้ง', not_team: 'มอบหมายได้เฉพาะทีมงาน/หมอดู', base_profile: 'โปรไฟล์ตั้งต้นลบไม่ได้ ใช้ซ่อนแทน', in_use: 'โปรไฟล์นี้เชื่อมกับบัญชีหมอดูอยู่ ยกเลิกการเชื่อมก่อน', bad_img: 'ลิงก์รูปต้องขึ้นต้นด้วย https://', out_of_stock: 'สินค้าหมด', busy: 'ระบบไม่ว่าง ลองอีกครั้ง',
 };
 let routeCtl = null; // เปลี่ยนหน้า → ยกเลิกคำขอของหน้าก่อน (กันข้อมูลเก่าทับหน้าใหม่)
 async function api(path, { method = 'GET', body, keep } = {}) {
@@ -45,7 +46,13 @@ async function api(path, { method = 'GET', body, keep } = {}) {
   if (!r.ok) { const e = new Error(j.message || ERR[j.error] || j.error || 'เกิดข้อผิดพลาด'); e.code = j.error; e.data = j; throw e; }
   return j;
 }
-const run = (fn) => async (...a) => { try { await fn(...a); } catch (e) { if (e.message !== 'login' && e.name !== 'AbortError') toast(e.message); } };
+const run = (fn) => async (...a) => {
+  try { await fn(...a); } catch (e) {
+    if (e.message === 'login' || e.name === 'AbortError') return;
+    toast(e.message);
+    if (e.code === 'conflict') route(); // ข้อมูลบนจอเก่าแล้ว → โหลดใหม่
+  }
+};
 
 // ---------- เข้าสู่ระบบ ----------
 let loginPhone = '';
@@ -75,6 +82,19 @@ $('loginForm').addEventListener('submit', run(async (e) => {
   }
 }));
 $('backPhone').addEventListener('click', () => { $('stepCode').hidden = true; $('stepPhone').hidden = false; });
+// โหมดสี: มืด (ม่วง ค่าเริ่มต้น) / สว่าง (ขาว) · จำไว้ในเบราว์เซอร์นี้
+const themeBtns = document.querySelectorAll('[data-theme-set]');
+function paintTheme() {
+  const cur = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+  themeBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeSet === cur)));
+}
+themeBtns.forEach((b) => b.addEventListener('click', () => {
+  const light = b.dataset.themeSet === 'light';
+  if (light) document.documentElement.dataset.theme = 'light'; else delete document.documentElement.dataset.theme;
+  try { localStorage.setItem('admin-theme', light ? 'light' : 'dark'); } catch (_) {}
+  paintTheme();
+}));
+paintTheme();
 $('logout').addEventListener('click', run(async () => { await api('auth/logout', { method: 'POST' }); me = null; showLogin(); }));
 
 async function boot() {
@@ -473,11 +493,10 @@ function openProfile(p, cats) {
       <label>ค่าโทรบนแอป (บาท)<input name="callCoin" type="number" min="0" max="100000" value="${p.callCoin || ''}" placeholder="0 = ไม่แสดง" style="width:130px"></label>
       <label>ต่อกี่นาที<input name="callMin" type="number" min="0" max="600" value="${p.callMin || ''}" style="width:100px"></label>
     </div>
-    <div class="stack" style="gap:8px"><b class="small">ศาสตร์ที่ถนัด <span class="muted" id="profCount">(${has.size})</span></b>
-      ${cats.map((c) => `<fieldset class="prof-cats"><legend>${c.icon} ${esc(c.name)}</legend>${c.types.map((t, i) => {
-        const k = `${c.id}|${i}`;
-        return `<label class="pchip"><input type="checkbox" name="cat" value="${esc(k)}" ${has.has(k) ? 'checked' : ''}><span>${esc(t)}</span></label>`;
-      }).join('')}</fieldset>`).join('')}
+    <div class="stack" style="gap:8px">
+      <label><span>ศาสตร์ที่ถนัด <span id="profCount">(${has.size})</span></span>
+        <select id="profAdd" aria-label="เพิ่มศาสตร์ที่ถนัด"></select></label>
+      <div class="prof-picked" id="profPicked"></div>
     </div>
     <label class="row small" style="display:flex;gap:6px"><input type="checkbox" name="hidden" ${p.hidden ? 'checked' : ''} style="width:auto"> ซ่อนจากหน้าเว็บ (พักรับงาน)</label>
     <div class="row" style="gap:8px;flex-wrap:wrap">
@@ -497,7 +516,20 @@ function openProfile(p, cats) {
     $('profPrev').innerHTML = profAv({ ...p, img: image }, 'big');
     if (f.noimg) f.noimg.checked = false;
   }));
-  f.addEventListener('change', (e) => { if (e.target.name === 'cat') $('profCount').textContent = `(${f.querySelectorAll('[name=cat]:checked').length})`; });
+  // เลือกศาสตร์จาก dropdown (จัดกลุ่มตามหมวด) → ขึ้นเป็นป้าย กด ✕ เพื่อเอาออก · ศาสตร์ที่เลือกแล้วจะไม่อยู่ใน dropdown
+  const typeName = Object.fromEntries(cats.flatMap((c) => c.types.map((t, i) => [`${c.id}|${i}`, `${c.icon} ${t}`])));
+  const drawCats = () => {
+    $('profAdd').innerHTML = `<option value="">＋ เลือกศาสตร์เพื่อเพิ่ม…</option>${cats.map((c) => {
+      const left = c.types.map((t, i) => [`${c.id}|${i}`, t]).filter(([k]) => !has.has(k));
+      return left.length ? `<optgroup label="${c.icon} ${esc(c.name)}">${left.map(([k, t]) => `<option value="${esc(k)}">${esc(t)}</option>`).join('')}</optgroup>` : '';
+    }).join('')}`;
+    $('profPicked').innerHTML = has.size ? [...has].map((k) => `<span class="pchip-on">${esc(typeName[k] || k)}<button type="button" data-unpick="${esc(k)}" aria-label="เอา ${esc(typeName[k] || k)} ออก">✕</button></span>`).join('')
+      : '<span class="muted small">ยังไม่ได้เลือก</span>';
+    $('profCount').textContent = `(${has.size})`;
+  };
+  drawCats();
+  $('profAdd').addEventListener('change', (e) => { if (e.target.value) { has.add(e.target.value); drawCats(); } });
+  $('profPicked').addEventListener('click', (e) => { const k = e.target.dataset?.unpick; if (k) { has.delete(k); drawCats(); } });
   $('profCancel').addEventListener('click', () => { box.innerHTML = ''; });
   f.addEventListener('submit', run(async (e) => {
     e.preventDefault();
@@ -513,7 +545,7 @@ function openProfile(p, cats) {
       await api(url, { method: 'POST', body: { reset: true } });
       toast('คืนค่าเดิมแล้ว'); route(); return;
     }
-    const body = { name: f.name.value.trim(), cats: [...f.querySelectorAll('[name=cat]:checked')].map((x) => x.value),
+    const body = { name: f.name.value.trim(), cats: [...has],
       callCoin: +f.callCoin.value || 0, callMin: +f.callMin.value || 0, hidden: f.hidden.checked };
     if (!body.cats.length && !confirm('ยังไม่ได้เลือกศาสตร์เลย บันทึกต่อไหม?')) return;
     if (image) body.image = image;

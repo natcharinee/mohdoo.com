@@ -8,6 +8,8 @@ import { fail, cookies, setCookie } from './http.js';
 
 const COOKIE = 'md_s';
 const SESSION_DAYS = 60;
+// ทีมงาน/ผู้ดูแลทำคืนเงิน เปลี่ยนสิทธิ์ ส่งประกาศได้ → อยู่ในระบบได้สั้นกว่า (เครื่องหายจะเสี่ยงน้อยลง)
+export const TEAM_SESSION_DAYS = 7;
 export const DEMO_CODE = '123456';
 export const ROLES = ['customer', 'seer', 'staff', 'admin'];
 export const STAFF = ['seer', 'staff', 'admin'];
@@ -30,8 +32,10 @@ const sign = (s) => crypto.createHmac('sha256', key()).update(s).digest('base64u
 const safeEq = (a, b) => a.length === b.length && crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b));
 
 export function startSession(res, user) {
-  const payload = Buffer.from(JSON.stringify({ uid: user.id, v: user.sv || 0, exp: Date.now() + SESSION_DAYS * 864e5 })).toString('base64url');
-  setCookie(res, COOKIE, `${payload}.${sign(payload)}`, { maxAge: SESSION_DAYS * 86400, secure: config.prod });
+  const days = BACKOFFICE.includes(user.role) ? TEAM_SESSION_DAYS : SESSION_DAYS;
+  const now = Date.now();
+  const payload = Buffer.from(JSON.stringify({ uid: user.id, v: user.sv || 0, iat: now, exp: now + days * 864e5 })).toString('base64url');
+  setCookie(res, COOKIE, `${payload}.${sign(payload)}`, { maxAge: days * 86400, secure: config.prod });
 }
 export const endSession = (res) => setCookie(res, COOKIE, '', { maxAge: 0, secure: config.prod });
 
@@ -45,6 +49,9 @@ export async function sessionUser(req) {
   if (!s.uid || s.exp < Date.now()) return null;
   const u = await (await db()).get('user', s.uid);
   if (!u || u.blocked || (u.sv || 0) !== s.v) return null; // sv เปลี่ยน = ออกจากระบบทุกเครื่อง
+  // ทีมงาน/ผู้ดูแล: เข้าสู่ระบบใหม่ทุก 7 วัน (รวมบัญชีที่เพิ่งได้สิทธิ์ทีมงานแต่ยังใช้คุกกี้ลูกค้า 60 วันเดิม)
+  const iat = s.iat || s.exp - SESSION_DAYS * 864e5;
+  if (BACKOFFICE.includes(u.role) && Date.now() - iat > TEAM_SESSION_DAYS * 864e5) return null;
   return u;
 }
 export async function needUser(req) {
