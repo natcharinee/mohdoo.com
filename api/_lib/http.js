@@ -39,13 +39,14 @@ export function setCookie(res, name, value, { maxAge, secure } = {}) {
   res.setHeader('Set-Cookie', [...(Array.isArray(prev) ? prev : prev ? [prev] : []), parts.join('; ')]);
 }
 
-export const ipOf = (req) => String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || '').split(',')[0].trim();
+// Vercel ใส่ x-real-ip / x-vercel-forwarded-for เอง (ผู้ใช้ปลอมไม่ได้) · x-forwarded-for ใช้สำรองตอนพัฒนาในเครื่อง
+export const ipOf = (req) => String(req.headers['x-real-ip'] || req.headers['x-vercel-forwarded-for'] || req.headers['x-forwarded-for'] || req.socket?.remoteAddress || '').split(',')[0].trim();
 
 // ข้อความจากผู้ใช้: ตัดความยาว ตัดอักขระควบคุม
 export const str = (v, max = 200) => String(v ?? '').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, '').trim().slice(0, max);
 export const int = (v) => (Number.isFinite(+v) ? Math.trunc(+v) : NaN);
 
-// จำกัดจำนวนครั้งแบบง่าย (ต่อ instance) · กันยิง OTP/ล็อกอินถี่ ๆ
+// จำกัดจำนวนครั้งในหน่วยความจำ (ต่อเครื่อง) · ใช้สำรองเมื่อฐานข้อมูลมีปัญหา · ตัวหลักอยู่ที่ ratelimit.js
 const buckets = new Map();
 export function rateLimit(key, max, windowMs) {
   const now = Date.now();

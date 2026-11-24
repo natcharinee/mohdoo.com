@@ -3,7 +3,8 @@
 // ทุกอย่างทำงานได้โดยไม่ต้องตั้งค่า (โหมดทดลอง) และเปลี่ยนเป็นของจริงเมื่อใส่ Environment Variables (ดู BACKEND.md)
 import { config } from './_lib/config.js';
 import { db, newId } from './_lib/db.js';
-import { HttpError, fail, send, bodyOf, str, int, ipOf, rateLimit } from './_lib/http.js';
+import { HttpError, fail, send, bodyOf, str, int, ipOf } from './_lib/http.js';
+import { rateLimit, cleanRate } from './_lib/ratelimit.js';
 import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
 import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, BACKOFFICE, DEMO_CODE } from './_lib/auth.js';
 import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles } from './_lib/catalog.js';
@@ -179,17 +180,21 @@ on('GET', 'health', async () => {
 on('POST', 'auth/otp', async (req) => {
   const b = bodyOf(req);
   const phone = normPhone(b.phone);
-  rateLimit(`otp-ip:${ipOf(req)}`, 30, 10 * 60e3); // เครือข่ายมือถือไทยใช้ IP ร่วมกัน · ต่อเบอร์จำกัด 1 ครั้ง/นาทีอยู่แล้ว
+  await rateLimit(`otp-ip:${ipOf(req)}`, 30, 10 * 60e3); // เครือข่ายมือถือไทยใช้ IP ร่วมกัน · ต่อเบอร์จำกัด 1 ครั้ง/นาทีอยู่แล้ว
   const exists = !!(await (await db()).byKey('user', phone))?.profile;
   // สมัครด้วยเบอร์ที่มีบัญชีแล้ว → ให้หน้าเว็บเปลี่ยนเป็นเข้าสู่ระบบ (ยังไม่ส่ง SMS)
   if (b.mode === 'register' && exists) return { exists: true, sent: false };
+  // ค่า SMS: ต่อเบอร์ไม่เกิน 8 ครั้ง/วัน · ทั้งระบบไม่เกิน OTP_HOURLY_CAP (ค่าเริ่มต้น 300) ครั้ง/ชม. กันถูกยิงจนบิลบาน
+  await rateLimit(`otp-phone:${phone}`, 8, 864e5);
+  await rateLimit('otp-all', config.otpHourlyCap, 3600e3);
   const r = await sendOtp(phone);
   return { exists, sent: true, demo: r.demo || undefined };
 });
 on('POST', 'auth/verify', async (req, res) => {
   const b = bodyOf(req);
   const phone = normPhone(b.phone);
-  rateLimit(`verify-ip:${ipOf(req)}`, 30, 10 * 60e3);
+  await rateLimit(`verify-ip:${ipOf(req)}`, 30, 10 * 60e3);
+  await rateLimit(`verify-phone:${phone}`, 20, 3600e3); // ขอรหัสใหม่ได้ แต่เดารหัสรวมไม่เกิน 20 ครั้ง/ชม. ต่อเบอร์
   await checkOtp(phone, b.code);
   const { user, isNew } = await userForPhone(phone);
   if (user.blocked) fail(403, 'blocked');
@@ -268,7 +273,7 @@ on('DELETE', 'me/push', async (req) => {
 // ---------- คำสั่งซื้อ ----------
 on('POST', 'orders', async (req) => {
   const u = await needUser(req);
-  rateLimit(`order:${u.id}`, 30, 10 * 60e3);
+  await rateLimit(`order:${u.id}`, 30, 10 * 60e3);
   const b = bodyOf(req);
   const it = priceOf(b, { humanOpen: await humanOpen() });
   const store = await db();
@@ -430,6 +435,7 @@ async function runDaily() {
       }
     }
   }
+  await cleanRate().catch((e) => console.error('[cleanRate]', e));
   return { ok: true, expired, daily, reminded };
 }
 
@@ -858,14 +864,14 @@ const typeNames = () => Object.fromEntries(catalog().CATEGORIES.flatMap((c) => c
 on('POST', 'seer-apply', async (req) => {
   const b = bodyOf(req);
   if (str(b.website, 200)) return { ok: true }; // ช่องดักบอท (มนุษย์มองไม่เห็น)
-  rateLimit(`apply-ip:${ipOf(req)}`, 20, 60 * 60e3); // มือถือไทยใช้ IP ร่วมกัน จึงไม่ตั้งต่ำเกินไป
+  await rateLimit(`apply-ip:${ipOf(req)}`, 20, 60 * 60e3); // มือถือไทยใช้ IP ร่วมกัน จึงไม่ตั้งต่ำเกินไป
   const phone = normPhone(b.phone);
   const name = str(b.name, 80), about = str(b.about, 2000);
   const keys = typeKeys();
   const cats = [...new Set((Array.isArray(b.cats) ? b.cats : []).map((k) => str(k, 30)).filter((k) => keys.has(k)))].slice(0, 40);
   if (!name || !cats.length || about.length < 20) fail(400, 'empty');
   if (b.consent !== true) fail(400, 'consent_required');
-  rateLimit(`apply-phone:${phone}`, 5, 24 * 3600e3); // นับเฉพาะใบที่กรอกครบ
+  await rateLimit(`apply-phone:${phone}`, 5, 24 * 3600e3); // นับเฉพาะใบที่กรอกครบ
   const years = int(b.years);
   const store = await db();
   const u = await store.byKey('user', phone);

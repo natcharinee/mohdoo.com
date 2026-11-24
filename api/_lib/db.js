@@ -33,6 +33,7 @@ function fileStore() {
     if (f.user_id && x.user_id !== f.user_id) return false;
     if (f.status && !(Array.isArray(f.status) ? f.status.includes(x.status) : x.status === f.status)) return false;
     if (f.since && x.created_at < f.since) return false;
+    if (f.before && x.created_at >= f.before) return false;
     if (f.where && !Object.entries(f.where).every(([k, v]) => d[k] === v)) return false;
     return matchQ(d, f.q);
   });
@@ -49,6 +50,12 @@ function fileStore() {
       c(coll)[doc.id] = structuredClone(doc); save(); return true;
     },
     async del(coll, id) { delete c(coll)[id]; save(); },
+    // นับเพิ่ม 1 แบบทำในครั้งเดียว (ใช้กับ rate limit) · คืนค่าหลังเพิ่ม
+    async incr(coll, id, createdAt) {
+      await lag();
+      const d = (c(coll)[id] ||= { id, n: 0, created_at: createdAt });
+      d.n += 1; save(); return d.n;
+    },
     async list(coll, f = {}) {
       const all = filter(coll, f).sort((a, b) => (f.asc ? 1 : -1) * (cols(a, coll).created_at - cols(b, coll).created_at));
       const off = f.offset || 0;
@@ -74,6 +81,7 @@ async function pgStore() {
     if (f.user_id) w = sql`${w} AND user_id = ${f.user_id}`;
     if (f.status) w = Array.isArray(f.status) ? sql`${w} AND status = ANY(${f.status}::text[])` : sql`${w} AND status = ${f.status}`;
     if (f.since) w = sql`${w} AND created_at >= ${f.since}`;
+    if (f.before) w = sql`${w} AND created_at < ${f.before}`;
     if (f.where) Object.entries(f.where).forEach(([k, v]) => { w = sql`${w} AND data->>${k} = ${String(v)}`; });
     if (f.q) w = sql`${w} AND data::text ILIKE ${`%${f.q.replace(/[%_\\]/g, '\\$&')}%`}`;
     return w;
@@ -99,6 +107,12 @@ async function pgStore() {
       return r.length > 0;
     },
     async del(coll, id) { await sql`DELETE FROM docs WHERE coll = ${coll} AND id = ${id}`; },
+    async incr(coll, id, createdAt) {
+      const [r] = await sql`INSERT INTO docs (coll, id, created_at, data) VALUES (${coll}, ${id}, ${createdAt}, ${{ id, n: 1, created_at: createdAt }}::jsonb)
+        ON CONFLICT (coll, id) DO UPDATE SET data = jsonb_set(docs.data, '{n}', to_jsonb(COALESCE((docs.data->>'n')::int, 0) + 1))
+        RETURNING (data->>'n')::int AS n`;
+      return r.n;
+    },
     async list(coll, f = {}) {
       const w = where(coll, f);
       const rows = await sql`SELECT data FROM docs WHERE ${w} ORDER BY created_at ${f.asc ? sql`ASC` : sql`DESC`} LIMIT ${f.limit || 50} OFFSET ${f.offset || 0}`;

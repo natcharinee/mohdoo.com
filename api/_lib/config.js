@@ -25,4 +25,5 @@ export const config = {
   ai: !!env.ANTHROPIC_API_KEY, // แม่หมอ AI พร้อมใช้ (MOHDOO_AI_CODE เป็นแค่รหัสทดสอบของทีม ไม่ต้องมี)
   dataDir: env.MOHDOO_DATA_DIR || (env.VERCEL ? '/tmp/mohdoo-data' : '.data'),
   orderMinutes: 15, // QR หมดอายุ
+  otpHourlyCap: Math.max(10, Number(env.OTP_HOURLY_CAP) || 300), // เพดาน SMS OTP ทั้งระบบต่อชั่วโมง (กันค่า SMS บาน)
 };
