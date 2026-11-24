@@ -33,6 +33,20 @@ export async function saveFile(dataUrl, { folder, owner }) {
   return { url: `/api/v1/files/${name}`, type: f.type };
 }
 
+// ลบไฟล์ที่เราเก็บไว้ (ใช้ตอนลบบัญชีตาม PDPA) · ลิงก์ภายนอกไม่แตะ · ลบไม่สำเร็จไม่ทำให้งานหลักล้ม
+export async function deleteFile(url) {
+  try {
+    const m = /^\/api\/v1\/files\/([A-Za-z0-9_.-]+)$/.exec(String(url || ''));
+    if (m) { fs.rmSync(path.join(config.dataDir, 'uploads', m[1]), { force: true }); return true; }
+    if (config.storage === 'blob' && /^https:\/\/[a-z0-9.-]+\.blob\.vercel-storage\.com\//.test(String(url || ''))) {
+      const { del } = await import('@vercel/blob');
+      await del(url);
+      return true;
+    }
+  } catch (e) { console.error('[deleteFile]', e.message); }
+  return false;
+}
+
 export function readLocalFile(name) {
   if (!/^[a-z]+-u[a-z0-9]+-[A-Za-z0-9_-]+\.[a-z0-9]+$/.test(name)) fail(404, 'not_found');
   const p = path.join(config.dataDir, 'uploads', name);

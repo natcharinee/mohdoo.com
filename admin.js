@@ -35,6 +35,7 @@ const ERR = {
   wait: 'รอสักครู่ก่อนขอรหัสใหม่', bad_phone: 'เบอร์โทรไม่ถูกต้อง', bad_state: 'สถานะงานตอนนี้ทำรายการนี้ไม่ได้', empty: 'กรุณากรอกข้อมูล',
   file_too_large: 'ไฟล์ใหญ่เกิน 8 MB', bad_file: 'ชนิดไฟล์ไม่รองรับ (รูป JPG/PNG/WebP หรือวิดีโอ MP4/MOV)', too_many_requests: 'ทำรายการถี่เกินไป รอสักครู่',
   otp_not_configured: 'ยังไม่ได้ตั้งค่าระบบ OTP', bad_price: 'ราคาต้องอยู่ระหว่าง 20–10,000 บาท', bad_qty: 'จำนวนไม่ถูกต้อง', is_staff: 'เบอร์นี้เป็นทีมงาน/ผู้ดูแลอยู่แล้ว', unknown_seer: 'ไม่พบโปรไฟล์หมอดูนี้', cannot_demote_self: 'ลดสิทธิ์ตัวเองไม่ได้',
+  ref_required: 'ใส่เลขอ้างอิงคำขอก่อน', confirm_mismatch: 'เบอร์ที่พิมพ์ไม่ตรงกับบัญชีนี้ ยังไม่ได้ลบ',
   conflict: 'มีคนแก้รายการนี้ไปก่อนคุณ · โหลดข้อมูลล่าสุดให้แล้ว ตรวจแล้วทำอีกครั้ง', not_team: 'มอบหมายได้เฉพาะทีมงาน/หมอดู', base_profile: 'โปรไฟล์ตั้งต้นลบไม่ได้ ใช้ซ่อนแทน', in_use: 'โปรไฟล์นี้เชื่อมกับบัญชีหมอดูอยู่ ยกเลิกการเชื่อมก่อน', bad_img: 'ลิงก์รูปต้องขึ้นต้นด้วย https://', out_of_stock: 'สินค้าหมด', busy: 'ระบบไม่ว่าง ลองอีกครั้ง',
 };
 let routeCtl = null; // เปลี่ยนหน้า → ยกเลิกคำขอของหน้าก่อน (กันข้อมูลเก่าทับหน้าใหม่)
@@ -455,6 +456,17 @@ async function viewUser(id) {
           <span class="row"><button class="btn sm" id="kick">ออกจากระบบทุกเครื่อง</button>
           ${can('admin') ? `<button class="btn sm danger" id="block">${u.blocked ? 'ยกเลิกการระงับ' : 'ระงับบัญชี'}</button>` : ''}</span>
         </section>
+        ${can('admin') && !['staff', 'admin'].includes(u.role) ? `<section class="card pdpa">
+          <h3>คำขอข้อมูลส่วนบุคคล (PDPA)</h3>
+          <p class="muted small">ใช้เมื่อลูกค้าขอทาง LINE แต่เข้าบัญชีเองไม่ได้ (ถ้าเข้าได้ ให้ลูกค้ากด "ดาวน์โหลดข้อมูลของฉัน" หรือ "ลบบัญชี" ในหน้าบัญชีเอง) ·
+            <b>ยืนยันตัวตนก่อนทุกครั้ง</b> เช่น ให้ส่งเลขคำสั่งซื้อและยอดเงินที่เคยจ่ายมาให้ตรง · ต้องทำภายใน 30 วันนับจากวันที่รับคำขอ</p>
+          <label>เลขอ้างอิงคำขอ / ช่องทาง<input id="pdpaRef" maxlength="120" placeholder="เช่น LINE 24 พ.ย. 69 · ยืนยันด้วยเลขคำสั่งซื้อ MD…"></label>
+          <div class="row" style="margin-top:10px">
+            <button class="btn sm" id="pdpaExport" type="button">⬇ ส่งออกข้อมูล (ไฟล์ JSON)</button>
+            <button class="btn sm danger" id="pdpaErase" type="button">ลบบัญชีตามคำขอ…</button>
+          </div>
+          <p class="muted small" style="margin-top:8px">ลบแล้ว: โปรไฟล์ ข้อมูลเกิด ประวัติดูดวง รูป คำตอบ ที่อยู่ แจ้งเตือน และใบสมัครหมอดู หายถาวร · คำสั่งซื้อเหลือเฉพาะยอดเงิน วันที่ สถานะ (ใช้ทำบัญชีตามกฎหมาย) · กู้คืนไม่ได้</p>
+        </section>` : ''}
         <section class="card"><h3>บันทึกภายใน</h3>
           <div class="notes">${u.notes.map((n) => `<p>${esc(n.text)}<small>${esc(n.by)} · ${dt(n.at)}</small></p>`).join('') || '<p class="muted small" style="background:none;padding:0">ยังไม่มีบันทึก</p>'}</div>
           <form class="row" id="unote" style="margin-top:10px"><input class="grow" name="text" required placeholder="เช่น ลูกค้าขอให้โทรก่อนส่งของ"><button class="btn sm">เพิ่ม</button></form>
@@ -462,6 +474,26 @@ async function viewUser(id) {
       </div>
     </div>`;
   const upd = (body, msg) => run(async (e) => { e?.preventDefault?.(); await api(`admin/users/${u.id}`, { method: 'POST', body }); toast(msg); route(); });
+  const pdpaRef = () => { const r = $('pdpaRef').value.trim(); if (r.length < 3) { toast('ใส่เลขอ้างอิงคำขอก่อน (บันทึกเป็นหลักฐาน)'); $('pdpaRef').focus(); } return r.length < 3 ? '' : r; };
+  $('pdpaExport')?.addEventListener('click', run(async () => {
+    const ref = pdpaRef();
+    if (!ref) return;
+    const r = await fetch(`/api/v1/admin/users/${encodeURIComponent(u.id)}/export?ref=${encodeURIComponent(ref)}`, { credentials: 'same-origin' });
+    if (!r.ok) { const j = await r.json().catch(() => ({})); throw new Error(ERR[j.error] || j.error || 'ส่งออกไม่สำเร็จ'); }
+    const name = (/filename="([^"]+)"/.exec(r.headers.get('content-disposition') || '') || [])[1] || 'mohdoo-data.json';
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(await r.blob()), download: name });
+    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    toast('ดาวน์โหลดไฟล์แล้ว · ส่งให้ลูกค้าทางช่องทางเดิมที่ยืนยันตัวตนแล้ว');
+  }));
+  $('pdpaErase')?.addEventListener('click', run(async () => {
+    const ref = pdpaRef();
+    if (!ref) return;
+    const typed = prompt(`ลบบัญชีนี้ถาวรตามคำขอของลูกค้า\n\nพิมพ์เบอร์ของบัญชี (${u.phone}) เพื่อยืนยัน:`);
+    if (typed === null) return;
+    const r = await api(`admin/users/${u.id}/erase`, { method: 'POST', body: { ref, confirm_phone: typed.trim() } });
+    toast(`ลบบัญชีแล้ว · ล้างข้อมูลในคำสั่งซื้อ ${r.orders} รายการ · ลบไฟล์ ${r.files} ไฟล์`);
+    location.hash = '#users';
+  }));
   $('roleBtn')?.addEventListener('click', () => confirm(`เปลี่ยนสิทธิ์เป็น “${ROLE[$('roleSel').value]}”?`) && upd({ role: $('roleSel').value }, 'เปลี่ยนสิทธิ์แล้ว')());
   $('seerBtn')?.addEventListener('click', () => upd({ seer_id: $('seerSel').value }, 'เชื่อมโปรไฟล์หมอดูแล้ว')());
   $('aiBtn').addEventListener('click', () => upd({ ai_days: +$('aiDays').value }, 'อัปเดตวันสมาชิกแล้ว')());

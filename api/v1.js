@@ -9,7 +9,7 @@ import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
 import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, BACKOFFICE, DEMO_CODE } from './_lib/auth.js';
 import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles } from './_lib/catalog.js';
 import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from './_lib/pay.js';
-import { saveFile, readLocalFile } from './_lib/storage.js';
+import { saveFile, readLocalFile, deleteFile } from './_lib/storage.js';
 import { notify, savePush } from './_lib/notify.js';
 import { kbOverrides, kbDoc, saveKB } from './_lib/kb.js';
 import { KB_TABLES, DEFAULT_KB, PAIR_LEVELS, KB_SCHEMA } from '../lib/calc/kb.js';
@@ -40,6 +40,7 @@ export const AUDIT_ACTIONS = {
   mark_paid: 'ยืนยันรับเงินเอง', refund: 'คืนเงิน', cancel: 'ยกเลิกคำสั่งซื้อ',
   seer_invite: 'เพิ่มหมอดู', seer_price: 'ตั้งราคาหมอดู', seer_profile: 'แก้โปรไฟล์หมอดู', seer_profile_new: 'เพิ่มโปรไฟล์หมอดู',
   seer_profile_reset: 'คืนค่าโปรไฟล์หมอดู', seer_profile_delete: 'ลบโปรไฟล์หมอดู', seer_app: 'ตรวจใบสมัครหมอดู', seer_app_delete: 'ลบใบสมัครหมอดู',
+  pdpa_export: 'ส่งออกข้อมูลลูกค้า (PDPA)', pdpa_erase: 'ลบบัญชีตามคำขอ (PDPA)', pdpa_self_export: 'ลูกค้าดาวน์โหลดข้อมูลตัวเอง', pdpa_self_erase: 'ลูกค้าลบบัญชีเอง',
   broadcast: 'ส่งประกาศ', export: 'ส่งออกข้อมูลคำสั่งซื้อ', stock: 'แก้สต๊อก', kb: 'แก้ตำราดูดวง', kb_restore: 'ย้อนเวอร์ชันตำรา', cron: 'สั่งงานประจำวันเอง',
 };
 const AUDIT_DAYS = 365;
@@ -247,19 +248,84 @@ on('PUT', 'me', async (req) => {
   if (u.role === 'seer') resetHumanOpen(); // หมอดูสมัครครบ → ศาสตร์ของท่านเปิดขายได้
   return { ok: true, updated_at: u.updated_at };
 });
-on('DELETE', 'me', async (req, res) => {
-  // ลบบัญชี (PDPA): ลบโปรไฟล์ การแจ้งเตือน และปิดการเชื่อมคำสั่งซื้อกับตัวตน (เก็บยอดไว้ทำบัญชี)
-  const u = await needUser(req);
+// =====================================================================
+// PDPA: ขอสำเนาข้อมูล (มาตรา 30–31) และขอลบ (มาตรา 33)
+// ลูกค้าทำเองได้ในหน้า "บัญชี" (ยืนยันตัวตนด้วย OTP แล้ว) · ผู้ดูแลทำแทนได้ในหลังบ้าน เมื่อลูกค้าเข้าบัญชีไม่ได้
+// =====================================================================
+const isoTimes = (k, v) => (typeof v === 'number' && v > 1e12 && /(_at|_until|^at)$/.test(k) ? new Date(v).toISOString() : v);
+async function userData(u) {
+  const store = await db();
+  const { rows: orders } = await store.list('order', { user_id: u.id, limit: 5000 });
+  const { rows: notifs } = await store.list('notif', { user_id: u.id, limit: 1000 });
+  const app = await store.byKey('seerapp', u.phone);
+  return {
+    about: 'ข้อมูลส่วนบุคคลของคุณที่หมอดู.com เก็บไว้ (สำเนาตาม พ.ร.บ.คุ้มครองข้อมูลส่วนบุคคล)',
+    controller: 'บริษัท ยูนิเวอร์ซ่า จำกัด · LINE @mohdoo',
+    exported_at: Date.now(),
+    account: { id: u.id, phone: u.phone, name: u.name || '', role: u.role, created_at: u.created_at, last_login_at: u.last_login, ai_until: u.ai_until || 0, blocked: !!u.blocked },
+    profile: u.profile || null, // ข้อมูลเกิด ประวัติการดูดวง และค่าที่ตั้งไว้
+    orders: orders.map((o) => {
+      const { qr, expires_at: _e, ...p } = pubOrder(o);
+      return { ...p, fields: o.fields || [], place: o.place || '', photo_consent_at: o.photo_consent_at || null, refund: o.refund ? { amount: o.refund.amount, at: o.refund.at } : null };
+    }),
+    notifications: notifs.map((n) => ({ title: n.title, body: n.body, created_at: n.created_at, read: !!n.read })),
+    seer_application: app ? { name: app.name, alias: app.alias, phone: app.phone, line: app.line, years: app.years, links: app.links, cats: app.cats, about: app.about, sample: app.sample, status: app.status, created_at: app.created_at, consent_at: app.consent_at } : null,
+    not_included: [
+      'รูปร่างกายในหน้า "บัญชี" (โหงวเฮ้ง/ลายมือ) เก็บในเครื่องของคุณเท่านั้น ไม่ได้ส่งมาที่เซิร์ฟเวอร์',
+      'ข้อมูลการชำระเงิน (เลขบัญชี/บัตร) อยู่ที่ผู้ให้บริการชำระเงิน เราไม่ได้เก็บ',
+    ],
+  };
+}
+const dataFile = (res, data, name) => {
+  send(res, 200, JSON.stringify(data, isoTimes, 2), {
+    'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store',
+    'Content-Disposition': `attachment; filename="${name}-${new Date().toISOString().slice(0, 10)}.json"`,
+  });
+};
+// ลบบัญชี: ลบโปรไฟล์ แจ้งเตือน ใบสมัครหมอดู รูปที่อัปโหลด · คำสั่งซื้อเหลือเฉพาะยอดเงิน/วันที่/สถานะ สำหรับทำบัญชีตามกฎหมาย
+async function eraseUser(u) {
   const store = await db();
   const { rows } = await store.list('order', { user_id: u.id, limit: 5000 });
+  let files = 0;
   for (const o of rows) {
-    o.phone = ''; o.name = 'บัญชีที่ลบแล้ว'; o.form = null; o.photos = []; o.user_deleted = true;
+    for (const f of [...(o.photos || []), ...(o.proof || [])]) if (await deleteFile(f.url)) files += 1;
+    o.phone = ''; o.name = 'บัญชีที่ลบแล้ว'; o.form = null; o.fields = []; o.place = ''; o.photos = []; o.proof = [];
+    o.answer = ''; o.summary = ''; o.notes = []; o.user_deleted = true; o.deleted_at = Date.now();
+    o.log = (o.log || []).map((l) => (l.by === u.id ? { ...l, who: 'ลูกค้า' } : l));
     o.rev = (o.rev || 0) + 1; // หน้าหลังบ้านที่เปิดค้างไว้จะบันทึกทับ (คืนข้อมูลส่วนตัว) ไม่ได้
     await store.put('order', o);
   }
+  // ประวัติการทำงานที่อ้างถึงบัญชีนี้: เก็บว่าทีมทำอะไร แต่ลบชื่อ/เบอร์/ข้อความออก
+  const { rows: logs } = await store.list('audit', { user_id: u.id, limit: 5000 });
+  for (const a of logs) {
+    const { phone, text, body, ...detail } = a.detail || {};
+    await store.put('audit', { ...a, target: { ...a.target, label: 'บัญชีที่ลบแล้ว' }, detail });
+  }
   await store.delWhere('notif', { user_id: u.id });
   await store.delWhere('push', { user_id: u.id });
+  if (u.phone) {
+    await store.del('otp', u.phone);
+    const app = await store.byKey('seerapp', u.phone);
+    if (app) await store.del('seerapp', app.id);
+  }
   await store.del('user', u.id);
+  return { orders: rows.length, files };
+}
+const last4 = (p) => `•••${String(p || '').slice(-4)}`;
+
+on('GET', 'me/export', async (req, res) => {
+  const u = await needUser(req);
+  await rateLimit(`export:${u.id}`, 5, 3600e3);
+  const data = await userData(u);
+  await audit({ id: u.id, name: 'ลูกค้า', role: u.role }, 'pdpa_self_export', { type: 'user', id: u.id, label: userLabel(u) });
+  dataFile(res, data, 'mohdoo-my-data');
+  return undefined;
+});
+on('DELETE', 'me', async (req, res) => {
+  const u = await needUser(req);
+  if (BACKOFFICE.includes(u.role)) fail(400, 'staff_cannot_self_delete'); // ทีมงาน: ให้ผู้ดูแลลดสิทธิ์ก่อน
+  const r = await eraseUser(u);
+  await audit({ id: u.id, name: 'ลูกค้า (ลบเอง)', role: u.role }, 'pdpa_self_erase', { type: 'user', id: u.id, label: 'บัญชีที่ลบแล้ว' }, { phone_last4: last4(u.phone), ...r });
   endSession(res);
   return { ok: true };
 });
@@ -999,6 +1065,32 @@ on('GET', 'admin/users/:id', async (req, res, { id }) => {
   if (!u) fail(404, 'not_found');
   const { rows } = await store.list('order', { user_id: u.id, limit: 200 });
   return { user: { ...pubUser(u), blocked: !!u.blocked, last_login: u.last_login, notes: u.notes || [], seer_id: u.seer_id || null }, orders: rows.map(adminOrder), seers: catalog().SEER_ALL };
+});
+// ผู้ดูแลทำแทนลูกค้า (PDPA) · ต้องระบุเลขอ้างอิง/เหตุผลของคำขอ เพื่อเป็นหลักฐานว่าตอบคำขอภายใน 30 วัน
+const pdpaRef = (v) => { const r = str(v, 120); if (r.length < 3) fail(400, 'ref_required'); return r; };
+on('GET', 'admin/users/:id/export', async (req, res, { id }) => {
+  const staff = await needRole(req, ['admin']);
+  const ref = pdpaRef(req.query?.ref);
+  const u = await (await db()).get('user', str(id, 40));
+  if (!u) fail(404, 'not_found');
+  const data = await userData(u);
+  await audit(staff, 'pdpa_export', { type: 'user', id: u.id, label: userLabel(u) }, { ref });
+  dataFile(res, data, `mohdoo-data-${u.phone.replace(/\D/g, '').slice(-4)}`);
+  return undefined;
+});
+on('POST', 'admin/users/:id/erase', async (req, res, { id }) => {
+  const staff = await needRole(req, ['admin']);
+  const b = bodyOf(req);
+  const ref = pdpaRef(b.ref);
+  const u = await (await db()).get('user', str(id, 40));
+  if (!u) fail(404, 'not_found');
+  if (BACKOFFICE.includes(u.role)) fail(400, 'is_staff'); // ลดสิทธิ์ทีมงานก่อน
+  let typed = '';
+  try { typed = normPhone(b.confirm_phone); } catch (_) { /* พิมพ์ไม่ครบ = ไม่ตรง */ }
+  if (typed !== u.phone) fail(400, 'confirm_mismatch'); // พิมพ์เบอร์ยืนยัน กันกดผิดคน
+  const r = await eraseUser(u);
+  await audit(staff, 'pdpa_erase', { type: 'user', id: u.id, label: 'บัญชีที่ลบแล้ว' }, { ref, phone_last4: last4(u.phone), ...r });
+  return { ok: true, ...r };
 });
 on('POST', 'admin/users/:id', async (req, res, { id }) => {
   const staff = await needRole(req, ['staff', 'admin']);
