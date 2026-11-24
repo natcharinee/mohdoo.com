@@ -110,7 +110,7 @@ html { scroll-behavior: smooth; }
   .legal-page .topbar { flex-direction: column; align-items: stretch; gap: 10px; padding: 10px 16px; }
   .legal-page .logo { font-size: 1.45rem; justify-content: center; }
   .legal-nav { justify-content: space-between; }
-  .legal-nav .nav-link { flex: 1; text-align: center; padding: 6px 8px; font-size: 13px; }
+  .legal-nav .nav-link { flex: 1 1 auto; text-align: center; padding: 6px 4px; font-size: 12.5px; white-space: nowrap; }
   .legal { padding: 18px 16px 64px; }
   .legal h2 { font-size: 18px; margin-top: 36px; scroll-margin-top: 120px; }
   .legal .toc { grid-template-columns: 1fr; }
@@ -123,3 +123,10 @@ html { scroll-behavior: smooth; }
 .embed .legal { padding-top: 8px; }
 .embed .legal h1 { display: none; } /* ชื่อเอกสารอยู่ที่หัวป๊อปอัปแล้ว */
 .embed .legal h2 { scroll-margin-top: 12px; }
+
+/* ---------- หน้าติดต่อเรา / 404 ---------- */
+.legal .nf-actions { margin-top: 16px; }
+.legal .nf-actions .btn-gold { display: inline-block; text-decoration: none; color: #2a1503; }
+.legal.notfound { text-align: center; padding-top: 12vh; }
+.legal.notfound .nf-orb { font-size: 72px; line-height: 1; filter: drop-shadow(0 0 24px rgba(180, 140, 255, .55)); }
+.legal.notfound .links { justify-content: center; }
