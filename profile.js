@@ -125,7 +125,7 @@ function renderProfile() {
     ${histSection('shop', 'ประวัติการซื้อสินค้า', 'รายการ', buys, (h) => esc(buyLine(h)), '📦', 'ยังไม่มีการสั่งซื้อ วัตถุมงคลที่สั่งจะแสดงสถานะและเลขพัสดุที่นี่')}
 
     <button class="btn-ghost full pf-logout" id="pfLogout">ออกจากระบบ</button>
-    <p class="pf-note">ข้อมูลของคุณใช้เพื่อการทำนายเท่านั้น · <a href="privacy.html">นโยบายความเป็นส่วนตัว</a> · <a href="terms.html">เงื่อนไขการใช้</a> · <a href="refund.html">นโยบายคืนเงิน</a> · <a href="contact.html">ติดต่อเรา (LINE @mohdoo)</a></p>
+    <p class="pf-note">ข้อมูลของคุณใช้เพื่อการทำนายเท่านั้น · <a href="privacy.html">นโยบายความเป็นส่วนตัว</a> · <a href="terms.html">เงื่อนไขการใช้</a> · <a href="refund.html">นโยบายคืนเงิน</a>  · <a href="about.html">คำถามที่พบบ่อย</a> · <a href="contact.html">ติดต่อเรา (LINE @mohdoo)</a></p>
     <p class="pf-note"><button type="button" class="pf-delete" id="pfDelete" style="background:none;border:0;color:#ff8fa6;text-decoration:underline;cursor:pointer;font:inherit">ลบบัญชีและข้อมูลของฉัน</button></p>`;
 }
 

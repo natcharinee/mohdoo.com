@@ -132,10 +132,10 @@ html { scroll-behavior: smooth; }
 .legal.notfound .links { justify-content: center; }
 
 /* ---------- ใบสมัครหมอดู (seer-apply.html) ---------- */
-.apply .perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0 18px; }
-.apply .perks .box { margin: 0; }
-.apply .perks b { color: var(--gold-2); font-weight: 500; }
-.apply .perks p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.apply .perks, .about .perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0 18px; }
+.apply .perks .box, .about .perks .box { margin: 0; }
+.apply .perks b, .about .perks b { color: var(--gold-2); font-weight: 500; }
+.apply .perks p, .about .perks p { font-size: 14px; color: var(--muted); margin-top: 4px; }
 .apply .urgent { border-color: rgba(255, 138, 163, .45); }
 .apply .urgent-list { color: var(--gold-2); font-size: 14.5px; }
 .apply-form { gap: 16px; margin-top: 12px; }
@@ -166,6 +166,15 @@ html { scroll-behavior: smooth; }
 .apply-form .btn-gold:disabled { opacity: .6; cursor: wait; }
 .apply .done { border-color: rgba(120, 230, 160, .45); }
 @media (max-width: 640px) {
-  .apply .perks, .apply-form .grid2 { grid-template-columns: 1fr; }
+  .apply .perks, .about .perks, .apply-form .grid2 { grid-template-columns: 1fr; }
   .apply-form .btn-gold { align-self: stretch; text-align: center; }
 }
+
+/* ---------- เกี่ยวกับเรา / คำถามที่พบบ่อย ---------- */
+.legal .faq { display: grid; gap: 10px; }
+.legal .faq details { border: 1px solid rgba(245, 201, 107, .22); border-radius: 14px; background: rgba(30, 16, 70, .55); padding: 0 16px; }
+.legal .faq summary { cursor: pointer; list-style: none; padding: 13px 0; color: var(--gold-2); font-weight: 500; display: flex; justify-content: space-between; gap: 12px; }
+.legal .faq summary::-webkit-details-marker { display: none; }
+.legal .faq summary::after { content: '+'; color: var(--gold); transition: transform .2s; }
+.legal .faq details[open] summary::after { transform: rotate(45deg); }
+.legal .faq details p { padding-bottom: 14px; }
