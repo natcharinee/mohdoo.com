@@ -200,3 +200,24 @@ dialog img:not([src]), dialog video:not([src]) { display: none; }
 .nowrap { white-space: nowrap; }
 .table.audit td { vertical-align: top; }
 .table.audit .chip { white-space: nowrap; font-size: 12px; }
+
+/* ===== กระดิ่งแจ้งเตือน ===== */
+.side-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.bell { position: relative; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; flex: none; cursor: pointer;
+  background: var(--card2); border: 1px solid var(--line); color: var(--text); }
+.bell:hover, .bell[aria-expanded="true"] { border-color: var(--violet2); }
+.bell svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.bell b { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px; background: var(--bad); color: #fff; font-size: 11px; font-weight: 500; line-height: 18px; text-align: center; }
+.bell-pop { position: fixed; z-index: 40; left: 230px; top: 14px; width: min(380px, calc(100vw - 24px)); max-height: min(70vh, 560px); overflow: auto; padding: 12px; box-shadow: 0 12px 40px rgba(0, 0, 0, .35); }
+.bell-pop header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.bell-pop h3 { margin: 0; }
+.bell-item { display: grid; gap: 2px; padding: 10px; border-radius: 10px; color: var(--text); text-decoration: none; border-left: 3px solid transparent; }
+a.bell-item:hover { background: var(--card2); }
+.bell-item.new { border-left-color: var(--violet2); background: var(--hover); }
+.bell-item b { font-weight: 500; font-size: 14px; }
+.bell-item span { font-size: 13px; color: var(--muted); }
+.bell-item small { font-size: 12px; color: var(--muted2); }
+@media (max-width: 900px) {
+  .side-top { order: -1; }
+  .bell-pop { left: auto; right: 12px; top: 58px; }
+}

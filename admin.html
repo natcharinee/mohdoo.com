@@ -38,7 +38,8 @@
 
   <div class="shell" id="shell" hidden>
     <aside class="side">
-      <p class="brand">🔮 หมอดู.com <small>หลังบ้าน</small></p>
+      <div class="side-top"><p class="brand">🔮 หมอดู.com <small>หลังบ้าน</small></p>
+        <button type="button" class="bell" id="bellBtn" aria-label="การแจ้งเตือน" aria-haspopup="true" aria-expanded="false" aria-controls="bellPop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><b id="bellN" hidden></b></button></div>
       <nav id="nav">
         <a href="#dash" data-v="dash" data-r="staff admin"><i>📊</i>ภาพรวม</a>
         <a href="#orders" data-v="orders"><i>🧾</i>คำสั่งซื้อ<b class="dot" id="qBadge" hidden></b></a>
@@ -53,6 +54,10 @@
       <div class="me"><span id="meName"></span><small id="meRole"></small><div class="theme-seg" role="group" aria-label="โหมดสี"><button type="button" data-theme-set="dark">🌙 มืด</button><button type="button" data-theme-set="light">☀️ สว่าง</button></div><button class="btn ghost sm" id="logout">ออกจากระบบ</button></div>
     </aside>
     <main class="main" id="view"></main>
+    <section class="bell-pop card" id="bellPop" hidden aria-label="การแจ้งเตือน">
+      <header><h3>การแจ้งเตือน</h3><button type="button" class="btn sm ghost" id="bellClose" aria-label="ปิด">✕</button></header>
+      <div id="bellList"></div>
+    </section>
   </div>
   <div class="toast" id="toast" hidden></div>
   <dialog id="viewer"><img alt=""><video controls></video><button class="btn ghost sm" value="close" onclick="this.closest('dialog').close()">ปิด</button></dialog>

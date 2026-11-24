@@ -114,7 +114,42 @@ async function boot() {
   route();
   refreshBadge();
 }
+// ---------- กระดิ่งแจ้งเตือน (คำสั่งซื้อใหม่ · ใบสมัครหมอดู ฯลฯ) ----------
+let bellItems = [];
+async function refreshBell() {
+  try {
+    const r = await api('me/notifications', { keep: true });
+    bellItems = r.items || [];
+    $('bellN').hidden = !r.unread;
+    $('bellN').textContent = r.unread > 99 ? '99+' : r.unread;
+    $('bellBtn').setAttribute('aria-label', r.unread ? `การแจ้งเตือน ยังไม่อ่าน ${r.unread} รายการ` : 'การแจ้งเตือน');
+    if (!$('bellPop').hidden) drawBell();
+  } catch (_) {}
+}
+function drawBell() {
+  $('bellList').innerHTML = bellItems.length ? bellItems.slice(0, 30).map((n) => {
+    const href = (n.link || '').replace(/^\/admin\.html/, '') || (n.order_no ? `#order/${n.order_no}` : '');
+    const inner = `<b>${esc(n.title)}</b><span>${esc(n.body)}</span><small>${dt(n.created_at)}</small>`;
+    return href.startsWith('#') ? `<a class="bell-item ${n.read ? '' : 'new'}" href="${esc(href)}">${inner}</a>` : `<div class="bell-item ${n.read ? '' : 'new'}">${inner}</div>`;
+  }).join('') : '<p class="empty" style="padding:24px 0">ยังไม่มีการแจ้งเตือน</p>';
+}
+function toggleBell(open = $('bellPop').hidden) {
+  $('bellPop').hidden = !open;
+  $('bellBtn').setAttribute('aria-expanded', String(open));
+  if (!open) return;
+  drawBell();
+  if (bellItems.some((n) => !n.read)) { // เปิดดู = อ่านแล้ว (ยังเห็นจุดใหม่ในรายการจนกว่าจะปิด)
+    api('me/notifications/read', { method: 'POST' }).then(() => { $('bellN').hidden = true; bellItems = bellItems.map((n) => ({ ...n, read: true })); }).catch(() => {});
+  }
+}
+$('bellBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleBell(); });
+$('bellClose').addEventListener('click', () => toggleBell(false));
+$('bellList').addEventListener('click', (e) => { if (e.target.closest('a')) toggleBell(false); });
+document.addEventListener('click', (e) => { if (!$('bellPop').hidden && !e.target.closest('#bellPop')) toggleBell(false); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('bellPop').hidden) { toggleBell(false); $('bellBtn').focus(); } });
+
 async function refreshBadge() {
+  refreshBell();
   try {
     const r = await api('admin/orders?status=submitted&limit=1', { keep: true });
     $('qBadge').hidden = !r.total;
@@ -740,7 +775,18 @@ async function viewStock() {
 }
 
 // ---------- ประกาศ ----------
+const bcState = (j) => (j.status === 'done' ? (j.failed ? `<span class="chip warn">เสร็จ · ไม่สำเร็จ ${j.failed}</span>` : '<span class="chip ok">ส่งครบแล้ว</span>') : `<span class="chip warn">กำลังส่ง ${j.delivered + j.failed}/${j.total}</span>`);
+// ส่งต่อจนครบ (เซิร์ฟเวอร์ส่งทีละรอบ) · ปิดหน้าไประหว่างทาง → งานประจำวันส่งต่อให้
+async function finishBroadcast(job, onProgress) {
+  while (job.status === 'running') {
+    onProgress(job);
+    job = (await api(`admin/broadcast/${job.id}/continue`, { method: 'POST' })).job;
+  }
+  onProgress(job);
+  return job;
+}
 async function viewBroadcast() {
+  const { items = [] } = await api('admin/broadcasts');
   view.innerHTML = `
     <div class="head"><h1>ส่งประกาศถึงลูกค้า</h1></div>
     <div class="grid2">
@@ -749,20 +795,37 @@ async function viewBroadcast() {
         <label>หัวข้อ<input name="title" maxlength="80" required placeholder="เช่น เปิดบริการใหม่ ฮวงจุ้ยคอนโด"></label>
         <label>ข้อความ<textarea name="body" maxlength="300" required placeholder="ข้อความสั้น ๆ ไม่เกิน 300 ตัวอักษร"></textarea></label>
         <button class="btn primary">ส่งประกาศ</button>
-        <p class="muted small">ลูกค้าเห็นในกล่องแจ้งเตือนบนเว็บ และได้รับ Push ถ้าเปิดการแจ้งเตือนไว้</p>
+        <p class="muted small" id="bcProgress" aria-live="polite">ลูกค้าเห็นในกล่องแจ้งเตือนบนเว็บ และได้รับ Push ถ้าเปิดการแจ้งเตือนไว้ · ส่งเป็นรอบ ๆ ถ้าปิดหน้านี้ระหว่างส่ง ระบบจะส่งต่อให้ในงานประจำวัน</p>
       </form>
       <section class="card stack"><h3>งานประจำวัน</h3>
         <p class="muted small">ระบบรันอัตโนมัติทุกวัน 06:00 น. (Vercel Cron): ส่งดวงโดยรวมวันนี้ให้สมาชิกรายเดือน (ในเว็บ · LINE OA ในอนาคต) · เตือนสมาชิกใกล้หมดอายุ · ปิดคำสั่งซื้อที่ QR หมดอายุ</p>
         <button class="btn" id="runDaily">รันงานประจำวันตอนนี้</button>
       </section>
-    </div>`;
+    </div>
+    <section class="card" style="margin-top:16px"><h3>ประกาศที่เคยส่ง</h3>
+      ${items.length ? `<div class="tscroll"><table class="table"><tr><th>วันที่</th><th>หัวข้อ</th><th>ส่งถึง</th><th class="num">ได้รับ</th><th>สถานะ</th><th class="hide-m">ผู้ส่ง</th></tr>
+        ${items.map((j) => `<tr><td class="nowrap">${dt(j.created_at)}</td><td>${esc(j.title)}<span class="sub">${esc(j.body)}</span></td>
+          <td>${j.target === 'ai' ? 'สมาชิก AI' : 'ลูกค้าทุกคน'}</td><td class="num">${j.delivered.toLocaleString('th-TH')}/${j.total.toLocaleString('th-TH')}</td>
+          <td>${bcState(j)}${j.status === 'running' ? ` <button class="btn sm" data-bc-go="${esc(j.id)}">ส่งต่อ</button>` : ''}</td><td class="hide-m">${esc(j.who || '')}</td></tr>`).join('')}
+      </table></div>` : '<p class="empty">ยังไม่เคยส่งประกาศ</p>'}
+    </section>`;
+  const progress = (j) => { $('bcProgress').innerHTML = `กำลังส่ง “${esc(j.title)}” ${(j.delivered + j.failed).toLocaleString('th-TH')}/${j.total.toLocaleString('th-TH')} คน · อย่าเพิ่งปิดหน้านี้`; };
+  view.querySelectorAll('[data-bc-go]').forEach((b) => b.addEventListener('click', run(async () => {
+    b.disabled = true;
+    const j = await finishBroadcast((await api(`admin/broadcast/${b.dataset.bcGo}/continue`, { method: 'POST' })).job, progress);
+    toast(`ส่งครบแล้ว ${j.delivered} คน`); route();
+  })));
   $('bcForm').addEventListener('submit', run(async (e) => {
     e.preventDefault();
     const f = e.target;
     if (!confirm(`ส่ง “${f.title.value}” ถึง${f.target.value === 'ai' ? 'สมาชิก AI' : 'ลูกค้าทุกคน'}?`)) return;
-    const r = await api('admin/broadcast', { method: 'POST', body: { target: f.target.value, title: f.title.value, body: f.body.value } });
-    toast(`ส่งแล้ว ${r.sent} คน`);
-    f.reset();
+    f.querySelector('button.primary').disabled = true;
+    try {
+      const r = await api('admin/broadcast', { method: 'POST', body: { target: f.target.value, title: f.title.value, body: f.body.value } });
+      const j = await finishBroadcast(r.job, progress);
+      toast(j.failed ? `ส่งแล้ว ${j.delivered} คน · ไม่สำเร็จ ${j.failed}` : `ส่งครบแล้ว ${j.delivered} คน`);
+      f.reset();
+    } finally { route(); }
   }));
   $('runDaily').addEventListener('click', run(async () => {
     const r = await api('admin/cron/daily', { method: 'POST' });

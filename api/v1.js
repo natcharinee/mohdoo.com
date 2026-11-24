@@ -524,6 +524,8 @@ async function runDaily() {
       }
     }
   }
+  const { rows: bcs } = await store.list('broadcast', { status: 'running', limit: 20 });
+  for (const j of bcs) await runBroadcast(j.id).catch((e) => console.error('[broadcast resume]', e));
   await cleanRate().catch((e) => console.error('[cleanRate]', e));
   await store.delWhere('audit', { before: now - AUDIT_DAYS * 864e5 }).catch((e) => console.error('[audit clean]', e));
   return { ok: true, expired, daily, reminded };
@@ -1131,16 +1133,63 @@ on('POST', 'admin/users/:id', async (req, res, { id }) => {
   return { ok: true };
 });
 
+// ---------- ประกาศถึงลูกค้า: ส่งเป็นรอบ ๆ (รอบละ BC_CHUNK คน) ไม่ให้เกินเวลาของ Vercel ----------
+// แต่ละคำขอส่งได้ไม่เกิน BC_BUDGET_MS แล้วหยุด → หน้าหลังบ้านเรียก continue ต่อ / งานประจำวันเก็บตกที่ค้าง
+// รับช่วงด้วย putIf (rev) ก่อนส่ง: สองเครื่องทำพร้อมกันจะไม่ส่งซ้ำคนเดิม
+const BC_CHUNK = Math.max(1, Number(process.env.MOHDOO_BC_CHUNK) || 40);
+const BC_BUDGET_MS = Number(process.env.MOHDOO_BC_BUDGET_MS ?? 20e3);
+const pubBroadcast = ({ ids, ...j }) => j;
+async function bumpBroadcast(id, patch) { // นับยอดส่งสำเร็จ/ไม่สำเร็จ (ลองใหม่ถ้าชนกับเครื่องอื่น)
+  const store = await db();
+  for (let i = 0; i < 10; i++) {
+    const j = await store.get('broadcast', id);
+    const rev = j.rev || 0;
+    const next = { ...j, rev: rev + 1, updated_at: Date.now() };
+    for (const [k, v] of Object.entries(patch)) next[k] = (j[k] || 0) + v;
+    if (await store.putIf('broadcast', next, rev)) return next;
+  }
+}
+async function runBroadcast(id) {
+  const store = await db();
+  const t0 = Date.now();
+  for (let first = true; ; first = false) {
+    const job = await store.get('broadcast', id);
+    if (!job || job.status !== 'running') return job;
+    if (!first && Date.now() - t0 > BC_BUDGET_MS) return job; // หมดเวลารอบนี้ (ทำอย่างน้อย 1 รอบเสมอ)
+    const start = job.claimed || 0;
+    const end = Math.min(start + BC_CHUNK, job.ids.length);
+    const rev = job.rev || 0;
+    const last = end >= job.ids.length;
+    if (!(await store.putIf('broadcast', { ...job, claimed: end, rev: rev + 1, status: last ? 'done' : 'running', ...(last ? { done_at: Date.now() } : {}), updated_at: Date.now() }, rev))) continue; // เครื่องอื่นรับช่วงนี้ไปแล้ว
+    const res = await Promise.allSettled(job.ids.slice(start, end).map((uid) => notify(uid, { title: job.title, body: job.body, link: job.link })));
+    const failed = res.filter((r) => r.status === 'rejected').length;
+    await bumpBroadcast(id, { delivered: res.length - failed, failed });
+  }
+}
 on('POST', 'admin/broadcast', async (req) => {
   const staff = await needRole(req, ['admin']);
   const b = bodyOf(req);
   const title = str(b.title, 80); const body = str(b.body, 300);
   if (!title || !body) fail(400, 'empty');
-  const { rows } = await (await db()).list('user', { limit: 50000 });
-  const target = rows.filter((u) => u.profile && !u.blocked && (b.target !== 'ai' || (u.ai_until || 0) > Date.now()));
-  for (const u of target) await notify(u.id, { title, body, link: str(b.link, 200) });
-  await audit(staff, 'broadcast', { type: 'broadcast', label: title }, { body, target: b.target === 'ai' ? 'ai' : 'all', sent: target.length });
-  return { ok: true, sent: target.length };
+  const store = await db();
+  const { rows } = await store.list('user', { limit: 50000 });
+  const ids = rows.filter((u) => u.profile && !u.blocked && (b.target !== 'ai' || (u.ai_until || 0) > Date.now())).map((u) => u.id);
+  const job = { id: newId('bc'), title, body, link: str(b.link, 200), target: b.target === 'ai' ? 'ai' : 'all', ids, total: ids.length,
+    claimed: 0, delivered: 0, failed: 0, status: ids.length ? 'running' : 'done', by: staff.id, who: staff.name || staff.phone, created_at: Date.now(), rev: 0 };
+  await store.put('broadcast', job);
+  await audit(staff, 'broadcast', { type: 'broadcast', id: job.id, label: title }, { body, target: job.target, sent: ids.length });
+  return { job: pubBroadcast((await runBroadcast(job.id)) || job) };
+});
+on('POST', 'admin/broadcast/:id/continue', async (req, res, { id }) => {
+  await needRole(req, ['admin']);
+  const job = await runBroadcast(str(id, 40));
+  if (!job) fail(404, 'not_found');
+  return { job: pubBroadcast(job) };
+});
+on('GET', 'admin/broadcasts', async (req) => {
+  await needRole(req, ['admin']);
+  const { rows } = await (await db()).list('broadcast', { limit: 30 });
+  return { items: rows.map(pubBroadcast) };
 });
 on('POST', 'admin/cron/daily', async (req) => { const staff = await needRole(req, ['admin']); await audit(staff, 'cron'); return runDaily(); });
 
