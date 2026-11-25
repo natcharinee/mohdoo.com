@@ -2,7 +2,10 @@
 // ที่มา: Mohdoo-Service-Catalog.md (ราคาเปิดตัวที่เสนอ หน่วยบาท)
 // open: true = เปิดให้จองแล้ว, false = แสดงป้าย "เร็ว ๆ นี้" (อิงลำดับเปิดขายในเอกสาร)
 // ราคา: ทุกบริการราคาเดียว SERVICE_PRICE (แก้ที่บรรทัดนี้ที่เดียว)
-const SERVICE_PRICE = 40;
+// ราคา/สถานะที่ผู้ดูแลแก้ในหลังบ้าน (โหลดจาก /api/v1/site-config.js ก่อนไฟล์นี้) · ไม่มี = ใช้ค่าในไฟล์
+// เซิร์ฟเวอร์อ่านไฟล์นี้เป็นค่าตั้งต้นแล้วใส่ค่าที่แก้เองฝั่งเซิร์ฟเวอร์ (api/_lib/catalog.js)
+const SITE_OVR = (typeof window !== 'undefined' && window.SITE_CFG) || null;
+const SERVICE_PRICE = (SITE_OVR && SITE_OVR.service_price) || 40;
 
 const SERVICES = [
   {
@@ -242,6 +245,13 @@ const PKG_META = {
   'palm': { topics: ['life', 'work', 'love'] }, 'face': { topics: ['life', 'work', 'love'] },
   'auspicious': { topics: ['love', 'work', 'family'] },
 };
+// ใส่ราคาและสถานะ (เปิด / เร็ว ๆ นี้ / ซ่อน) ตามที่ผู้ดูแลตั้ง · ซ่อน = ยังอยู่ในรายการ (ลิงก์เดิมไม่พัง) แต่ไม่แสดงและสั่งไม่ได้
+if (SITE_OVR && SITE_OVR.services) SERVICES.forEach((s) => {
+  const o = SITE_OVR.services[s.id];
+  if (!o) return;
+  s.open = !!o.open; s.hidden = !!o.hidden;
+  (o.prices || []).forEach((p, i) => { if (s.prices[i] && p != null) s.prices[i].price = p; });
+});
 SERVICES.forEach((s) => {
   const m = PKG_META[s.id] || {};
   s.topics = m.topics || (s.id.startsWith('fs-') || s.id === 'fengshui' ? ['money', 'family', 'life'] : (s.group === 'merit' ? ['life', 'family'] : ALL_TOPICS));

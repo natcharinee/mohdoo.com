@@ -8,3 +8,8 @@ const SHOP_ITEMS = [
   { id: 'cloth', icon: '🧧', name: 'ผ้ามงคลลายยันต์', desc: 'ผ้าแขวนหรือพกติดตัว ลายยันต์และดาวนพเคราะห์', price: 250 },
   { id: 'wallpaper', icon: '🖼️', name: 'วอลเปเปอร์มงคลประจำเดือน', desc: 'ไฟล์ดิจิทัล ออกแบบตามสีมงคลของคุณ ส่งทางแชท', price: 49, digital: true },
 ];
+// ชื่อ คำอธิบาย ราคา และการซ่อน ตามที่ผู้ดูแลตั้งในหลังบ้าน (/api/v1/site-config.js)
+if (typeof window !== 'undefined' && window.SITE_CFG && window.SITE_CFG.shop) SHOP_ITEMS.forEach((p) => {
+  const o = window.SITE_CFG.shop[p.id];
+  if (o) Object.assign(p, { name: o.name || p.name, desc: o.desc ?? p.desc, price: o.price ?? p.price, hidden: !!o.hidden });
+});

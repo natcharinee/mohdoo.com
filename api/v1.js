@@ -7,7 +7,7 @@ import { HttpError, fail, send, bodyOf, str, int, ipOf } from './_lib/http.js';
 import { rateLimit, cleanRate } from './_lib/ratelimit.js';
 import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
 import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, BACKOFFICE, DEMO_CODE } from './_lib/auth.js';
-import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles } from './_lib/catalog.js';
+import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles, publicSiteCfg, PRICE_RANGE } from './_lib/catalog.js';
 import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from './_lib/pay.js';
 import { saveFile, readLocalFile, deleteFile } from './_lib/storage.js';
 import { notify, savePush } from './_lib/notify.js';
@@ -39,7 +39,7 @@ export const AUDIT_ACTIONS = {
   ai_days: 'ให้/ปรับสมาชิก AI', seer_link: 'เชื่อมโปรไฟล์หมอดู', user_note: 'บันทึกในบัญชีลูกค้า',
   mark_paid: 'ยืนยันรับเงินเอง', refund: 'คืนเงิน', cancel: 'ยกเลิกคำสั่งซื้อ',
   seer_invite: 'เพิ่มหมอดู', seer_price: 'ตั้งราคาหมอดู', seer_profile: 'แก้โปรไฟล์หมอดู', seer_profile_new: 'เพิ่มโปรไฟล์หมอดู',
-  seer_profile_reset: 'คืนค่าโปรไฟล์หมอดู', seer_profile_delete: 'ลบโปรไฟล์หมอดู', seer_app: 'ตรวจใบสมัครหมอดู', seer_app_delete: 'ลบใบสมัครหมอดู',
+  seer_profile_reset: 'คืนค่าโปรไฟล์หมอดู', seer_profile_delete: 'ลบโปรไฟล์หมอดู', pricing: 'แก้ราคาและบริการ', seer_app: 'ตรวจใบสมัครหมอดู', seer_app_delete: 'ลบใบสมัครหมอดู',
   pdpa_export: 'ส่งออกข้อมูลลูกค้า (PDPA)', pdpa_erase: 'ลบบัญชีตามคำขอ (PDPA)', pdpa_self_export: 'ลูกค้าดาวน์โหลดข้อมูลตัวเอง', pdpa_self_erase: 'ลูกค้าลบบัญชีเอง',
   broadcast: 'ส่งประกาศ', export: 'ส่งออกข้อมูลคำสั่งซื้อ', stock: 'แก้สต๊อก', kb: 'แก้ตำราดูดวง', kb_restore: 'ย้อนเวอร์ชันตำรา', cron: 'สั่งงานประจำวันเอง',
 };
@@ -1227,6 +1227,108 @@ on('POST', 'admin/stock', async (req) => {
   await store.put('stock', { id: p.id, qty: q, rev: (prev?.rev || 0) + 1, updated_at: Date.now(), updated_by: staff.name || staff.phone, created_at: prev?.created_at || Date.now() });
   await audit(staff, 'stock', { type: 'item', id: p.id, label: p.name }, { from: prevQty, to: q });
   return { ok: true, qty: q };
+});
+// ---------- ราคาและบริการ (แก้ในหลังบ้าน · หน้าเว็บอ่านผ่าน /api/v1/site-config.js) ----------
+// หน้าเว็บโหลดไฟล์นี้ก่อนไฟล์ข้อมูล (services-data.js ฯลฯ) → ราคา/สถานะบนหน้าเว็บตรงกับที่เซิร์ฟเวอร์คิดเงินเสมอ
+on('GET', 'site-config.js', async (req, res) => {
+  send(res, 200, `window.SITE_CFG=${JSON.stringify(publicSiteCfg())};`, {
+    'Content-Type': 'text/javascript; charset=utf-8',
+    // เบราว์เซอร์ถามใหม่ทุกครั้ง · CDN ของ Vercel เก็บไว้ไม่เกิน 30 วินาที (+30 วินาทีระหว่างดึงค่าใหม่) → ราคาใหม่ขึ้นภายใน 1 นาที
+    'Cache-Control': 'public, max-age=0, must-revalidate, s-maxage=30, stale-while-revalidate=30',
+  });
+  return undefined;
+});
+const priceVal = (v) => {
+  if (v === null || v === '') return null; // ล้างค่า = กลับไปใช้ราคากลาง/ค่าเดิม
+  const n = int(v);
+  if (!(n >= PRICE_RANGE.min && n <= PRICE_RANGE.max)) fail(400, 'bad_price', PRICE_RANGE);
+  return n;
+};
+on('GET', 'admin/pricing', async (req) => {
+  await needRole(req, ['admin']);
+  const c = catalog();
+  const cfg = (await (await db()).get('sitecfg', 'main')) || {};
+  return {
+    base: { service_price: c.BASE.service_price, ai_price: c.BASE.ai_price },
+    service_price: c.SERVICE_PRICE, ai_price: c.AI_PRICE, range: PRICE_RANGE, updated_at: cfg.updated_at || null, updated_by: cfg.updated_by || null,
+    services: c.SERVICES.map((s, i) => {
+      const b = c.BASE.services[i]; const o = (cfg.services || {})[s.id] || {};
+      return { id: s.id, icon: s.icon, name: s.name, group: s.group || '', app: !!s.app, can_open: !!b.open, state: s.state,
+        price: s.prices.find((t) => t.price != null)?.price ?? null, custom_price: o.price ?? null, priced: s.prices.some((t) => t.price != null), edited: !!(o.state || o.price != null) };
+    }),
+    shop: c.SHOP_ITEMS.map((p, i) => {
+      const b = c.BASE.shop[i]; const o = (cfg.shop || {})[p.id] || {};
+      return { id: p.id, icon: p.icon, name: p.name, desc: p.desc, price: p.price, hidden: p.hidden, digital: !!p.digital,
+        base: { name: b.name, desc: b.desc, price: b.price }, edited: !!Object.keys(o).length };
+    }),
+  };
+});
+on('POST', 'admin/pricing', async (req) => {
+  const staff = await needRole(req, ['admin']);
+  const b = bodyOf(req);
+  const c = catalog();
+  const store = await db();
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const prev = (await store.get('sitecfg', 'main')) || { id: 'main', created_at: Date.now() };
+    const cfg = JSON.parse(JSON.stringify(prev));
+    cfg.services ||= {}; cfg.shop ||= {};
+    const changes = [];
+    if (b.service_price !== undefined) {
+      const v = priceVal(b.service_price);
+      changes.push({ what: 'ราคากลางบริการ', from: c.SERVICE_PRICE, to: v ?? c.BASE.service_price });
+      if (v == null) delete cfg.service_price; else cfg.service_price = v;
+    }
+    if (b.ai_price !== undefined) {
+      const v = priceVal(b.ai_price);
+      changes.push({ what: 'สมาชิก AI / เดือน', from: c.AI_PRICE, to: v ?? c.BASE.ai_price });
+      if (v == null) delete cfg.ai_price; else cfg.ai_price = v;
+    }
+    if (b.service) {
+      const id = str(b.service.id, 40);
+      const i = c.BASE.services.findIndex((x) => x.id === id);
+      if (i < 0) fail(404, 'not_found');
+      const base = c.BASE.services[i];
+      const o = { ...(cfg.services[id] || {}) };
+      if (b.service.reset === true) { delete cfg.services[id]; changes.push({ what: base.name, to: 'คืนค่าเดิม' }); } else {
+        if (b.service.state !== undefined) {
+          const st = str(b.service.state, 10);
+          if (!['open', 'soon', 'hidden'].includes(st)) fail(400, 'bad_state');
+          if (st === 'open' && !base.open) fail(400, 'cannot_open'); // บริการที่ยังไม่มีขั้นตอนรองรับบนเว็บ (บริการบนแอปสั่งบนเว็บไม่ได้อยู่แล้ว)
+          changes.push({ what: base.name, field: 'สถานะ', from: c.SERVICES[i].state, to: st });
+          if (st === (base.open ? 'open' : 'soon')) delete o.state; else o.state = st;
+        }
+        if (b.service.price !== undefined) {
+          if (!base.prices.some((t) => t.price != null)) fail(400, 'not_priced'); // เช่น บริการที่ "สอบถามราคา"
+          const v = priceVal(b.service.price);
+          changes.push({ what: base.name, field: 'ราคา', from: c.SERVICES[i].prices.find((t) => t.price != null)?.price, to: v ?? 'ราคากลาง' });
+          if (v == null) delete o.price; else o.price = v;
+        }
+        if (Object.keys(o).length) cfg.services[id] = o; else delete cfg.services[id];
+      }
+    }
+    if (b.item) {
+      const id = str(b.item.id, 40);
+      const i = c.BASE.shop.findIndex((x) => x.id === id);
+      if (i < 0) fail(404, 'not_found');
+      const base = c.BASE.shop[i];
+      const o = { ...(cfg.shop[id] || {}) };
+      if (b.item.reset === true) { delete cfg.shop[id]; changes.push({ what: base.name, to: 'คืนค่าเดิม' }); } else {
+        if (b.item.name !== undefined) { const v = str(b.item.name, 80); if (!v) fail(400, 'empty'); if (v === base.name) delete o.name; else o.name = v; changes.push({ what: base.name, field: 'ชื่อ', to: v }); }
+        if (b.item.desc !== undefined) { const v = str(b.item.desc, 200); if (v === base.desc) delete o.desc; else o.desc = v; changes.push({ what: base.name, field: 'คำอธิบาย' }); }
+        if (b.item.price !== undefined) { const v = priceVal(b.item.price); if (v == null || v === base.price) delete o.price; else o.price = v; changes.push({ what: base.name, field: 'ราคา', from: c.SHOP_ITEMS[i].price, to: v ?? base.price }); }
+        if (b.item.hidden !== undefined) { if (b.item.hidden === true) o.hidden = true; else delete o.hidden; changes.push({ what: base.name, field: 'ซ่อน', to: b.item.hidden === true }); }
+        if (Object.keys(o).length) cfg.shop[id] = o; else delete cfg.shop[id];
+      }
+    }
+    if (!changes.length) fail(400, 'empty');
+    const rev = prev.rev || 0;
+    cfg.rev = rev + 1; cfg.updated_at = Date.now(); cfg.updated_by = staff.name || staff.phone;
+    if (!(await store.putIf('sitecfg', cfg, rev))) continue; // มีผู้ดูแลอีกคนแก้พร้อมกัน → อ่านใหม่แล้วใช้การแก้ของเราซ้ำ
+    resetSeerProfiles(); await syncSeerProfiles(store);
+    await audit(staff, 'pricing', { type: 'pricing', label: changes.map((x) => x.what).join(', ').slice(0, 80) }, { changes });
+    return { ok: true };
+  }
+  fail(409, 'conflict');
 });
 on('GET', 'admin/catalog', async (req) => {
   await needRole(req, ['staff', 'admin']);

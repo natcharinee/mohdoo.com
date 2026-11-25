@@ -41,7 +41,7 @@ function select(id) {
   } else {
     info.hidden = true;
   }
-  render(sci ? SERVICES.filter((s) => sci.services.includes(s.id)) : SERVICES);
+  render((sci ? SERVICES.filter((s) => sci.services.includes(s.id)) : SERVICES).filter((s) => !s.hidden));
   const url = new URL(location);
   if (id === 'all') url.searchParams.delete('science'); else url.searchParams.set('science', id);
   history.replaceState(null, '', url);
@@ -160,4 +160,4 @@ const initial = new URLSearchParams(location.search).get('science');
 select(SCIENCES.some((s) => s.id === initial) ? initial : 'all');
 // มาจากหน้าศาสตร์ทั่วโลก: services.html?pkg=fengshui → เปิดรายละเอียดแพ็กเกจนั้น
 const pkgParam = new URLSearchParams(location.search).get('pkg');
-if (SERVICES.some((s) => s.id === pkgParam)) openBook(pkgParam);
+if (SERVICES.some((s) => s.id === pkgParam && !s.hidden)) openBook(pkgParam);

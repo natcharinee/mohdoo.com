@@ -3,7 +3,7 @@
 // ทั้งสองเมนูชี้ไปแพ็กเกจ id เดียวกัน → ราคาเดียวกันทุกเส้นทาง
 const $ = (id) => document.getElementById(id);
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const svcOf = (id) => SERVICES.find((s) => s.id === id);
+const svcOf = (id) => SERVICES.find((s) => s.id === id && !s.hidden);
 const sciOf = (id) => WORLD_SCIENCES.find((s) => s.id === id);
 const catOf = (id) => NAV_CATEGORIES.find((c) => c.id === id);
 const regionOf = (id) => WORLD_REGIONS.find((r) => r.id === id);

@@ -36,6 +36,7 @@ const ERR = {
   file_too_large: 'ไฟล์ใหญ่เกิน 8 MB', bad_file: 'ชนิดไฟล์ไม่รองรับ (รูป JPG/PNG/WebP หรือวิดีโอ MP4/MOV)', too_many_requests: 'ทำรายการถี่เกินไป รอสักครู่',
   otp_not_configured: 'ยังไม่ได้ตั้งค่าระบบ OTP', bad_price: 'ราคาต้องอยู่ระหว่าง 20–10,000 บาท', bad_qty: 'จำนวนไม่ถูกต้อง', is_staff: 'เบอร์นี้เป็นทีมงาน/ผู้ดูแลอยู่แล้ว', unknown_seer: 'ไม่พบโปรไฟล์หมอดูนี้', cannot_demote_self: 'ลดสิทธิ์ตัวเองไม่ได้',
   ref_required: 'ใส่เลขอ้างอิงคำขอก่อน', confirm_mismatch: 'เบอร์ที่พิมพ์ไม่ตรงกับบัญชีนี้ ยังไม่ได้ลบ',
+  cannot_open: 'บริการนี้ยังไม่มีขั้นตอนรองรับบนเว็บ เปิดจองไม่ได้', not_priced: 'บริการนี้คิดราคาตามใบเสนอราคา ตั้งราคาไม่ได้',
   conflict: 'มีคนแก้รายการนี้ไปก่อนคุณ · โหลดข้อมูลล่าสุดให้แล้ว ตรวจแล้วทำอีกครั้ง', not_team: 'มอบหมายได้เฉพาะทีมงาน/หมอดู', base_profile: 'โปรไฟล์ตั้งต้นลบไม่ได้ ใช้ซ่อนแทน', in_use: 'โปรไฟล์นี้เชื่อมกับบัญชีหมอดูอยู่ ยกเลิกการเชื่อมก่อน', bad_img: 'ลิงก์รูปต้องขึ้นต้นด้วย https://', out_of_stock: 'สินค้าหมด', busy: 'ระบบไม่ว่าง ลองอีกครั้ง',
 };
 let routeCtl = null; // เปลี่ยนหน้า → ยกเลิกคำขอของหน้าก่อน (กันข้อมูลเก่าทับหน้าใหม่)
@@ -44,6 +45,7 @@ async function api(path, { method = 'GET', body, keep } = {}) {
   const r = await fetch(`/api/v1/${path}`, { method, signal, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined, credentials: 'same-origin' });
   const j = await r.json().catch(() => ({}));
   if (r.status === 401 && !path.startsWith('auth/')) { showLogin(); throw new Error('login'); }
+  if (j.error === 'bad_price' && j.min != null) j.message = `ราคาต้องอยู่ระหว่าง ${Number(j.min).toLocaleString('th-TH')}–${Number(j.max).toLocaleString('th-TH')} บาท`;
   if (!r.ok) { const e = new Error(j.message || ERR[j.error] || j.error || 'เกิดข้อผิดพลาด'); e.code = j.error; e.data = j; throw e; }
   return j;
 }
@@ -166,7 +168,7 @@ function route() {
   routeCtl?.abort();
   routeCtl = new AbortController();
   view.innerHTML = '<p class="empty">กำลังโหลด…</p>';
-  const views = { audit: viewAudit, stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings, kb: viewKB };
+  const views = { pricing: viewPricing, audit: viewAudit, stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings, kb: viewKB };
   run((views[v] || viewOrders))(decodeURIComponent(arg || ''));
   scrollTo(0, 0);
 }
@@ -380,10 +382,109 @@ async function shrink(file, max) {
 // ---------- ลูกค้า ----------
 const uq = { q: '', role: '', ai: false, offset: 0 };
 
+// ---------- ราคาและบริการ (ผู้ดูแลเท่านั้น) ----------
+// ค่าตั้งต้นอยู่ในไฟล์ (services-data.js · shop-data.js) · ที่แก้ตรงนี้เก็บในฐานข้อมูล · หน้าเว็บอัปเดตภายใน 1 นาที
+const SVC_STATE = { open: ['เปิดจอง', 'ok'], soon: ['เร็ว ๆ นี้', 'warn'], hidden: ['ซ่อน', 'bad'] };
+async function viewPricing() {
+  const r = await api('admin/pricing');
+  const priceIn = (name, val, ph, w = 96) => `<input name="${name}" type="number" inputmode="numeric" min="${r.range.min}" max="${r.range.max}" value="${val ?? ''}" placeholder="${ph}" style="width:${w}px">`;
+  const groups = [['ดูดวง', r.services.filter((x) => x.group !== 'merit' && !x.app)], ['บริการมงคล', r.services.filter((x) => x.group === 'merit')], ['บนแอป (คุยสด / ลงพื้นที่)', r.services.filter((x) => x.app)]];
+  view.innerHTML = `
+    <div class="head"><h1>ราคาและบริการ</h1><span class="muted small">${r.updated_at ? `แก้ล่าสุด ${dt(r.updated_at)} · ${esc(r.updated_by || '')}` : 'ยังใช้ค่าเริ่มต้นทั้งหมด'}</span></div>
+    <p class="muted small" style="margin:-8px 0 14px">หน้าเว็บเปลี่ยนตามภายใน 1 นาที · ลูกค้าจ่ายตามราคาที่ตั้งตรงนี้เสมอ (เซิร์ฟเวอร์คิดเงินจากค่าเดียวกัน) · ทุกการแก้บันทึกในประวัติการทำงาน</p>
+    <div class="stack">
+      <form class="card" id="pMain">
+        <h3>ราคาหลัก</h3>
+        <div class="row" style="align-items:flex-end">
+          <label>ราคากลางบริการ (บาท)${priceIn('service_price', r.service_price !== r.base.service_price ? r.service_price : '', r.base.service_price, 120)}
+            <small class="muted">ใช้กับทุกบริการที่ไม่ได้ตั้งราคาเฉพาะ · ค่าเดิม ${baht(r.base.service_price)}</small></label>
+          <label>สมาชิก AI / เดือน (บาท)${priceIn('ai_price', r.ai_price !== r.base.ai_price ? r.ai_price : '', r.base.ai_price, 120)}
+            <small class="muted">ค่าเดิม ${baht(r.base.ai_price)}</small></label>
+          <button class="btn primary">บันทึกราคาหลัก</button>
+        </div>
+        <p class="muted small" style="margin-top:8px">เว้นว่าง = ใช้ค่าเดิม · ตอนนี้: บริการ ${baht(r.service_price)} · สมาชิก AI ${baht(r.ai_price)}/เดือน</p>
+      </form>
+      <section class="card"><h3>บริการ</h3>
+        <p class="muted small">สถานะ: <b>เปิดจอง</b> = ลูกค้าสั่งได้ · <b>เร็ว ๆ นี้</b> = แสดงแต่สั่งไม่ได้ · <b>ซ่อน</b> = ไม่แสดงบนเว็บ · บริการที่ยังไม่มีขั้นตอนรองรับบนเว็บเปิดจองไม่ได้ · ราคาเว้นว่าง = ราคากลาง</p>
+        ${groups.filter(([, list]) => list.length).map(([title, list]) => `<h4 class="p-group">${title}</h4>
+        <div class="tscroll"><table class="table p-table"><tr><th>บริการ</th><th>สถานะ</th><th>ราคา (บาท)</th><th></th></tr>
+          ${list.map((x) => `<tr><td>${x.icon} ${esc(x.name)}${x.edited ? ' <span class="chip warn">แก้แล้ว</span>' : ''}<span class="sub">${esc(x.id)}</span></td>
+            <td><form class="row p-row" data-svc="${esc(x.id)}" style="flex-wrap:nowrap;gap:6px">
+              <select name="state" style="width:auto">${['open', 'soon', 'hidden'].filter((st) => st !== 'open' || x.can_open).map((st) => `<option value="${st}" ${st === x.state ? 'selected' : ''}>${x.app && st === 'open' ? 'แสดง (สั่งบนแอป)' : SVC_STATE[st][0]}</option>`).join('')}</select></td>
+            <td>${x.priced && !x.app ? priceIn('price', x.custom_price, r.service_price) : '<span class="muted small">ตามใบเสนอราคา / บนแอป</span>'}</td>
+            <td class="nowrap"><button class="btn sm">บันทึก</button>${x.edited ? ` <button class="btn sm ghost" name="reset" value="1" type="submit">คืนค่าเดิม</button>` : ''}</form></td></tr>`).join('')}
+        </table></div>`).join('')}
+      </section>
+      <section class="card"><h3>สินค้า</h3>
+        <p class="muted small">แก้ชื่อ คำอธิบาย ราคา หรือซ่อนจากร้าน · จำนวนสต๊อกแก้ที่หน้า <a href="#stock">📦 สินค้า</a></p>
+        <div class="stack" style="gap:10px">${r.shop.map((p) => `<form class="p-item ${p.hidden ? 'off' : ''}" data-item="${esc(p.id)}">
+          <span class="p-icon">${p.icon}</span>
+          <label class="grow">ชื่อ<input name="name" maxlength="80" required value="${esc(p.name)}"></label>
+          <label class="grow">คำอธิบาย<input name="desc" maxlength="200" value="${esc(p.desc)}"></label>
+          <label>ราคา (บาท)${priceIn('price', p.price, p.base.price)}</label>
+          <label class="row small" style="display:flex;gap:6px;align-self:center"><input type="checkbox" name="hidden" ${p.hidden ? 'checked' : ''} style="width:auto"> ซ่อน</label>
+          <span class="row" style="gap:6px;align-self:end"><button class="btn sm">บันทึก</button>${p.edited ? '<button class="btn sm ghost" name="reset" value="1">คืนค่าเดิม</button>' : ''}</span>
+          ${p.edited ? `<small class="muted p-base">ค่าเดิม: ${esc(p.base.name)} · ${baht(p.base.price)}</small>` : ''}
+        </form>`).join('')}</div>
+      </section>
+    </div>`;
+  const save = async (body, msg) => { await api('admin/pricing', { method: 'POST', body }); toast(msg); route(); };
+  $('pMain').addEventListener('submit', run(async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const body = {};
+    const sp = f.service_price.value === '' ? null : +f.service_price.value;
+    const ap = f.ai_price.value === '' ? null : +f.ai_price.value;
+    if ((sp ?? r.base.service_price) !== r.service_price) body.service_price = sp;
+    if ((ap ?? r.base.ai_price) !== r.ai_price) body.ai_price = ap;
+    if (!Object.keys(body).length) return toast('ยังไม่ได้เปลี่ยนราคา');
+    const lines = [body.service_price !== undefined && `ราคากลางบริการ ${baht(r.service_price)} → ${baht(sp ?? r.base.service_price)}`, body.ai_price !== undefined && `สมาชิก AI ${baht(r.ai_price)} → ${baht(ap ?? r.base.ai_price)}`].filter(Boolean);
+    if (!confirm(`เปลี่ยนราคา?\n\n${lines.join('\n')}\n\nลูกค้าจะเห็นราคาใหม่ภายใน 1 นาที`)) return;
+    await save(body, 'บันทึกราคาหลักแล้ว ✓');
+  }));
+  view.querySelectorAll('form[data-svc]').forEach((f) => f.addEventListener('submit', run(async (e) => {
+    e.preventDefault();
+    const id = f.dataset.svc;
+    const x = r.services.find((s) => s.id === id);
+    const row = f.closest('tr');
+    if (e.submitter?.name === 'reset') {
+      if (!confirm(`คืนค่าเดิมของ "${x.name}"?`)) return;
+      return save({ service: { id, reset: true } }, 'คืนค่าเดิมแล้ว');
+    }
+    const svc = { id };
+    if (f.state.value !== x.state) svc.state = f.state.value;
+    const pIn = row.querySelector('input[name=price]');
+    if (pIn) { const v = pIn.value === '' ? null : +pIn.value; if (v !== x.custom_price) svc.price = v; }
+    if (Object.keys(svc).length === 1) return toast('ยังไม่ได้เปลี่ยนอะไร');
+    if (svc.state === 'hidden' && !confirm(`ซ่อน "${x.name}" จากหน้าเว็บ? ลูกค้าจะมองไม่เห็นและสั่งไม่ได้`)) return;
+    await save({ service: svc }, 'บันทึกแล้ว ✓');
+  })));
+  // ช่องราคาอยู่คนละเซลล์กับฟอร์ม → กด Enter ในช่องราคาให้บันทึกแถวนั้น
+  view.querySelectorAll('.p-table input[name=price]').forEach((i) => i.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); i.closest('tr').querySelector('form').requestSubmit(); } }));
+  view.querySelectorAll('form[data-item]').forEach((f) => f.addEventListener('submit', run(async (e) => {
+    e.preventDefault();
+    const id = f.dataset.item;
+    const p = r.shop.find((x) => x.id === id);
+    if (e.submitter?.name === 'reset') {
+      if (!confirm(`คืนค่าเดิมของ "${p.base.name}"? (ชื่อ คำอธิบาย ราคา และการซ่อน)`)) return;
+      return save({ item: { id, reset: true } }, 'คืนค่าเดิมแล้ว');
+    }
+    const item = { id };
+    if (f.name.value.trim() !== p.name) item.name = f.name.value.trim();
+    if (f.desc.value.trim() !== p.desc) item.desc = f.desc.value.trim();
+    const v = f.price.value === '' ? null : +f.price.value;
+    if ((v ?? p.base.price) !== p.price) item.price = v;
+    if (f.hidden.checked !== p.hidden) item.hidden = f.hidden.checked;
+    if (Object.keys(item).length === 1) return toast('ยังไม่ได้เปลี่ยนอะไร');
+    if (item.price !== undefined && !confirm(`เปลี่ยนราคา "${p.name}" ${baht(p.price)} → ${baht(v ?? p.base.price)}?`)) return;
+    await save({ item }, 'บันทึกแล้ว ✓');
+  })));
+}
+
 // ---------- ประวัติการทำงานของทีมงาน (ผู้ดูแลเท่านั้น) ----------
 const aq = { action: '', q: '', offset: 0 };
 const AUDIT_CHIP = { refund: 'bad', cancel: 'bad', block: 'bad', role: 'warn', mark_paid: 'warn', ai_days: 'warn', broadcast: 'warn', export: 'warn', seer_profile_delete: 'bad', seer_app_delete: 'bad', login: '' };
-const DETAIL_KEY = { from: 'จาก', to: 'เป็น', amount: 'จำนวน', reason: 'เหตุผล', days: 'วัน', until: 'ถึง', price: 'ราคา', status: 'สถานะ', sent: 'ส่งถึง', target: 'กลุ่ม', rows: 'จำนวนแถว', phone: 'เบอร์', text: 'ข้อความ', body: 'ข้อความ', changed: 'แก้', hidden: 'ซ่อน', ip: 'IP', note: 'หมายเหตุ', paid: 'จ่ายแล้ว', provider: 'ช่องทาง', reset: 'คืนค่าเริ่มต้น', reviewed: 'ตรวจแล้ว', version: 'เวอร์ชัน', self: 'หมอดูตั้งเอง', seer_id: 'โปรไฟล์' };
+const DETAIL_KEY = { changes: 'รายการ',  from: 'จาก', to: 'เป็น', amount: 'จำนวน', reason: 'เหตุผล', days: 'วัน', until: 'ถึง', price: 'ราคา', status: 'สถานะ', sent: 'ส่งถึง', target: 'กลุ่ม', rows: 'จำนวนแถว', phone: 'เบอร์', text: 'ข้อความ', body: 'ข้อความ', changed: 'แก้', hidden: 'ซ่อน', ip: 'IP', note: 'หมายเหตุ', paid: 'จ่ายแล้ว', provider: 'ช่องทาง', reset: 'คืนค่าเริ่มต้น', reviewed: 'ตรวจแล้ว', version: 'เวอร์ชัน', self: 'หมอดูตั้งเอง', seer_id: 'โปรไฟล์' };
 function auditDetail(a) {
   const fmt = (k, v) => {
     if (a.action === 'stock' && v === null) return 'ไม่จำกัด';
@@ -393,6 +494,10 @@ function auditDetail(a) {
     if (k === 'until' || k === 'version') return dt(v);
     if (k === 'from' || k === 'to') return ROLE[v] || String(v);
     if (k === 'target') return v === 'ai' ? 'สมาชิก AI' : 'ลูกค้าทุกคน';
+    if (k === 'changes') {
+      const sv = (x) => (SVC_STATE[x] ? SVC_STATE[x][0] : typeof x === 'boolean' ? (x ? 'ใช่' : 'ไม่') : x ?? '—');
+      return v.map((c) => [c.what, c.field].filter(Boolean).join(' ') + (c.from !== undefined ? `: ${sv(c.from)} → ${sv(c.to)}` : c.to !== undefined ? `: ${sv(c.to)}` : '')).join(' · ');
+    }
     if (Array.isArray(v)) return v.join(', ');
     return String(v);
   };
@@ -986,7 +1091,7 @@ const KB_HELP = {
 
 // ---------- ตั้งค่าระบบ ----------
 async function viewSettings() {
-  const [s, cat] = await Promise.all([api('admin/stats'), api('admin/catalog')]);
+  const s = await api('admin/stats');
   view.innerHTML = `
     <div class="head"><h1>ตั้งค่าระบบ</h1></div>
     <div class="stack">
@@ -1000,13 +1105,8 @@ async function viewSettings() {
           <p>• แม่หมอ AI: <code>ANTHROPIC_API_KEY</code> <code>MOHDOO_AI_CODE</code></p>
         </div>
       </section>
-      <section class="card"><h3>บริการและราคา (อ่านจาก services-data.js · แก้ราคาที่ไฟล์แล้ว deploy)</h3>
-        <div class="tscroll"><table class="table"><tr><th>บริการ</th><th>สถานะ</th><th class="num">ราคา</th></tr>
-        ${cat.services.map((x) => `<tr><td>${x.icon} ${esc(x.name)}<span class="sub">${x.id}${x.group ? ` · ${x.group}` : ''}</span></td>
-          <td>${x.app ? '<span class="chip">บนแอป</span>' : x.open ? '<span class="chip ok">เปิดจอง</span>' : '<span class="chip">เร็ว ๆ นี้</span>'}</td>
-          <td class="num">${x.prices.map((t) => `${esc(t.label)}: ${t.price == null ? 'สอบถาม' : baht(t.price)}`).join('<br>')}</td></tr>`).join('')}
-        ${cat.shop.map((x) => `<tr><td>${x.icon} ${esc(x.name)}<span class="sub">สินค้า · ${x.id}</span></td><td><span class="chip ok">ขาย</span></td><td class="num">${baht(x.price)}</td></tr>`).join('')}
-        </table></div>
+      <section class="card"><h3>บริการและราคา</h3>
+        <p class="muted small">แก้ราคา เปิด/ปิดบริการ และสินค้าได้ที่ ${can('admin') ? '<a href="#pricing">💰 ราคาและบริการ</a>' : 'หน้า "ราคาและบริการ" (ผู้ดูแลระบบ)'} · หน้าเว็บเปลี่ยนตามภายใน 1 นาที</p>
       </section>
     </div>`;
 }

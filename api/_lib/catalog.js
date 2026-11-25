@@ -5,7 +5,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { fail, int, str } from './http.js';
 
-export const AI_PRICE = 150;
+export const AI_PRICE = 150; // ค่าเริ่มต้น · ราคาที่ใช้จริงอยู่ใน catalog().AI_PRICE (แก้ได้ในหลังบ้าน)
 export const AI_DAYS = 30; // ใช้กับการให้วันเพิ่มจากหลังบ้านเท่านั้น
 // สมาชิกรายเดือน: หมดอายุวันที่เดียวกันของเดือนถัดไป (สมัคร 20 พ.ย. → หมด 20 ธ.ค.) · วันที่ 29–31 ที่เดือนหน้าไม่มี → วันสุดท้ายของเดือน
 export function addMonth(ts) {
@@ -40,7 +40,13 @@ function load() {
   const code = `${files.map((f) => fs.readFileSync(path.join(root, f), 'utf8')).join('\n;\n')}
     ;({ SERVICE_PRICE, SERVICES, CATEGORY_PRICE, CATEGORIES, SHOP_ITEMS, SEER_BASE: SEER_DATA })`;
   cache = vm.runInNewContext(code, {}, { timeout: 2000 });
+  // ค่าตั้งต้นจากไฟล์ (ใช้คืนค่าเดิม และคำนวณใหม่ทุกครั้งที่ผู้ดูแลแก้)
+  cache.BASE = {
+    service_price: cache.SERVICE_PRICE, ai_price: AI_PRICE,
+    services: JSON.parse(JSON.stringify(cache.SERVICES)), shop: JSON.parse(JSON.stringify(cache.SHOP_ITEMS)),
+  };
   applySeerEdits(cache, []);
+  applySiteCfg(cache, null);
   return cache;
 }
 export const catalog = () => load();
@@ -63,19 +69,55 @@ function applySeerEdits(c, edits) {
   c.SEER_IDS = c.SEER_ALL.filter((s) => !s.hidden);
 }
 // เรียกต้นคำขอ (v1.js) · อ่านจากฐานข้อมูลใหม่ทุก 30 วินาที หรือทันทีหลังผู้ดูแลแก้ (resetSeerProfiles)
+// ---------- ราคาและบริการ: ค่าตั้งต้นจากไฟล์ + ที่ผู้ดูแลแก้ในหลังบ้าน (เอกสาร sitecfg/main) ----------
+// state ของบริการ: open = เปิดจอง · soon = เร็ว ๆ นี้ · hidden = ไม่แสดง · เปิดได้เฉพาะบริการที่ไฟล์เปิดไว้ (มีขั้นตอนรองรับแล้ว)
+export const PRICE_RANGE = { min: 1, max: 100000 };
+export function applySiteCfg(c, cfg) {
+  cfg = cfg || {};
+  const B = c.BASE;
+  const sp = cfg.service_price ?? B.service_price;
+  c.SERVICE_PRICE = sp;
+  c.CATEGORY_PRICE = sp;
+  c.AI_PRICE = cfg.ai_price ?? B.ai_price;
+  c.SERVICES = B.services.map((s) => {
+    const o = (cfg.services || {})[s.id] || {};
+    const state = o.state === 'hidden' ? 'hidden' : o.state === 'soon' || !s.open ? 'soon' : 'open';
+    const prices = s.prices.map((t) => ({ ...t, price: t.price == null ? null : o.price ?? (t.price === B.service_price ? sp : t.price) }));
+    return { ...s, prices, open: state === 'open', hidden: state === 'hidden', state };
+  });
+  c.SHOP_ITEMS = B.shop.map((p) => {
+    const o = (cfg.shop || {})[p.id] || {};
+    return { ...p, name: o.name || p.name, desc: o.desc ?? p.desc, price: o.price ?? p.price, hidden: !!o.hidden };
+  });
+  c.SITE_CFG = cfg;
+}
+// ค่าที่หน้าเว็บใช้ (/api/v1/site-config.js) · ส่งเฉพาะที่จำเป็นต่อการแสดงผล
+export function publicSiteCfg() {
+  const c = load();
+  return {
+    service_price: c.SERVICE_PRICE, ai_price: c.AI_PRICE,
+    services: Object.fromEntries(c.SERVICES.map((s) => [s.id, { open: s.open, hidden: s.hidden, prices: s.prices.map((t) => t.price) }])),
+    shop: Object.fromEntries(c.SHOP_ITEMS.map((p) => [p.id, { name: p.name, desc: p.desc, price: p.price, hidden: p.hidden }])),
+  };
+}
+
+// อ่านจากฐานข้อมูลใหม่ทุก 30 วินาที (โปรไฟล์หมอดู + ราคาและบริการ) หรือทันทีหลังผู้ดูแลแก้ (resetCatalog)
 const seerSync = { at: 0, p: null };
-export async function syncSeerProfiles(store) {
+export async function syncCatalog(store) {
   if (Date.now() - seerSync.at < 30_000) return;
-  seerSync.p ||= store.list('seerprof', { limit: 1000 }).then(({ rows }) => {
+  seerSync.p ||= Promise.all([store.list('seerprof', { limit: 1000 }), store.get('sitecfg', 'main')]).then(([{ rows }, cfg]) => {
     applySeerEdits(load(), rows);
+    applySiteCfg(load(), cfg);
     seerSync.at = Date.now();
   }).finally(() => { seerSync.p = null; });
   await seerSync.p;
 }
-export const resetSeerProfiles = () => { seerSync.at = 0; };
+export const resetCatalog = () => { seerSync.at = 0; };
+export const syncSeerProfiles = syncCatalog;
+export const resetSeerProfiles = resetCatalog;
 
 function fromService(s, tierIdx) {
-  if (!s.open || s.app) fail(400, 'service_closed');
+  if (!s.open || s.app || s.hidden) fail(400, 'service_closed');
   const tier = s.prices[tierIdx];
   if (!tier || tier.price == null || tier.soon) fail(400, 'bad_tier');
   const kind = s.link ? 'instant' : s.group === 'merit' ? 'merit' : ['palm', 'face'].includes(s.id) ? 'photo' : 'ask';
@@ -90,11 +132,11 @@ export function priceOf({ key, tier = 0, donation, qty }, opts = {}) {
   key = str(key, 60);
   tier = int(tier) || 0;
   let it;
-  if (key === 'ai-month') it = { key, kind: 'ai', title: 'ดูดวงประจำวัน รายเดือน', icon: '🔮', label: '1 เดือน · ดวงทุกเช้า + ถาม AI ไม่จำกัด', price: AI_PRICE };
+  if (key === 'ai-month') it = { key, kind: 'ai', title: 'ดูดวงประจำวัน รายเดือน', icon: '🔮', label: '1 เดือน · ดวงทุกเช้า + ถาม AI ไม่จำกัด', price: c.AI_PRICE };
   else if (key === 'tarot') it = { key, kind: 'instant', title: 'ไพ่ทาโรต์', icon: '🃏', label: 'เปิดไพ่ 1 ครั้ง', price: c.CATEGORY_PRICE };
   else if (key.startsWith('shop:')) {
     const p = c.SHOP_ITEMS.find((x) => x.id === key.slice(5));
-    if (!p) fail(400, 'unknown_item');
+    if (!p || p.hidden) fail(400, 'unknown_item');
     const q = p.digital ? 1 : Math.max(1, Math.min(MAX_QTY, int(qty) || 1)); // สินค้าดิจิทัลสั่งได้ครั้งละ 1
     it = { key, kind: p.digital ? 'digital' : 'shop', title: p.name, icon: p.icon, label: `${q} ชิ้น`, price: p.price * q, unit: p.price, qty: q, item_id: p.id };
   } else if (key.startsWith('seer:')) {

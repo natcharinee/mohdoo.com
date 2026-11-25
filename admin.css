@@ -221,3 +221,12 @@ a.bell-item:hover { background: var(--card2); }
   .side-top { order: -1; }
   .bell-pop { left: auto; right: 12px; top: 58px; }
 }
+
+/* ===== ราคาและบริการ ===== */
+.p-group { margin: 14px 0 6px; font-size: 14px; color: var(--muted); font-weight: 500; }
+.p-table td { vertical-align: middle; }
+.p-table input[type=number] { padding: 6px 8px; }
+.p-item { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--card2); }
+.p-item.off { opacity: .6; }
+.p-item .p-icon { font-size: 26px; align-self: center; }
+.p-item .p-base { flex-basis: 100%; }

@@ -15,7 +15,7 @@ function renderMongkol() {
   }
   const u = currentUser();
   const day = u && u.birthdate ? DAY_COLORS[birthParts(u).date.getDay()] : null;
-  const merit = SERVICES.filter((s) => s.group === 'merit');
+  const merit = SERVICES.filter((s) => s.group === 'merit' && !s.hidden);
   mongkolBody.innerHTML = `
     <div class="mk-switch" role="tablist" aria-label="มงคล">
       <button role="tab" data-mk="service" aria-selected="${mkTab === 'service'}"><span>🪷</span>บริการมงคล</button>
@@ -53,7 +53,7 @@ function renderMongkol() {
       </div>
       <div class="sec-head"><h3>สินค้าแนะนำ</h3><span class="sec-note">ราคาตัวอย่าง</span></div>
       ${day ? `<p class="mk-tip">✦ คุณเกิดวัน${day.day} สีประจำวันเกิดคือ <b>สี${day.birth}</b> · สีเสริมการเงิน <b>สี${day.money}</b></p>` : ''}
-      <div class="mk-shop">${SHOP_ITEMS.map((p) => `
+      <div class="mk-shop">${SHOP_ITEMS.filter((p) => !p.hidden).map((p) => `
         <article class="mk-item">
           <span class="mk-pi">${p.icon}</span>
           <div class="mk-it"><b>${esc(p.name)}</b><small>${esc(p.personal && day ? `${p.desc} · ของคุณ: สี${day.birth}` : p.desc)}</small></div>
