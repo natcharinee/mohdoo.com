@@ -11,6 +11,13 @@ process.env.ADMIN_PHONES ??= '+66812345678'; // เครื่องตัว�
 const PORT = +(process.env.PORT || 5174);
 const ROOT = process.cwd();
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.ico': 'image/x-icon', '.md': 'text/plain; charset=utf-8' };
+// header ความปลอดภัยแบบเดียวกับบนเว็บจริง (อ่านจาก vercel.json) · รองรับ source แบบ "/(.*)" และ path ตรงตัว
+const VERCEL_HEADERS = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8')).headers || []; } catch (_) { return []; } })();
+function applyHeaders(res, pathname) {
+  for (const h of VERCEL_HEADERS) {
+    if (h.source === '/(.*)' || h.source === pathname) for (const { key, value } of h.headers) res.setHeader(key, value);
+  }
+}
 const API = { '/api/v1': './api/v1.js', '/api/chat': './api/chat.js', '/api/reading': './api/reading.js', '/api/slip': './api/slip.js' };
 
 function readBody(req) {
@@ -54,6 +61,7 @@ http.createServer(async (req, res) => {
     if (err) { res.statusCode = 404; return res.end('not found'); }
     res.setHeader('Content-Type', TYPES[path.extname(file)] || 'application/octet-stream');
     res.setHeader('Cache-Control', 'no-cache');
+    applyHeaders(res, url.pathname);
     res.end(buf);
   });
 }).listen(PORT, '127.0.0.1', () => {

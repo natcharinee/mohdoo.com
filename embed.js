@@ -4,6 +4,10 @@
 (function () {
   var embedded = window.self !== window.top;
   var page = location.pathname.split('/').pop() || 'index.html';
+  // โปรแกรมของเครื่องมือค้นหา (Google ฯลฯ) → แสดงหน้านี้ตรง ๆ ไม่พาไปเปิดซ้อน ให้เก็บเนื้อหาหน้านี้ได้ตาม sitemap/canonical
+  // เนื้อหาเหมือนที่ผู้ใช้เห็นในหน้าแรกทุกอย่าง (ไม่ใช่ cloaking) · ผู้ใช้ทั่วไปยังเปิดซ้อนในหน้าแรกเหมือนเดิม
+  var crawler = /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|linespider|embedly|lighthouse|inspectiontool/i.test(navigator.userAgent || '');
+  if (!embedded && crawler) { document.documentElement.classList.add('standalone'); return; }
   if (!embedded) {
     location.replace('index.html?app=' + encodeURIComponent(page + location.search));
     return;
