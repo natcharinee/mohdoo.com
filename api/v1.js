@@ -2,7 +2,7 @@
 // vercel.json ส่ง /api/v1/<path> มาที่ไฟล์นี้ (?p=<path>) · เครื่องพัฒนาใช้ dev-server.mjs
 // ทุกอย่างทำงานได้โดยไม่ต้องตั้งค่า (โหมดทดลอง) และเปลี่ยนเป็นของจริงเมื่อใส่ Environment Variables (ดู BACKEND.md)
 import { config } from './_lib/config.js';
-import { db, newId } from './_lib/db.js';
+import { db, newId, updateDoc } from './_lib/db.js';
 import { HttpError, fail, send, bodyOf, str, int, ipOf } from './_lib/http.js';
 import { rateLimit, cleanRate } from './_lib/ratelimit.js';
 import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
@@ -141,7 +141,8 @@ async function markPaidOnce(o, by, via) {
     o.status = 'done';
   }
   await saveOrder(o); // บันทึกคำสั่งซื้อก่อน แล้วค่อยต่ออายุสมาชิก (ชนกันจะไม่ต่อซ้ำ)
-  if (u) { u.ai_until = o.ai_until; u.ai_reminded = 0; await store.put('user', u); }
+  // ต่ออายุจากค่าล่าสุดในฐานข้อมูล (ผู้ดูแลอาจแถมวันไปพร้อมกัน) · บันทึกแบบกันทับ
+  if (u) await updateDoc('user', u.id, (x) => { x.ai_until = addMonth(Math.max(x.ai_until || 0, Date.now())); x.ai_reminded = 0; x.updated_at = Date.now(); });
   await notify(o.user_id, { title: 'ชำระเงินสำเร็จ ✓', body: `${o.title} · ${o.amount.toLocaleString('th-TH')} ฿ · ${o.no}`, order_no: o.no });
   await notifyTeam(o).catch((e) => console.error('[notifyTeam]', e)); // แจ้งทีมไม่สำเร็จ ไม่ให้กระทบการชำระเงิน
   return o;
@@ -241,10 +242,10 @@ on('PUT', 'me', async (req) => {
   if (phone && phone !== u.phone) fail(409, 'account_mismatch'); // กันโปรไฟล์ของอีกบัญชีมาทับ
   const json = JSON.stringify(rest);
   if (json.length > 600_000) fail(413, 'profile_too_large');
-  u.profile = JSON.parse(json);
-  u.name = str(rest.name || rest.first, 60);
-  u.updated_at = Date.now();
-  await (await db()).put('user', u);
+  // แก้เฉพาะโปรไฟล์ · สิทธิ์ บันทึกของทีม วันสมาชิก ที่ผู้ดูแลแก้พร้อมกันไม่หาย
+  const saved = await updateDoc('user', u.id, (x) => { x.profile = JSON.parse(json); x.name = str(rest.name || rest.first, 60); x.updated_at = Date.now(); });
+  if (!saved) fail(401, 'login_required');
+  Object.assign(u, saved);
   if (u.role === 'seer') resetHumanOpen(); // หมอดูสมัครครบ → ศาสตร์ของท่านเปิดขายได้
   return { ok: true, updated_at: u.updated_at };
 });
@@ -518,8 +519,7 @@ async function runDaily() {
       daily += 1;
       if (u.ai_until - now < 3 * 864e5 && !u.ai_reminded) {
         await notify(u.id, { title: 'สมาชิกใกล้หมดอายุ', body: `สมาชิกดูดวงรายเดือนหมดอายุ ${new Date(u.ai_until).toLocaleDateString('th-TH')} ต่ออายุเพื่อรับรายงานต่อเนื่อง`, link: '#ai' });
-        u.ai_reminded = now;
-        await store.put('user', u);
+        await updateDoc('user', u.id, (x) => { x.ai_reminded = now; });
         reminded += 1;
       }
     }
@@ -998,14 +998,21 @@ async function inviteSeer(staff, { phone: rawPhone, name, seer_id }) {
   const sid = str(seer_id, 40);
   if (sid && !catalog().SEER_ALL.some((x) => x.id === sid)) fail(400, 'unknown_seer');
   const store = await db();
-  let u = await store.byKey('user', phone);
-  if (u && ['staff', 'admin'].includes(u.role)) fail(400, 'is_staff');
-  if (!u) u = { id: newId('u'), phone, name: '', profile: null, ai_until: 0, created_at: Date.now(), invited_at: Date.now(), invited_by: staff.id };
-  u.role = 'seer';
-  u.seer_id = sid || u.seer_id || null;
-  if (!u.profile) u.name = str(name, 60) || u.name;
-  u.updated_at = Date.now();
-  await store.put('user', u);
+  const found = await store.byKey('user', phone);
+  const apply = (u) => {
+    if (['staff', 'admin'].includes(u.role)) fail(400, 'is_staff');
+    u.role = 'seer';
+    u.seer_id = sid || u.seer_id || null;
+    if (!u.profile) u.name = str(name, 60) || u.name;
+    u.updated_at = Date.now();
+  };
+  let u;
+  if (found) u = await updateDoc('user', found.id, apply); // บัญชีเดิม: แก้แบบกันทับ (ลูกค้าอาจแก้โปรไฟล์อยู่)
+  else {
+    u = { id: newId('u'), phone, name: '', profile: null, ai_until: 0, created_at: Date.now(), invited_at: Date.now(), invited_by: staff.id };
+    apply(u);
+    await store.put('user', u);
+  }
   resetHumanOpen();
   return u;
 }
@@ -1151,11 +1158,11 @@ on('POST', 'admin/users/:id/erase', async (req, res, { id }) => {
 });
 on('POST', 'admin/users/:id', async (req, res, { id }) => {
   const staff = await needRole(req, ['staff', 'admin']);
-  const store = await db();
-  const u = await store.get('user', str(id, 40));
-  if (!u) fail(404, 'not_found');
   const b = bodyOf(req);
-  const before = { role: u.role, seer_id: u.seer_id || null, blocked: !!u.blocked, ai_until: u.ai_until || 0 };
+  let before;
+  // แก้แบบกันทับ: ผู้ดูแลอีกคน หรือลูกค้าที่แก้โปรไฟล์อยู่ จะไม่ทำให้การแก้ของกันและกันหาย
+  const u = await updateDoc('user', str(id, 40), (u) => {
+  before = { role: u.role, seer_id: u.seer_id || null, blocked: !!u.blocked, ai_until: u.ai_until || 0 };
   if (b.role !== undefined) {
     if (staff.role !== 'admin' || !ROLES.includes(b.role)) fail(403, 'forbidden');
     if (u.id === staff.id && b.role !== 'admin') fail(400, 'cannot_demote_self');
@@ -1176,7 +1183,8 @@ on('POST', 'admin/users/:id', async (req, res, { id }) => {
   if (b.logout) u.sv = (u.sv || 0) + 1;
   if (b.note) (u.notes ||= []).push({ at: Date.now(), by: staff.name || staff.phone, text: str(b.note, 1000) });
   u.updated_at = Date.now();
-  await store.put('user', u);
+  });
+  if (!u) fail(404, 'not_found');
   resetHumanOpen();
   const t = { type: 'user', id: u.id, label: userLabel(u) };
   if (u.role !== before.role) await audit(staff, 'role', t, { from: before.role, to: u.role });

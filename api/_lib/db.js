@@ -4,6 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from './config.js';
+import { fail } from './http.js';
 
 const cols = (doc, coll) => ({
   k: doc.phone || doc.k || null,
@@ -128,6 +129,21 @@ let store;
 export async function db() {
   if (!store) store = config.db === 'postgres' ? pgStore() : Promise.resolve(fileStore());
   return store;
+}
+
+// แก้เอกสารแบบกันบันทึกทับ: อ่านล่าสุด → mutate(doc) → เขียนเฉพาะเมื่อไม่มีใครแก้แทรก (rev) ไม่งั้นอ่านใหม่แล้วทำซ้ำ
+// mutate แก้ doc ตรง ๆ (throw ได้ เช่น fail(403)) · ไม่มีเอกสาร → คืน null โดยไม่เรียก mutate
+export async function updateDoc(coll, id, mutate, tries = 8) {
+  const store = await db();
+  for (let i = 0; i < tries; i++) {
+    const doc = await store.get(coll, id);
+    if (!doc) return null;
+    const rev = doc.rev || 0;
+    await mutate(doc);
+    doc.rev = rev + 1;
+    if (await store.putIf(coll, doc, rev)) return doc;
+  }
+  fail(409, 'conflict');
 }
 
 export const newId = (p) => `${p}${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;

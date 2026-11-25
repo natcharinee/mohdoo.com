@@ -3,7 +3,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from './config.js';
-import { db, newId } from './db.js';
+import { db, newId, updateDoc } from './db.js';
 import { fail, cookies, setCookie } from './http.js';
 
 const COOKIE = 'md_s';
@@ -117,12 +117,18 @@ export async function checkOtp(phone, code) {
 // หา/สร้างบัญชีจากเบอร์ · เบอร์ใน ADMIN_PHONES ได้สิทธิ์ผู้ดูแลอัตโนมัติ
 export async function userForPhone(phone) {
   const store = await db();
-  let u = await store.byKey('user', phone);
-  const isNew = !u;
-  if (!u) u = { id: newId('u'), phone, role: 'customer', name: '', profile: null, ai_until: 0, created_at: Date.now() };
-  if (config.adminPhones.includes(phone) && u.role !== 'admin') u.role = 'admin';
-  u.last_login = Date.now();
-  u.updated_at = Date.now();
-  await store.put('user', u);
-  return { user: u, isNew: isNew || !u.profile };
+  const found = await store.byKey('user', phone);
+  const touch = (u) => {
+    if (config.adminPhones.includes(phone) && u.role !== 'admin') u.role = 'admin';
+    u.last_login = Date.now();
+    u.updated_at = Date.now();
+  };
+  let u;
+  if (found) u = await updateDoc('user', found.id, touch); // แก้เฉพาะเวลาเข้าระบบ ไม่ทับสิ่งที่ผู้ดูแลแก้พร้อมกัน
+  if (!u) {
+    u = { id: newId('u'), phone, role: 'customer', name: '', profile: null, ai_until: 0, created_at: Date.now() };
+    touch(u);
+    await store.put('user', u);
+  }
+  return { user: u, isNew: !found || !u.profile };
 }

@@ -53,15 +53,14 @@ export async function chatAccess(req) {
   if (!u || !((u.ai_until || 0) > Date.now())) return { ok: false };
   const store = await db();
   const doc = await store.get('aiuse', `${u.id}:${bkkDay()}`);
-  return { ok: true, user: u, quota: quota(doc?.count || 0) };
+  return { ok: true, user: u, quota: quota(doc?.n ?? doc?.count ?? 0) }; // n = ตัวนับแบบใหม่ (incr) · count = เอกสารแบบเดิม
 }
 
 // นับหลังตอบสำเร็จเท่านั้น (ถามแล้ว AI ล่ม ไม่เสียสิทธิ์)
 export async function chatCount(user) {
   const store = await db();
   const id = `${user.id}:${bkkDay()}`;
-  const doc = (await store.get('aiuse', id)) || { id, user_id: user.id, day: bkkDay(), count: 0, created_at: Date.now() };
-  doc.count += 1;
-  await store.put('aiuse', doc);
-  return quota(doc.count);
+  // นับเพิ่มแบบทำในครั้งเดียว (ถามพร้อมกันหลายคำถามก็นับครบ ไม่เกินโควตา)
+  const n = await store.incr('aiuse', id, Date.now());
+  return quota(n);
 }

@@ -98,3 +98,20 @@ test('กดคืนเงินซ้ำพร้อมกัน → คืน
   assert.equal(o.refund.pending, false);
   assert.equal(o.log.filter((l) => l.act === 'refund' || l.action === 'refund').length, 1);
 });
+
+test('ข้อมูลลูกค้า: ผู้ดูแลบันทึก/แถมวันพร้อมกัน และลูกค้าแก้โปรไฟล์พร้อมกัน → ไม่มีอะไรหาย', async () => {
+  await loginAdmin();
+  const cust = client();
+  const v = await cust.login('+66870000071', 'ลูกค้าแก้พร้อมกัน');
+  const id = v.user.id;
+  const notes = [...Array(8)].map((_, i) => admin(`admin/users/${id}`, { note: `โน้ต${i}` }));
+  const days = [...Array(4)].map(() => admin(`admin/users/${id}`, { ai_days: 10 }));
+  const profile = cust('me', { profile: { name: 'ชื่อใหม่', first: 'ชื่อใหม่', birthdate: '1991-02-03' } }, 'PUT');
+  const rs = await Promise.all([...notes, ...days, profile]);
+  assert.ok(rs.every((r) => r.status === 200), JSON.stringify(rs.map((r) => r.error)));
+  const { user: u } = await admin(`admin/users/${id}`);
+  assert.equal(u.notes.length, 8, 'บันทึกครบ 8');
+  assert.equal(u.profile.birthdate, '1991-02-03', 'โปรไฟล์ที่ลูกค้าแก้ไม่หาย');
+  const left = (u.ai_until - Date.now()) / 864e5;
+  assert.ok(left > 39 && left <= 40, `แถม 4 ครั้ง ครั้งละ 10 วัน = 40 วัน (ได้ ${left.toFixed(2)})`);
+});
