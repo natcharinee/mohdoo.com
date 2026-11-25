@@ -424,3 +424,6 @@ a, button, label, summary { -webkit-tap-highlight-color: transparent; touch-acti
   .policy-dialog { width: 100vw; height: 100dvh; border-radius: 0; border: 0; }
   .policy-dialog footer > * { flex: 1; }
 }
+
+/* ซ่อนปุ่มเข้าสู่ระบบด้วยโซเชียลจนกว่าจะเชื่อมต่อจริง */
+.divider[hidden], .socials[hidden] { display: none; }
