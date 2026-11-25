@@ -2138,3 +2138,9 @@ p.avoid-tag { display: flex; width: fit-content; margin: 8px auto 0; }
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: border-color .2s; }
 .help-btn:hover, .help-btn:focus-visible { border-color: var(--gold); }
 .help-btn svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ปุ่มออกจากระบบและลบข้อมูลในเครื่องนี้ (เครื่องสาธารณะ) */
+.pf-wipe-note { text-align: center; margin-top: 6px; }
+.pf-wipe { background: none; border: 0; padding: 4px 2px; font: inherit; color: var(--gold-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.pf-wipe:hover, .pf-wipe:focus-visible { color: var(--gold); }
+.pf-wipe-note small { color: var(--muted); font-size: .72rem; }

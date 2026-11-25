@@ -236,6 +236,30 @@ function logout() {
   applyUser();
   toast('ออกจากระบบแล้ว แล้วพบกันใหม่ ✦');
 }
+// ออกจากระบบและลบข้อมูลในเครื่องนี้ (เครื่องสาธารณะ / ใช้ร่วมกับคนอื่น · PDPA)
+// ข้อมูลบนเซิร์ฟเวอร์ (โปรไฟล์ ประวัติ คำสั่งซื้อ) ยังอยู่ · ลบเฉพาะที่เก็บในเบราว์เซอร์นี้ + ปิดแจ้งเตือนของบัญชีนี้ในเครื่องนี้
+async function logoutAndWipe() {
+  const u = currentUser();
+  if (!u) return;
+  const msg = window.SERVER
+    ? 'ออกจากระบบและลบข้อมูลของคุณออกจากเครื่องนี้?\n\nโปรไฟล์ ประวัติการดูดวง และคำสั่งซื้อยังอยู่ในบัญชี เข้าสู่ระบบใหม่ก็กลับมาครบ\nแต่รูปโหงวเฮ้ง/ลายมือในหน้าบัญชีเก็บไว้ในเครื่องนี้เท่านั้น จะถูกลบด้วย'
+    : 'ออกจากระบบและลบข้อมูลของคุณออกจากเครื่องนี้?\n\nตอนนี้เป็นโหมดทดลอง ข้อมูลทั้งหมดเก็บอยู่ในเครื่องนี้ จะหายถาวร';
+  if (!confirm(msg)) return;
+  try { // ปิดแจ้งเตือน (ไม่งั้นคนถัดไปที่ใช้เครื่องนี้จะได้แจ้งเตือนของคุณ) · ต้องทำก่อนออกจากระบบ
+    const reg = 'serviceWorker' in navigator ? await navigator.serviceWorker.getRegistration() : null;
+    const sub = reg && reg.pushManager ? await reg.pushManager.getSubscription() : null;
+    if (sub) await sub.unsubscribe();
+    if (window.SERVER && typeof srv === 'function') await srv('me/push', { method: 'DELETE' }).catch(() => {});
+  } catch (_) {}
+  try {
+    const all = accounts();
+    if (u.phone) delete all[u.phone];
+    if (Object.keys(all).length) localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(all)); else localStorage.removeItem(ACCOUNTS_KEY);
+    Object.keys(localStorage).filter((k) => k.startsWith('mohdooDraft:') || k === 'mohdooPush').forEach((k) => localStorage.removeItem(k));
+  } catch (_) {}
+  logout();
+  toast('ออกจากระบบและลบข้อมูลของคุณออกจากเครื่องนี้แล้ว');
+}
 $('avatarBtn').addEventListener('click', toggleAccount);
 $('tabAccount').addEventListener('click', toggleAccount);
 applyUser();

@@ -125,6 +125,7 @@ function renderProfile() {
     ${histSection('shop', 'ประวัติการซื้อสินค้า', 'รายการ', buys, (h) => esc(buyLine(h)), '📦', 'ยังไม่มีการสั่งซื้อ วัตถุมงคลที่สั่งจะแสดงสถานะและเลขพัสดุที่นี่')}
 
     <button class="btn-ghost full pf-logout" id="pfLogout">ออกจากระบบ</button>
+    <p class="pf-note pf-wipe-note"><button type="button" class="pf-wipe" id="pfWipe">ออกจากระบบและลบข้อมูลในเครื่องนี้</button><br><small>ใช้เมื่อเป็นเครื่องสาธารณะ หรือใช้เครื่องร่วมกับคนอื่น</small></p>
     <p class="pf-note">ข้อมูลของคุณใช้เพื่อการทำนายเท่านั้น · <a href="privacy.html">นโยบายความเป็นส่วนตัว</a> · <a href="terms.html">เงื่อนไขการใช้</a> · <a href="refund.html">นโยบายคืนเงิน</a>  · <a href="about.html">คำถามที่พบบ่อย</a> · <a href="contact.html">ติดต่อเรา (LINE @mohdoo)</a></p>
     <p class="pf-note">${window.SERVER ? '<a href="/api/v1/me/export" download id="pfExport">ดาวน์โหลดข้อมูลของฉัน</a> · ' : ''}<button type="button" class="pf-delete" id="pfDelete" style="background:none;border:0;color:#ff8fa6;text-decoration:underline;cursor:pointer;font:inherit">ลบบัญชีและข้อมูลของฉัน</button></p>`;
 }
@@ -240,6 +241,7 @@ profileBody.addEventListener('click', (e) => {
   const t = e.target;
   if (t.closest('#pfEdit, [data-edit]')) return openEdit();
   if (t.closest('#pfLogout')) return logout();
+  if (t.closest('#pfWipe')) return logoutAndWipe();
   if (t.closest('#pfDelete')) return deleteAccount();
   const del = t.closest('[data-photo-del]');
   if (del) {
