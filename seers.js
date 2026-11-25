@@ -67,8 +67,13 @@ const seerMatches = (s, f) => f === 'ทั้งหมด' || (topicCats(f) ? t
 
 // ไม่มีรูป / โหลดรูปไม่ได้ → แสดงอักษรแรกของชื่อแทน (ชื่อ/ลิงก์รูปแก้ได้จากหลังบ้าน จึงต้อง escape)
 const seerInitial = (s) => esc([...String(s.name || '?')][0]);
+// รูปโหลดไม่ได้ → แทนด้วยอักษรแรกของชื่อ (ฟังที่ document แทน onerror ในหน้า เพื่อให้ CSP ห้ามสคริปต์ในหน้าได้)
+document.addEventListener('error', (e) => {
+  const img = e.target;
+  if (img && img.tagName === 'IMG' && img.dataset.initial !== undefined && img.closest('.seer-av')) img.replaceWith(Object.assign(document.createElement('i'), { textContent: img.dataset.initial }));
+}, true);
 const seerAvatar = (s, cls = '') => s.img
-  ? `<span class="seer-av photo ${cls}"><img src="${esc(s.img)}" alt="" loading="lazy" data-initial="${seerInitial(s)}" onerror="this.replaceWith(Object.assign(document.createElement('i'),{textContent:this.dataset.initial}))"></span>`
+  ? `<span class="seer-av photo ${cls}"><img src="${esc(s.img)}" alt="" loading="lazy" data-initial="${seerInitial(s)}"></span>`
   : `<span class="seer-av photo ${cls}"><i>${seerInitial(s)}</i></span>`;
 // ศาสตร์ที่ตรงกับคำค้นหา → ขึ้นก่อนและเน้นสีทอง
 const qHit = (t, q) => typeof q === 'string' && !!q && `${t} ${skillLabel(t)}`.toLowerCase().includes(q.toLowerCase());

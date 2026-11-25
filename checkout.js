@@ -430,7 +430,21 @@ async function renderQR() {
   $('paidBtn').addEventListener('click', confirmPaid);
   $('cancelPay').addEventListener('click', cancelCheckout);
 }
-function drawQR(box, text) {
+// ไลบรารีสร้าง QR โหลดเฉพาะตอนถึงขั้นจ่ายเงิน (หน้าแรกไม่ต้องต่อไปเซิร์ฟเวอร์ภายนอก) · ตรวจไฟล์ด้วย SRI
+const QR_LIB = { src: 'https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js', sri: 'sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw==' };
+let qrLib = null;
+function loadQRLib() {
+  if (typeof qrcode === 'function') return Promise.resolve();
+  return (qrLib ||= new Promise((resolve, reject) => {
+    const s = Object.assign(document.createElement('script'), { src: QR_LIB.src, integrity: QR_LIB.sri, crossOrigin: 'anonymous', referrerPolicy: 'no-referrer' });
+    s.onload = resolve;
+    s.onerror = () => { qrLib = null; reject(new Error('qr_lib')); };
+    document.head.appendChild(s);
+  }));
+}
+async function drawQR(box, text) {
+  box.innerHTML = '<div class="qr-fallback">กำลังสร้าง QR…</div>';
+  try { await loadQRLib(); } catch (_) { box.innerHTML = '<div class="qr-fallback">โหลด QR ไม่สำเร็จ · ลองกดกลับแล้วเข้าใหม่</div>'; return; }
   try {
     const qr = qrcode(0, 'M');
     qr.addData(unescape(encodeURIComponent(text)));

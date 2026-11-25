@@ -36,7 +36,7 @@ const ERR = {
   file_too_large: 'ไฟล์ใหญ่เกิน 8 MB', bad_file: 'ชนิดไฟล์ไม่รองรับ (รูป JPG/PNG/WebP หรือวิดีโอ MP4/MOV)', too_many_requests: 'ทำรายการถี่เกินไป รอสักครู่',
   otp_not_configured: 'ยังไม่ได้ตั้งค่าระบบ OTP', bad_price: 'ราคาต้องอยู่ระหว่าง 20–10,000 บาท', bad_qty: 'จำนวนไม่ถูกต้อง', is_staff: 'เบอร์นี้เป็นทีมงาน/ผู้ดูแลอยู่แล้ว', unknown_seer: 'ไม่พบโปรไฟล์หมอดูนี้', cannot_demote_self: 'ลดสิทธิ์ตัวเองไม่ได้',
   ref_required: 'ใส่เลขอ้างอิงคำขอก่อน', confirm_mismatch: 'เบอร์ที่พิมพ์ไม่ตรงกับบัญชีนี้ ยังไม่ได้ลบ',
-  cannot_open: 'บริการนี้ยังไม่มีขั้นตอนรองรับบนเว็บ เปิดจองไม่ได้', not_priced: 'บริการนี้คิดราคาตามใบเสนอราคา ตั้งราคาไม่ได้',
+  cannot_open: 'บริการนี้ยังไม่มีขั้นตอนรองรับบนเว็บ เปิดจองไม่ได้', range_too_long: 'เลือกช่วงได้ไม่เกิน 366 วัน', bad_range: 'ช่วงวันที่ไม่ถูกต้อง', not_priced: 'บริการนี้คิดราคาตามใบเสนอราคา ตั้งราคาไม่ได้',
   conflict: 'มีคนแก้รายการนี้ไปก่อนคุณ · โหลดข้อมูลล่าสุดให้แล้ว ตรวจแล้วทำอีกครั้ง', not_team: 'มอบหมายได้เฉพาะทีมงาน/หมอดู', base_profile: 'โปรไฟล์ตั้งต้นลบไม่ได้ ใช้ซ่อนแทน', in_use: 'โปรไฟล์นี้เชื่อมกับบัญชีหมอดูอยู่ ยกเลิกการเชื่อมก่อน', bad_img: 'ลิงก์รูปต้องขึ้นต้นด้วย https://', out_of_stock: 'สินค้าหมด', busy: 'ระบบไม่ว่าง ลองอีกครั้ง',
 };
 let routeCtl = null; // เปลี่ยนหน้า → ยกเลิกคำขอของหน้าก่อน (กันข้อมูลเก่าทับหน้าใหม่)
@@ -168,7 +168,7 @@ function route() {
   routeCtl?.abort();
   routeCtl = new AbortController();
   view.innerHTML = '<p class="empty">กำลังโหลด…</p>';
-  const views = { pricing: viewPricing, audit: viewAudit, stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings, kb: viewKB };
+  const views = { report: viewReport, pricing: viewPricing, audit: viewAudit, stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings, kb: viewKB };
   run((views[v] || viewOrders))(decodeURIComponent(arg || ''));
   scrollTo(0, 0);
 }
@@ -178,7 +178,7 @@ async function viewDash() {
   const s = await api('admin/stats');
   const max = Math.max(1, ...s.series.map((d) => d.revenue));
   view.innerHTML = `
-    <div class="head"><h1>ภาพรวม</h1><span class="muted small">อัปเดต ${dt(Date.now())}</span><button class="btn sm" onclick="route()">↻ รีเฟรช</button></div>
+    <div class="head"><h1>ภาพรวม</h1><span class="muted small">อัปเดต ${dt(Date.now())}</span><button class="btn sm" id="dashRefresh">↻ รีเฟรช</button></div>
     <div class="kpis">
       <div class="kpi"><small>ยอดขายวันนี้</small><b>${baht(s.today.revenue)}</b><em>${s.today.orders} รายการ</em></div>
       <div class="kpi"><small>7 วันล่าสุด</small><b>${baht(s.d7.revenue)}</b><em>${s.d7.orders} รายการ</em></div>
@@ -203,6 +203,7 @@ async function viewDash() {
     ${s.lowStock.length ? `<a class="card" href="#stock" style="display:block;margin-top:16px;text-decoration:none;color:inherit;border-color:var(--warn)"><h3 style="color:var(--warn)">📦 สินค้าใกล้หมด</h3>
       <div class="chips">${s.lowStock.map((p) => `<span class="chip ${p.qty ? 'warn' : 'bad'}">${p.icon} ${esc(p.name)} · ${p.qty ? `เหลือ ${p.qty}` : 'หมดแล้ว'}</span>`).join('')}</div></a>` : ''}
     <section class="card" style="margin-top:16px"><h3>สถานะระบบ</h3>${configChips(s.config)}</section>`;
+  $('dashRefresh')?.addEventListener('click', () => route());
 }
 function configChips(c) {
   const chip = (ok, warn, label, txt) => `<span class="chip ${ok ? 'ok' : warn ? 'warn' : 'bad'}">${label}: ${txt}</span>`;
@@ -218,7 +219,7 @@ function configChips(c) {
 }
 
 // ---------- รายการคำสั่งซื้อ ----------
-const oq = { status: TABS[0][1], q: '', kind: '', mine: false, offset: 0 };
+const oq = { status: TABS[0][1], q: '', kind: '', mine: false, from: '', to: '', offset: 0 };
 async function viewOrders(arg) {
   if (arg !== undefined && arg !== '') { oq.status = arg; oq.offset = 0; history.replaceState(null, '', '#orders'); }
   const params = new URLSearchParams({ limit: 30, offset: oq.offset });
@@ -226,17 +227,21 @@ async function viewOrders(arg) {
   if (oq.q) params.set('q', oq.q);
   if (oq.kind) params.set('kind', oq.kind);
   if (oq.mine) params.set('mine', 1);
+  if (oq.from) params.set('from', oq.from);
+  if (oq.to) params.set('to', oq.to);
   const r = await api(`admin/orders?${params}`);
+  const exportHref = oq.from || oq.to ? `/api/v1/admin/export/orders?from=${oq.from || oq.to}&to=${oq.to || oq.from}` : '/api/v1/admin/export/orders?days=31';
   const kinds = me.role === 'seer' ? ['reading', 'photo'] : Object.keys(KIND);
   view.innerHTML = `
     <div class="head"><h1>คำสั่งซื้อ</h1>
-      ${can('staff', 'admin') ? '<a class="btn sm" href="/api/v1/admin/export/orders?days=31">⬇︎ ส่งออก CSV 31 วัน</a>' : ''}</div>
+      ${can('staff', 'admin') ? `<a class="btn sm" href="${exportHref}">⬇︎ ส่งออก CSV ${oq.from || oq.to ? 'ช่วงที่เลือก' : '31 วัน'}</a>` : ''}</div>
     <div class="tabs">${TABS.map(([l, s]) => `<button data-st="${s}" class="${s === oq.status ? 'on' : ''}">${l}</button>`).join('')}</div>
     <form class="row" id="oFilter" style="margin-bottom:12px">
       <input class="grow" name="q" value="${esc(oq.q)}" placeholder="ค้นหา เลขที่ ชื่อ เบอร์ หรือคำในฟอร์ม">
       <select name="kind" style="width:auto"><option value="">ทุกประเภท</option>${kinds.map((k) => `<option value="${k}" ${k === oq.kind ? 'selected' : ''}>${KIND[k]}</option>`).join('')}</select>
       <label class="row" style="display:flex"><input type="checkbox" name="mine" ${oq.mine ? 'checked' : ''} style="width:auto"> งานของฉัน</label>
-      <button class="btn">ค้นหา</button>
+      <span class="row" style="gap:6px"><label class="small">สั่งตั้งแต่<input type="date" name="from" value="${oq.from}" max="${todayTH()}"></label><label class="small">ถึง<input type="date" name="to" value="${oq.to}" max="${todayTH()}"></label></span>
+      <button class="btn">ค้นหา</button>${oq.from || oq.to ? ' <button type="button" class="btn ghost sm" id="oClearDate">ล้างวันที่</button>' : ''}
     </form>
     ${r.orders.length ? `<div class="tscroll"><table class="table">
       <tr><th>เลขที่ / เวลา</th><th>รายการ</th><th class="hide-m">ลูกค้า</th><th>สถานะ</th><th class="num">ยอด</th></tr>
@@ -250,7 +255,8 @@ async function viewOrders(arg) {
       <span class="row"><button class="btn sm" id="prev" ${oq.offset ? '' : 'disabled'}>‹ ก่อนหน้า</button><button class="btn sm" id="next" ${oq.offset + 30 < r.total ? '' : 'disabled'}>ถัดไป ›</button></span></div>`
     : '<p class="empty">ไม่มีรายการในหมวดนี้ ✦</p>'}`;
   view.querySelectorAll('[data-st]').forEach((b) => b.addEventListener('click', () => { oq.status = b.dataset.st; oq.offset = 0; route(); }));
-  $('oFilter').addEventListener('submit', (e) => { e.preventDefault(); const f = e.target; oq.q = f.q.value.trim(); oq.kind = f.kind.value; oq.mine = f.mine.checked; oq.offset = 0; route(); });
+  $('oFilter').addEventListener('submit', (e) => { e.preventDefault(); const f = e.target; oq.q = f.q.value.trim(); oq.kind = f.kind.value; oq.mine = f.mine.checked; oq.from = f.from.value; oq.to = f.to.value; if (oq.from && oq.to && oq.from > oq.to) [oq.from, oq.to] = [oq.to, oq.from]; oq.offset = 0; route(); });
+  $('oClearDate')?.addEventListener('click', () => { oq.from = ''; oq.to = ''; oq.offset = 0; route(); });
   $('prev')?.addEventListener('click', () => { oq.offset = Math.max(0, oq.offset - 30); route(); });
   $('next')?.addEventListener('click', () => { oq.offset += 30; route(); });
   view.querySelectorAll('tr[data-href]').forEach((tr) => tr.addEventListener('click', () => { location.hash = tr.dataset.href; }));
@@ -381,6 +387,66 @@ async function shrink(file, max) {
 
 // ---------- ลูกค้า ----------
 const uq = { q: '', role: '', ai: false, offset: 0 };
+
+// ---------- รายงานยอดขายตามช่วงวันที่ (นับตามวันที่ชำระ · เวลาไทย) ----------
+const todayTH = () => new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);
+const addDaysTH = (d, n) => new Date(Date.parse(`${d}T00:00:00Z`) + n * 864e5).toISOString().slice(0, 10);
+const rq = { from: '', to: '' };
+function reportPresets() {
+  const t = todayTH(); const [y, m] = t.split('-').map(Number);
+  const pad = (n) => String(n).padStart(2, '0');
+  const lastPrev = addDaysTH(`${y}-${pad(m)}-01`, -1);
+  return [['วันนี้', t, t], ['7 วัน', addDaysTH(t, -6), t], ['30 วัน', addDaysTH(t, -29), t],
+    ['เดือนนี้', `${y}-${pad(m)}-01`, t], ['เดือนก่อน', `${lastPrev.slice(0, 7)}-01`, lastPrev], ['ปีนี้', `${y}-01-01`, t]];
+}
+async function viewReport() {
+  if (!rq.to) { rq.to = todayTH(); rq.from = addDaysTH(rq.to, -29); }
+  const r = await api(`admin/report?from=${rq.from}&to=${rq.to}`);
+  const S = r.summary;
+  // ช่วงยาวกว่า 62 วัน → รวมเป็นรายเดือนในกราฟ
+  const monthly = r.days.length > 62;
+  const series = monthly ? Object.values(r.days.reduce((acc, d) => { const k = d.day.slice(0, 7); const x = (acc[k] ||= { day: k, orders: 0, net: 0 }); x.orders += d.orders; x.net += d.net; return acc; }, {})) : r.days;
+  const max = Math.max(1, ...series.map((d) => d.net));
+  const label = (d) => (monthly ? `${+d.day.slice(5, 7)}/${d.day.slice(2, 4)}` : `${+d.day.slice(8, 10)}`);
+  const thDate = (d) => new Date(`${d}T00:00:00+07:00`).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit', timeZone: 'Asia/Bangkok' });
+  view.innerHTML = `
+    <div class="head"><h1>รายงานยอดขาย</h1><span class="muted small">${thDate(r.from)} – ${thDate(r.to)} · ${r.days.length} วัน · นับตามวันที่ชำระเงิน</span>
+      <a class="btn sm" href="/api/v1/admin/export/orders?from=${r.from}&to=${r.to}">⬇︎ ส่งออก CSV ช่วงนี้</a></div>
+    <form class="card row" id="rForm" style="margin-bottom:16px;align-items:flex-end">
+      <div class="tabs" style="margin:0">${reportPresets().map(([l, f, t]) => `<button type="button" data-rp="${f}|${t}" class="${f === r.from && t === r.to ? 'on' : ''}">${l}</button>`).join('')}</div>
+      <label class="small">ตั้งแต่<input type="date" name="from" value="${r.from}" max="${todayTH()}"></label>
+      <label class="small">ถึง<input type="date" name="to" value="${r.to}" max="${todayTH()}"></label>
+      <button class="btn primary">ดูรายงาน</button>
+    </form>
+    <div class="kpis">
+      <div class="kpi"><small>ยอดรับชำระ</small><b>${baht(S.gross)}</b><em>${S.orders} รายการ · ลูกค้า ${S.customers} คน</em></div>
+      <div class="kpi ${S.refunds ? 'alert' : ''}"><small>คืนเงิน</small><b>${baht(S.refunds)}</b><em>${S.refunded_orders} รายการ</em></div>
+      <div class="kpi"><small>ยอดสุทธิ</small><b>${baht(S.net)}</b><em>เฉลี่ย ${baht(S.avg)} / รายการ</em></div>
+      <div class="kpi"><small>เงินทำบุญ (ฝากถวาย)</small><b>${baht(S.donation)}</b><em>ไม่ใช่รายได้บริษัท</em></div>
+      <div class="kpi"><small>ค่าบริการสุทธิ</small><b>${baht(S.service_net)}</b><em>สุทธิ − เงินทำบุญ</em></div>
+    </div>
+    <section class="card" style="margin-bottom:16px"><h3>ยอดสุทธิ${monthly ? 'รายเดือน' : 'รายวัน'}</h3>
+      ${S.orders ? `<div class="chart rchart">${series.map((d) => `<div class="bar"><span style="height:${(d.net / max) * 100}%" data-v="${baht(d.net)} · ${d.orders} รายการ"></span><small>${label(d)}</small></div>`).join('')}</div>` : '<p class="empty">ไม่มียอดขายในช่วงนี้</p>'}
+    </section>
+    <div class="grid2">
+      <section class="card"><h3>แยกตามประเภท</h3>
+        ${r.by_kind.length ? `<div class="tscroll"><table class="table"><tr><th>ประเภท</th><th class="num">รายการ</th><th class="num">คืนเงิน</th><th class="num">สุทธิ</th></tr>
+          ${r.by_kind.map((k) => `<tr><td>${esc(k.name)}</td><td class="num">${k.orders}</td><td class="num">${k.refunds ? baht(k.refunds) : '—'}</td><td class="num">${baht(k.net)}</td></tr>`).join('')}</table></div>` : '<p class="empty">—</p>'}
+      </section>
+      <section class="card"><h3>ขายดี (สูงสุด 15 รายการ)</h3>
+        ${r.top_items.length ? `<div class="tscroll"><table class="table"><tr><th>รายการ</th><th class="num">ครั้ง</th><th class="num">สุทธิ</th></tr>
+          ${r.top_items.map((x) => `<tr><td>${esc(x.icon)} ${esc(x.title)}${x.qty > x.orders ? `<span class="sub">รวม ${x.qty} ชิ้น</span>` : ''}</td><td class="num">${x.orders}</td><td class="num">${baht(x.net)}</td></tr>`).join('')}</table></div>` : '<p class="empty">—</p>'}
+      </section>
+    </div>`;
+  $('rForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    let { from, to } = { from: e.target.from.value, to: e.target.to.value };
+    if (!from || !to) return toast('เลือกวันที่ให้ครบ');
+    if (from > to) [from, to] = [to, from];
+    rq.from = from; rq.to = to; route();
+  });
+  view.querySelectorAll('[data-rp]').forEach((b) => b.addEventListener('click', () => { [rq.from, rq.to] = b.dataset.rp.split('|'); route(); }));
+}
 
 // ---------- ราคาและบริการ (ผู้ดูแลเท่านั้น) ----------
 // ค่าตั้งต้นอยู่ในไฟล์ (services-data.js · shop-data.js) · ที่แก้ตรงนี้เก็บในฐานข้อมูล · หน้าเว็บอัปเดตภายใน 1 นาที
@@ -800,7 +866,7 @@ async function viewSeers() {
     ${seers.length ? `<div class="tscroll"><table class="table">
       <tr><th>หมอดู</th><th>เบอร์</th><th>โปรไฟล์บนเว็บ</th><th>ราคา/เรื่อง</th><th>สถานะ</th><th class="num">รอตอบ</th><th class="num">ตอบแล้ว</th></tr>
       ${seers.map((x) => `<tr data-href="#user/${x.id}"><td>${esc(x.name || '—')}</td><td>${esc(x.phone)}</td><td>${esc(x.seer_name || '—')}</td>
-        <td>${!x.seer_id ? '<span class="muted small">เชื่อมโปรไฟล์ก่อน</span>' : can('admin') ? `<form class="row" data-price="${x.seer_id}" style="flex-wrap:nowrap" onclick="event.stopPropagation()"><input name="p" type="number" min="20" max="10000" value="${x.price || ''}" placeholder="${base}" style="width:84px"><button class="btn sm">บันทึก</button></form>` : baht(x.price || base)}</td>
+        <td>${!x.seer_id ? '<span class="muted small">เชื่อมโปรไฟล์ก่อน</span>' : can('admin') ? `<form class="row" data-price="${x.seer_id}" style="flex-wrap:nowrap"><input name="p" type="number" min="20" max="10000" value="${x.price || ''}" placeholder="${base}" style="width:84px"><button class="btn sm">บันทึก</button></form>` : baht(x.price || base)}</td>
         <td>${x.blocked ? '<span class="chip bad">ระงับ</span>' : x.registered ? `<span class="chip ok">สมัครแล้ว</span><span class="sub">เข้าล่าสุด ${dt(x.last_login)}</span>` : `<span class="chip warn">รอสมัครที่หน้าเว็บ</span><span class="sub">เพิ่มเมื่อ ${dt(x.invited_at)}</span>`}</td>
         <td class="num">${x.open ? `<b style="color:var(--warn)">${x.open}</b>` : 0}</td><td class="num">${x.answered}</td></tr>`).join('')}
     </table></div>` : '<p class="empty">ยังไม่มีหมอดู · เพิ่มชื่อและเบอร์ด้านบน</p>'}
@@ -824,6 +890,7 @@ async function viewSeers() {
     toast(r.registered ? 'เปลี่ยนบัญชีนี้เป็นหมอดูแล้ว ✓' : 'เพิ่มหมอดูแล้ว · รอสมัครที่หน้าเว็บด้วยเบอร์นี้');
     route();
   }));
+  view.querySelectorAll('[data-price]').forEach((f) => f.addEventListener('click', (e) => e.stopPropagation())); // กดในช่องราคาไม่ให้เปิดหน้าหมอดู
   view.querySelectorAll('[data-price]').forEach((f) => f.addEventListener('submit', run(async (e) => {
     e.preventDefault();
     const r = await api('admin/seers/price', { method: 'POST', body: { seer_id: f.dataset.price, price: f.p.value === '' ? null : +f.p.value } });
@@ -1123,6 +1190,7 @@ document.addEventListener('click', (e) => {
   d.showModal();
 });
 $('viewer').addEventListener('close', () => d0());
+$('viewerClose').addEventListener('click', () => $('viewer').close());
 const d0 = () => { const v = $('viewer').querySelector('video'); v.pause(); };
 
 boot();

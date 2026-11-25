@@ -704,6 +704,60 @@ on('GET', 'admin/stats', async (req) => {
   };
 });
 
+// ---------- รายงานยอดขายตามช่วงวันที่ (เวลาไทย · นับตามวันที่ชำระเงิน) ----------
+// from/to = YYYY-MM-DD (รวมทั้งสองวัน) · ไม่เกิน 366 วัน
+const BKK = 7 * 3600e3;
+const bkkDayStart = (d) => Date.parse(`${d}T00:00:00+07:00`);
+const bkkDate = (t) => new Date(t + BKK).toISOString().slice(0, 10);
+function dateRange(q, defDays = 30) {
+  const ok = (d) => /^\d{4}-\d{2}-\d{2}$/.test(d || '') && !Number.isNaN(bkkDayStart(d));
+  const today = bkkDate(Date.now());
+  const to = ok(q.to) ? q.to : today;
+  const from = ok(q.from) ? q.from : bkkDate(bkkDayStart(to) - (defDays - 1) * 864e5);
+  const a = bkkDayStart(from); const b = bkkDayStart(to) + 864e5;
+  if (b <= a) fail(400, 'bad_range');
+  if (b - a > 366 * 864e5) fail(400, 'range_too_long', { max_days: 366 });
+  return { from, to, a, b };
+}
+on('GET', 'admin/report', async (req) => {
+  await needRole(req, ['staff', 'admin']);
+  const { from, to, a, b } = dateRange(req.query || {});
+  // คำสั่งซื้อสร้างก่อนชำระไม่นาน (QR หมดอายุ 15 นาที · ยืนยันรับเงินเองอาจช้ากว่า) → ดึงย้อนไป 7 วันแล้วกรองตามวันที่ชำระ
+  const { rows } = await (await db()).list('order', { since: a - 7 * 864e5, before: b, limit: 100000, asc: true });
+  const paid = rows.filter((o) => o.paid_at >= a && o.paid_at < b);
+  const refundOf = (o) => (o.refund && !o.refund.pending ? o.refund.amount || 0 : 0);
+  const sum = (list, f) => list.reduce((s, o) => s + (f(o) || 0), 0);
+  const days = [];
+  for (let t = a; t < b; t += 864e5) days.push({ day: bkkDate(t), orders: 0, gross: 0, refunds: 0, net: 0 });
+  const dayIdx = Object.fromEntries(days.map((d, i) => [d.day, i]));
+  const byKind = {}; const byItem = {};
+  for (const o of paid) {
+    const r = refundOf(o);
+    const d = days[dayIdx[bkkDate(o.paid_at)]];
+    if (d) { d.orders += 1; d.gross += o.amount; d.refunds += r; d.net += o.amount - r; }
+    const k = (byKind[o.kind] ||= { kind: o.kind, name: KIND_NAME[o.kind] || o.kind, orders: 0, gross: 0, refunds: 0, net: 0 });
+    k.orders += 1; k.gross += o.amount; k.refunds += r; k.net += o.amount - r;
+    const ik = o.item_id ? `shop:${o.item_id}` : o.key || o.title;
+    const it = (byItem[ik] ||= { key: ik, title: o.title, icon: o.icon || '', kind: o.kind, orders: 0, qty: 0, net: 0 });
+    it.orders += 1; it.qty += o.qty || 1; it.net += o.amount - r;
+  }
+  const gross = sum(paid, (o) => o.amount);
+  const refunds = sum(paid, refundOf);
+  const donation = sum(paid.filter((o) => !refundOf(o)), (o) => o.donation);
+  return {
+    from, to,
+    summary: {
+      orders: paid.length, gross, refunds, net: gross - refunds,
+      refunded_orders: paid.filter((o) => refundOf(o)).length,
+      donation, // เงินทำบุญที่ลูกค้าฝากไปถวาย (ไม่ใช่รายได้ของบริษัท)
+      service_net: gross - refunds - donation,
+      avg: paid.length ? Math.round((gross - refunds) / paid.length) : 0,
+      customers: new Set(paid.map((o) => o.user_id)).size,
+    },
+    days, by_kind: Object.values(byKind).sort((x, y) => y.net - x.net),
+    top_items: Object.values(byItem).sort((x, y) => y.net - x.net).slice(0, 15),
+  };
+});
 on('GET', 'admin/orders', async (req) => {
   const staff = await needRole(req);
   const q = req.query || {};
@@ -712,6 +766,7 @@ on('GET', 'admin/orders', async (req) => {
   if (q.status) f.status = str(q.status, 80).split(',');
   if (q.kind) f.where = { kind: str(q.kind, 20) };
   if (q.mine) f.where = { ...(f.where || {}), assignee: staff.id };
+  if (q.from || q.to) { const r = dateRange(q, 3650); f.since = r.a; f.before = r.b; } // วันที่สั่ง (เวลาไทย)
   let { rows, total } = await store.list('order', f);
   if (staff.role === 'seer') rows = rows.filter((o) => canSee(staff, o)).map((o) => ({ ...o, phone: '' }));
   return { orders: rows.map(adminOrder), total };
@@ -1196,8 +1251,10 @@ on('POST', 'admin/cron/daily', async (req) => { const staff = await needRole(req
 on('GET', 'admin/export/orders', async (req, res) => {
   const staff = await needRole(req, ['staff', 'admin']);
   const q = req.query || {};
-  const since = q.days ? Date.now() - Math.min(int(q.days) || 30, 3650) * 864e5 : 0;
-  const { rows } = await (await db()).list('order', { since, limit: 100000, asc: true });
+  let since = q.days ? Date.now() - Math.min(int(q.days) || 30, 3650) * 864e5 : 0;
+  let before; let range = null;
+  if (q.from || q.to) { range = dateRange(q); since = range.a; before = range.b; } // ช่วงวันที่สั่ง (เวลาไทย)
+  const { rows } = await (await db()).list('order', { since, before, limit: 100000, asc: true });
   // ข้อความที่ขึ้นต้นด้วย = + - @ (หรือ tab/ขึ้นบรรทัด) Excel จะตีความเป็นสูตร → ใส่ ' นำหน้า (ตัวเลขติดลบยังเป็นตัวเลข)
   const cell = (v) => {
     let t = String(v ?? '');
@@ -1209,7 +1266,7 @@ on('GET', 'admin/export/orders', async (req, res) => {
   await audit(staff, 'export', { type: 'export', label: 'คำสั่งซื้อ (CSV)' }, { days: q.days ? int(q.days) : 'all', rows: rows.length }); // มีเบอร์/ชื่อลูกค้า = ข้อมูลส่วนบุคคล
   const lines = rows.map((o) => [o.no, th(o.created_at), th(o.paid_at), STATUS[o.status], KIND_NAME[o.kind], o.title, o.label, o.price, o.donation || 0, o.amount, o.name, o.phone, o.pay?.provider, o.refund?.amount || ''].map(cell).join(','));
   send(res, 200, `﻿${[head.map(cell).join(','), ...lines].join('\r\n')}`, {
-    'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': `attachment; filename="mohdoo-orders-${new Date().toISOString().slice(0, 10)}.csv"`,
+    'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': `attachment; filename="mohdoo-orders-${range ? `${range.from}_${range.to}` : new Date().toISOString().slice(0, 10)}.csv"`,
   });
   return undefined;
 });
@@ -1233,8 +1290,10 @@ on('POST', 'admin/stock', async (req) => {
 on('GET', 'site-config.js', async (req, res) => {
   send(res, 200, `window.SITE_CFG=${JSON.stringify(publicSiteCfg())};`, {
     'Content-Type': 'text/javascript; charset=utf-8',
-    // เบราว์เซอร์ถามใหม่ทุกครั้ง · CDN ของ Vercel เก็บไว้ไม่เกิน 30 วินาที (+30 วินาทีระหว่างดึงค่าใหม่) → ราคาใหม่ขึ้นภายใน 1 นาที
-    'Cache-Control': 'public, max-age=0, must-revalidate, s-maxage=30, stale-while-revalidate=30',
+    // ไฟล์นี้ต้องโหลดก่อนสคริปต์อื่น (หน้าเว็บรอ) → ต้องตอบเร็วเสมอ:
+    // CDN ของ Vercel ส่งสำเนาที่มีอยู่ทันที แล้วไปดึงค่าใหม่เบื้องหลัง (ฐานข้อมูลที่หลับอยู่ปลุกนาน 1–3 วินาที ลูกค้าไม่ต้องรอ)
+    // ค่าใหม่ใช้หลัง 30 วินาที: คนแรกหลังจากนั้นยังเห็นค่าเดิม 1 ครั้ง แล้วคนถัดไปเห็นค่าใหม่ · เบราว์เซอร์ถาม CDN ทุกครั้ง
+    'Cache-Control': 'public, max-age=0, must-revalidate, s-maxage=30, stale-while-revalidate=604800',
   });
   return undefined;
 });

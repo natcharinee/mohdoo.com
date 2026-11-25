@@ -230,3 +230,8 @@ a.bell-item:hover { background: var(--card2); }
 .p-item.off { opacity: .6; }
 .p-item .p-icon { font-size: 26px; align-self: center; }
 .p-item .p-base { flex-basis: 100%; }
+
+/* ===== รายงานยอดขาย ===== */
+.rchart { gap: 2px; overflow-x: auto; }
+.rchart .bar { min-width: 14px; }
+.rchart .bar small { font-size: 10px; }

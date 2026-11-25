@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
   <!-- ตั้งโหมดสี (มืด/สว่าง) ก่อนแสดงหน้า กันจอกระพริบ -->
-  <script>try { if (localStorage.getItem('admin-theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (_) {}</script>
+  <script src="admin-theme.js"></script>
 </head>
 <body>
   <!-- เข้าสู่ระบบ: เบอร์ทีมงาน → OTP -->
@@ -42,6 +42,7 @@
         <button type="button" class="bell" id="bellBtn" aria-label="การแจ้งเตือน" aria-haspopup="true" aria-expanded="false" aria-controls="bellPop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><b id="bellN" hidden></b></button></div>
       <nav id="nav">
         <a href="#dash" data-v="dash" data-r="staff admin"><i>📊</i>ภาพรวม</a>
+        <a href="#report" data-v="report" data-r="staff admin"><i>📈</i>รายงานยอดขาย</a>
         <a href="#orders" data-v="orders"><i>🧾</i>คำสั่งซื้อ<b class="dot" id="qBadge" hidden></b></a>
         <a href="#users" data-v="users" data-r="staff admin"><i>👥</i>ลูกค้า</a>
         <a href="#seers" data-v="seers" data-r="staff admin"><i>🔮</i>หมอดู</a>
@@ -61,7 +62,7 @@
     </section>
   </div>
   <div class="toast" id="toast" hidden></div>
-  <dialog id="viewer"><img alt=""><video controls></video><button class="btn ghost sm" value="close" onclick="this.closest('dialog').close()">ปิด</button></dialog>
+  <dialog id="viewer"><img alt=""><video controls></video><button class="btn ghost sm" value="close" id="viewerClose">ปิด</button></dialog>
   <script src="admin.js"></script>
 </body>
 </html>
