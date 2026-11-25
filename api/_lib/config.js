@@ -19,7 +19,8 @@ export const config = {
   twilio: { sid: env.TWILIO_ACCOUNT_SID, token: env.TWILIO_AUTH_TOKEN, verify: env.TWILIO_VERIFY_SID },
   pay: env.OMISE_SECRET_KEY ? 'omise' : demo(env.PAY_DEMO) ? 'demo' : 'off',
   omiseSecret: env.OMISE_SECRET_KEY || '',
-  storage: env.BLOB_READ_WRITE_TOKEN ? 'blob' : 'file',
+  // Vercel Blob: แบบเดิมใช้ BLOB_READ_WRITE_TOKEN · store แบบใหม่ใช้ BLOB_STORE_ID + OIDC ของ Vercel (ไลบรารีจัดการให้เอง)
+  storage: env.BLOB_READ_WRITE_TOKEN || env.BLOB_STORE_ID ? 'blob' : 'file',
   vapid: env.VAPID_PUBLIC_KEY && env.VAPID_PRIVATE_KEY ? { pub: env.VAPID_PUBLIC_KEY, priv: env.VAPID_PRIVATE_KEY, subject: env.VAPID_SUBJECT || 'mailto:admin@example.com' } : null,
   cronSecret: env.CRON_SECRET || '',
   ai: !!env.ANTHROPIC_API_KEY, // แม่หมอ AI พร้อมใช้ (MOHDOO_AI_CODE เป็นแค่รหัสทดสอบของทีม ไม่ต้องมี)
