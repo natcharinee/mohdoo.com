@@ -218,7 +218,7 @@ on('GET', 'health', async () => {
   const store = await db();
   return {
     ok: true, version: 1, db: store.kind, otp: config.otp, pay: config.pay, storage: config.storage,
-    diag: { vercel_env: process.env.VERCEL_ENV || null, commit: String(process.env.VERCEL_GIT_COMMIT_SHA || '').slice(0, 7) || null, prod: config.prod, session_secret_set: !!process.env.SESSION_SECRET, preview_secret_set: !!process.env.PREVIEW_SESSION_SECRET }, // ไล่ปัญหาตัวแปรบน Vercel (แสดงแค่ true/false ไม่มีค่าจริง)
+    ...(config.prod ? {} : { diag: { vercel_env: process.env.VERCEL_ENV || null, commit: String(process.env.VERCEL_GIT_COMMIT_SHA || '').slice(0, 7) || null, prod: config.prod, session_secret_set: !!process.env.SESSION_SECRET, preview_secret_set: !!process.env.PREVIEW_SESSION_SECRET } }), // ไล่ปัญหาตัวแปรบน Vercel (แสดงแค่ true/false ไม่มีค่าจริง)
     session_key: config.sessionSecret ? 'env' : 'temp', // 'temp' = ไม่มีกุญแจจากตัวแปร (สุ่มเป็นไฟล์ชั่วคราว → เซสชันหลุดข้ามเครื่องบน Vercel)
     push: config.vapid ? config.vapid.pub : null, ai: config.ai, demo_code: config.otp === 'demo' ? DEMO_CODE : undefined,
     human_open: [...(await humanOpen())], // ศาสตร์ที่ตอนนี้มีหมอดูจริงรับงาน (หน้าเว็บใช้เปิดประเภทที่ซ่อนไว้)

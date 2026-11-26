@@ -2,6 +2,7 @@
 // เก็บเป็นเอกสาร (document) แยกตามกลุ่ม (coll): user · order · otp · notif · push
 // คอลัมน์ค้นหา: k (คีย์รอง เช่น เบอร์โทร) · user_id · status · created_at (ms)
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import path from 'node:path';
 import { config } from './config.js';
 import { fail } from './http.js';
@@ -148,4 +149,4 @@ export async function updateDoc(coll, id, mutate, tries = 8) {
   fail(409, 'conflict');
 }
 
-export const newId = (p) => `${p}${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+export const newId = (p) => `${p}${Date.now().toString(36)}${crypto.randomBytes(5).toString('hex')}`;

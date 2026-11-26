@@ -32,7 +32,11 @@ export async function saveFile(dataUrl, { folder, owner }) {
     try {
       await put(`${folder}/${name}`, f.buf, { access: 'private', contentType: f.type, addRandomSuffix: false });
       return { url: `/api/v1/files/${name}`, type: f.type };
-    } catch (e) { console.warn('[storage] อัปโหลดแบบ private ไม่ได้ (Blob store ต้องเป็นชนิด private) ใช้ลิงก์สาธารณะแทน:', e.message); }
+    } catch (e) {
+      // เว็บจริง: รูปลายมือ/ใบหน้า/หลักฐานพิธีห้ามกลายเป็นลิงก์สาธารณะ → ปฏิเสธการอัปโหลดแทนการสำรอง (รูปสินค้า/โปรไฟล์หมอดูเป็นข้อมูลสาธารณะอยู่แล้ว สำรองได้)
+      if (config.prod && !PUBLIC_FOLDERS.includes(folder)) { console.error('[storage] อัปโหลดแบบ private ไม่ได้ และเว็บจริงไม่อนุญาตให้สำรองเป็นสาธารณะ (ต้องใช้ Blob store ชนิด private):', e.message); fail(503, 'storage_private_required'); }
+      console.warn('[storage] อัปโหลดแบบ private ไม่ได้ (Blob store ต้องเป็นชนิด private) ใช้ลิงก์สาธารณะแทน:', e.message);
+    }
     const b = await put(`${folder}/${name}`, f.buf, { access: 'public', contentType: f.type, addRandomSuffix: true });
     return { url: b.url, type: f.type };
   }
