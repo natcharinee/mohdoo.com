@@ -38,7 +38,7 @@ function load() {
   const root = process.cwd();
   const files = ['services-data.js', 'categories-data.js', 'shop-data.js', 'seers-data.js'];
   const code = `${files.map((f) => fs.readFileSync(path.join(root, f), 'utf8')).join('\n;\n')}
-    ;({ SERVICE_PRICE, SERVICES, CATEGORY_PRICE, CATEGORIES, SHOP_ITEMS, SCIENCES, SEER_BASE: SEER_DATA })`;
+    ;({ SERVICE_PRICE, SERVICES, CATEGORY_PRICE, CATEGORIES, SHOP_ITEMS, SCIENCES, shopVariants, SEER_BASE: SEER_DATA })`;
   cache = vm.runInNewContext(code, {}, { timeout: 2000 });
   // ค่าตั้งต้นจากไฟล์ (ใช้คืนค่าเดิม และคำนวณใหม่ทุกครั้งที่ผู้ดูแลแก้)
   cache.BASE = {
@@ -100,10 +100,11 @@ export function applySiteCfg(c, cfg) {
   })));
   c.SHOP_ITEMS = B.shop.map((p) => {
     const o = (cfg.shop || {})[p.id] || {};
-    return { ...p, name: o.name || p.name, desc: o.desc ?? p.desc, price: o.price ?? p.price, hidden: !!o.hidden };
+    return { ...p, name: o.name || p.name, desc: o.desc ?? p.desc, price: o.price ?? p.price, hidden: !!o.hidden, images: o.images || [], img: (o.images || [])[0] || '', options: o.options || [], variants: o.variants || {} };
   });
   c.SHOP_ITEMS.push(...(cfg.custom_shop || []).map((x) => ({
-    id: x.id, icon: x.icon || '🎁', name: x.name, desc: x.desc || '', price: x.price, hidden: !!x.hidden, digital: !!x.digital, img: x.img || '', custom: true,
+    id: x.id, icon: x.icon || '🎁', name: x.name, desc: x.desc || '', price: x.price, hidden: !!x.hidden, digital: !!x.digital, custom: true,
+    images: x.images || (x.img ? [x.img] : []), img: (x.images || [x.img])[0] || '', options: x.options || [], variants: x.variants || {},
   })));
   c.SITE_CFG = cfg;
 }
@@ -113,11 +114,11 @@ export function publicSiteCfg() {
   return {
     service_price: c.SERVICE_PRICE, ai_price: c.AI_PRICE,
     services: Object.fromEntries(c.SERVICES.filter((s) => !s.custom).map((s) => [s.id, { open: s.open, hidden: s.hidden, prices: s.prices.map((t) => t.price) }])),
-    shop: Object.fromEntries(c.SHOP_ITEMS.filter((p) => !p.custom).map((p) => [p.id, { name: p.name, desc: p.desc, price: p.price, hidden: p.hidden }])),
+    shop: Object.fromEntries(c.SHOP_ITEMS.filter((p) => !p.custom).map((p) => [p.id, { name: p.name, desc: p.desc, price: p.price, hidden: p.hidden, images: p.images, options: p.options, variants: p.variants }])),
     // บริการ/สินค้าที่สร้างเอง: หน้าเว็บเพิ่มเข้ารายการต่อจากของเดิม
     custom_services: c.SERVICES.filter((s) => s.custom).map((s) => ({ id: s.id, icon: s.icon, name: s.name, about: s.about, get: s.get, kind: s.kind,
       price: s.prices[0].price, price_label: s.price_label, duration: s.duration, science: s.science, state: s.state, fields: s.fields })),
-    custom_shop: c.SHOP_ITEMS.filter((p) => p.custom).map((p) => ({ id: p.id, icon: p.icon, name: p.name, desc: p.desc, price: p.price, digital: p.digital, img: p.img, hidden: p.hidden })),
+    custom_shop: c.SHOP_ITEMS.filter((p) => p.custom).map((p) => ({ id: p.id, icon: p.icon, name: p.name, desc: p.desc, price: p.price, digital: p.digital, img: p.img, images: p.images, options: p.options, variants: p.variants, hidden: p.hidden })),
   };
 }
 
@@ -147,7 +148,7 @@ function fromService(s, tierIdx) {
 // key จากหน้าเว็บ (ตรงกับ item.key ใน checkout.js)
 export const MAX_QTY = 20;
 // opts.humanOpen = Set ของ "หมวด|ลำดับ" ที่ตอนนี้มีหมอดูจริงพร้อมรับงาน (ดู humanOpen() ใน v1.js)
-export function priceOf({ key, tier = 0, donation, qty }, opts = {}) {
+export function priceOf({ key, tier = 0, donation, qty, variant }, opts = {}) {
   const c = load();
   key = str(key, 60);
   tier = int(tier) || 0;
@@ -158,7 +159,19 @@ export function priceOf({ key, tier = 0, donation, qty }, opts = {}) {
     const p = c.SHOP_ITEMS.find((x) => x.id === key.slice(5));
     if (!p || p.hidden) fail(400, 'unknown_item');
     const q = p.digital ? 1 : Math.max(1, Math.min(MAX_QTY, int(qty) || 1)); // สินค้าดิจิทัลสั่งได้ครั้งละ 1
-    it = { key, kind: p.digital ? 'digital' : 'shop', title: p.name, icon: p.icon, label: `${q} ชิ้น`, price: p.price * q, unit: p.price, qty: q, item_id: p.id };
+    // สินค้าที่มีตัวเลือก (สี/ขนาด): ต้องเลือกครบ · ราคาและสต๊อกตามแบบที่เลือก (ตรวจที่เซิร์ฟเวอร์ทุกครั้ง)
+    const vs = load().shopVariants(p);
+    let v = null;
+    if (vs.length) {
+      const vk = str(variant, 40);
+      if (!vk) fail(400, 'variant_required');
+      v = vs.find((x) => x.key === vk);
+      if (!v) fail(400, 'variant_unknown');
+      if (v.off) fail(400, 'variant_unavailable');
+    }
+    const unit = v ? v.price : p.price;
+    it = { key, kind: p.digital ? 'digital' : 'shop', title: p.name, icon: p.icon, label: `${q} ชิ้น${v ? ` · ${v.label}` : ''}`, price: unit * q, unit, qty: q, item_id: p.id,
+      ...(v ? { variant: { key: v.key, label: v.label }, ...(p.digital ? {} : { stock_key: `${p.id}:${v.key}` }) } : {}) };
   } else if (key.startsWith('seer:')) {
     const s = c.SEER_IDS.find((x) => x.id === key.slice(5));
     if (!s) fail(400, 'unknown_seer');

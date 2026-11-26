@@ -241,14 +241,17 @@ function renderSummary() {
     ${item.aiPlan ? aiExpiryHTML() : ''}
     ${placePickerHTML(item)}
     ${donates(item) ? donationHTML() : ''}
+    ${couponHTML()}
     <div class="pay-total"><span>ยอดชำระ</span><b id="payTotal">${baht(orderTotal())}</b></div>
     <button class="btn-gold full" id="toQR">ชำระเงินด้วย QR ›</button>
     <p class="pay-note"><a href="refund.html" target="_blank" rel="noopener">นโยบายคืนเงิน</a> · ${item.ship ? 'ชำระแล้วกรอกที่อยู่จัดส่ง · ร้านจัดส่งภายใน 3–5 วันทำการ' : item.shop ? 'ชำระแล้วแจ้งรายละเอียด · ทีมส่งไฟล์ให้ภายใน 24 ชั่วโมง' : donates(item) ? 'ชำระแล้วกรอกข้อมูลสำหรับทำพิธี · ส่งรูปและวิดีโอยืนยันภายใน 3 วัน' : `ชำระแล้วจึงเริ่มบริการ · ${item.next.instant ? 'ขั้นต่อไปพิมพ์คำถาม แล้วรับใบผลดวงตอบคำถามทันที' : item.next.kind === 'form' ? 'ขั้นต่อไปกรอกข้อมูลสำหรับการทำนาย' : item.next.kind === 'ai' ? 'ใช้ได้ทันทีหลังชำระ' : 'ขั้นต่อไปเริ่มดูดวงได้ทันที'}`}</p>`;
   $('payBody').querySelectorAll('input[name="ptier"]').forEach((r) => r.addEventListener('change', () => {
     order.tier = +r.value;
     updateTotal();
+    recheckCoupon();
   }));
   $('toQR').addEventListener('click', renderQR);
+  bindCoupon();
   bindPlacePicker(item);
   if (donates(item)) bindDonation();
   if (item.qtyPick) bindQty(item);
@@ -258,7 +261,7 @@ function renderSummary() {
 // ---------- เงินทำบุญ (บริการมงคล): ยอดชำระ = ค่าบริการทำแทน + เงินทำบุญที่เลือก ----------
 const DONATION_STEPS = [20, 50, 100, 200, 300, 500, 1000];
 const donates = (item) => !!placeField(item) || !!item.donate;
-const orderTotal = () => (order.item.tiers[order.tier].price || 0) * (order.qty || 1) + (order.donation || 0);
+const orderTotal = () => (order.item.tiers[order.tier].price || 0) * (order.qty || 1) + (order.donation || 0) - (order.coupon ? order.coupon.discount : 0);
 // ---------- สมาชิกรายเดือน: บอกวันหมดอายุก่อนจ่าย ----------
 function aiExpiryHTML() {
   const u = currentUser();
@@ -291,12 +294,13 @@ async function bindQty(item) {
   $('payBody').querySelectorAll('[data-qty]').forEach((b) => b.addEventListener('click', () => {
     order.qty = Math.max(1, Math.min(max(), order.qty + +b.dataset.qty));
     paint();
+    recheckCoupon();
   }));
   paint();
   if (typeof loadShopStock === 'function') {
     const st = await loadShopStock();
     if (!$('qtyVal')) return;
-    order.stock = st[item.shopId] ?? null;
+    order.stock = st[item.stockKey || item.shopId] ?? null;
     order.qty = Math.max(1, Math.min(order.qty, max()));
     paint();
   }
@@ -328,6 +332,51 @@ function bindDonation() {
     if (custom) { inp.focus(); set(+inp.value); } else set(+sel.value);
   });
   inp.addEventListener('input', () => set(+inp.value));
+}
+// ---------- โค้ดส่วนลด (ต้องมีระบบหลังบ้าน · ราคาลดคำนวณที่เซิร์ฟเวอร์) ----------
+function couponHTML() {
+  if (!window.SERVER) return '';
+  const c = order.coupon;
+  return `<div class="pay-coupon">
+    ${c ? `<div class="coupon-on"><span>🏷️ ใช้โค้ด <b>${esc(c.code)}</b> · ลด ${baht(c.discount)}</span><button type="button" class="link-btn" id="couponOff">เอาออก</button></div>`
+      : `<button type="button" class="link-btn" id="couponToggle" aria-expanded="false" aria-controls="couponBox">🏷️ มีโค้ดส่วนลด?</button>
+      <div class="coupon-box" id="couponBox" hidden>
+        <input id="couponIn" maxlength="20" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="กรอกโค้ด" aria-label="โค้ดส่วนลด">
+        <button type="button" class="btn-ghost" id="couponApply">ใช้โค้ด</button>
+      </div>`}
+    <p class="coupon-msg" id="couponMsg" role="status" aria-live="polite"></p>
+  </div>`;
+}
+function bindCoupon() {
+  const msg = (t, bad) => { const el = $('couponMsg'); if (el) { el.textContent = t || ''; el.classList.toggle('bad', !!bad); } };
+  $('couponOff')?.addEventListener('click', () => { order.coupon = null; renderSummary(); });
+  $('couponToggle')?.addEventListener('click', () => {
+    const box = $('couponBox');
+    box.hidden = !box.hidden;
+    $('couponToggle').setAttribute('aria-expanded', String(!box.hidden));
+    if (!box.hidden) $('couponIn').focus();
+  });
+  const apply = async () => {
+    const code = $('couponIn').value.trim();
+    if (!code) return msg('กรอกโค้ดก่อน', true);
+    const btn = $('couponApply');
+    btn.disabled = true; msg('กำลังตรวจโค้ด…');
+    try {
+      const q = await srvCheckCoupon(order, code);
+      order.coupon = { code: q.code, discount: q.discount };
+      renderSummary();
+      const m = $('couponMsg'); if (m) m.textContent = `ใช้โค้ด ${q.code} แล้ว ลด ${baht(q.discount)} ✓`;
+    } catch (err) { msg(err.message, true); btn.disabled = false; }
+  };
+  $('couponApply')?.addEventListener('click', apply);
+  $('couponIn')?.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); apply(); } });
+}
+// เปลี่ยนแพ็กเกจ/จำนวน → ส่วนลดเดิมอาจไม่ตรง → ตรวจโค้ดใหม่ (ถ้าใช้ไม่ได้แล้วจะเอาออก)
+async function recheckCoupon() {
+  if (!order.coupon || !window.SERVER) return;
+  const code = order.coupon.code;
+  try { const q = await srvCheckCoupon(order, code); order.coupon = { code: q.code, discount: q.discount }; } catch (err) { order.coupon = null; toast(`${err.message} · เอาโค้ดออกแล้ว`); }
+  if ($('payTotal')) renderSummary();
 }
 function updateTotal() {
   const item = order.item;
@@ -399,6 +448,7 @@ async function renderQR() {
       toast(err.message);
       if (err.status === 401) { cancelCheckout(); requireLogin(() => startCheckout(order.item)); return; }
       if (err.code === 'out_of_stock') { renderSummary(); return; } // สต๊อกเปลี่ยน → โหลดจำนวนที่เหลือใหม่
+      if (err.code && err.code.startsWith('coupon_')) { order.coupon = null; renderSummary(); return; } // โค้ดใช้ไม่ได้แล้ว → เอาออกแล้วให้ลูกค้าตรวจยอดอีกครั้ง
       if (btn) { btn.disabled = false; btn.textContent = 'ชำระเงินด้วย QR ›'; }
       return;
     }
@@ -415,7 +465,8 @@ async function renderQR() {
       <p class="qr-head">สแกนจ่ายผ่านแอปธนาคาร</p>
       <div class="qr-box" id="qrBox"></div>
       <p class="qr-amount">${baht(order.amount)}</p>
-      <p class="qr-meta">${esc(order.item.title)} · ${esc(order.item.qtyPick ? `${order.qty} ชิ้น × ${baht(t.price)}` : t.label)}${order.donation ? `<br>ค่าบริการทำแทน ${baht(t.price)} + เงินทำบุญ ${baht(order.donation)}` : ''}<br>เลขที่คำสั่งซื้อ ${order.no}</p>
+      ${so && so.discount ? `<p class="qr-disc">โค้ด ${esc(so.coupon)} · ลด ${baht(so.discount)} (จากราคา ${baht(so.original_price)}${order.donation ? ' · ไม่ลดเงินทำบุญ' : ''})</p>` : ''}
+      <p class="qr-meta">${esc(order.item.title)}${order.item.variant ? ` (${esc(order.item.variant.label)})` : ''} · ${esc(order.item.qtyPick ? `${order.qty} ชิ้น × ${baht(t.price)}` : t.label)}${order.donation ? `<br>ค่าบริการทำแทน ${baht(t.price)} + เงินทำบุญ ${baht(order.donation)}` : ''}<br>เลขที่คำสั่งซื้อ ${order.no}</p>
       <p class="qr-timer">QR หมดอายุใน <b id="qrTime">${ORDER_MINUTES}:00</b></p>
     </div>
     <ol class="qr-how"><li>เปิดแอปธนาคาร แล้วเลือกสแกน QR</li><li>ตรวจยอดเงินให้ตรง แล้วยืนยันการโอน</li><li>กลับมากด “ฉันชำระเงินแล้ว”</li></ol>

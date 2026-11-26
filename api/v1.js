@@ -5,6 +5,7 @@ import { config } from './_lib/config.js';
 import { db, newId, updateDoc } from './_lib/db.js';
 import { HttpError, fail, send, bodyOf, str, int, ipOf } from './_lib/http.js';
 import { rateLimit, cleanRate } from './_lib/ratelimit.js';
+import { MIN_PAY, COUPON_SCOPES, COUPON_MAX, normCode, getCoupon, evalCoupon, applyDiscount, checkCouponLimits, reserveCoupon, releaseCoupon, couponUsed } from './_lib/coupon.js';
 import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
 import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, BACKOFFICE, DEMO_CODE } from './_lib/auth.js';
 import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles, publicSiteCfg, PRICE_RANGE, CUSTOM_MAX, CUSTOM_KINDS, FIELD_TYPES } from './_lib/catalog.js';
@@ -26,6 +27,7 @@ function pubOrder(o) {
   return {
     no: o.no, key: o.key, kind: o.kind, title: o.title, icon: o.icon, label: o.label, amount: o.amount, price: o.price, donation: o.donation,
     status: o.status, status_text: STATUS[o.status], created_at: o.created_at, paid_at: o.paid_at || null, updated_at: o.updated_at,
+    variant: o.variant || null, original_price: o.original_price || null, discount: o.discount || 0, coupon: o.coupon || '', // ส่วนลด: ราคาเดิม · ส่วนลด · โค้ด (amount = ยอดจ่ายจริง)
     steps: o.steps, step: o.step || 0, answer: o.answer || '', summary: o.summary || '', answered_by: o.answered_by ? (o.answered_by === 'ai' ? 'ai' : 'seer') : '',
     proof: o.proof || [], tracking: o.tracking || null, qr: o.status === 'pending' ? o.pay?.qr || null : null,
     expires_at: o.status === 'pending' ? o.pay?.expires_at : null, demo: o.pay?.provider === 'demo', form: o.form || null, photos: o.photos || [],
@@ -39,7 +41,7 @@ export const AUDIT_ACTIONS = {
   ai_days: 'ให้/ปรับสมาชิก AI', seer_link: 'เชื่อมโปรไฟล์หมอดู', user_note: 'บันทึกในบัญชีลูกค้า',
   mark_paid: 'ยืนยันรับเงินเอง', refund: 'คืนเงิน', cancel: 'ยกเลิกคำสั่งซื้อ',
   seer_invite: 'เพิ่มหมอดู', seer_price: 'ตั้งราคาหมอดู', seer_profile: 'แก้โปรไฟล์หมอดู', seer_profile_new: 'เพิ่มโปรไฟล์หมอดู',
-  seer_profile_reset: 'คืนค่าโปรไฟล์หมอดู', seer_profile_delete: 'ลบโปรไฟล์หมอดู', pricing: 'แก้ราคาและบริการ', custom: 'สร้าง/แก้/ลบ บริการและสินค้าใหม่', seer_app: 'ตรวจใบสมัครหมอดู', seer_app_delete: 'ลบใบสมัครหมอดู',
+  seer_profile_reset: 'คืนค่าโปรไฟล์หมอดู', seer_profile_delete: 'ลบโปรไฟล์หมอดู', coupon: 'โค้ดส่วนลด', team_invite: 'เพิ่มทีมงาน', pricing: 'แก้ราคาและบริการ', custom: 'สร้าง/แก้/ลบ บริการและสินค้าใหม่', seer_app: 'ตรวจใบสมัครหมอดู', seer_app_delete: 'ลบใบสมัครหมอดู',
   pdpa_export: 'ส่งออกข้อมูลลูกค้า (PDPA)', pdpa_erase: 'ลบบัญชีตามคำขอ (PDPA)', pdpa_self_export: 'ลูกค้าดาวน์โหลดข้อมูลตัวเอง', pdpa_self_erase: 'ลูกค้าลบบัญชีเอง',
   broadcast: 'ส่งประกาศ', export: 'ส่งออกข้อมูลคำสั่งซื้อ', stock: 'แก้สต๊อก', kb: 'แก้ตำราดูดวง', kb_restore: 'ย้อนเวอร์ชันตำรา', cron: 'สั่งงานประจำวันเอง',
 };
@@ -82,7 +84,11 @@ async function saveOrder(o) {
   o.rev = prev + 1; o.updated_at = Date.now();
   if (!(await (await db()).putIf('order', o, prev))) { o.rev = prev; stockBack.delete(o); fail(409, 'conflict'); }
   const back = stockBack.get(o);
-  if (back) { stockBack.delete(o); await adjustStock(back.id, back.qty); }
+  if (back) {
+    stockBack.delete(o);
+    if (back.stock) await adjustStock(back.stock.id, back.stock.qty);
+    if (back.coupon) await releaseCoupon(back.coupon.code, back.coupon.user);
+  }
   return o;
 }
 // แก้คำสั่งซื้อที่อาจชนกับระบบอื่น (webhook / งานประจำวัน / หน้าเว็บลูกค้า): ชนกัน → โหลดใหม่แล้วลองอีกครั้ง
@@ -110,17 +116,27 @@ async function adjustStock(id, delta) {
 }
 async function takeStock(o) {
   if (o.kind !== 'shop') return;
-  await adjustStock(o.item_id, -o.qty);
+  await adjustStock(o.stock_key || o.item_id, -o.qty); // สินค้ามีตัวเลือก: สต๊อกแยกตามแบบ (stock_key = รหัสสินค้า:รหัสแบบ)
   o.stock_held = true;
 }
 // ทำเครื่องหมายว่าคืนสต๊อกแล้ว · คืนจริงตอน saveOrder สำเร็จ
 async function releaseStock(o) {
-  if (!o.stock_held || o.stock_released) return;
-  o.stock_released = true;
-  stockBack.set(o, { id: o.item_id, qty: o.qty });
+  const back = stockBack.get(o) || {};
+  if (o.coupon_held) { o.coupon_held = false; back.coupon = { code: o.coupon, user: o.user_id }; } // คืนสิทธิ์โค้ดส่วนลดด้วย
+  if (o.stock_held && !o.stock_released) { o.stock_released = true; back.stock = { id: o.stock_key || o.item_id, qty: o.qty }; }
+  if (back.coupon || back.stock) stockBack.set(o, back);
+}
+// คืนทันที (ใช้เมื่อคำสั่งซื้อยังไม่ถูกบันทึก เช่น สร้าง QR ไม่สำเร็จ)
+async function releaseNow(o) {
+  await releaseStock(o);
+  const back = stockBack.get(o);
+  if (!back) return;
+  stockBack.delete(o);
+  if (back.stock) await adjustStock(back.stock.id, back.stock.qty);
+  if (back.coupon) await releaseCoupon(back.coupon.code, back.coupon.user);
 }
 async function stockMap() {
-  const { rows } = await (await db()).list('stock', { limit: 500 });
+  const { rows } = await (await db()).list('stock', { limit: 5000 }); // รวมสต๊อกแยกตามแบบของสินค้าที่มีตัวเลือก
   return Object.fromEntries(rows.map((d) => [d.id, d.qty]));
 }
 
@@ -361,17 +377,36 @@ on('DELETE', 'me/push', async (req) => {
 });
 
 // ---------- คำสั่งซื้อ ----------
+// ราคาของรายการที่ลูกค้าเลือก (รวมราคาที่หมอดูตั้งเอง) · ใช้ทั้งตอนสร้างคำสั่งซื้อและตอนตรวจโค้ดส่วนลด
+async function quoteOrder(b) {
+  const it = priceOf(b, { humanOpen: await humanOpen() });
+  // หมอดูตั้งราคาเองได้ (ถาม 1 เรื่อง) · ไม่ได้ตั้ง = ราคากลาง
+  if (it.seer) {
+    const sp = await (await db()).get('seerprice', it.seer);
+    if (sp && sp.price) { it.price = sp.price; it.amount = sp.price; }
+  }
+  return it;
+}
+on('POST', 'coupons/check', async (req) => {
+  const u = await needUser(req);
+  await rateLimit(`coupon:${u.id}`, 20, 10 * 60e3); // กันเดาโค้ด
+  await rateLimit(`coupon-ip:${ipOf(req)}`, 60, 10 * 60e3);
+  const b = bodyOf(req);
+  const it = await quoteOrder(b);
+  const c = await getCoupon(normCode(b.coupon));
+  const d = evalCoupon(c, it);
+  await checkCouponLimits(c, u.id);
+  return { ok: true, code: c.id, discount: d, original: it.price, price: it.price - d, amount: it.amount - d };
+});
 on('POST', 'orders', async (req) => {
   const u = await needUser(req);
   await rateLimit(`order:${u.id}`, 30, 10 * 60e3);
   const b = bodyOf(req);
-  const it = priceOf(b, { humanOpen: await humanOpen() });
+  const it = await quoteOrder(b);
   const store = await db();
-  // หมอดูตั้งราคาเองได้ (ถาม 1 เรื่อง) · ไม่ได้ตั้ง = ราคากลาง
-  if (it.seer) {
-    const sp = await store.get('seerprice', it.seer);
-    if (sp && sp.price) { it.price = sp.price; it.amount = sp.price; }
-  }
+  let coupon = null;
+  const code = normCode(b.coupon);
+  if (code) { coupon = await getCoupon(code); applyDiscount(it, evalCoupon(coupon, it)); }
   const no = await orderNo(store);
   const o = {
     id: no, no, user_id: u.id, phone: u.phone, name: u.name, ...it,
@@ -379,8 +414,13 @@ on('POST', 'orders', async (req) => {
     place: str(b.place, 160) || undefined, status: 'pending', step: 0, created_at: Date.now(), updated_at: Date.now(), log: [],
   };
   log(o, u, 'created');
-  await takeStock(o);
-  try { o.pay = await createPayment(o); } catch (e) { await releaseStock(o); throw e; }
+  if (coupon) { // จองสิทธิ์โค้ด (ครบโควตา/ใช้ครบแล้ว → ตอบ error ก่อนสร้าง QR)
+    await reserveCoupon(coupon, u.id);
+    o.coupon = coupon.id; o.coupon_held = true;
+    log(o, u, 'coupon', { code: coupon.id, discount: o.discount });
+  }
+  try { await takeStock(o); } catch (e) { await releaseNow(o); throw e; }
+  try { o.pay = await createPayment(o); } catch (e) { await releaseNow(o); throw e; }
   await store.put('order', o);
   return { order: pubOrder(o) };
 });
@@ -689,7 +729,12 @@ on('GET', 'admin/stats', async (req) => {
   };
   const { rows: users } = await store.list('user', { limit: 50000 });
   const stock = await stockMap();
-  const lowStock = catalog().SHOP_ITEMS.filter((p) => stock[p.id] != null && stock[p.id] <= 3).map((p) => ({ id: p.id, name: p.name, icon: p.icon, qty: stock[p.id] }));
+  const lowStock = catalog().SHOP_ITEMS.flatMap((p) => {
+    const vs = variantsOf(p);
+    if (!vs.length) return stock[p.id] != null && stock[p.id] <= 3 ? [{ id: p.id, name: p.name, icon: p.icon, qty: stock[p.id] }] : [];
+    return vs.filter((v) => !v.off && stock[`${p.id}:${v.key}`] != null && stock[`${p.id}:${v.key}`] <= 3)
+      .map((v) => ({ id: `${p.id}:${v.key}`, name: `${p.name} (${v.label})`, icon: p.icon, qty: stock[`${p.id}:${v.key}`] }));
+  });
   // ค่าใช้จ่าย AI (ประมาณการ) วันนี้และ 7 วัน
   const aiDays = await Promise.all([...Array(7)].map((_, k) => aiDay(bkkDay(now - k * 864e5))));
   const aiCost = { today: aiDays[0], d7: { usd: Math.round(aiDays.reduce((a, d) => a + d.usd, 0) * 100) / 100, calls: aiDays.reduce((a, d) => a + d.calls, 0) }, alert: ALERT_USD, cap: CAP_USD };
@@ -750,10 +795,12 @@ on('GET', 'admin/report', async (req) => {
       orders: paid.length, gross, refunds, net: gross - refunds,
       refunded_orders: paid.filter((o) => refundOf(o)).length,
       donation, // เงินทำบุญที่ลูกค้าฝากไปถวาย (ไม่ใช่รายได้ของบริษัท)
+      discount: sum(paid, (o) => o.discount), discount_orders: paid.filter((o) => o.discount).length, // ส่วนลดที่ให้ (ยอดรับชำระเป็นยอดหลังลดแล้ว)
       service_net: gross - refunds - donation,
       avg: paid.length ? Math.round((gross - refunds) / paid.length) : 0,
       customers: new Set(paid.map((o) => o.user_id)).size,
     },
+    by_coupon: Object.values(paid.filter((o) => o.coupon).reduce((m, o) => { const x = (m[o.coupon] ||= { code: o.coupon, orders: 0, discount: 0, net: 0 }); x.orders += 1; x.discount += o.discount || 0; x.net += o.amount - refundOf(o); return m; }, {})).sort((x, y) => y.discount - x.discount),
     days, by_kind: Object.values(byKind).sort((x, y) => y.net - x.net),
     top_items: Object.values(byItem).sort((x, y) => y.net - x.net).slice(0, 15),
   };
@@ -1161,11 +1208,12 @@ on('POST', 'admin/users/:id', async (req, res, { id }) => {
   const b = bodyOf(req);
   let before;
   // แก้แบบกันทับ: ผู้ดูแลอีกคน หรือลูกค้าที่แก้โปรไฟล์อยู่ จะไม่ทำให้การแก้ของกันและกันหาย
-  const u = await updateDoc('user', str(id, 40), (u) => {
+  const u = await updateDoc('user', str(id, 40), async (u) => {
   before = { role: u.role, seer_id: u.seer_id || null, blocked: !!u.blocked, ai_until: u.ai_until || 0 };
   if (b.role !== undefined) {
     if (staff.role !== 'admin' || !ROLES.includes(b.role)) fail(403, 'forbidden');
     if (u.id === staff.id && b.role !== 'admin') fail(400, 'cannot_demote_self');
+    if (u.role === 'admin' && b.role !== 'admin' && !(await adminsLeft(u.id))) fail(400, 'last_admin'); // ต้องเหลือผู้ดูแลอย่างน้อย 1 คน
     u.role = b.role;
   }
   if (b.seer_id !== undefined) { // เชื่อมบัญชีกับโปรไฟล์หมอดู (รับงานที่ลูกค้าเลือกท่านนี้)
@@ -1179,7 +1227,12 @@ on('POST', 'admin/users/:id', async (req, res, { id }) => {
     if (!(d >= -365 && d <= 365)) fail(400, 'bad_days');
     u.ai_until = Math.max(u.ai_until || 0, Date.now()) + d * 864e5;
   }
-  if (b.blocked !== undefined) { if (staff.role !== 'admin') fail(403, 'forbidden'); u.blocked = !!b.blocked; u.sv = (u.sv || 0) + 1; }
+  if (b.blocked !== undefined) {
+    if (staff.role !== 'admin') fail(403, 'forbidden');
+    if (b.blocked && u.id === staff.id) fail(400, 'cannot_block_self');
+    if (b.blocked && u.role === 'admin' && !(await adminsLeft(u.id))) fail(400, 'last_admin');
+    u.blocked = !!b.blocked; u.sv = (u.sv || 0) + 1;
+  }
   if (b.logout) u.sv = (u.sv || 0) + 1;
   if (b.note) (u.notes ||= []).push({ at: Date.now(), by: staff.name || staff.phone, text: str(b.note, 1000) });
   u.updated_at = Date.now();
@@ -1281,16 +1334,23 @@ on('GET', 'admin/export/orders', async (req, res) => {
 on('POST', 'admin/stock', async (req) => {
   const staff = await needRole(req);
   const b = bodyOf(req);
-  const p = catalog().SHOP_ITEMS.find((x) => x.id === str(b.id, 40));
+  // id = รหัสสินค้า (สินค้าไม่มีตัวเลือก) หรือ "รหัสสินค้า:รหัสแบบ" (สินค้าที่มีตัวเลือก สต๊อกแยกตามแบบ)
+  const [pid, vkey] = str(b.id, 60).split(':');
+  const p = catalog().SHOP_ITEMS.find((x) => x.id === pid);
   if (!p || p.digital) fail(400, 'unknown_item');
+  const vs = variantsOf(p);
+  const v = vkey ? vs.find((x) => x.key === vkey) : null;
+  if (vs.length ? !v : vkey) fail(400, 'unknown_item'); // สินค้ามีตัวเลือกต้องระบุแบบ · สินค้าไม่มีตัวเลือกห้ามระบุแบบ
+  const sid = v ? `${p.id}:${v.key}` : p.id;
+  const label = v ? `${p.name} (${v.label})` : p.name;
   const store = await db();
-  const prevQty = (await store.get('stock', p.id))?.qty ?? null;
-  if (b.qty === null || b.qty === '') { await store.del('stock', p.id); await audit(staff, 'stock', { type: 'item', id: p.id, label: p.name }, { from: prevQty, to: null }); return { ok: true, qty: null }; } // ไม่จำกัด
+  const prevQty = (await store.get('stock', sid))?.qty ?? null;
+  if (b.qty === null || b.qty === '') { await store.del('stock', sid); await audit(staff, 'stock', { type: 'item', id: p.id, label }, { from: prevQty, to: null }); return { ok: true, qty: null }; } // ไม่จำกัด
   const q = int(b.qty);
   if (!(q >= 0 && q <= 100000)) fail(400, 'bad_qty');
-  const prev = await store.get('stock', p.id);
-  await store.put('stock', { id: p.id, qty: q, rev: (prev?.rev || 0) + 1, updated_at: Date.now(), updated_by: staff.name || staff.phone, created_at: prev?.created_at || Date.now() });
-  await audit(staff, 'stock', { type: 'item', id: p.id, label: p.name }, { from: prevQty, to: q });
+  const prev = await store.get('stock', sid);
+  await store.put('stock', { id: sid, qty: q, rev: (prev?.rev || 0) + 1, updated_at: Date.now(), updated_by: staff.name || staff.phone, created_at: prev?.created_at || Date.now() });
+  await audit(staff, 'stock', { type: 'item', id: p.id, label }, { from: prevQty, to: q });
   return { ok: true, qty: q };
 });
 // ---------- ราคาและบริการ (แก้ในหลังบ้าน · หน้าเว็บอ่านผ่าน /api/v1/site-config.js) ----------
@@ -1315,12 +1375,14 @@ on('GET', 'admin/pricing', async (req) => {
   await needRole(req, ['admin']);
   const c = catalog();
   const cfg = (await (await db()).get('sitecfg', 'main')) || {};
+  const stk = await stockMap();
+  const stockOf = (p) => (variantsOf(p).length ? Object.fromEntries(variantsOf(p).map((v) => [v.key, stk[`${p.id}:${v.key}`] ?? null])) : stk[p.id] ?? null);
   return {
     base: { service_price: c.BASE.service_price, ai_price: c.BASE.ai_price },
     service_price: c.SERVICE_PRICE, ai_price: c.AI_PRICE, range: PRICE_RANGE, updated_at: cfg.updated_at || null, updated_by: cfg.updated_by || null,
     custom: { max: CUSTOM_MAX, kinds: CUSTOM_KINDS, field_types: FIELD_TYPES, sciences: c.SCIENCES.map((x) => ({ id: x.id, icon: x.icon, name: x.name })),
       services: (cfg.custom_services || []).map((x) => ({ ...x, price_now: x.price ?? c.SERVICE_PRICE })),
-      items: (cfg.custom_shop || []) },
+      items: c.SHOP_ITEMS.filter((p) => p.custom).map((p) => ({ ...p, variants_list: variantsOf(p), stock: stockOf(p) })), max_images: MAX_IMAGES },
     services: c.SERVICES.filter((s) => !s.custom).map((s, i) => {
       const b = c.BASE.services[i]; const o = (cfg.services || {})[s.id] || {};
       return { id: s.id, icon: s.icon, name: s.name, group: s.group || '', app: !!s.app, can_open: !!b.open, state: s.state,
@@ -1329,6 +1391,7 @@ on('GET', 'admin/pricing', async (req) => {
     shop: c.SHOP_ITEMS.filter((p) => !p.custom).map((p, i) => {
       const b = c.BASE.shop[i]; const o = (cfg.shop || {})[p.id] || {};
       return { id: p.id, icon: p.icon, name: p.name, desc: p.desc, price: p.price, hidden: p.hidden, digital: !!p.digital,
+        images: p.images, options: p.options, variants: p.variants || {}, variants_list: variantsOf(p), stock: stockOf(p),
         base: { name: b.name, desc: b.desc, price: b.price }, edited: !!Object.keys(o).length };
     }),
   };
@@ -1338,6 +1401,9 @@ on('POST', 'admin/pricing', async (req) => {
   const b = bodyOf(req);
   const c = catalog();
   const store = await db();
+  const upl = b.item ? await uploadShopImages(b.item, staff) : { lead: null, adds: [], all: [] };
+  let media = null; let saved = false;
+  try {
   for (let attempt = 0; attempt < 5; attempt++) {
     const prev = (await store.get('sitecfg', 'main')) || { id: 'main', created_at: Date.now() };
     const cfg = JSON.parse(JSON.stringify(prev));
@@ -1382,7 +1448,15 @@ on('POST', 'admin/pricing', async (req) => {
       if (i < 0) fail(404, 'not_found');
       const base = c.BASE.shop[i];
       const o = { ...(cfg.shop[id] || {}) };
-      if (b.item.reset === true) { delete cfg.shop[id]; changes.push({ what: base.name, to: 'คืนค่าเดิม' }); } else {
+      if (b.item.reset === true) {
+        media = await cleanMedia({ images: [], options: [], variants: {} }, o, { lead: null, adds: [], all: [] }, id); // คืนค่าเดิม = ลบรูป/ตัวเลือกที่ตั้งไว้ (ถ้ามีคนสั่งแบบนั้นแล้วจะไม่ให้ลบ)
+        delete cfg.shop[id]; changes.push({ what: base.name, to: 'คืนค่าเดิม' });
+      } else {
+        if (['images', 'new_images', 'image', 'img', 'options', 'variants'].some((k) => b.item[k] !== undefined)) {
+          media = await cleanMedia(b.item, o, upl, id);
+          for (const k of ['images', 'options', 'variants']) { if (Array.isArray(media[k]) ? media[k].length : Object.keys(media[k]).length) o[k] = media[k]; else delete o[k]; }
+          changes.push({ what: base.name, field: 'รูป/ตัวเลือก', to: `${media.images.length} รูป · ${variantsOf({ price: 0, options: media.options }).length || 'ไม่มี'} แบบ` });
+        }
         if (b.item.name !== undefined) { const v = str(b.item.name, 80); if (!v) fail(400, 'empty'); if (v === base.name) delete o.name; else o.name = v; changes.push({ what: base.name, field: 'ชื่อ', to: v }); }
         if (b.item.desc !== undefined) { const v = str(b.item.desc, 200); if (v === base.desc) delete o.desc; else o.desc = v; changes.push({ what: base.name, field: 'คำอธิบาย' }); }
         if (b.item.price !== undefined) { const v = priceVal(b.item.price); if (v == null || v === base.price) delete o.price; else o.price = v; changes.push({ what: base.name, field: 'ราคา', from: c.SHOP_ITEMS[i].price, to: v ?? base.price }); }
@@ -1394,12 +1468,94 @@ on('POST', 'admin/pricing', async (req) => {
     const rev = prev.rev || 0;
     cfg.rev = rev + 1; cfg.updated_at = Date.now(); cfg.updated_by = staff.name || staff.phone;
     if (!(await store.putIf('sitecfg', cfg, rev))) continue; // มีผู้ดูแลอีกคนแก้พร้อมกัน → อ่านใหม่แล้วใช้การแก้ของเราซ้ำ
+    saved = true;
+    await afterMedia(media, upl, true);
     resetSeerProfiles(); await syncSeerProfiles(store);
     await audit(staff, 'pricing', { type: 'pricing', label: changes.map((x) => x.what).join(', ').slice(0, 80) }, { changes });
     return { ok: true };
   }
   fail(409, 'conflict');
+  } finally { if (!saved) await afterMedia(null, upl, false); }
 });
+// ---------- รูป (สูงสุด 5) และตัวเลือก สี/ขนาด ของสินค้า ----------
+// ตัวเลือก: สูงสุด 2 กลุ่ม กลุ่มละ 10 ค่า (ทุกแบบรวมกันไม่เกิน 60) · ค่าแต่ละค่ามีรหัสคงที่ (v1, v2 …) แก้ชื่อได้โดยสต๊อก/คำสั่งซื้อไม่เพี้ยน
+// แบบ (variant) = ผลคูณของตัวเลือก มีราคาเฉพาะ/ปิดขายได้ · สต๊อกแยกตามแบบ (คอลเลกชัน stock id = "รหัสสินค้า:รหัสแบบ")
+const MAX_IMAGES = 5; const MAX_GROUPS = 2; const MAX_VALUES = 10; const MAX_COMBOS = 60;
+const variantsOf = (p) => catalog().shopVariants(p);
+const valueIds = (opts) => new Set((opts || []).flatMap((g) => g.values.map((v) => v.id)));
+// อัปโหลดรูปใหม่ก่อนเข้าลูปบันทึก (ลูปอาจวนซ้ำเมื่อมีผู้ดูแลแก้พร้อมกัน → ไม่ให้อัปโหลดซ้ำ)
+async function uploadShopImages(d, staff) {
+  const toUp = [...(d.image ? [d.image] : []), ...(Array.isArray(d.new_images) ? d.new_images : [])];
+  if (toUp.length > MAX_IMAGES) fail(400, 'too_many_images', { max: MAX_IMAGES });
+  const urls = [];
+  try { for (const x of toUp) urls.push((await saveFile(x, { folder: 'shopimg', owner: staff.id })).url); } catch (e) { await Promise.all(urls.map(deleteFile)); throw e; }
+  return { lead: d.image ? urls[0] : null, adds: d.image ? urls.slice(1) : urls, all: urls };
+}
+function cleanOptions(list, prevOptions) {
+  if (!Array.isArray(list)) fail(400, 'bad_options');
+  const groups = list.slice(0, MAX_GROUPS);
+  const taken = new Set(); let seq = 1;
+  for (const id of valueIds(prevOptions)) seq = Math.max(seq, int(id.slice(1)) + 1);
+  for (const g of groups) for (const v of g?.values || []) { const m = /^v(\d{1,3})$/.exec(str(v?.id, 5)); if (m) seq = Math.max(seq, +m[1] + 1); }
+  const gids = new Set();
+  const out = groups.map((g, gi) => {
+    let id = /^o[12]$/.test(str(g?.id, 3)) && !gids.has(g.id) ? g.id : ['o1', 'o2'].find((x) => !gids.has(x) && !groups.some((y, yi) => yi !== gi && y?.id === x)) || ['o1', 'o2'].find((x) => !gids.has(x));
+    gids.add(id);
+    const name = safeText(g?.name, 20);
+    if (!name) fail(400, 'option_name_required');
+    const labels = new Set();
+    const values = (Array.isArray(g?.values) ? g.values : []).slice(0, MAX_VALUES).map((v) => {
+      const label = safeText(v?.label, 30);
+      if (!label) fail(400, 'option_value_required');
+      if (labels.has(label.toLowerCase())) fail(400, 'option_value_duplicate');
+      labels.add(label.toLowerCase());
+      let vid = str(v?.id, 5);
+      if (!/^v\d{1,3}$/.test(vid) || taken.has(vid)) vid = `v${seq++}`;
+      taken.add(vid);
+      return { id: vid, label, img: str(v?.img, 300), off: v?.off === true };
+    });
+    if (!values.length) fail(400, 'option_needs_values');
+    return { id, name, values };
+  }).sort((x, y) => (x.id < y.id ? -1 : 1)); // เรียงกลุ่มตามรหัส → รหัสแบบ (key) คงที่
+  const combos = out.reduce((n, g) => n * g.values.length, out.length ? 1 : 0);
+  if (combos > MAX_COMBOS) fail(400, 'too_many_variants', { max: MAX_COMBOS });
+  return out;
+}
+// คืน { images, options, variants, dropped, prune } จากข้อมูลที่ส่งมา + ของเดิม
+async function cleanMedia(d, prev, upl, pid) {
+  prev = prev || {};
+  const prevImages = prev.images || (prev.img ? [prev.img] : []);
+  let kept = Array.isArray(d.images) ? [...new Set(d.images.filter((u) => prevImages.includes(u)))] : [...prevImages];
+  if (d.img === '') kept = []; // (รูปแบบเดิม) ลบรูปทั้งหมด
+  const images = [...(upl.lead ? [upl.lead] : []), ...kept, ...upl.adds];
+  if (images.length > MAX_IMAGES) fail(400, 'too_many_images', { max: MAX_IMAGES });
+  const dropped = prevImages.filter((u) => !images.includes(u));
+  const options = (d.options !== undefined ? cleanOptions(d.options, prev.options) : JSON.parse(JSON.stringify(prev.options || [])))
+    .map((g) => ({ ...g, values: g.values.map((v) => ({ ...v, img: images.includes(v.img) ? v.img : '' })) })); // รูปที่ผูกไว้ถูกลบ → ล้างการผูก
+  const keys = variantsOf({ price: 0, options }).map((v) => v.key);
+  const src = d.variants !== undefined ? d.variants : prev.variants;
+  const variants = {};
+  for (const [k, o] of Object.entries(src && typeof src === 'object' ? src : {})) {
+    if (!keys.includes(k)) continue;
+    const price = o?.price === null || o?.price === '' || o?.price === undefined ? null : priceVal(o.price);
+    if (price != null || o?.off === true) variants[k] = { ...(price != null ? { price } : {}), ...(o.off === true ? { off: true } : {}) };
+  }
+  // ค่าตัวเลือกที่หายไป แต่เคยมีคนสั่งแบบนั้น → ลบไม่ได้ (ให้ตั้ง "ไม่มีจำหน่าย" แทน)
+  const removed = [...valueIds(prev.options)].filter((id) => !valueIds(options).has(id));
+  if (removed.length) {
+    const { rows } = await (await db()).list('order', { where: { item_id: pid }, limit: 5000 });
+    const used = new Set(rows.flatMap((o) => (o.variant?.key || '').split('.').filter(Boolean)));
+    if (removed.some((id) => used.has(id))) fail(400, 'option_in_use');
+  }
+  const prevKeys = variantsOf({ price: 0, options: prev.options || [] }).map((v) => v.key);
+  return { images, options, variants, dropped, prune: prevKeys.filter((k) => !keys.includes(k)).map((k) => `${pid}:${k}`) };
+}
+async function afterMedia(m, upl, ok) { // ok = บันทึกสำเร็จ → ลบรูปเก่า/สต๊อกแบบที่หายไป · ไม่สำเร็จ → ลบรูปที่เพิ่งอัปโหลด
+  if (!ok) { await Promise.all(upl.all.map(deleteFile)); return; }
+  await Promise.all((m?.dropped || []).map(deleteFile));
+  const store = await db();
+  for (const id of m?.prune || []) await store.del('stock', id);
+}
 // ---------- บริการ/สินค้าที่ผู้ดูแลสร้างเองในหลังบ้าน (เก็บใน sitecfg.custom_services / custom_shop) ----------
 // บริการ: หมอดูตอบเป็นข้อความ (เข้าคิวงานเดิม) หรือ บริการมงคล (ทีมทำพิธี + เงินทำบุญ) · สินค้า: ของจัดส่ง/ไฟล์ดิจิทัล + รูป 1 รูป
 // ข้อความที่ผู้ดูแลกรอกจะถูกตัด < > " ` ออก เพราะหน้าเว็บนำไปแสดงในหน้า (กัน HTML แทรก)
@@ -1441,19 +1597,19 @@ function cleanCustomService(d, prev) {
   if (x.state === 'open' && !x.about) fail(400, 'about_required'); // เปิดจองต้องมีคำอธิบายให้ลูกค้าอ่าน
   return x;
 }
-async function cleanCustomItem(d, prev, staff) {
+async function cleanCustomItem(d, prev, upl) {
   const x = {
     id: prev?.id || newCustomId(), created_at: prev?.created_at || Date.now(), updated_at: Date.now(),
     icon: safeText(d.icon, 8) || prev?.icon || '🎁', name: safeText(d.name, 80), desc: safeText(d.desc, 200),
     digital: prev ? !!prev.digital : d.digital === true, // ชนิดเปลี่ยนภายหลังไม่ได้
-    hidden: d.hidden === true, img: prev?.img || '',
+    hidden: d.hidden === true,
     price: priceVal(d.price),
   };
   if (!x.name) fail(400, 'name_required');
   if (x.price == null) fail(400, 'bad_price', PRICE_RANGE);
-  if (d.image) x.img = (await saveFile(d.image, { folder: 'shopimg', owner: staff.id })).url;
-  else if (d.img === '') x.img = '';
-  return x;
+  const m = await cleanMedia(d, prev, upl, x.id);
+  Object.assign(x, { images: m.images, img: m.images[0] || '', options: m.options, variants: m.variants });
+  return { def: x, media: m };
 }
 on('POST', 'admin/custom', async (req) => {
   const staff = await needRole(req, ['admin']);
@@ -1462,7 +1618,10 @@ on('POST', 'admin/custom', async (req) => {
   const op = ['create', 'update', 'delete'].includes(b.op) ? b.op : fail(400, 'bad_op');
   const key = type === 'service' ? 'custom_services' : 'custom_shop';
   const store = await db();
-  let result = null; let oldImg = ''; let newImg = '';
+  let result = null; let media = null;
+  const upl = type === 'item' && op !== 'delete' ? await uploadShopImages(b.data || {}, staff) : { lead: null, adds: [], all: [] };
+  let saved = false;
+  try {
   for (let attempt = 0; attempt < 5; attempt++) {
     const prevCfg = (await store.get('sitecfg', 'main')) || { id: 'main', created_at: Date.now() };
     const cfg = JSON.parse(JSON.stringify(prevCfg));
@@ -1473,31 +1632,143 @@ on('POST', 'admin/custom', async (req) => {
       const ref = type === 'service' ? str(b.id, 40) : `shop:${str(b.id, 40)}`;
       if (await store.count('order', { where: { key: ref } })) fail(400, 'has_orders'); // เคยมีคนสั่งแล้ว → ซ่อนแทนการลบ
       [result] = list.splice(idx, 1);
-      oldImg = result.img || '';
+      if (type === 'item') media = { dropped: result.images || (result.img ? [result.img] : []), prune: variantsOf(result).map((v) => `${result.id}:${v.key}`) };
     } else {
       if (op === 'create' && list.length >= CUSTOM_MAX) fail(400, 'too_many', { max: CUSTOM_MAX });
       const prev = op === 'update' ? list[idx] : null;
-      const def = type === 'service' ? cleanCustomService(b.data || {}, prev) : await cleanCustomItem(b.data || {}, prev, staff);
-      if (type === 'item') { oldImg = prev?.img && prev.img !== def.img ? prev.img : ''; newImg = def.img && def.img !== prev?.img ? def.img : ''; }
+      let def;
+      if (type === 'service') def = cleanCustomService(b.data || {}, prev);
+      else { ({ def, media } = await cleanCustomItem(b.data || {}, prev, upl)); }
       if (op === 'create') list.push(def); else list[idx] = def;
       result = def;
     }
     const rev = prevCfg.rev || 0;
     cfg.rev = rev + 1; cfg.updated_at = Date.now(); cfg.updated_by = staff.name || staff.phone;
-    if (!(await store.putIf('sitecfg', cfg, rev))) { if (newImg) await deleteFile(newImg); newImg = ''; continue; }
-    if (oldImg) await deleteFile(oldImg);
+    if (!(await store.putIf('sitecfg', cfg, rev))) continue;
+    saved = true;
+    await afterMedia(media, upl, true);
     if (op === 'delete' && type === 'item') await store.del('stock', result.id);
     resetSeerProfiles(); await syncSeerProfiles(store);
     await audit(staff, 'custom', { type: type === 'service' ? 'service' : 'item', id: result.id, label: result.name }, { op, kind: type === 'service' ? result.kind : result.digital ? 'digital' : 'shop', name: result.name, ...(op !== 'delete' ? { price: result.price ?? 'ราคากลาง', state: result.state ?? (result.hidden ? 'hidden' : 'open') } : {}) });
     return { ok: true, id: result.id };
   }
   fail(409, 'conflict');
+  } finally { if (!saved) await afterMedia(null, upl, false); } // บันทึกไม่สำเร็จ → ลบรูปที่เพิ่งอัปโหลด
+});
+// ---------- โค้ดส่วนลด (หลังบ้าน · admin) ----------
+const dayStartTH = (d) => (/^\d{4}-\d{2}-\d{2}$/.test(d || '') ? Date.parse(`${d}T00:00:00+07:00`) : null);
+const dayStr = (t) => (t ? new Date(t + 7 * 3600e3).toISOString().slice(0, 10) : '');
+function cleanCoupon(d, prev) {
+  const type = d.type === 'amount' ? 'amount' : 'percent';
+  const value = int(d.value);
+  if (type === 'percent' ? !(value >= 1 && value <= 90) : !(value >= 1 && value <= PRICE_RANGE.max)) fail(400, 'bad_value');
+  const from = dayStartTH(d.starts); const to = dayStartTH(d.ends);
+  if ((d.starts && from == null) || (d.ends && to == null)) fail(400, 'bad_range');
+  const ends_at = to == null ? null : to + 864e5; // หมดอายุสิ้นวันที่เลือก
+  if (from != null && ends_at != null && ends_at <= from) fail(400, 'bad_range');
+  const num = (v, max) => { const n = int(v); return Number.isFinite(n) && n >= 0 && n <= max ? n : fail(400, 'bad_value'); };
+  return {
+    ...(prev || {}), type, value,
+    scope: Object.keys(COUPON_SCOPES).includes(d.scope) ? d.scope : 'all',
+    min_amount: num(d.min_amount ?? 0, 100000), max_uses: num(d.max_uses ?? 0, 1e6), per_user: num(d.per_user ?? 1, 100),
+    starts_at: from, ends_at, active: d.active !== false, note: safeText(d.note, 100), updated_at: Date.now(),
+  };
+}
+on('GET', 'admin/coupons', async (req) => {
+  await needRole(req, ['admin']);
+  const store = await db();
+  const { rows } = await store.list('coupon', { limit: COUPON_MAX });
+  const out = [];
+  for (const c of rows) {
+    const { rows: os } = await store.list('order', { where: { coupon: c.id }, limit: 5000 });
+    const paid = os.filter((o) => o.paid_at && o.status !== 'refunded');
+    out.push({ ...c, starts: dayStr(c.starts_at), ends: dayStr(c.ends_at ? c.ends_at - 864e5 : null), used: await couponUsed(c.id),
+      orders: os.length, paid_orders: paid.length, discount_given: paid.reduce((s, o) => s + (o.discount || 0), 0) });
+  }
+  return { coupons: out, scopes: COUPON_SCOPES, max: COUPON_MAX, min_pay: MIN_PAY, today: dayStr(Date.now()) };
+});
+on('POST', 'admin/coupons', async (req) => {
+  const staff = await needRole(req, ['admin']);
+  const b = bodyOf(req);
+  const op = ['create', 'update', 'delete'].includes(b.op) ? b.op : fail(400, 'bad_op');
+  const store = await db();
+  const code = op === 'create' ? normCode(b.data?.code) : normCode(b.code);
+  if (op === 'create' && !/^[A-Z0-9][A-Z0-9_-]{2,19}$/.test(code)) fail(400, 'bad_code');
+  const prev = await store.get('coupon', code);
+  if (op === 'create' && prev) fail(409, 'code_exists');
+  if (op !== 'create' && !prev) fail(404, 'not_found');
+  if (op === 'delete') {
+    if ((await couponUsed(code)) || (await store.count('order', { where: { coupon: code } }))) fail(400, 'has_orders'); // เคยมีคนใช้ → ให้หยุดใช้แทน
+    await store.del('coupon', code);
+    await store.del('couponuse', code);
+  } else {
+    if (op === 'create' && (await store.count('coupon')) >= COUPON_MAX) fail(400, 'too_many', { max: COUPON_MAX });
+    const doc = cleanCoupon(b.data || {}, prev || { id: code, code, created_at: Date.now(), created_by: staff.name || staff.phone });
+    await store.put('coupon', doc);
+  }
+  const c = op === 'delete' ? prev : await store.get('coupon', code);
+  await audit(staff, 'coupon', { type: 'coupon', id: code, label: code }, { op, value: c.type === 'percent' ? `${c.value}%` : `${c.value} บาท`, scope: COUPON_SCOPES[c.scope], active: !!c.active });
+  return { ok: true, code };
+});
+// ---------- ทีมงาน: รวมผู้ดูแล · ทีมงาน · หมอดู ในที่เดียว (หลังบ้าน → 👥 ทีมงาน) ----------
+const STALE_DAYS = 30; // ไม่เข้าระบบเกินนี้ = ควรทบทวนสิทธิ์
+const adminsLeft = async (exceptId) => (await (await db()).list('user', { status: 'admin', limit: 200 })).rows.filter((x) => x.id !== exceptId && !x.blocked).length;
+on('GET', 'admin/team', async (req) => {
+  await needRole(req, ['staff', 'admin']);
+  const store = await db();
+  const now = Date.now();
+  const members = (await Promise.all(STAFF.map((r) => store.list('user', { status: r, limit: 300 })))).flatMap((x) => x.rows);
+  const names = Object.fromEntries(catalog().SEER_ALL.map((x) => [x.id, x.name]));
+  const rows = await Promise.all(members.map(async (u) => {
+    const since = (d) => store.count('order', { where: { answered_by: u.id }, since: now - d * 864e5 });
+    const [a7, a30, aAll, open, [last]] = await Promise.all([
+      since(7), since(30), store.count('order', { where: { answered_by: u.id } }),
+      store.count('order', { where: { assignee: u.id }, status: OPEN_JOB }),
+      store.list('audit', { where: { by: u.id }, limit: 1 }).then((r) => r.rows),
+    ]);
+    const registered = !!(u.profile || u.last_login); // เคยเข้าระบบแล้ว (ผู้ดูแลที่ยังไม่กรอกโปรไฟล์ก็นับ)
+    const lastLogin = u.last_login || null;
+    return {
+      id: u.id, phone: u.phone, name: u.profile ? [u.profile.first || u.name, u.profile.last].filter(Boolean).join(' ') : u.name || '', role: u.role,
+      seer_name: names[u.seer_id] || '', blocked: !!u.blocked, registered, invited_at: u.invited_at || u.created_at || null,
+      last_login: lastLogin, stale: !u.blocked && registered && now - lastLogin > STALE_DAYS * 864e5,
+      answered: { d7: a7, d30: a30, all: aAll }, open_jobs: open, last_action: last ? { at: last.created_at, action: last.action } : null,
+    };
+  }));
+  const order = { admin: 0, staff: 1, seer: 2 };
+  rows.sort((x, y) => order[x.role] - order[y.role] || (y.last_login || 0) - (x.last_login || 0));
+  return {
+    members: rows, stale_days: STALE_DAYS, me: (await needUser(req)).id,
+    counts: { admin: rows.filter((x) => x.role === 'admin').length, staff: rows.filter((x) => x.role === 'staff').length, seer: rows.filter((x) => x.role === 'seer').length,
+      blocked: rows.filter((x) => x.blocked).length, stale: rows.filter((x) => x.stale).length, pending: rows.filter((x) => !x.registered).length },
+    actions: AUDIT_ACTIONS,
+  };
+});
+// เพิ่มทีมงานใหม่ (สิทธิ์ "ทีมงาน"): ใส่เบอร์ → คนนั้นสมัครที่หน้าเว็บด้วยเบอร์นี้แล้วได้สิทธิ์ทันที · ผู้ดูแล/หมอดู: ใช้หน้าลูกค้า/หน้าหมอดู
+on('POST', 'admin/team/invite', async (req) => {
+  const staff = await needRole(req, ['admin']);
+  const b = bodyOf(req);
+  const phone = normPhone(b.phone);
+  const store = await db();
+  const found = await store.byKey('user', phone);
+  const apply = (u) => {
+    if (u.role === 'admin' || u.role === 'staff') fail(400, 'already_team');
+    u.role = 'staff';
+    if (!u.profile) u.name = safeText(b.name, 60) || u.name;
+    u.invited_at = u.invited_at || Date.now(); u.invited_by = u.invited_by || staff.id;
+    u.sv = (u.sv || 0) + 1; u.updated_at = Date.now();
+  };
+  let u;
+  if (found) u = await updateDoc('user', found.id, apply);
+  else { u = { id: newId('u'), phone, name: '', profile: null, ai_until: 0, created_at: Date.now() }; apply(u); u.role = 'staff'; await store.put('user', u); }
+  await audit(staff, 'team_invite', { type: 'user', id: u.id, label: userLabel(u) }, { phone: u.phone, registered: !!u.profile });
+  return { ok: true, registered: !!u.profile };
 });
 on('GET', 'admin/catalog', async (req) => {
   await needRole(req, ['staff', 'admin']);
   const c = catalog();
   const stock = await stockMap();
-  return { stock, services: c.SERVICES.map((s) => ({ id: s.id, name: s.name, icon: s.icon, open: s.open, app: !!s.app, group: s.group || '', prices: s.prices })), shop: c.SHOP_ITEMS, price: c.SERVICE_PRICE };
+  return { stock, services: c.SERVICES.map((s) => ({ id: s.id, name: s.name, icon: s.icon, open: s.open, app: !!s.app, group: s.group || '', prices: s.prices })), shop: c.SHOP_ITEMS.map((p) => ({ ...p, variants_list: variantsOf(p) })), price: c.SERVICE_PRICE };
 });
 
 // ---------- ตำราดูดวง: ตารางที่ใช้คำนวณ (คู่เลข · อักษรประจำดาว · ค่าอักษร) ----------

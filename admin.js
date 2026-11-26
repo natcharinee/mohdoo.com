@@ -37,8 +37,8 @@ const ERR = {
   otp_not_configured: 'ยังไม่ได้ตั้งค่าระบบ OTP', bad_price: 'ราคาต้องอยู่ระหว่าง 20–10,000 บาท', bad_qty: 'จำนวนไม่ถูกต้อง', is_staff: 'เบอร์นี้เป็นทีมงาน/ผู้ดูแลอยู่แล้ว', unknown_seer: 'ไม่พบโปรไฟล์หมอดูนี้', cannot_demote_self: 'ลดสิทธิ์ตัวเองไม่ได้',
   ref_required: 'ใส่เลขอ้างอิงคำขอก่อน', confirm_mismatch: 'เบอร์ที่พิมพ์ไม่ตรงกับบัญชีนี้ ยังไม่ได้ลบ',
   cannot_open: 'บริการนี้ยังไม่มีขั้นตอนรองรับบนเว็บ เปิดจองไม่ได้', range_too_long: 'เลือกช่วงได้ไม่เกิน 366 วัน',
-  name_required: 'ใส่ชื่อก่อน', about_required: 'เปิดจองต้องมีคำอธิบายให้ลูกค้าอ่าน', field_label_required: 'ช่องในแบบฟอร์มต้องมีชื่อ', select_needs_options: 'ช่องเลือกจากรายการต้องมีตัวเลือกอย่างน้อย 2 ข้อ', has_orders: 'เคยมีคนสั่งแล้ว ลบไม่ได้ · ให้ตั้งเป็น "ซ่อน" แทน', too_many: 'สร้างได้ไม่เกิน 30 รายการ', bad_range: 'ช่วงวันที่ไม่ถูกต้อง', not_priced: 'บริการนี้คิดราคาตามใบเสนอราคา ตั้งราคาไม่ได้',
-  conflict: 'มีคนแก้รายการนี้ไปก่อนคุณ · โหลดข้อมูลล่าสุดให้แล้ว ตรวจแล้วทำอีกครั้ง', not_team: 'มอบหมายได้เฉพาะทีมงาน/หมอดู', base_profile: 'โปรไฟล์ตั้งต้นลบไม่ได้ ใช้ซ่อนแทน', in_use: 'โปรไฟล์นี้เชื่อมกับบัญชีหมอดูอยู่ ยกเลิกการเชื่อมก่อน', bad_img: 'ลิงก์รูปต้องขึ้นต้นด้วย https://', out_of_stock: 'สินค้าหมด', busy: 'ระบบไม่ว่าง ลองอีกครั้ง',
+  bad_code: 'โค้ดต้องเป็น A–Z 0–9 - _ ยาว 3–20 ตัว', code_exists: 'มีโค้ดนี้อยู่แล้ว', bad_value: 'ค่าไม่ถูกต้อง (ลดเป็น % ได้ 1–90)', name_required: 'ใส่ชื่อก่อน', already_team: 'เบอร์นี้เป็นทีมงาน/ผู้ดูแลอยู่แล้ว', last_admin: 'ต้องเหลือผู้ดูแลระบบอย่างน้อย 1 คน', cannot_block_self: 'ระงับตัวเองไม่ได้', about_required: 'เปิดจองต้องมีคำอธิบายให้ลูกค้าอ่าน', field_label_required: 'ช่องในแบบฟอร์มต้องมีชื่อ', select_needs_options: 'ช่องเลือกจากรายการต้องมีตัวเลือกอย่างน้อย 2 ข้อ', has_orders: 'เคยมีคนสั่งแล้ว ลบไม่ได้ · ให้ตั้งเป็น "ซ่อน" แทน', too_many: 'สร้างได้ไม่เกิน 30 รายการ', bad_range: 'ช่วงวันที่ไม่ถูกต้อง', not_priced: 'บริการนี้คิดราคาตามใบเสนอราคา ตั้งราคาไม่ได้',
+  conflict: 'มีคนแก้รายการนี้ไปก่อนคุณ · โหลดข้อมูลล่าสุดให้แล้ว ตรวจแล้วทำอีกครั้ง', not_team: 'มอบหมายได้เฉพาะทีมงาน/หมอดู', base_profile: 'โปรไฟล์ตั้งต้นลบไม่ได้ ใช้ซ่อนแทน', in_use: 'โปรไฟล์นี้เชื่อมกับบัญชีหมอดูอยู่ ยกเลิกการเชื่อมก่อน', bad_img: 'ลิงก์รูปต้องขึ้นต้นด้วย https://', out_of_stock: 'สินค้าหมด', busy: 'ระบบไม่ว่าง ลองอีกครั้ง', too_many_images: 'ใส่รูปได้ไม่เกิน 5 รูป', option_in_use: 'ตัวเลือกนี้เคยมีคนสั่งแล้ว ลบไม่ได้ · ติ๊ก "ปิดขาย" แทน', option_name_required: 'ตั้งชื่อตัวเลือกด้วย (เช่น สี, ขนาด)', option_value_required: 'ตัวเลือกต้องมีอย่างน้อย 1 ค่า', option_value_duplicate: 'มีค่าซ้ำกันในตัวเลือกเดียวกัน', option_needs_values: 'ตัวเลือกต้องมีอย่างน้อย 1 ค่า', too_many_variants: 'รวมแล้วเกิน 60 แบบ ลดจำนวนค่าลง', variant_required: 'ต้องเลือกตัวเลือกให้ครบ', variant_unavailable: 'แบบนี้ปิดขายอยู่', unknown_item: 'ไม่พบสินค้า/แบบนี้ (ตัวเลือกอาจเพิ่งถูกแก้)',
 };
 let routeCtl = null; // เปลี่ยนหน้า → ยกเลิกคำขอของหน้าก่อน (กันข้อมูลเก่าทับหน้าใหม่)
 async function api(path, { method = 'GET', body, keep } = {}) {
@@ -169,7 +169,7 @@ function route() {
   routeCtl?.abort();
   routeCtl = new AbortController();
   view.innerHTML = '<p class="empty">กำลังโหลด…</p>';
-  const views = { report: viewReport, pricing: viewPricing, audit: viewAudit, stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings, kb: viewKB };
+  const views = { team: viewTeam, coupons: viewCoupons, report: viewReport, pricing: viewPricing, audit: viewAudit, stock: viewStock, seers: viewSeers, dash: viewDash, orders: viewOrders, order: viewOrder, users: viewUsers, user: viewUser, broadcast: viewBroadcast, settings: viewSettings, kb: viewKB };
   run((views[v] || viewOrders))(decodeURIComponent(arg || ''));
   scrollTo(0, 0);
 }
@@ -314,6 +314,7 @@ async function viewOrder(no) {
           <dt>ประเภท</dt><dd>${KIND[o.kind] || o.kind}</dd><dt>แพ็กเกจ</dt><dd>${esc(o.label)}</dd>
           ${o.qty ? `<dt>จำนวน</dt><dd>${o.qty} ชิ้น × ${baht(o.unit)}</dd>` : ''}
           <dt>ค่าบริการ</dt><dd>${baht(o.price)}</dd>${o.donation ? `<dt>เงินทำบุญ</dt><dd>${baht(o.donation)}</dd>` : ''}
+          ${o.discount ? `<dt>ราคาเดิม</dt><dd>${baht(o.original_price)}</dd><dt>ส่วนลด</dt><dd>−${baht(o.discount)} <span class="chip ok">${esc(o.coupon)}</span></dd>` : ''}
           <dt>ยอดชำระ</dt><dd><b>${baht(o.amount)}</b></dd><dt>ช่องทาง</dt><dd>${esc(o.pay?.provider || '—')}${o.pay?.charge_id ? `<span class="muted small"> · ${esc(o.pay.charge_id)}</span>` : ''}</dd>
           <dt>สั่งเมื่อ</dt><dd>${dt(o.created_at)}</dd><dt>ชำระเมื่อ</dt><dd>${dt(o.paid_at)}</dd>
           ${o.tracking ? `<dt>เลขพัสดุ</dt><dd>${esc(o.tracking.carrier)} ${esc(o.tracking.no)}</dd>` : ''}
@@ -372,7 +373,7 @@ async function viewOrder(no) {
     } finally { btn.disabled = false; btn.textContent = 'อัปโหลดและส่งให้ลูกค้า'; }
   }));
 }
-const LOG = { created: 'สร้างคำสั่งซื้อ', paid: 'ชำระเงินแล้ว', intake: 'ลูกค้าส่งข้อมูล', ai_answer: 'แม่หมอ AI ตอบ', start: 'รับงาน', answer: 'ส่งคำตอบ', step: 'อัปเดตขั้นตอน', tracking: 'ใส่เลขพัสดุ', status: 'เปลี่ยนสถานะ', note: 'เพิ่มบันทึก', assign: 'มอบหมายงาน', cancel: 'ยกเลิก', cancelled: 'ลูกค้ายกเลิก', refund: 'คืนเงิน', files: 'แนบไฟล์', payment_failed: 'ชำระเงินไม่สำเร็จ' };
+const LOG = { coupon: 'ใช้โค้ดส่วนลด', created: 'สร้างคำสั่งซื้อ', paid: 'ชำระเงินแล้ว', intake: 'ลูกค้าส่งข้อมูล', ai_answer: 'แม่หมอ AI ตอบ', start: 'รับงาน', answer: 'ส่งคำตอบ', step: 'อัปเดตขั้นตอน', tracking: 'ใส่เลขพัสดุ', status: 'เปลี่ยนสถานะ', note: 'เพิ่มบันทึก', assign: 'มอบหมายงาน', cancel: 'ยกเลิก', cancelled: 'ลูกค้ายกเลิก', refund: 'คืนเงิน', files: 'แนบไฟล์', payment_failed: 'ชำระเงินไม่สำเร็จ' };
 
 const readData = (file) => new Promise((ok, bad) => { const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = bad; r.readAsDataURL(file); });
 async function shrink(file, max) {
@@ -425,6 +426,7 @@ async function viewReport() {
       <div class="kpi"><small>ยอดสุทธิ</small><b>${baht(S.net)}</b><em>เฉลี่ย ${baht(S.avg)} / รายการ</em></div>
       <div class="kpi"><small>เงินทำบุญ (ฝากถวาย)</small><b>${baht(S.donation)}</b><em>ไม่ใช่รายได้บริษัท</em></div>
       <div class="kpi"><small>ค่าบริการสุทธิ</small><b>${baht(S.service_net)}</b><em>สุทธิ − เงินทำบุญ</em></div>
+      <div class="kpi"><small>ส่วนลดที่ให้</small><b>${baht(S.discount)}</b><em>${S.discount_orders} รายการ · ยอดข้างบนเป็นยอดหลังลดแล้ว</em></div>
     </div>
     <section class="card" style="margin-bottom:16px"><h3>ยอดสุทธิ${monthly ? 'รายเดือน' : 'รายวัน'}</h3>
       ${S.orders ? `<div class="chart rchart">${series.map((d) => `<div class="bar"><span style="height:${(d.net / max) * 100}%" data-v="${baht(d.net)} · ${d.orders} รายการ"></span><small>${label(d)}</small></div>`).join('')}</div>` : '<p class="empty">ไม่มียอดขายในช่วงนี้</p>'}
@@ -434,6 +436,8 @@ async function viewReport() {
         ${r.by_kind.length ? `<div class="tscroll"><table class="table"><tr><th>ประเภท</th><th class="num">รายการ</th><th class="num">คืนเงิน</th><th class="num">สุทธิ</th></tr>
           ${r.by_kind.map((k) => `<tr><td>${esc(k.name)}</td><td class="num">${k.orders}</td><td class="num">${k.refunds ? baht(k.refunds) : '—'}</td><td class="num">${baht(k.net)}</td></tr>`).join('')}</table></div>` : '<p class="empty">—</p>'}
       </section>
+      ${r.by_coupon.length ? `<section class="card"><h3>โค้ดส่วนลดที่ใช้</h3><div class="tscroll"><table class="table"><tr><th>โค้ด</th><th class="num">ครั้ง</th><th class="num">ส่วนลด</th><th class="num">ยอดสุทธิ</th></tr>
+        ${r.by_coupon.map((x) => `<tr><td><b>${esc(x.code)}</b></td><td class="num">${x.orders}</td><td class="num">${baht(x.discount)}</td><td class="num">${baht(x.net)}</td></tr>`).join('')}</table></div></section>` : ''}
       <section class="card"><h3>ขายดี (สูงสุด 15 รายการ)</h3>
         ${r.top_items.length ? `<div class="tscroll"><table class="table"><tr><th>รายการ</th><th class="num">ครั้ง</th><th class="num">สุทธิ</th></tr>
           ${r.top_items.map((x) => `<tr><td>${esc(x.icon)} ${esc(x.title)}${x.qty > x.orders ? `<span class="sub">รวม ${x.qty} ชิ้น</span>` : ''}</td><td class="num">${x.orders}</td><td class="num">${baht(x.net)}</td></tr>`).join('')}</table></div>` : '<p class="empty">—</p>'}
@@ -449,9 +453,209 @@ async function viewReport() {
   view.querySelectorAll('[data-rp]').forEach((b) => b.addEventListener('click', () => { [rq.from, rq.to] = b.dataset.rp.split('|'); route(); }));
 }
 
+// ---------- ทีมงาน: ผู้ดูแล · ทีมงาน · หมอดู ในที่เดียว ----------
+async function viewTeam() {
+  const r = await api('admin/team');
+  const admin = can('admin');
+  const C = r.counts;
+  const lastSeen = (m) => (!m.registered ? '<span class="chip warn">รอสมัครที่หน้าเว็บ</span>' : m.last_login ? dt(m.last_login) : '<span class="muted">ยังไม่เคยเข้า</span>');
+  view.innerHTML = `
+    <div class="head"><h1>ทีมงาน</h1><span class="muted small">ผู้ดูแล ทีมงาน และหมอดู ${r.members.length} คน</span></div>
+    <div class="kpis">
+      <div class="kpi"><small>ผู้ดูแลระบบ</small><b>${C.admin}</b><em>เข้าหลังบ้านได้ทุกอย่าง</em></div>
+      <div class="kpi"><small>ทีมงาน</small><b>${C.staff}</b><em>เข้าหลังบ้านได้ (ไม่รวมตั้งค่า)</em></div>
+      <div class="kpi"><small>หมอดู</small><b>${C.seer}</b><em>ตอบคำถามที่หน้าเว็บ</em></div>
+      <div class="kpi ${C.stale ? 'alert' : ''}"><small>ไม่ได้เข้าเกิน ${r.stale_days} วัน</small><b>${C.stale}</b><em>ควรทบทวนสิทธิ์</em></div>
+      ${C.blocked ? `<div class="kpi"><small>ถูกระงับ</small><b>${C.blocked}</b><em>เข้าระบบไม่ได้</em></div>` : ''}
+    </div>
+    ${admin ? `<form class="card row" id="tInvite" style="margin-bottom:16px;align-items:flex-end">
+      <h3 style="flex-basis:100%;margin:0">เพิ่มทีมงานใหม่ (สิทธิ์ "ทีมงาน")</h3>
+      <label class="grow">ชื่อที่ใช้เรียก<input name="name" maxlength="60" placeholder="เช่น คุณแพรว"></label>
+      <label>เบอร์โทรที่ใช้สมัคร<span class="phone"><select name="cc"><option value="66">🇹🇭 +66</option><option value="856">🇱🇦 +856</option><option value="95">🇲🇲 +95</option><option value="1">🇺🇸 +1</option></select><input name="phone" inputmode="tel" required placeholder="812345678"></span></label>
+      <button class="btn primary">เพิ่มทีมงาน</button>
+      <p class="muted small" style="flex-basis:100%;margin:0">คนนั้นสมัครที่หน้าเว็บด้วยเบอร์นี้ → ได้สิทธิ์ทันที · เพิ่มหมอดูที่หน้า <a href="#seers">🔮 หมอดู</a> · เลื่อนเป็นผู้ดูแลที่หน้าลูกค้าของคนนั้น (เลื่อนสิทธิ์ได้เฉพาะผู้ดูแล)</p>
+    </form>` : ''}
+    <div class="tscroll"><table class="table"><tr><th>สมาชิก</th><th>สิทธิ์</th><th>เข้าระบบล่าสุด</th><th class="num hide-m">งานที่ตอบ 7 / 30 วัน</th><th class="num hide-m">ทั้งหมด</th><th class="num hide-m">กำลังรับ</th><th class="hide-m">ทำล่าสุด</th>${admin ? '<th></th>' : ''}</tr>
+      ${r.members.map((m) => `<tr ${m.blocked ? 'style="opacity:.6"' : ''}>
+        <td><a href="#user/${esc(m.id)}"><b>${esc(m.name || m.phone)}</b></a>${m.id === r.me ? ' <span class="chip">คุณ</span>' : ''}${m.blocked ? ' <span class="chip bad">ระงับ</span>' : ''}${m.stale ? ' <span class="chip warn">ไม่ได้เข้านาน</span>' : ''}<span class="sub">${esc(m.phone)}${m.seer_name ? ` · โปรไฟล์ ${esc(m.seer_name)}` : ''}</span></td>
+        <td>${esc(ROLE[m.role])}</td><td>${lastSeen(m)}</td>
+        <td class="num hide-m">${m.answered.d7} / ${m.answered.d30}</td><td class="num hide-m">${m.answered.all}</td><td class="num hide-m">${m.open_jobs ? `<b style="color:var(--warn)">${m.open_jobs}</b>` : 0}</td>
+        <td class="hide-m small">${m.last_action ? `${esc(r.actions[m.last_action.action] || m.last_action.action)}<span class="sub">${dt(m.last_action.at)}</span>` : '<span class="muted">—</span>'}</td>
+        ${admin ? `<td class="nowrap"><a class="btn sm ghost" href="#audit/by:${esc(m.id)}" title="ประวัติการทำงานของคนนี้">🛡️</a>
+          ${m.id === r.me ? '' : `<button class="btn sm ghost" data-kick="${esc(m.id)}" title="ให้ออกจากระบบทุกเครื่อง">ออกจากระบบ</button> <button class="btn sm ${m.blocked ? '' : 'danger'}" data-block="${esc(m.id)}" data-to="${m.blocked ? 0 : 1}">${m.blocked ? 'ยกเลิกระงับ' : 'ระงับ'}</button>`}</td>` : ''}</tr>`).join('')}
+    </table></div>
+    <p class="muted small" style="margin-top:10px">"งานที่ตอบ" นับคำถามที่คนนั้นตอบแล้ว · "ไม่ได้เข้านาน" = ไม่เข้าระบบเกิน ${r.stale_days} วัน (ถ้าไม่ได้ใช้แล้ว แนะนำให้ระงับหรือลดสิทธิ์) · แก้สิทธิ์ที่หน้าของสมาชิก (กดที่ชื่อ)</p>`;
+  const post = (id, body, msg) => run(async () => { await api(`admin/users/${encodeURIComponent(id)}`, { method: 'POST', body }); toast(msg); route(); })();
+  view.querySelectorAll('[data-kick]').forEach((b) => b.addEventListener('click', () => confirm('ให้คนนี้ออกจากระบบทุกเครื่อง?') && post(b.dataset.kick, { logout: true }, 'ออกจากระบบทุกเครื่องแล้ว')));
+  view.querySelectorAll('[data-block]').forEach((b) => b.addEventListener('click', () => {
+    const on = b.dataset.to === '1';
+    if (confirm(on ? 'ระงับคนนี้? (เข้าสู่ระบบไม่ได้จนกว่าจะยกเลิก)' : 'ยกเลิกการระงับ?')) post(b.dataset.block, { blocked: on }, on ? 'ระงับแล้ว' : 'ยกเลิกการระงับแล้ว');
+  }));
+  $('tInvite')?.addEventListener('submit', run(async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const phone = `+${f.cc.value}${f.phone.value.replace(/\D/g, '').replace(/^0+/, '')}`;
+    if (!confirm(`เพิ่ม ${f.name.value || phone} เป็นทีมงาน?\nทีมงานเห็นข้อมูลลูกค้าและคำสั่งซื้อได้ทั้งหมด (ไม่รวมตั้งค่าระบบ)`)) return;
+    const res = await api('admin/team/invite', { method: 'POST', body: { name: f.name.value, phone } });
+    toast(res.registered ? 'เปลี่ยนบัญชีนี้เป็นทีมงานแล้ว ✓' : 'เพิ่มแล้ว · รอสมัครที่หน้าเว็บด้วยเบอร์นี้'); route();
+  }));
+}
+
+// ---------- โค้ดส่วนลด (ผู้ดูแลเท่านั้น) ----------
+async function viewCoupons() {
+  const r = await api('admin/coupons');
+  const desc = (c) => (c.type === 'percent' ? `ลด ${c.value}%` : `ลด ${baht(c.value)}`);
+  const period = (c) => (c.starts || c.ends ? `${c.starts ? `ตั้งแต่ ${day(Date.parse(c.starts))}` : ''}${c.starts && c.ends ? ' ' : ''}${c.ends ? `ถึง ${day(Date.parse(c.ends))}` : ''}` : 'ไม่จำกัดวัน');
+  const state = (c) => {
+    if (!c.active) return ['หยุดใช้', 'bad'];
+    if (c.ends_at && Date.now() >= c.ends_at) return ['หมดอายุ', 'bad'];
+    if (c.starts_at && Date.now() < c.starts_at) return ['ยังไม่เริ่ม', 'warn'];
+    if (c.max_uses && c.used >= c.max_uses) return ['ใช้ครบแล้ว', 'warn'];
+    return ['ใช้ได้', 'ok'];
+  };
+  view.innerHTML = `
+    <div class="head"><h1>โค้ดส่วนลด</h1><span class="muted small">${r.coupons.length}/${r.max} โค้ด</span><button class="btn sm" id="cpNew">＋ สร้างโค้ดใหม่</button></div>
+    <p class="muted small" style="margin:-8px 0 14px">ลูกค้ากรอกโค้ดในขั้นสรุปรายการก่อนชำระเงิน · ใช้ได้ 1 โค้ดต่อคำสั่งซื้อ · <b>ลดเฉพาะค่าบริการ/สินค้า ไม่ลดเงินทำบุญ</b> · ยอดค่าบริการหลังลดต่ำสุด ${baht(r.min_pay)} (พร้อมเพย์ไม่รับยอดต่ำกว่านี้) · นับสิทธิ์ตอนสร้าง QR และคืนสิทธิ์เมื่อ QR หมดอายุ/ยกเลิก</p>
+    <div id="cpEdit"></div>
+    ${r.coupons.length ? `<div class="tscroll"><table class="table"><tr><th>โค้ด</th><th>ส่วนลด</th><th>ใช้กับ</th><th class="hide-m">เงื่อนไข</th><th class="num">ใช้แล้ว</th><th class="num hide-m">ลดไปแล้ว</th><th>สถานะ</th></tr>
+      ${r.coupons.map((c) => { const [st, cl] = state(c); return `<tr data-cp="${esc(c.id)}" style="cursor:pointer"><td><b>${esc(c.id)}</b>${c.note ? `<span class="sub">${esc(c.note)}</span>` : ''}</td><td>${desc(c)}</td><td>${esc(r.scopes[c.scope])}</td>
+        <td class="hide-m small">${period(c)}${c.min_amount ? `<br>ยอดขั้นต่ำ ${baht(c.min_amount)}` : ''}<br>คนละ ${c.per_user || 'ไม่จำกัด'} ครั้ง</td>
+        <td class="num">${c.used}${c.max_uses ? ` / ${c.max_uses}` : ''}</td><td class="num hide-m">${baht(c.discount_given)}<span class="sub">${c.paid_orders} รายการจ่ายแล้ว</span></td><td><span class="chip ${cl}">${st}</span></td></tr>`; }).join('')}
+    </table></div>` : '<p class="empty">ยังไม่มีโค้ดส่วนลด · กด "สร้างโค้ดใหม่"</p>'}`;
+  const open = (c) => {
+    const isNew = !c;
+    c ||= { id: '', type: 'percent', value: 10, scope: 'all', min_amount: 0, max_uses: 0, per_user: 1, starts: '', ends: '', active: true, note: '' };
+    $('cpEdit').innerHTML = `<form class="card stack" id="cpForm" style="margin-bottom:16px">
+      <h3>${isNew ? 'สร้างโค้ดใหม่' : `แก้โค้ด ${esc(c.id)}`}</h3>
+      <div class="row">
+        <label>โค้ด (A–Z 0–9 - _ · 3–20 ตัว)<input name="code" ${isNew ? 'required' : 'disabled'} maxlength="20" value="${esc(c.id)}" placeholder="เช่น WELCOME50" style="text-transform:uppercase;width:210px"></label>
+        <label>ชนิดส่วนลด<select name="type"><option value="percent" ${c.type === 'percent' ? 'selected' : ''}>ลดเป็น %</option><option value="amount" ${c.type === 'amount' ? 'selected' : ''}>ลดเป็นบาท</option></select></label>
+        <label><span id="cpValLabel">${c.type === 'percent' ? 'ลดกี่ % (1–90)' : 'ลดกี่บาท'}</span><input name="value" type="number" required min="1" max="100000" value="${c.value}" style="width:130px"></label>
+        <label>ใช้กับ<select name="scope">${Object.entries(r.scopes).map(([k, v]) => `<option value="${k}" ${k === c.scope ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></label>
+      </div>
+      <div class="row">
+        <label>เริ่มใช้ได้<input name="starts" type="date" value="${c.starts}"></label>
+        <label>ใช้ได้ถึง (สิ้นวันที่เลือก)<input name="ends" type="date" value="${c.ends}"></label>
+        <label>ยอดขั้นต่ำ (บาท)<input name="min_amount" type="number" min="0" max="100000" value="${c.min_amount}" style="width:120px"></label>
+        <label>ใช้ได้รวมกี่ครั้ง (0 = ไม่จำกัด)<input name="max_uses" type="number" min="0" max="1000000" value="${c.max_uses}" style="width:140px"></label>
+        <label>ลูกค้าคนละกี่ครั้ง (0 = ไม่จำกัด)<input name="per_user" type="number" min="0" max="100" value="${c.per_user}" style="width:140px"></label>
+      </div>
+      <label>บันทึกภายใน (ลูกค้าไม่เห็น)<input name="note" maxlength="100" value="${esc(c.note)}" placeholder="เช่น แจกในไลฟ์ 25 พ.ย."></label>
+      <label class="row small" style="display:flex;gap:6px"><input type="checkbox" name="active" ${c.active ? 'checked' : ''} style="width:auto"> เปิดใช้งาน (ปิด = หยุดใช้ชั่วคราว)</label>
+      <div class="row" style="gap:8px;flex-wrap:wrap">
+        <button class="btn primary" name="do" value="save">${isNew ? 'สร้างโค้ด' : 'บันทึก'}</button>
+        <button type="button" class="btn ghost" id="cpCancel">ยกเลิก</button>
+        ${isNew ? '' : '<button class="btn danger" name="do" value="delete" type="submit">ลบโค้ด</button>'}
+      </div></form>`;
+    const f = $('cpForm');
+    f.type.addEventListener('change', () => { $('cpValLabel').textContent = f.type.value === 'percent' ? 'ลดกี่ % (1–90)' : 'ลดกี่บาท'; });
+    $('cpCancel').addEventListener('click', () => { $('cpEdit').innerHTML = ''; });
+    f.addEventListener('submit', run(async (e) => {
+      e.preventDefault();
+      if (e.submitter?.value === 'delete') {
+        if (!confirm(`ลบโค้ด ${c.id}?\n(ลบได้เฉพาะโค้ดที่ยังไม่เคยมีคนใช้ · ที่เคยใช้แล้วให้ปิดใช้งานแทน)`)) return;
+        await api('admin/coupons', { method: 'POST', body: { op: 'delete', code: c.id } });
+        toast('ลบโค้ดแล้ว'); return route();
+      }
+      const data = { code: f.code.value, type: f.type.value, value: +f.value.value, scope: f.scope.value, starts: f.starts.value, ends: f.ends.value,
+        min_amount: +f.min_amount.value || 0, max_uses: +f.max_uses.value || 0, per_user: f.per_user.value === '' ? 1 : +f.per_user.value, note: f.note.value, active: f.active.checked };
+      if (isNew && !confirm(`สร้างโค้ด ${data.code.toUpperCase()} (${data.type === 'percent' ? `ลด ${data.value}%` : `ลด ${baht(data.value)}`})?\nลูกค้าใช้ได้ทันทีหลังสร้าง`)) return;
+      await api('admin/coupons', { method: 'POST', body: { op: isNew ? 'create' : 'update', code: c.id, data } });
+      toast(isNew ? 'สร้างโค้ดแล้ว ✓' : 'บันทึกแล้ว ✓'); route();
+    }));
+    $('cpEdit').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    (isNew ? f.code : f.value).focus({ preventScroll: true });
+  };
+  $('cpNew').addEventListener('click', () => open(null));
+  view.querySelectorAll('tr[data-cp]').forEach((tr) => tr.addEventListener('click', () => open(r.coupons.find((c) => c.id === tr.dataset.cp))));
+}
+
 // ---------- ราคาและบริการ (ผู้ดูแลเท่านั้น) ----------
 // ค่าตั้งต้นอยู่ในไฟล์ (services-data.js · shop-data.js) · ที่แก้ตรงนี้เก็บในฐานข้อมูล · หน้าเว็บอัปเดตภายใน 1 นาที
 const SVC_STATE = { open: ['เปิดจอง', 'ok'], soon: ['เร็ว ๆ นี้', 'warn'], hidden: ['ซ่อน', 'bad'] };
+
+// ---------- ตัวแก้รูปหลายรูป + ตัวเลือก (ขนาด/สี) ใช้ร่วมกันทั้งสินค้าเดิมและสินค้าที่สร้างเอง ----------
+function mediaEditor(host, x, { maxImages = 5, basePrice = 0 } = {}) {
+  const st = {
+    images: (x.images || (x.img ? [x.img] : [])).map((url) => ({ url })),
+    options: JSON.parse(JSON.stringify(x.options || [])),
+    variants: JSON.parse(JSON.stringify(x.variants || {})),
+  };
+  const stock = x.stock || {};
+  const savedUrls = () => st.images.filter((i) => i.url).map((i) => i.url);
+  const combos = () => {
+    const groups = st.options.filter((g) => g.values.length);
+    if (!groups.length || groups.some((g) => g.values.some((v) => !v.id))) return null;
+    let cs = [[]];
+    groups.forEach((g) => { cs = cs.flatMap((c) => g.values.map((v) => [...c, { g, v }])); });
+    return cs.map((c) => ({ key: c.map((y) => y.v.id).join('.'), label: c.map((y) => `${y.g.name || 'ตัวเลือก'}: ${y.v.label || '…'}`).join(' · ') }));
+  };
+  const draw = () => {
+    const cs = combos();
+    host.innerHTML = `<fieldset class="mx"><legend>รูปสินค้า (${st.images.length}/${maxImages})</legend>
+      <div class="mx-imgs">${st.images.map((im, i) => `<figure class="mx-img ${i === 0 ? 'main' : ''}"><img src="${esc(im.url || im.data)}" alt="รูปที่ ${i + 1}">
+        <figcaption>${i === 0 ? 'รูปหลัก' : im.url ? `<button type="button" class="btn sm ghost" data-me-main="${i}">ตั้งเป็นรูปหลัก</button>` : 'รูปใหม่'}
+        <button type="button" class="btn sm ghost" data-me-del="${i}" aria-label="เอารูปที่ ${i + 1} ออก">เอาออก</button></figcaption></figure>`).join('')}</div>
+      ${st.images.length < maxImages ? `<label class="btn sm" style="justify-self:start">เพิ่มรูป…<input type="file" data-me-file accept="image/jpeg,image/png,image/webp" multiple hidden></label>` : ''}
+      <span class="muted small">สูงสุด ${maxImages} รูป · ระบบย่อให้อัตโนมัติ · รูปแรกคือรูปหลักที่แสดงบนการ์ดสินค้า · รูปที่เพิ่มใหม่จะต่อท้าย</span></fieldset>
+    <fieldset class="mx"><legend>ตัวเลือก (ขนาด / สี ฯลฯ)</legend>
+      ${st.options.map((g, gi) => `<div class="mx-grp"><div class="row" style="gap:8px;align-items:end"><label class="grow">ชื่อตัวเลือก<input data-me-gname="${gi}" maxlength="30" value="${esc(g.name)}" placeholder="เช่น สี หรือ ขนาด"></label>
+        <button type="button" class="btn sm ghost" data-me-gdel="${gi}">ลบตัวเลือกนี้</button></div>
+        ${g.values.map((v, vi) => `<div class="row mx-val" style="gap:8px;align-items:center"><input data-me-vlabel="${gi}.${vi}" maxlength="30" value="${esc(v.label)}" placeholder="เช่น แดง / M" aria-label="ค่าที่ ${vi + 1}">
+          <select data-me-vimg="${gi}.${vi}" aria-label="รูปของค่านี้"><option value="">ไม่ผูกรูป</option>${savedUrls().map((u, ui) => `<option value="${esc(u)}" ${u === v.img ? 'selected' : ''}>รูปที่ ${ui + 1}</option>`).join('')}</select>
+          <label class="row small" style="display:flex;gap:4px"><input type="checkbox" data-me-voff="${gi}.${vi}" ${v.off ? 'checked' : ''} style="width:auto"> ปิดขาย</label>
+          <button type="button" class="btn sm ghost" data-me-vdel="${gi}.${vi}" aria-label="ลบค่านี้">ลบ</button></div>`).join('')}
+        <button type="button" class="btn sm" data-me-vadd="${gi}" ${g.values.length >= 10 ? 'disabled' : ''}>＋ เพิ่มค่า</button></div>`).join('')}
+      ${st.options.length < 2 ? '<button type="button" class="btn sm" data-me-gadd style="justify-self:start">＋ เพิ่มตัวเลือก</button>' : ''}
+      <span class="muted small">ลูกค้าต้องเลือกให้ครบก่อนสั่ง · ค่าที่เคยมีคนสั่งแล้วลบไม่ได้ ให้ติ๊ก "ปิดขาย" แทน · แก้ชื่อได้โดยไม่กระทบคำสั่งซื้อเดิม</span></fieldset>
+    ${st.options.some((g) => g.values.length) ? `<fieldset class="mx"><legend>ราคาและสต๊อกแยกตามแบบ</legend>${cs
+      ? `<div class="tscroll"><table class="table"><tr><th>แบบ</th><th>ราคา (ว่าง = ${baht(basePrice)})</th><th>ปิดขาย</th><th>คงเหลือ</th></tr>${cs.map((c) => {
+        const o = st.variants[c.key] || {}; const q = stock[c.key];
+        return `<tr><td>${esc(c.label)}</td><td><input type="number" min="1" data-me-vprice="${c.key}" value="${o.price ?? ''}" style="width:110px"></td>
+          <td><input type="checkbox" data-me-voffk="${c.key}" ${o.off ? 'checked' : ''}></td><td class="muted">${q == null ? 'ไม่จำกัด' : q}</td></tr>`;
+      }).join('')}</table></div><span class="muted small">ตั้งจำนวนคงเหลือแต่ละแบบที่หน้า 📦 สินค้า</span>`
+      : '<p class="muted small">บันทึกก่อน แล้วจึงจะตั้งราคาและสต๊อกแยกตามแบบได้ (ค่าใหม่ยังไม่มีรหัส)</p>'}</fieldset>` : ''}`;
+  };
+  const at = (s) => s.split('.').map(Number);
+  host.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    const d = b.dataset;
+    if (d.meMain !== undefined) { const [im] = st.images.splice(+d.meMain, 1); st.images.unshift(im); }
+    else if (d.meDel !== undefined) { const [im] = st.images.splice(+d.meDel, 1); st.options.forEach((g) => g.values.forEach((v) => { if (im.url && v.img === im.url) v.img = ''; })); }
+    else if (d.meGadd !== undefined) st.options.push({ name: '', values: [{ label: '' }] });
+    else if (d.meGdel !== undefined) st.options.splice(+d.meGdel, 1);
+    else if (d.meVadd !== undefined) st.options[+d.meVadd].values.push({ label: '' });
+    else if (d.meVdel !== undefined) { const [g, v] = at(d.meVdel); st.options[g].values.splice(v, 1); }
+    else return;
+    draw();
+  });
+  host.addEventListener('input', (e) => {
+    const d = e.target.dataset;
+    if (d.meGname !== undefined) st.options[+d.meGname].name = e.target.value;
+    else if (d.meVlabel !== undefined) { const [g, v] = at(d.meVlabel); st.options[g].values[v].label = e.target.value; }
+    else if (d.meVprice !== undefined) { (st.variants[d.meVprice] ||= {}).price = e.target.value === '' ? null : +e.target.value; }
+    else if (d.meVoffk !== undefined) { (st.variants[d.meVoffk] ||= {}).off = e.target.checked; }
+  });
+  host.addEventListener('change', run(async (e) => {
+    const d = e.target.dataset;
+    if (d.meVoff !== undefined) { const [g, v] = at(d.meVoff); st.options[g].values[v].off = e.target.checked; }
+    else if (d.meVimg !== undefined) { const [g, v] = at(d.meVimg); st.options[g].values[v].img = e.target.value; }
+    else if (d.meFile !== undefined) {
+      for (const f of [...e.target.files].slice(0, maxImages - st.images.length)) st.images.push({ data: await shrinkImage(f) });
+      draw();
+    }
+  }));
+  draw();
+  return {
+    collect: () => ({
+      images: st.images.filter((i) => i.url).map((i) => i.url),
+      new_images: st.images.filter((i) => i.data).map((i) => i.data),
+      options: st.options.filter((g) => g.name.trim() || g.values.some((v) => v.label.trim())).map((g) => ({ ...(g.id ? { id: g.id } : {}), name: g.name, values: g.values.filter((v) => v.label.trim()).map((v) => ({ ...(v.id ? { id: v.id } : {}), label: v.label, off: !!v.off, img: v.img || '' })) })),
+      variants: Object.fromEntries(Object.entries(st.variants).filter(([, o]) => o && (o.price != null || o.off)).map(([k, o]) => [k, { ...(o.price != null ? { price: o.price } : {}), ...(o.off ? { off: true } : {}) }])),
+    }),
+  };
+}
+
 async function viewPricing() {
   const r = await api('admin/pricing');
   const priceIn = (name, val, ph, w = 96) => `<input name="${name}" type="number" inputmode="numeric" min="${r.range.min}" max="${r.range.max}" value="${val ?? ''}" placeholder="${ph}" style="width:${w}px">`;
@@ -490,7 +694,7 @@ async function viewPricing() {
           <label class="grow">คำอธิบาย<input name="desc" maxlength="200" value="${esc(p.desc)}"></label>
           <label>ราคา (บาท)${priceIn('price', p.price, p.base.price)}</label>
           <label class="row small" style="display:flex;gap:6px;align-self:center"><input type="checkbox" name="hidden" ${p.hidden ? 'checked' : ''} style="width:auto"> ซ่อน</label>
-          <span class="row" style="gap:6px;align-self:end"><button class="btn sm">บันทึก</button>${p.edited ? '<button class="btn sm ghost" name="reset" value="1">คืนค่าเดิม</button>' : ''}</span>
+          <span class="row" style="gap:6px;align-self:end"><button class="btn sm">บันทึก</button><button type="button" class="btn sm ghost" data-pmedia="${esc(p.id)}">รูป/ตัวเลือก${p.images && p.images.length > 1 || (p.options || []).length ? ' ●' : ''}</button>${p.edited ? '<button class="btn sm ghost" name="reset" value="1">คืนค่าเดิม</button>' : ''}</span>
           ${p.edited ? `<small class="muted p-base">ค่าเดิม: ${esc(p.base.name)} · ${baht(p.base.price)}</small>` : ''}
         </form>`).join('')}</div>
       </section>
@@ -506,7 +710,7 @@ async function viewPricing() {
       <section class="card"><div class="row" style="justify-content:space-between;align-items:center;margin-bottom:4px">
           <h3 style="margin:0">🎁 สินค้าที่สร้างเอง <span class="muted small">${r.custom.items.length}/${r.custom.max}</span></h3>
           <button class="btn sm" id="cItemNew" type="button">＋ เพิ่มสินค้าใหม่</button></div>
-        <p class="muted small">ของจัดส่ง หรือไฟล์ดิจิทัล · มีรูปได้ 1 รูป · จำนวนสต๊อกตั้งที่หน้า <a href="#stock">📦 สินค้า</a> · ที่เคยมีคนสั่งแล้วลบไม่ได้ ให้ "ซ่อน" แทน</p>
+        <p class="muted small">ของจัดส่ง หรือไฟล์ดิจิทัล · มีได้หลายรูปและหลายตัวเลือก (ขนาด/สี) · จำนวนสต๊อกตั้งที่หน้า <a href="#stock">📦 สินค้า</a> · ที่เคยมีคนสั่งแล้วลบไม่ได้ ให้ "ซ่อน" แทน</p>
         ${r.custom.items.length ? `<div class="c-list">${r.custom.items.map((x) => `<button type="button" class="c-card ${x.hidden ? 'off' : ''}" data-citem="${esc(x.id)}">
           <span class="c-ic">${x.img ? `<img src="${esc(x.img)}" alt="">` : esc(x.icon)}</span><b>${esc(x.name)}</b>
           <small>${x.digital ? 'ไฟล์ดิจิทัล' : 'ของจัดส่ง'} · ${baht(x.price)}</small>
@@ -644,18 +848,22 @@ async function viewPricing() {
     scrollEdit(); f.name.focus({ preventScroll: true });
   }
 
+  view.querySelectorAll('[data-pmedia]').forEach((b) => b.addEventListener('click', () => {
+    const p = r.shop.find((y) => y.id === b.dataset.pmedia);
+    $('cEdit').innerHTML = `<form class="card stack" id="cForm"><h3>รูป/ตัวเลือก: ${esc(p.name)}</h3><div id="pmHost" class="stack"></div>
+      <div class="row" style="gap:8px"><button class="btn primary">บันทึก</button><button type="button" class="btn ghost" id="cCancel">ยกเลิก</button></div></form>`;
+    const me = mediaEditor($('pmHost'), p, { maxImages: C.max_images || 5, basePrice: p.price });
+    $('cCancel').addEventListener('click', () => { $('cEdit').innerHTML = ''; });
+    $('cForm').addEventListener('submit', run(async (e) => { e.preventDefault(); await save({ item: { id: p.id, ...me.collect() } }, 'บันทึกรูป/ตัวเลือกแล้ว ✓'); }));
+    scrollEdit();
+  }));
+
   function openCustomItem(x) {
     const isNew = !x;
     x ||= { icon: '🎁', name: '', desc: '', price: '', digital: false, hidden: false, img: '' };
     $('cEdit').innerHTML = `<form class="card stack" id="cForm">
       <h3>${isNew ? 'เพิ่มสินค้าใหม่' : `แก้สินค้า: ${esc(x.name)}`}</h3>
-      <div class="row" style="align-items:center;gap:14px">
-        <span id="ciPrev" class="prof-av big">${x.img ? `<img src="${esc(x.img)}" alt="">` : esc(x.icon)}</span>
-        <div class="stack" style="gap:6px">
-          <label class="btn sm" style="justify-self:start">เลือกรูปสินค้า…<input type="file" name="file" accept="image/jpeg,image/png,image/webp" hidden></label>
-          ${x.img ? '<label class="row small" style="display:flex;gap:6px"><input type="checkbox" name="noimg" style="width:auto"> ลบรูป (แสดงไอคอนแทน)</label>' : ''}
-          <span class="muted small">รูปสี่เหลี่ยมจัตุรัส ระบบย่อให้อัตโนมัติ · ไม่มีรูป = แสดงไอคอนอีโมจิ</span></div>
-      </div>
+      <div id="ciMedia" class="stack"></div>
       <div class="row">
         <label>ไอคอน (อีโมจิ)<input name="icon" maxlength="8" value="${esc(x.icon)}" style="width:80px"></label>
         <label class="grow">ชื่อสินค้า<input name="name" required maxlength="80" value="${esc(x.name)}"></label>
@@ -672,14 +880,7 @@ async function viewPricing() {
         ${isNew ? '' : '<button class="btn danger" name="do" value="delete" type="submit">ลบสินค้า</button>'}
       </div></form>`;
     const f = $('cForm');
-    let image = null;
-    f.file.addEventListener('change', run(async () => {
-      const file = f.file.files[0];
-      if (!file) return;
-      image = await shrinkImage(file);
-      $('ciPrev').innerHTML = `<img src="${image}" alt="">`;
-      if (f.noimg) f.noimg.checked = false;
-    }));
+    const me = mediaEditor($('ciMedia'), x, { maxImages: C.max_images || 5, basePrice: +x.price || 0 });
     $('cCancel').addEventListener('click', () => { $('cEdit').innerHTML = ''; });
     f.addEventListener('submit', run(async (e) => {
       e.preventDefault();
@@ -688,7 +889,7 @@ async function viewPricing() {
         return send({ type: 'item', op: 'delete', id: x.id }, 'ลบสินค้าแล้ว');
       }
       const data = { icon: f.icon.value, name: f.name.value, desc: f.desc.value, price: +f.price.value, digital: f.digital.checked, hidden: f.hidden.checked };
-      if (image) data.image = image; else if (f.noimg?.checked) data.img = '';
+      Object.assign(data, me.collect());
       await send({ type: 'item', op: isNew ? 'create' : 'update', id: x.id, data }, isNew ? 'เพิ่มสินค้าแล้ว ✓' : 'บันทึกแล้ว ✓');
     }));
     scrollEdit(); f.name.focus({ preventScroll: true });
@@ -698,7 +899,7 @@ async function viewPricing() {
 // ---------- ประวัติการทำงานของทีมงาน (ผู้ดูแลเท่านั้น) ----------
 const aq = { action: '', q: '', offset: 0 };
 const AUDIT_CHIP = { refund: 'bad', cancel: 'bad', block: 'bad', role: 'warn', mark_paid: 'warn', ai_days: 'warn', broadcast: 'warn', export: 'warn', seer_profile_delete: 'bad', seer_app_delete: 'bad', login: '' };
-const DETAIL_KEY = { op: 'ทำอะไร', kind: 'ประเภท', name: 'ชื่อ', state: 'สถานะ', changes: 'รายการ',  from: 'จาก', to: 'เป็น', amount: 'จำนวน', reason: 'เหตุผล', days: 'วัน', until: 'ถึง', price: 'ราคา', status: 'สถานะ', sent: 'ส่งถึง', target: 'กลุ่ม', rows: 'จำนวนแถว', phone: 'เบอร์', text: 'ข้อความ', body: 'ข้อความ', changed: 'แก้', hidden: 'ซ่อน', ip: 'IP', note: 'หมายเหตุ', paid: 'จ่ายแล้ว', provider: 'ช่องทาง', reset: 'คืนค่าเริ่มต้น', reviewed: 'ตรวจแล้ว', version: 'เวอร์ชัน', self: 'หมอดูตั้งเอง', seer_id: 'โปรไฟล์' };
+const DETAIL_KEY = { code: 'โค้ด', scope: 'ใช้กับ', op: 'ทำอะไร', kind: 'ประเภท', name: 'ชื่อ', state: 'สถานะ', changes: 'รายการ',  from: 'จาก', to: 'เป็น', amount: 'จำนวน', reason: 'เหตุผล', days: 'วัน', until: 'ถึง', price: 'ราคา', status: 'สถานะ', sent: 'ส่งถึง', target: 'กลุ่ม', rows: 'จำนวนแถว', phone: 'เบอร์', text: 'ข้อความ', body: 'ข้อความ', changed: 'แก้', hidden: 'ซ่อน', ip: 'IP', note: 'หมายเหตุ', paid: 'จ่ายแล้ว', provider: 'ช่องทาง', reset: 'คืนค่าเริ่มต้น', reviewed: 'ตรวจแล้ว', version: 'เวอร์ชัน', self: 'หมอดูตั้งเอง', seer_id: 'โปรไฟล์' };
 function auditDetail(a) {
   const fmt = (k, v) => {
     if (a.action === 'stock' && v === null) return 'ไม่จำกัด';
@@ -728,14 +929,17 @@ const auditTarget = (t) => {
 };
 async function viewAudit(arg = '') {
   const user = arg.startsWith('user:') ? arg.slice(5) : '';
+  const by = arg.startsWith('by:') ? arg.slice(3) : '';
   const params = new URLSearchParams({ limit: 50, offset: aq.offset });
   if (aq.action) params.set('action', aq.action);
   if (aq.q) params.set('q', aq.q);
   if (user) params.set('user', user);
+  if (by) params.set('by', by);
   const r = await api(`admin/audit?${params}`);
   view.innerHTML = `
     <div class="head"><h1>ประวัติการทำงาน</h1><span class="muted small">ใครทำอะไร เมื่อไร · เก็บย้อนหลัง 1 ปี · ผู้ดูแลระบบเท่านั้นที่เห็นหน้านี้</span></div>
     ${user ? `<p class="small" style="margin-bottom:10px">กรองเฉพาะบัญชี <a href="#user/${esc(user)}">${esc(r.items[0]?.target?.label || user)}</a> · <a href="#audit">ดูทั้งหมด</a></p>` : ''}
+    ${by ? `<p class="small" style="margin-bottom:10px">การกระทำของ <b>${esc(r.items[0]?.who || by)}</b> · <a href="#team">‹ กลับหน้าทีมงาน</a> · <a href="#audit">ดูทั้งหมด</a></p>` : ''}
     <form class="row" id="aFilter" style="margin-bottom:12px">
       <input class="grow" name="q" value="${esc(aq.q)}" placeholder="ค้นหา ชื่อทีมงาน ลูกค้า เลขคำสั่งซื้อ">
       <select name="action" style="width:auto"><option value="">ทุกการกระทำ</option>${Object.entries(r.actions).map(([k, v]) => `<option value="${k}" ${k === aq.action ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select>
@@ -1077,15 +1281,19 @@ async function viewStock() {
     <div class="head"><h1>สินค้าและสต๊อก</h1><span class="muted small">ลูกค้าเลือกจำนวนได้ไม่เกินที่เหลือ · จองสต๊อกตอนสร้าง QR และคืนให้อัตโนมัติถ้า QR หมดอายุหรือยกเลิก</span></div>
     <div class="tscroll"><table class="table">
       <tr><th>สินค้า</th><th class="num">ราคา</th><th>คงเหลือ</th><th></th></tr>
-      ${shop.map((p) => {
-        const q = stock[p.id];
-        const state = p.digital ? '<span class="chip">ไฟล์ดิจิทัล · ไม่ใช้สต๊อก</span>' : q == null ? '<span class="chip ok">ไม่จำกัด</span>' : q === 0 ? '<span class="chip bad">หมดแล้ว</span>' : q <= 3 ? `<span class="chip warn">เหลือ ${q}</span>` : `<span class="chip ok">เหลือ ${q}</span>`;
-        return `<tr><td>${p.icon} ${esc(p.name)}<span class="sub">${p.id}</span></td><td class="num">${baht(p.price)}</td><td>${state}</td>
-          <td>${p.digital ? '' : `<form class="row" data-stock="${p.id}" style="flex-wrap:nowrap"><input name="qty" type="number" min="0" max="100000" value="${q ?? ''}" placeholder="ไม่จำกัด" style="width:110px">
-            <button class="btn sm">บันทึก</button>${q != null ? `<button type="button" class="btn sm ghost" data-unlimit="${p.id}">ไม่จำกัด</button>` : ''}</form>`}</td></tr>`;
+      ${shop.flatMap((p) => {
+        const vs = p.digital ? [] : p.variants_list || [];
+        const rows = vs.length ? vs.map((v) => ({ id: `${p.id}:${v.key}`, name: `${p.icon} ${p.name}`, sub: v.label, price: v.price, off: v.off })) : [{ id: p.id, name: `${p.icon} ${p.name}`, sub: p.id, price: p.price, digital: p.digital }];
+        return rows.map((r) => {
+          const q = stock[r.id];
+          const state = r.digital ? '<span class="chip">ไฟล์ดิจิทัล · ไม่ใช้สต๊อก</span>' : r.off ? '<span class="chip bad">ปิดขาย</span>' : q == null ? '<span class="chip ok">ไม่จำกัด</span>' : q === 0 ? '<span class="chip bad">หมดแล้ว</span>' : q <= 3 ? `<span class="chip warn">เหลือ ${q}</span>` : `<span class="chip ok">เหลือ ${q}</span>`;
+          return `<tr><td>${r.name}<span class="sub">${esc(r.sub)}</span></td><td class="num">${baht(r.price)}</td><td>${state}</td>
+          <td>${r.digital ? '' : `<form class="row" data-stock="${esc(r.id)}" style="flex-wrap:nowrap"><input name="qty" type="number" min="0" max="100000" value="${q ?? ''}" placeholder="ไม่จำกัด" style="width:110px" aria-label="จำนวนคงเหลือ ${esc(r.sub)}">
+            <button class="btn sm">บันทึก</button>${q != null ? `<button type="button" class="btn sm ghost" data-unlimit="${esc(r.id)}">ไม่จำกัด</button>` : ''}</form>`}</td></tr>`;
+        });
       }).join('')}
     </table></div>
-    <p class="muted small" style="margin-top:10px">ราคาสินค้าแก้ที่ไฟล์ shop-data.js แล้ว deploy</p>`;
+    <p class="muted small" style="margin-top:10px">ราคา รูป และตัวเลือกแก้ที่หน้า 💰 ราคาและบริการ</p>`;
   view.querySelectorAll('[data-stock]').forEach((f) => f.addEventListener('submit', run(async (e) => {
     e.preventDefault();
     await api('admin/stock', { method: 'POST', body: { id: f.dataset.stock, qty: f.qty.value === '' ? null : +f.qty.value } });

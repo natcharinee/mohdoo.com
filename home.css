@@ -2148,3 +2148,34 @@ p.avoid-tag { display: flex; width: fit-content; margin: 8px auto 0; }
 /* รูปสินค้าที่ผู้ดูแลอัปโหลด (แทนไอคอนอีโมจิ) */
 .mk-pi img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
 .mk-pi:has(img) { background: #1b0e3d; overflow: hidden; }
+
+/* โค้ดส่วนลดในขั้นสรุปรายการ */
+.pay-coupon { margin: 4px 0 8px; }
+.pay-coupon .link-btn { background: none; border: 0; padding: 6px 2px; font: inherit; font-size: .86rem; color: var(--gold-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.coupon-box { display: flex; gap: 8px; margin: 6px 0 2px; }
+.coupon-box input { flex: 1; min-width: 0; text-transform: uppercase; letter-spacing: .06em; }
+.coupon-box .btn-ghost { flex: none; padding: 0 16px; }
+.coupon-on { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: 12px; background: rgba(79, 214, 156, .1); border: 1px solid rgba(79, 214, 156, .35); font-size: .86rem; }
+.coupon-msg { margin: 4px 2px 0; font-size: .78rem; color: var(--muted); min-height: 1.2em; }
+.coupon-msg.bad { color: #ff8fa6; }
+.qr-disc { font-size: .72rem; color: #1b7a4f; margin: -2px 0 6px; }
+
+/* สินค้า: หน้ารายละเอียด · รูปหลายรูป · ตัวเลือก */
+.mk-more { display: block; color: var(--gold); opacity: .8; }
+.mk-detail { display: grid; gap: 10px; padding: 12px; border-radius: 18px; background: rgba(255, 255, 255, .05); border: 1px solid rgba(227, 179, 255, .18); }
+.mk-back { justify-self: start; }
+.mk-gal { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: 14px; background: #1b0e3d; scrollbar-width: none; }
+.mk-gal img { flex: none; width: 100%; aspect-ratio: 1; object-fit: cover; scroll-snap-align: center; }
+.mk-thumbs { display: flex; gap: 6px; overflow-x: auto; }
+.mk-thumbs button { flex: none; padding: 0; border: 1px solid rgba(227, 179, 255, .3); border-radius: 10px; overflow: hidden; background: none; cursor: pointer; }
+.mk-thumbs img { display: block; width: 44px; height: 44px; object-fit: cover; }
+.mk-noimg { display: grid; place-items: center; font-size: 4rem; aspect-ratio: 2; border-radius: 14px; background: radial-gradient(circle at 35% 30%, #fff3, #4a2486); }
+.mk-opt { border: 0; padding: 0; margin: 0; }
+.mk-opt legend { font-size: .82rem; opacity: .85; margin-bottom: 6px; }
+.mk-opt > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.mk-chip { padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(227, 179, 255, .35); background: rgba(255, 255, 255, .06); color: inherit; font: inherit; font-size: .85rem; cursor: pointer; }
+.mk-chip.on { background: var(--gold); color: #2a1450; border-color: var(--gold); font-weight: 600; }
+.mk-chip:disabled { opacity: .35; text-decoration: line-through; cursor: not-allowed; }
+.mk-price { display: flex; align-items: center; gap: 10px; margin: 0; }
+.mk-price b { color: var(--gold); font-size: 1.15rem; }
+.mk-sel { margin: 0; font-size: .82rem; opacity: .8; }

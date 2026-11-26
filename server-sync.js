@@ -28,7 +28,7 @@ const SRV_ERR = {
   bad_phone: 'เบอร์โทรไม่ถูกต้อง', too_many_requests: 'ทำรายการถี่เกินไป รอสักครู่แล้วลองใหม่', sms_failed: 'ส่ง SMS ไม่สำเร็จ ลองใหม่อีกครั้ง',
   otp_not_configured: 'ระบบ OTP ยังไม่พร้อม', payment_not_configured: 'ระบบชำระเงินยังไม่พร้อม', payment_failed: 'สร้าง QR ไม่สำเร็จ ลองใหม่อีกครั้ง',
   service_closed: 'บริการนี้ยังไม่เปิดให้จอง', bad_donation: 'กรุณาเลือกจำนวนเงินทำบุญ', login_required: 'กรุณาเข้าสู่ระบบอีกครั้ง',
-  file_too_large: 'รูปใหญ่เกินไป', out_of_stock: 'สินค้าเหลือไม่พอ ปรับจำนวนใหม่อีกครั้งนะคะ', conflict: 'ข้อมูลเพิ่งถูกอัปเดต ลองอีกครั้งนะคะ', staff_cannot_self_delete: 'บัญชีทีมงานลบเองไม่ได้ ติดต่อผู้ดูแลระบบ', busy: 'ระบบไม่ว่าง ลองอีกครั้งนะคะ', bad_file: 'ไฟล์รูปไม่ถูกต้อง', blocked: 'บัญชีนี้ถูกระงับ ติดต่อทีมงาน',
+  file_too_large: 'รูปใหญ่เกินไป', out_of_stock: 'สินค้าเหลือไม่พอ ปรับจำนวนใหม่อีกครั้งนะคะ', conflict: 'ข้อมูลเพิ่งถูกอัปเดต ลองอีกครั้งนะคะ', coupon_invalid: 'ไม่พบโค้ดนี้ หรือโค้ดปิดใช้งานแล้ว', coupon_expired: 'โค้ดนี้หมดอายุแล้ว', coupon_not_started: 'โค้ดนี้ยังไม่ถึงวันเริ่มใช้', coupon_used_up: 'โค้ดนี้ถูกใช้ครบจำนวนแล้ว', coupon_user_limit: 'คุณใช้สิทธิ์โค้ดนี้ครบแล้ว', coupon_scope: 'โค้ดนี้ใช้กับรายการนี้ไม่ได้', coupon_na: 'ราคารายการนี้ต่ำเกินไปที่จะลดด้วยโค้ดนี้', staff_cannot_self_delete: 'บัญชีทีมงานลบเองไม่ได้ ติดต่อผู้ดูแลระบบ', busy: 'ระบบไม่ว่าง ลองอีกครั้งนะคะ', bad_file: 'ไฟล์รูปไม่ถูกต้อง', blocked: 'บัญชีนี้ถูกระงับ ติดต่อทีมงาน',
 };
 async function srv(path, { method = 'GET', body } = {}) {
   const r = await fetch(`/api/v1/${path}`, {
@@ -38,6 +38,7 @@ async function srv(path, { method = 'GET', body } = {}) {
   const j = await r.json().catch(() => ({}));
   if (!r.ok) {
     const e = new Error(j.error === 'wait' ? `ขอรหัสใหม่ได้ใน ${j.wait} วินาที` : SRV_ERR[j.error] || 'เชื่อมต่อระบบไม่สำเร็จ ลองใหม่อีกครั้ง');
+    if (j.error === 'coupon_min') e.message = `โค้ดนี้ใช้ได้เมื่อยอดตั้งแต่ ${Number(j.min).toLocaleString('th-TH')} บาทขึ้นไป`;
     e.code = j.error; e.status = r.status;
     throw e;
   }
@@ -75,9 +76,9 @@ function srvSaveProfile(u) {
 }
 
 // ---------- คำสั่งซื้อ ----------
-const srvCreateOrder = (o) => srv('orders', { method: 'POST', body: {
-  key: o.item.key, tier: o.tier, qty: o.qty || 1, donation: o.donation || 0, title: o.item.title, place: (o.item.preset || {}).place || '',
-} });
+const orderBody = (o) => ({ key: o.item.key, tier: o.tier, qty: o.qty || 1, donation: o.donation || 0, title: o.item.title, ...(o.item.variant ? { variant: o.item.variant.key } : {}), place: (o.item.preset || {}).place || '' });
+const srvCreateOrder = (o) => srv('orders', { method: 'POST', body: { ...orderBody(o), ...(o.coupon ? { coupon: o.coupon.code } : {}) } });
+const srvCheckCoupon = (o, code) => srv('coupons/check', { method: 'POST', body: { ...orderBody(o), coupon: code } });
 const srvOrder = (no) => srv(`orders/${encodeURIComponent(no)}`);
 const srvDemoPay = (no) => srv(`orders/${encodeURIComponent(no)}/demo-pay`, { method: 'POST' });
 const srvCancel = (no) => srv(`orders/${encodeURIComponent(no)}/cancel`, { method: 'POST' }).catch(() => {});
