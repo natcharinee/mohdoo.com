@@ -869,10 +869,14 @@ on('POST', 'admin/orders/:no', async (req, res, { no }) => {
     }
     case 'tracking': {
       if (!['shop'].includes(o.kind) || !isPaid) fail(400, 'bad_state');
-      o.tracking = { carrier: str(b.carrier, 40), no: str(b.no, 60) };
-      if (!o.tracking.no) fail(400, 'empty');
+      const next = { carrier: str(b.carrier, 40), no: str(b.no, 60).replace(/\s+/g, '').toUpperCase() };
+      if (!next.no) fail(400, 'empty');
+      if (!/^[A-Z0-9-]{5,40}$/.test(next.no)) fail(400, 'bad_tracking'); // เลขพัสดุมีแค่ตัวอักษรอังกฤษ ตัวเลข และขีด
+      const changed = !o.tracking || o.tracking.no !== next.no || o.tracking.carrier !== next.carrier;
+      o.tracking = next;
       o.step = o.steps.length; o.status = 'shipped';
-      msg = { title: 'จัดส่งสินค้าแล้ว 📦', body: `${o.tracking.carrier} ${o.tracking.no}` };
+      if (changed) msg = { title: o.tracking_sent ? 'อัปเดตเลขพัสดุ 📦' : 'จัดส่งสินค้าแล้ว 📦', body: `${next.carrier} ${next.no}` }; // บันทึกซ้ำโดยไม่เปลี่ยน = ไม่แจ้งลูกค้าซ้ำ
+      o.tracking_sent = true;
       break;
     }
     case 'status': {
