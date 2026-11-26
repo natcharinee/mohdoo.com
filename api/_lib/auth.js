@@ -35,9 +35,9 @@ export function startSession(res, user) {
   const days = BACKOFFICE.includes(user.role) ? TEAM_SESSION_DAYS : SESSION_DAYS;
   const now = Date.now();
   const payload = Buffer.from(JSON.stringify({ uid: user.id, v: user.sv || 0, iat: now, exp: now + days * 864e5 })).toString('base64url');
-  setCookie(res, COOKIE, `${payload}.${sign(payload)}`, { maxAge: days * 86400, secure: config.prod });
+  setCookie(res, COOKIE, `${payload}.${sign(payload)}`, { maxAge: days * 86400, secure: config.prod || config.onVercel });
 }
-export const endSession = (res) => setCookie(res, COOKIE, '', { maxAge: 0, secure: config.prod });
+export const endSession = (res) => setCookie(res, COOKIE, '', { maxAge: 0, secure: config.prod || config.onVercel });
 
 export async function sessionUser(req) {
   const raw = cookies(req)[COOKIE];

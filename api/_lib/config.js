@@ -3,7 +3,8 @@
 const env = process.env;
 const flag = (v) => ['1', 'true', 'yes', 'on'].includes(String(v || '').toLowerCase());
 
-const prod = env.VERCEL_ENV === 'production' || env.NODE_ENV === 'production';
+// บน Vercel ตัดสินจาก VERCEL_ENV เท่านั้น (Vercel ตั้ง NODE_ENV=production ให้ Preview ด้วย ถ้าดู NODE_ENV จะนับ Preview เป็นเว็บจริง)
+const prod = env.VERCEL_ENV ? env.VERCEL_ENV === 'production' : env.NODE_ENV === 'production';
 // โหมดทดลอง (OTP 123456 · กดจ่ายแล้วไม่เสียเงิน) ใช้ได้เฉพาะเครื่อง dev และ Preview · บนเว็บจริงไม่มีผลแม้เผลอตั้งไว้
 const demo = (v) => !prod && flag(v);
 if (prod && (flag(env.OTP_DEMO) || flag(env.PAY_DEMO))) console.warn('[config] OTP_DEMO / PAY_DEMO ถูกปิดบน production');
