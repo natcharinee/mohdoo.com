@@ -69,3 +69,19 @@ test('health บนเว็บจริงไม่มี diag และไม�
   assert.equal(h.demo_code, undefined);
   assert.equal(h.session_key, 'env');
 });
+
+test('Preview บน Vercel ที่ไม่มี PREVIEW_DATABASE_URL แต่มี DATABASE_URL ของเว็บจริง → ปฏิเสธ ไม่แตะฐานข้อมูลจริง', async () => {
+  const port = 5180;
+  const p = spawn(process.execPath, ['dev-server.mjs'], {
+    env: { ...process.env, PORT: String(port), MOHDOO_DATA_DIR: fs.mkdtempSync(path.join(os.tmpdir(), 'mohdoo-pv-')), VERCEL: '1', VERCEL_ENV: 'preview', DATABASE_URL: 'postgres://u:p@127.0.0.1:1/x', SESSION_SECRET: 'z'.repeat(40), ANTHROPIC_API_KEY: '' },
+    stdio: 'ignore',
+  });
+  try {
+    let r;
+    for (let i = 0; i < 50; i++) {
+      try { r = await fetch(`http://127.0.0.1:${port}/api/v1/health`); break; } catch (_) { await new Promise((x) => setTimeout(x, 100)); }
+    }
+    assert.equal(r.status, 503);
+    assert.equal((await r.json()).error, 'preview_database_missing');
+  } finally { p.kill(); }
+});

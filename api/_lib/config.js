@@ -9,11 +9,18 @@ const prod = env.VERCEL_ENV ? env.VERCEL_ENV === 'production' : env.NODE_ENV ===
 const demo = (v) => !prod && flag(v);
 if (prod && (flag(env.OTP_DEMO) || flag(env.PAY_DEMO))) console.warn('[config] OTP_DEMO / PAY_DEMO ถูกปิดบน production');
 
+// ฐานข้อมูล: Production ใช้ DATABASE_URL · Preview บน Vercel ต้องใช้ PREVIEW_DATABASE_URL (ฐานข้อมูลแยก) เท่านั้น
+// ถ้า Preview ไม่มี PREVIEW_DATABASE_URL แต่มี DATABASE_URL ของเว็บจริงติดมา (Neon integration ผูกทุก environment) → ปฏิเสธ ไม่แตะข้อมูลลูกค้าจริง (dbBlocked)
+const sharedDb = env.DATABASE_URL || env.POSTGRES_URL || '';
+const previewDb = env.PREVIEW_DATABASE_URL || '';
+const dbUrl = prod ? sharedDb : previewDb || (env.VERCEL ? '' : sharedDb);
+
 export const config = {
   prod,
   onVercel: !!env.VERCEL,
-  db: env.DATABASE_URL || env.POSTGRES_URL ? 'postgres' : 'file',
-  databaseUrl: env.DATABASE_URL || env.POSTGRES_URL || '',
+  dbBlocked: !prod && !!env.VERCEL && !previewDb && !!sharedDb,
+  db: dbUrl ? 'postgres' : 'file',
+  databaseUrl: dbUrl,
   // Production ใช้ SESSION_SECRET · Preview ใช้ PREVIEW_SESSION_SECRET ได้ (ตั้งแยกคนละค่ากับ Production เพื่อไม่ให้ชื่อชนกับตัวแปรของเว็บจริง)
   sessionSecret: env.SESSION_SECRET || (prod ? '' : env.PREVIEW_SESSION_SECRET || ''),
   adminPhones: String(env.ADMIN_PHONES || '').split(',').map((p) => p.trim()).filter(Boolean),

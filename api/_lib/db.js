@@ -130,6 +130,7 @@ async function pgStore() {
 
 let store;
 export async function db() {
+  if (config.dbBlocked) fail(503, 'preview_database_missing'); // Preview ต้องตั้ง PREVIEW_DATABASE_URL (ฐานข้อมูลแยกจากเว็บจริง)
   if (!store) store = config.db === 'postgres' ? pgStore() : Promise.resolve(fileStore());
   return store;
 }
