@@ -190,6 +190,7 @@ function accounts() {
 }
 // บันทึกผู้ใช้ปัจจุบัน + เก็บลงบัญชีตามเบอร์ (ออกจากระบบแล้วประวัติ/คูปองไม่หาย)
 function persistUser(u) {
+  if (u && u.birthdate && typeof normBirthISO === 'function') u.birthdate = normBirthISO(u.birthdate); // เคยเก็บเป็น พ.ศ. → ค.ศ.
   // บันทึกขึ้นเซิร์ฟเวอร์ก่อนเสมอ (แยกจากการเขียนในเครื่อง) · ถ้าพื้นที่เบราว์เซอร์เต็มแล้วเขียนในเครื่องไม่ได้ โปรไฟล์ต้องไม่หายจากระบบ
   try { if (typeof srvSaveProfile === 'function') srvSaveProfile(u); } catch (_) {}
   try {

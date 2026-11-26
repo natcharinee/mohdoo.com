@@ -33,7 +33,11 @@ function pubOrder(o) {
     expires_at: o.status === 'pending' ? o.pay?.expires_at : null, demo: o.pay?.provider === 'demo', form: o.form || null, photos: o.photos || [],
   };
 }
-const pubUser = (u) => ({ id: u.id, phone: u.phone, role: u.role, seer_id: u.seer_id || null, name: u.name, ai_until: u.ai_until || 0, profile: u.profile, created_at: u.created_at });
+// วันเกิดที่เคยบันทึกเป็น พ.ศ. (ปี ≥ 2400) → ค.ศ. · ระบบคำนวณและส่งให้ AI ใช้ ค.ศ. เสมอ
+export const normBirth = (s) => { const m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(String(s ?? '').trim()); return m && +m[1] >= 2400 ? `${+m[1] - 543}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}` : s; };
+const BIRTH_KEYS = ['birthdate', 'birth2', 'partnerBirth', 'babybirth'];
+const normProfile = (p) => (p && p.birthdate ? { ...p, birthdate: normBirth(p.birthdate) } : p);
+const pubUser = (u) => ({ id: u.id, phone: u.phone, role: u.role, seer_id: u.seer_id || null, name: u.name, ai_until: u.ai_until || 0, profile: normProfile(u.profile), created_at: u.created_at });
 // ---------- ประวัติการทำงานของทีมงาน (audit log) · ดูได้ที่หลังบ้าน → ประวัติการทำงาน (ผู้ดูแลเท่านั้น) ----------
 // บันทึกว่าใครทำอะไรกับใคร เมื่อไร · บันทึกไม่สำเร็จจะไม่ทำให้งานหลักล้ม · เก็บ 1 ปี (ลบเก่าในงานประจำวัน)
 export const AUDIT_ACTIONS = {
@@ -190,7 +194,7 @@ function cleanForm(form) {
   const out = {};
   Object.entries(form && typeof form === 'object' ? form : {}).slice(0, 40).forEach(([k, v]) => {
     const key = str(k, 40).replace(/[^\w-]/g, '');
-    if (key) out[key] = str(v, 3000);
+    if (key) out[key] = BIRTH_KEYS.includes(key) ? str(normBirth(str(v, 20)), 20) : str(v, 3000);
   });
   return out;
 }
@@ -258,6 +262,7 @@ on('PUT', 'me', async (req) => {
   if (!p || typeof p !== 'object' || Array.isArray(p)) fail(400, 'bad_profile');
   const { photos, photoLog, aiUntil, phone, role, seerId, ...rest } = p; // รูปเก็บแยก · สิทธิ์/วันหมดอายุเป็นของเซิร์ฟเวอร์
   if (phone && phone !== u.phone) fail(409, 'account_mismatch'); // กันโปรไฟล์ของอีกบัญชีมาทับ
+  if (rest.birthdate) rest.birthdate = str(normBirth(str(rest.birthdate, 20)), 20);
   const json = JSON.stringify(rest);
   if (json.length > 600_000) fail(413, 'profile_too_large');
   // แก้เฉพาะโปรไฟล์ · สิทธิ์ บันทึกของทีม วันสมาชิก ที่ผู้ดูแลแก้พร้อมกันไม่หาย

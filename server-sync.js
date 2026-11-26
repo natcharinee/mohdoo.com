@@ -55,7 +55,7 @@ const srvLogout = () => { srvSession = null; seerKnown = null; notes = { items: 
 // โปรไฟล์จากเซิร์ฟเวอร์ + รูปในแฟ้มดวงที่เก็บในเครื่องนี้ (รูปไม่ขึ้นเซิร์ฟเวอร์กับโปรไฟล์ · ส่งเฉพาะตอนสั่งดูดวง)
 function srvUserFrom(su) {
   const local = (typeof findAccount === 'function' && findAccount(su.phone)) || {};
-  return { ...su.profile, phone: su.phone, photos: local.photos || su.profile.photos, photoLog: local.photoLog, aiUntil: su.ai_until || 0, role: su.role, seerId: su.seer_id || null };
+  return { ...su.profile, ...(su.profile.birthdate && typeof normBirthISO === 'function' ? { birthdate: normBirthISO(su.profile.birthdate) } : {}), phone: su.phone, photos: local.photos || su.profile.photos, photoLog: local.photoLog, aiUntil: su.ai_until || 0, role: su.role, seerId: su.seer_id || null };
 }
 
 // ---------- บันทึกโปรไฟล์ขึ้นเซิร์ฟเวอร์ (เรียกจาก persistUser) ----------

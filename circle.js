@@ -72,7 +72,7 @@ function renderCircle() {
           <label>ชื่อเล่น<input name="name" required maxlength="30" placeholder="เช่น ต้น"></label>
         </div>
         <div class="two">
-          <label>วันเกิด<input type="date" name="birthdate" required></label>
+          <label>วันเกิด (พ.ศ.)<div class="bd" data-bd="birthdate" data-required></div></label>
           <label><span>เวลาเกิด <small>(ถ้าทราบ)</small></span><input type="time" name="birthtime"></label>
         </div>
         <label class="pf-consent"><input type="checkbox" name="consent" required>

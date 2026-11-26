@@ -354,7 +354,7 @@ function openEdit() {
         <label>นามสกุลภาษาอังกฤษ<input name="lastEn" lang="en" placeholder="Last name" value="${esc(u.lastEn || '')}"></label>
       </div>
       <div class="two">
-        <label>วันเกิด<input type="date" name="birthdate" value="${esc(u.birthdate || '')}"></label>
+        <label>วันเกิด (พ.ศ.)<div class="bd" data-bd="birthdate" data-value="${esc(u.birthdate || '')}"></div></label>
         <label>เวลาเกิด<input type="time" name="birthtime" value="${esc(u.birthtime || '')}"></label>
       </div>
       <label>สถานที่เกิด (จังหวัด / ประเทศ)<input name="birthplace" placeholder="เช่น กรุงเทพมหานคร" value="${esc(u.birthplace || '')}"></label>

@@ -8,7 +8,7 @@ const FORM_FIELDS = {
   babyname: [
     { name: 'surname', label: 'นามสกุลของลูก', required: true },
     { name: 'gender', label: 'เพศของลูก', type: 'select', options: ['ยังไม่ทราบ', 'ชาย', 'หญิง'] },
-    { name: 'babybirth', label: 'วันเกิดลูก (ถ้าคลอดแล้ว)', type: 'date' },
+    { name: 'babybirth', label: 'วันเกิดลูก (ถ้าคลอดแล้ว) พ.ศ.', type: 'birthdate' },
     { name: 'likes', label: 'ความหมายหรือเสียงที่ชอบ', type: 'textarea', placeholder: 'เช่น อยากได้ชื่อที่แปลว่าความสำเร็จ ออกเสียงง่าย' },
   ],
   rename: [
@@ -26,7 +26,7 @@ const FORM_FIELDS = {
     { name: 'from', label: 'สะดวกตั้งแต่วันที่', type: 'date', required: true },
     { name: 'to', label: 'ถึงวันที่ (ไม่เกิน 120 วัน)', type: 'date', required: true },
     { name: 'name2', label: 'ชื่อเล่นอีกฝ่าย / คนที่เกี่ยวข้อง (ถ้ามี)', placeholder: 'เช่น เจ้าสาว หรือหุ้นส่วน' },
-    { name: 'birth2', label: 'วันเกิดของคนนั้น (ถ้ามี)', type: 'date' },
+    { name: 'birth2', label: 'วันเกิดของคนนั้น (ถ้ามี) พ.ศ.', type: 'birthdate' },
     { name: 'people', label: 'รายละเอียดเพิ่มเติม (ถ้ามี)', type: 'textarea', placeholder: 'เช่น อยากได้วันเสาร์-อาทิตย์ หรือมีคนเกี่ยวข้องมากกว่า 2 คน' },
   ],
   palm: [
@@ -69,7 +69,7 @@ Object.assign(FORM_FIELDS, {
     inputmode: 'numeric', pattern: '[0-9 -]{13,17}', placeholder: 'x-xxxx-xxxxx-xx-x' }],
   couple: [
     { name: 'partner', label: 'ชื่อเล่นของอีกฝ่าย', required: true },
-    { name: 'partnerBirth', label: 'วันเกิดของอีกฝ่าย', type: 'date', required: true },
+    { name: 'partnerBirth', label: 'วันเกิดของอีกฝ่าย (พ.ศ.)', type: 'birthdate', required: true },
     { name: 'partnerTime', label: 'เวลาเกิดของอีกฝ่าย (ถ้าทราบ)', type: 'time' },
     { name: 'science', label: 'ศาสตร์ที่อยากใช้', type: 'select', options: ['ให้หมอดูเลือก', 'โหราศาสตร์ไทย', 'ปาจื้อ', 'ซาจู', 'โหราศาสตร์ตะวันตก'] },
     { name: 'question', label: 'อยากรู้เรื่องไหนเป็นพิเศษ', type: 'textarea' },
@@ -607,6 +607,7 @@ function renderIntake(fields) {
       return `<select name="${f.name}">${f.options.map(opt).join('')}${(f.groups || []).map(([label, list]) =>
         `<optgroup label="${esc(label)}">${list.map(opt).join('')}</optgroup>`).join('')}</select>`;
     }
+    if (f.type === 'birthdate') return `<div class="bd" data-bd="${f.name}" ${f.required ? 'data-required' : ''}></div>`;
     if (f.type === 'file') {
       // มีรูปในแฟ้มดวงแล้ว → ใช้รูปเดิมได้เลย หรือเลือกรูปใหม่ (รูปเดิมเก็บไว้ดูย้อนหลัง)
       const old = f.slot && (u.photos || {})[f.slot];
@@ -632,7 +633,7 @@ function renderIntake(fields) {
       <p>ใช้ข้อมูลจากโปรไฟล์ · แก้ได้ที่หน้าบัญชี</p>
     </div>
     <form class="form" id="intakeForm">
-      ${u.birthdate ? '' : '<label>วันเกิดของคุณ<input type="date" name="birthdate" required></label>'}
+      ${u.birthdate ? '' : '<label>วันเกิดของคุณ (พ.ศ.)<div class="bd" data-bd="birthdate" data-required></div></label>'}
       ${fields.map((f) => `<label>${f.label}${f.required ? '' : ' <small>(ไม่บังคับ)</small>'}${input(f)}</label>`).join('')}
       ${fields.some((f) => f.slot) ? `<p class="pf-note">📷 รูปจะเก็บไว้ใน “แฟ้มดวง” ของคุณ ใช้ดูดวงครั้งต่อไปและรายงานดวงประจำวัน ลบได้ทุกเมื่อในหน้าบัญชี</p>
       <label class="pf-consent"><input type="checkbox" name="photoConsent" required>
