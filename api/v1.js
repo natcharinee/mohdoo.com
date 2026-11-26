@@ -10,7 +10,7 @@ import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
 import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, BACKOFFICE, DEMO_CODE } from './_lib/auth.js';
 import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles, publicSiteCfg, PRICE_RANGE, CUSTOM_MAX, CUSTOM_KINDS, FIELD_TYPES } from './_lib/catalog.js';
 import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from './_lib/pay.js';
-import { saveFile, readLocalFile, deleteFile } from './_lib/storage.js';
+import { saveFile, readLocalFile, readFile, deleteFile } from './_lib/storage.js';
 import { notify, savePush } from './_lib/notify.js';
 import { kbOverrides, kbDoc, saveKB } from './_lib/kb.js';
 import { KB_TABLES, DEFAULT_KB, PAIR_LEVELS, KB_SCHEMA } from '../lib/calc/kb.js';
@@ -526,7 +526,7 @@ on('GET', 'files/:name', async (req, res, { name }) => {
     return undefined;
   }
   const u = await needUser(req);
-  const f = readLocalFile(name);
+  const f = await readFile(name);
   if (f.owner !== u.id && !STAFF.includes(u.role)) fail(404, 'not_found');
   send(res, 200, f.buf, { 'Content-Type': f.type, 'Cache-Control': 'private, max-age=3600' });
   return undefined;
