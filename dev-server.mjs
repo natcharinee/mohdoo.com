@@ -10,7 +10,7 @@ process.env.PAY_DEMO ??= '1';
 process.env.ADMIN_PHONES ??= '+66812345678'; // เครื่องตัวเองเท่านั้น: เบอร์ 0812345678 เข้าหลังบ้านได้ (บน Vercel ตั้งเองใน Environment Variables)
 const PORT = +(process.env.PORT || 5174);
 const ROOT = process.cwd();
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.ico': 'image/x-icon', '.md': 'text/plain; charset=utf-8' };
+const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.ico': 'image/x-icon', '.md': 'text/plain; charset=utf-8' };
 // header ความปลอดภัยแบบเดียวกับบนเว็บจริง (อ่านจาก vercel.json) · รองรับ source แบบ "/(.*)" และ path ตรงตัว
 const VERCEL_HEADERS = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8')).headers || []; } catch (_) { return []; } })();
 // แปลง source แบบ Vercel ("/assets/(.*)") เป็น regex · ในเครื่องไม่ใช้ Cache-Control (แก้ไฟล์แล้วเห็นผลทันที)
