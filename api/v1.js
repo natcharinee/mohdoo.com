@@ -10,7 +10,7 @@ import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
 import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, BACKOFFICE, DEMO_CODE } from './_lib/auth.js';
 import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles, publicSiteCfg, PRICE_RANGE, CUSTOM_MAX, CUSTOM_KINDS, FIELD_TYPES } from './_lib/catalog.js';
 import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from './_lib/pay.js';
-import { saveFile, readLocalFile, readFile, deleteFile } from './_lib/storage.js';
+import { saveFile, readFile, deleteFile, PUBLIC_FOLDERS } from './_lib/storage.js';
 import { notify, savePush } from './_lib/notify.js';
 import { kbOverrides, kbDoc, saveKB } from './_lib/kb.js';
 import { KB_TABLES, DEFAULT_KB, PAIR_LEVELS, KB_SCHEMA } from '../lib/calc/kb.js';
@@ -520,17 +520,29 @@ on('POST', 'webhooks/omise', async (req) => {
 
 // ---------- ไฟล์ในเครื่อง (โหมดพัฒนา) ----------
 on('GET', 'files/:name', async (req, res, { name }) => {
-  if (name.startsWith('seerimg-') || name.startsWith('shopimg-')) { // รูปโปรไฟล์หมอดู / รูปสินค้า = ข้อมูลสาธารณะ
-    const f = readLocalFile(name);
-    send(res, 200, f.buf, { 'Content-Type': f.type, 'Cache-Control': 'public, max-age=86400' });
+  const isPublic = PUBLIC_FOLDERS.some((f) => name.startsWith(`${f}-`)); // รูปโปรไฟล์หมอดู / รูปสินค้า = ข้อมูลสาธารณะ
+  let cache = 'public, max-age=86400';
+  if (!isPublic) {
+    const u = await needUser(req);
+    const f0 = await readFile(name);
+    if (f0.owner !== u.id && !STAFF.includes(u.role)) { f0.stream?.cancel?.(); fail(404, 'not_found'); }
+    return sendFile(res, f0, 'private, max-age=3600');
+  }
+  return sendFile(res, await readFile(name), cache);
+});
+async function sendFile(res, f, cache) {
+  if (f.stream) { // วิดีโอ: ส่งเป็น stream
+    res.statusCode = 200;
+    res.setHeader('Content-Type', f.type); res.setHeader('Cache-Control', cache);
+    if (f.size) res.setHeader('Content-Length', String(f.size));
+    const { Readable } = await import('node:stream');
+    const { pipeline } = await import('node:stream/promises');
+    await pipeline(Readable.fromWeb(f.stream), res).catch(() => {});
     return undefined;
   }
-  const u = await needUser(req);
-  const f = await readFile(name);
-  if (f.owner !== u.id && !STAFF.includes(u.role)) fail(404, 'not_found');
-  send(res, 200, f.buf, { 'Content-Type': f.type, 'Cache-Control': 'private, max-age=3600' });
+  send(res, 200, f.buf, { 'Content-Type': f.type, 'Cache-Control': cache });
   return undefined;
-});
+}
 
 // ---------- งานประจำวัน (Vercel Cron 06:00 น. เวลาไทย) ----------
 on('GET', 'cron/daily', async (req) => {
