@@ -2187,3 +2187,9 @@ p.avoid-tag { display: flex; width: fit-content; margin: 8px auto 0; }
 .bd select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245, 201, 107, .18); }
 .bd select option { background: #1d0f42; color: #f1eaff; }
 @media (max-width: 699px) { .bd select { font-size: 16px; } }
+
+/* รูปที่ลูกค้าส่งในหน้าคำสั่งซื้อ */
+.order-photos { margin-top: 12px; }
+.order-photos > small { display: block; color: var(--muted); margin-bottom: 6px; }
+.order-photos figure { margin: 0; display: grid; gap: 4px; }
+.order-photos figcaption { font-size: .75rem; text-align: center; color: var(--muted); }

@@ -124,6 +124,7 @@ async function srvSyncOrders() {
     if (o.answer && o.answered_by !== 'ai') { h.reading = o.answer; h.summary = o.summary || h.summary; }
     if (o.proof.length) h.proof = o.proof;
     if (o.tracking) h.tracking = o.tracking;
+    if (o.photos && o.photos.length) h.photos = o.photos.map((p) => ({ slot: p.slot, url: p.url })); // รูปที่ลูกค้าส่งให้หมอดู (เก็บบนเซิร์ฟเวอร์ · เปิดได้เฉพาะเจ้าของและทีมงาน)
   });
   u.history.sort((a, b) => b.at - a.at);
   if (JSON.stringify(u.history) !== before) persistUser(u);

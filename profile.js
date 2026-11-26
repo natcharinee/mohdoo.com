@@ -319,6 +319,11 @@ function openHistory(id) {
         ${h.proof && h.proof.length ? `<div class="proof-media">${h.proof.map((m) => (/video/.test(m.type || '')
           ? `<video src="${esc(m.url)}" controls playsinline preload="metadata"></video>`
           : `<a href="${esc(m.url)}" target="_blank" rel="noopener"><img src="${esc(m.url)}" alt="${esc(m.caption || 'รูปยืนยัน')}" loading="lazy"></a>`)).join('')}</div>` : ''}
+        ${h.photos && h.photos.length ? `<div class="order-photos"><small>รูปที่คุณส่งให้หมอดู · เห็นเฉพาะคุณและทีมงาน</small><div class="proof-media">${h.photos.map((p) => {
+          const name = (BODY_SLOTS.find((s) => s.id === p.slot) || { name: 'รูป' }).name;
+          const img = `<img src="${esc(p.url)}" alt="${esc(name)}" loading="lazy">`;
+          return `<figure>${/^data:/.test(p.url) ? img : `<a href="${esc(p.url)}" target="_blank" rel="noopener">${img}</a>`}<figcaption>${esc(name)}</figcaption></figure>`;
+        }).join('')}</div></div>` : ''}
         <ul class="order-info">
           <li><small>${isPurchase(h) ? 'จำนวน' : 'แพ็กเกจ'}</small><b>${esc(h.label)}</b></li>
           <li><small>ยอดชำระ</small><b>${Number(h.amount).toLocaleString('th-TH')} ฿</b></li>
