@@ -128,7 +128,13 @@ const AFTER = {
 // 2 หมอดู (seer:…)                 → ส่งคำถามแล้วรอหมอดูท่านนั้นตอบเป็นข้อความ
 // 3 ดูดวงประจำวัน 150 บาท/30 วัน  → ถามแม่หมอ AI ได้ไม่จำกัด + ดวงโดยรวมทุกเช้า
 // 4 มงคล                          → บริการทำแทน (ค่าบริการ + เงินทำบุญ) และวัตถุมงคล (จัดส่งตามที่อยู่)
-const askNow = (s) => !s.link && s.group !== 'merit' && !['palm', 'face'].includes(s.id);
+const askNow = (s) => !s.custom && !s.link && s.group !== 'merit' && !['palm', 'face'].includes(s.id);
+// ช่องฟอร์มของบริการที่ผู้ดูแลสร้างเอง (ชนิด: text / textarea / select / date / tel)
+const customFields = (s) => (s.fields || []).map((f) => ({
+  name: f.name, label: f.label, required: !!f.required,
+  ...(f.type === 'textarea' || f.type === 'select' || f.type === 'date' ? { type: f.type } : f.type === 'tel' ? { type: 'tel', inputmode: 'tel' } : {}),
+  ...(f.type === 'select' ? { options: f.options || [] } : {}),
+}));
 const ASK_LABEL = 'ถาม 1 เรื่อง · รับใบผลดวงทันที';
 const HUMAN_LABEL = 'ถาม 1 เรื่อง · หมอดูจริงตอบภายใน 24 ชม.';
 const ASK_FIELDS = [
@@ -144,8 +150,9 @@ function itemFromService(id, title) {
   return {
     key: s.id, icon: s.icon, title: title || s.name, sub: s.get,
     tiers: s.prices.map((p) => ({ label: p.label, price: p.price, soon: p.soon || !s.open })),
-    next: s.link ? { kind: 'frame', href: s.link } : { kind: 'form', fields: FORM_FIELDS[s.id] || ASK_FIELDS, instant: askNow(s) },
+    next: s.link ? { kind: 'frame', href: s.link } : { kind: 'form', fields: s.custom ? customFields(s) : FORM_FIELDS[s.id] || ASK_FIELDS, instant: askNow(s) },
     done: AFTER[s.group],
+    ...(s.custom && s.kind === 'merit' ? { donate: true } : {}), // บริการมงคลที่สร้างเอง: ให้เลือกเงินทำบุญเหมือนบริการมงคลเดิม
   };
 }
 function itemFromType(catId, idx) {
@@ -250,7 +257,7 @@ function renderSummary() {
 
 // ---------- เงินทำบุญ (บริการมงคล): ยอดชำระ = ค่าบริการทำแทน + เงินทำบุญที่เลือก ----------
 const DONATION_STEPS = [20, 50, 100, 200, 300, 500, 1000];
-const donates = (item) => !!placeField(item);
+const donates = (item) => !!placeField(item) || !!item.donate;
 const orderTotal = () => (order.item.tiers[order.tier].price || 0) * (order.qty || 1) + (order.donation || 0);
 // ---------- สมาชิกรายเดือน: บอกวันหมดอายุก่อนจ่าย ----------
 function aiExpiryHTML() {

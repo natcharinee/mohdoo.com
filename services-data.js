@@ -252,8 +252,20 @@ if (SITE_OVR && SITE_OVR.services) SERVICES.forEach((s) => {
   s.open = !!o.open; s.hidden = !!o.hidden;
   (o.prices || []).forEach((p, i) => { if (s.prices[i] && p != null) s.prices[i].price = p; });
 });
+// บริการที่ผู้ดูแลสร้างเองในหลังบ้าน (หมอดูตอบ / มงคล) → ต่อท้ายรายการเดิม และใส่ในกลุ่มศาสตร์ที่เลือก
+const CUSTOM_SERVICE_IDS = [];
+if (SITE_OVR && SITE_OVR.custom_services) SITE_OVR.custom_services.forEach((c) => {
+  SERVICES.push({
+    id: c.id, icon: c.icon, name: c.name, open: c.state === 'open', hidden: c.state === 'hidden', phase: 1,
+    about: c.about, get: c.get, prices: [{ label: c.price_label, price: c.price }],
+    custom: true, kind: c.kind, fields: c.fields || [], duration: c.duration || '', ...(c.kind === 'merit' ? { group: 'merit' } : {}),
+  });
+  CUSTOM_SERVICE_IDS.push(c.id);
+  const sci = SCIENCES.find((x) => x.id === c.science);
+  if (sci) sci.services.push(c.id);
+});
 SERVICES.forEach((s) => {
   const m = PKG_META[s.id] || {};
   s.topics = m.topics || (s.id.startsWith('fs-') || s.id === 'fengshui' ? ['money', 'family', 'life'] : (s.group === 'merit' ? ['life', 'family'] : ALL_TOPICS));
-  s.delivery = m.delivery || null;
+  s.delivery = s.custom ? s.duration || null : m.delivery || null;
 });

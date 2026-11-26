@@ -55,7 +55,7 @@ function renderMongkol() {
       ${day ? `<p class="mk-tip">✦ คุณเกิดวัน${day.day} สีประจำวันเกิดคือ <b>สี${day.birth}</b> · สีเสริมการเงิน <b>สี${day.money}</b></p>` : ''}
       <div class="mk-shop">${SHOP_ITEMS.filter((p) => !p.hidden).map((p) => `
         <article class="mk-item">
-          <span class="mk-pi">${p.icon}</span>
+          <span class="mk-pi">${p.img ? `<img src="${esc(p.img)}" alt="" loading="lazy" width="56" height="56" data-fallback="${esc(p.icon)}">` : p.icon}</span>
           <div class="mk-it"><b>${esc(p.name)}</b><small>${esc(p.personal && day ? `${p.desc} · ของคุณ: สี${day.birth}` : p.desc)}</small></div>
           <div class="mk-buy"><b>${baht(p.price)}</b>${stockBadge(p)}<button class="btn-ghost" data-shop="${p.id}" ${!p.digital && shopStock[p.id] === 0 ? 'disabled' : ''}>${!p.digital && shopStock[p.id] === 0 ? 'สินค้าหมด' : 'สั่งซื้อ'}</button></div>
         </article>`).join('')}</div>
@@ -119,6 +119,11 @@ const stockBadge = (p) => {
   if (p.digital || q == null) return '';
   return q > 0 && q <= 5 ? `<em class="mk-stock">เหลือ ${q} ชิ้น</em>` : ''; // หมดแล้ว → ปุ่มขึ้น “สินค้าหมด” แทน
 };
+// รูปสินค้าโหลดไม่ได้ → แสดงไอคอนอีโมจิแทน (ฟังที่ document แทน onerror ในหน้า เพื่อให้ CSP ห้ามสคริปต์ในหน้าได้)
+document.addEventListener('error', (e) => {
+  const img = e.target;
+  if (img && img.tagName === 'IMG' && img.dataset.fallback !== undefined && img.closest('.mk-pi')) img.replaceWith(document.createTextNode(img.dataset.fallback));
+}, true);
 function shopItem(p) {
   const u = currentUser();
   const day = u && u.birthdate ? DAY_COLORS[birthParts(u).date.getDay()] : null;

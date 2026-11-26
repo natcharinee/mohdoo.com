@@ -2144,3 +2144,7 @@ p.avoid-tag { display: flex; width: fit-content; margin: 8px auto 0; }
 .pf-wipe { background: none; border: 0; padding: 4px 2px; font: inherit; color: var(--gold-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .pf-wipe:hover, .pf-wipe:focus-visible { color: var(--gold); }
 .pf-wipe-note small { color: var(--muted); font-size: .72rem; }
+
+/* รูปสินค้าที่ผู้ดูแลอัปโหลด (แทนไอคอนอีโมจิ) */
+.mk-pi img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
+.mk-pi:has(img) { background: #1b0e3d; overflow: hidden; }

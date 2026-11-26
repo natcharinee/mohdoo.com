@@ -38,7 +38,7 @@ function load() {
   const root = process.cwd();
   const files = ['services-data.js', 'categories-data.js', 'shop-data.js', 'seers-data.js'];
   const code = `${files.map((f) => fs.readFileSync(path.join(root, f), 'utf8')).join('\n;\n')}
-    ;({ SERVICE_PRICE, SERVICES, CATEGORY_PRICE, CATEGORIES, SHOP_ITEMS, SEER_BASE: SEER_DATA })`;
+    ;({ SERVICE_PRICE, SERVICES, CATEGORY_PRICE, CATEGORIES, SHOP_ITEMS, SCIENCES, SEER_BASE: SEER_DATA })`;
   cache = vm.runInNewContext(code, {}, { timeout: 2000 });
   // ค่าตั้งต้นจากไฟล์ (ใช้คืนค่าเดิม และคำนวณใหม่ทุกครั้งที่ผู้ดูแลแก้)
   cache.BASE = {
@@ -72,6 +72,11 @@ function applySeerEdits(c, edits) {
 // ---------- ราคาและบริการ: ค่าตั้งต้นจากไฟล์ + ที่ผู้ดูแลแก้ในหลังบ้าน (เอกสาร sitecfg/main) ----------
 // state ของบริการ: open = เปิดจอง · soon = เร็ว ๆ นี้ · hidden = ไม่แสดง · เปิดได้เฉพาะบริการที่ไฟล์เปิดไว้ (มีขั้นตอนรองรับแล้ว)
 export const PRICE_RANGE = { min: 1, max: 100000 };
+// บริการ/สินค้าที่ผู้ดูแลสร้างเองในหลังบ้าน (เก็บใน sitecfg.custom_services / custom_shop)
+export const CUSTOM_MAX = 30;
+export const CUSTOM_KINDS = { reading: 'หมอดูตอบเป็นข้อความ', merit: 'บริการมงคล (ทำพิธีแทน)' };
+export const FIELD_TYPES = { text: 'ข้อความสั้น', textarea: 'ข้อความยาว', select: 'เลือกจากรายการ', date: 'วันที่', tel: 'เบอร์โทร' };
+const customPriceLabel = (x) => (x.kind === 'merit' ? 'ค่าบริการทำพิธีแทน' : `หมอดูตอบเป็นข้อความ${x.duration ? ` · ${x.duration}` : ''}`);
 export function applySiteCfg(c, cfg) {
   cfg = cfg || {};
   const B = c.BASE;
@@ -85,10 +90,21 @@ export function applySiteCfg(c, cfg) {
     const prices = s.prices.map((t) => ({ ...t, price: t.price == null ? null : o.price ?? (t.price === B.service_price ? sp : t.price) }));
     return { ...s, prices, open: state === 'open', hidden: state === 'hidden', state };
   });
+  // บริการที่สร้างเอง: เปิดจอง/เร็ว ๆ นี้/ซ่อน ตามที่ตั้ง · ราคาว่าง = ราคากลาง
+  c.SERVICES.push(...(cfg.custom_services || []).map((x) => ({
+    id: x.id, icon: x.icon || '✨', name: x.name, phase: 1, about: x.about || '', get: x.get || '',
+    prices: [{ label: customPriceLabel(x), price: x.price ?? sp }],
+    state: x.state, open: x.state === 'open', hidden: x.state === 'hidden',
+    custom: true, kind: x.kind, fields: x.fields || [], duration: x.duration || '', science: x.science || '', price_label: customPriceLabel(x),
+    ...(x.kind === 'merit' ? { group: 'merit' } : {}),
+  })));
   c.SHOP_ITEMS = B.shop.map((p) => {
     const o = (cfg.shop || {})[p.id] || {};
     return { ...p, name: o.name || p.name, desc: o.desc ?? p.desc, price: o.price ?? p.price, hidden: !!o.hidden };
   });
+  c.SHOP_ITEMS.push(...(cfg.custom_shop || []).map((x) => ({
+    id: x.id, icon: x.icon || '🎁', name: x.name, desc: x.desc || '', price: x.price, hidden: !!x.hidden, digital: !!x.digital, img: x.img || '', custom: true,
+  })));
   c.SITE_CFG = cfg;
 }
 // ค่าที่หน้าเว็บใช้ (/api/v1/site-config.js) · ส่งเฉพาะที่จำเป็นต่อการแสดงผล
@@ -96,8 +112,12 @@ export function publicSiteCfg() {
   const c = load();
   return {
     service_price: c.SERVICE_PRICE, ai_price: c.AI_PRICE,
-    services: Object.fromEntries(c.SERVICES.map((s) => [s.id, { open: s.open, hidden: s.hidden, prices: s.prices.map((t) => t.price) }])),
-    shop: Object.fromEntries(c.SHOP_ITEMS.map((p) => [p.id, { name: p.name, desc: p.desc, price: p.price, hidden: p.hidden }])),
+    services: Object.fromEntries(c.SERVICES.filter((s) => !s.custom).map((s) => [s.id, { open: s.open, hidden: s.hidden, prices: s.prices.map((t) => t.price) }])),
+    shop: Object.fromEntries(c.SHOP_ITEMS.filter((p) => !p.custom).map((p) => [p.id, { name: p.name, desc: p.desc, price: p.price, hidden: p.hidden }])),
+    // บริการ/สินค้าที่สร้างเอง: หน้าเว็บเพิ่มเข้ารายการต่อจากของเดิม
+    custom_services: c.SERVICES.filter((s) => s.custom).map((s) => ({ id: s.id, icon: s.icon, name: s.name, about: s.about, get: s.get, kind: s.kind,
+      price: s.prices[0].price, price_label: s.price_label, duration: s.duration, science: s.science, state: s.state, fields: s.fields })),
+    custom_shop: c.SHOP_ITEMS.filter((p) => p.custom).map((p) => ({ id: p.id, icon: p.icon, name: p.name, desc: p.desc, price: p.price, digital: p.digital, img: p.img, hidden: p.hidden })),
   };
 }
 
@@ -120,7 +140,7 @@ function fromService(s, tierIdx) {
   if (!s.open || s.app || s.hidden) fail(400, 'service_closed');
   const tier = s.prices[tierIdx];
   if (!tier || tier.price == null || tier.soon) fail(400, 'bad_tier');
-  const kind = s.link ? 'instant' : s.group === 'merit' ? 'merit' : ['palm', 'face'].includes(s.id) ? 'photo' : 'ask';
+  const kind = s.custom ? s.kind : s.link ? 'instant' : s.group === 'merit' ? 'merit' : ['palm', 'face'].includes(s.id) ? 'photo' : 'ask';
   return { key: s.id, kind, title: s.name, icon: s.icon, label: tier.label, price: tier.price };
 }
 

@@ -36,7 +36,8 @@ const ERR = {
   file_too_large: 'ไฟล์ใหญ่เกิน 8 MB', bad_file: 'ชนิดไฟล์ไม่รองรับ (รูป JPG/PNG/WebP หรือวิดีโอ MP4/MOV)', too_many_requests: 'ทำรายการถี่เกินไป รอสักครู่',
   otp_not_configured: 'ยังไม่ได้ตั้งค่าระบบ OTP', bad_price: 'ราคาต้องอยู่ระหว่าง 20–10,000 บาท', bad_qty: 'จำนวนไม่ถูกต้อง', is_staff: 'เบอร์นี้เป็นทีมงาน/ผู้ดูแลอยู่แล้ว', unknown_seer: 'ไม่พบโปรไฟล์หมอดูนี้', cannot_demote_self: 'ลดสิทธิ์ตัวเองไม่ได้',
   ref_required: 'ใส่เลขอ้างอิงคำขอก่อน', confirm_mismatch: 'เบอร์ที่พิมพ์ไม่ตรงกับบัญชีนี้ ยังไม่ได้ลบ',
-  cannot_open: 'บริการนี้ยังไม่มีขั้นตอนรองรับบนเว็บ เปิดจองไม่ได้', range_too_long: 'เลือกช่วงได้ไม่เกิน 366 วัน', bad_range: 'ช่วงวันที่ไม่ถูกต้อง', not_priced: 'บริการนี้คิดราคาตามใบเสนอราคา ตั้งราคาไม่ได้',
+  cannot_open: 'บริการนี้ยังไม่มีขั้นตอนรองรับบนเว็บ เปิดจองไม่ได้', range_too_long: 'เลือกช่วงได้ไม่เกิน 366 วัน',
+  name_required: 'ใส่ชื่อก่อน', about_required: 'เปิดจองต้องมีคำอธิบายให้ลูกค้าอ่าน', field_label_required: 'ช่องในแบบฟอร์มต้องมีชื่อ', select_needs_options: 'ช่องเลือกจากรายการต้องมีตัวเลือกอย่างน้อย 2 ข้อ', has_orders: 'เคยมีคนสั่งแล้ว ลบไม่ได้ · ให้ตั้งเป็น "ซ่อน" แทน', too_many: 'สร้างได้ไม่เกิน 30 รายการ', bad_range: 'ช่วงวันที่ไม่ถูกต้อง', not_priced: 'บริการนี้คิดราคาตามใบเสนอราคา ตั้งราคาไม่ได้',
   conflict: 'มีคนแก้รายการนี้ไปก่อนคุณ · โหลดข้อมูลล่าสุดให้แล้ว ตรวจแล้วทำอีกครั้ง', not_team: 'มอบหมายได้เฉพาะทีมงาน/หมอดู', base_profile: 'โปรไฟล์ตั้งต้นลบไม่ได้ ใช้ซ่อนแทน', in_use: 'โปรไฟล์นี้เชื่อมกับบัญชีหมอดูอยู่ ยกเลิกการเชื่อมก่อน', bad_img: 'ลิงก์รูปต้องขึ้นต้นด้วย https://', out_of_stock: 'สินค้าหมด', busy: 'ระบบไม่ว่าง ลองอีกครั้ง',
 };
 let routeCtl = null; // เปลี่ยนหน้า → ยกเลิกคำขอของหน้าก่อน (กันข้อมูลเก่าทับหน้าใหม่)
@@ -493,6 +494,25 @@ async function viewPricing() {
           ${p.edited ? `<small class="muted p-base">ค่าเดิม: ${esc(p.base.name)} · ${baht(p.base.price)}</small>` : ''}
         </form>`).join('')}</div>
       </section>
+      <section class="card"><div class="row" style="justify-content:space-between;align-items:center;margin-bottom:4px">
+          <h3 style="margin:0">✨ บริการที่สร้างเอง <span class="muted small">${r.custom.services.length}/${r.custom.max}</span></h3>
+          <button class="btn sm" id="cSvcNew" type="button">＋ เพิ่มบริการใหม่</button></div>
+        <p class="muted small">บริการที่หมอดูหรือทีมงานเป็นคนตอบ (ลูกค้ากรอกแบบฟอร์ม → จ่ายเงิน → เข้าคิวงาน) หรือบริการมงคล (ทีมทำพิธีแทน + เงินทำบุญ) · บริการที่ต้องคำนวณหรือเปิดไพ่เองต้องให้นักพัฒนาเพิ่ม</p>
+        ${r.custom.services.length ? `<div class="c-list">${r.custom.services.map((x) => `<button type="button" class="c-card" data-csvc="${esc(x.id)}">
+          <span class="c-ic">${esc(x.icon)}</span><b>${esc(x.name)}</b>
+          <small>${esc(r.custom.kinds[x.kind])} · ${baht(x.price_now)}</small>
+          <span class="chip ${SVC_STATE[x.state][1]}">${SVC_STATE[x.state][0]}</span></button>`).join('')}</div>` : '<p class="empty" style="padding:18px 0">ยังไม่มีบริการที่สร้างเอง</p>'}
+      </section>
+      <section class="card"><div class="row" style="justify-content:space-between;align-items:center;margin-bottom:4px">
+          <h3 style="margin:0">🎁 สินค้าที่สร้างเอง <span class="muted small">${r.custom.items.length}/${r.custom.max}</span></h3>
+          <button class="btn sm" id="cItemNew" type="button">＋ เพิ่มสินค้าใหม่</button></div>
+        <p class="muted small">ของจัดส่ง หรือไฟล์ดิจิทัล · มีรูปได้ 1 รูป · จำนวนสต๊อกตั้งที่หน้า <a href="#stock">📦 สินค้า</a> · ที่เคยมีคนสั่งแล้วลบไม่ได้ ให้ "ซ่อน" แทน</p>
+        ${r.custom.items.length ? `<div class="c-list">${r.custom.items.map((x) => `<button type="button" class="c-card ${x.hidden ? 'off' : ''}" data-citem="${esc(x.id)}">
+          <span class="c-ic">${x.img ? `<img src="${esc(x.img)}" alt="">` : esc(x.icon)}</span><b>${esc(x.name)}</b>
+          <small>${x.digital ? 'ไฟล์ดิจิทัล' : 'ของจัดส่ง'} · ${baht(x.price)}</small>
+          ${x.hidden ? '<span class="chip bad">ซ่อน</span>' : '<span class="chip ok">ขายอยู่</span>'}</button>`).join('')}</div>` : '<p class="empty" style="padding:18px 0">ยังไม่มีสินค้าที่สร้างเอง</p>'}
+      </section>
+      <div id="cEdit"></div>
     </div>`;
   const save = async (body, msg) => { await api('admin/pricing', { method: 'POST', body }); toast(msg); route(); };
   $('pMain').addEventListener('submit', run(async (e) => {
@@ -545,12 +565,140 @@ async function viewPricing() {
     if (item.price !== undefined && !confirm(`เปลี่ยนราคา "${p.name}" ${baht(p.price)} → ${baht(v ?? p.base.price)}?`)) return;
     await save({ item }, 'บันทึกแล้ว ✓');
   })));
+  // ----- บริการ/สินค้าที่สร้างเอง -----
+  const C = r.custom;
+  const scrollEdit = () => { $('cEdit').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  const send = async (body, msg) => { await api('admin/custom', { method: 'POST', body }); toast(msg); route(); };
+  $('cSvcNew').addEventListener('click', () => openCustomService(null));
+  $('cItemNew').addEventListener('click', () => openCustomItem(null));
+  view.querySelectorAll('[data-csvc]').forEach((b) => b.addEventListener('click', () => openCustomService(C.services.find((x) => x.id === b.dataset.csvc))));
+  view.querySelectorAll('[data-citem]').forEach((b) => b.addEventListener('click', () => openCustomItem(C.items.find((x) => x.id === b.dataset.citem))));
+
+  function openCustomService(x) {
+    const isNew = !x;
+    x ||= { icon: '✨', name: '', about: '', get: '', duration: '', kind: 'reading', science: '', state: 'soon', price: null, fields: [{ label: 'เรื่องที่อยากถาม', type: 'textarea', required: true }] };
+    let fields = JSON.parse(JSON.stringify(x.fields || []));
+    $('cEdit').innerHTML = `<form class="card stack" id="cForm">
+      <h3>${isNew ? 'เพิ่มบริการใหม่' : `แก้บริการ: ${esc(x.name)}`}</h3>
+      <div class="row">
+        <label>ไอคอน (อีโมจิ)<input name="icon" maxlength="8" value="${esc(x.icon)}" style="width:80px"></label>
+        <label class="grow">ชื่อบริการ<input name="name" required maxlength="60" value="${esc(x.name)}" placeholder="เช่น ดูดวงตามปีเกิด"></label>
+        <label>ประเภท<select name="kind" ${isNew ? '' : 'disabled'}>${Object.entries(C.kinds).map(([k, v]) => `<option value="${k}" ${k === x.kind ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></label>
+      </div>
+      <label>คำอธิบายสั้น (ลูกค้าเห็นในหน้าบริการ)<textarea name="about" maxlength="240" rows="2" placeholder="บริการนี้คืออะไร เหมาะกับใคร">${esc(x.about)}</textarea></label>
+      <label>สิ่งที่ลูกค้าจะได้รับ<input name="get" maxlength="240" value="${esc(x.get)}" placeholder="เช่น คำทำนายเป็นข้อความ จากหมอดูจริง"></label>
+      <div class="row">
+        <label>ราคา (บาท)<input name="price" type="number" min="${r.range.min}" max="${r.range.max}" value="${x.price ?? ''}" placeholder="ราคากลาง ${r.service_price}" style="width:150px"></label>
+        <label class="grow">ระยะเวลาส่งมอบ<input name="duration" maxlength="40" value="${esc(x.duration)}" placeholder="เช่น ภายใน 24 ชม."></label>
+        <label>จัดอยู่ในศาสตร์<select name="science"><option value="">ไม่จัดกลุ่ม (แสดงใน "ทั้งหมด")</option>${C.sciences.map((s) => `<option value="${esc(s.id)}" ${s.id === x.science ? 'selected' : ''}>${esc(s.icon)} ${esc(s.name)}</option>`).join('')}</select></label>
+        <label>สถานะ<select name="state">${Object.entries(SVC_STATE).map(([k, [t]]) => `<option value="${k}" ${k === x.state ? 'selected' : ''}>${t}</option>`).join('')}</select></label>
+      </div>
+      <div class="stack" style="gap:8px"><b class="small">แบบฟอร์มที่ลูกค้ากรอก <span class="muted" id="cfCount"></span></b>
+        <div id="cfRows" class="stack" style="gap:8px"></div>
+        <button type="button" class="btn sm" id="cfAdd" style="justify-self:start">＋ เพิ่มช่อง</button></div>
+      <p class="muted small" id="cKindNote"></p>
+      <div class="row" style="gap:8px;flex-wrap:wrap">
+        <button class="btn primary" name="do" value="save">${isNew ? 'เพิ่มบริการ' : 'บันทึก'}</button>
+        <button type="button" class="btn ghost" id="cCancel">ยกเลิก</button>
+        ${isNew ? '' : '<button class="btn danger" name="do" value="delete" type="submit">ลบบริการ</button>'}
+      </div></form>`;
+    const f = $('cForm');
+    const drawFields = () => {
+      $('cfCount').textContent = `(${fields.length}/8)`;
+      $('cfAdd').hidden = fields.length >= 8;
+      $('cfRows').innerHTML = fields.map((ff, i) => `<div class="cf-row" data-i="${i}">
+        <input data-k="label" maxlength="60" value="${esc(ff.label)}" placeholder="ชื่อช่อง เช่น ปีเกิด" aria-label="ชื่อช่อง ${i + 1}">
+        <select data-k="type" aria-label="ชนิดช่อง ${i + 1}">${Object.entries(C.field_types).map(([k, v]) => `<option value="${k}" ${k === ff.type ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select>
+        <label class="row small" style="display:flex;gap:6px"><input type="checkbox" data-k="required" ${ff.required ? 'checked' : ''} style="width:auto"> บังคับ</label>
+        <button type="button" class="btn sm ghost" data-rm="${i}" aria-label="ลบช่อง ${i + 1}">✕</button>
+        ${ff.type === 'select' ? `<textarea data-k="options" rows="3" placeholder="ตัวเลือก บรรทัดละ 1 ข้อ (อย่างน้อย 2)" aria-label="ตัวเลือก ช่อง ${i + 1}">${esc((ff.options || []).join('\n'))}</textarea>` : ''}
+      </div>`).join('') || '<p class="muted small">ยังไม่มีช่อง · ลูกค้าจะกดสั่งซื้อได้เลยโดยไม่ต้องกรอกอะไร</p>';
+    };
+    const readFields = () => { fields = [...$('cfRows').querySelectorAll('.cf-row')].map((row, i) => {
+      const o = { ...fields[i] };
+      row.querySelectorAll('[data-k]').forEach((el) => { o[el.dataset.k] = el.type === 'checkbox' ? el.checked : el.value; });
+      if (typeof o.options === 'string') o.options = o.options.split('\n');
+      return o;
+    }); };
+    const note = () => { $('cKindNote').textContent = f.kind.value === 'merit'
+      ? 'บริการมงคล: ลูกค้าเลือกจำนวนเงินทำบุญเพิ่มจากค่าบริการ · ทีมทำพิธีแล้วส่งรูป/วิดีโอยืนยันในหน้าคำสั่งซื้อ (ใช้ขั้นตอนเดิม)'
+      : 'หมอดูตอบเป็นข้อความ: งานเข้าคิวของหมอดู/ทีมงานทุกคน (ที่หน้า "งานตอบคำถาม") ตอบแล้วลูกค้าอ่านในประวัติและได้แจ้งเตือน'; };
+    drawFields(); note();
+    f.kind.addEventListener('change', note);
+    $('cfAdd').addEventListener('click', () => { readFields(); if (fields.length < 8) fields.push({ label: '', type: 'text', required: false }); drawFields(); $('cfRows').querySelector('.cf-row:last-child input')?.focus(); });
+    $('cfRows').addEventListener('click', (e) => { const i = e.target.dataset?.rm; if (i !== undefined) { readFields(); fields.splice(+i, 1); drawFields(); } });
+    $('cfRows').addEventListener('change', (e) => { if (e.target.dataset.k === 'type') { readFields(); drawFields(); } });
+    $('cCancel').addEventListener('click', () => { $('cEdit').innerHTML = ''; });
+    f.addEventListener('submit', run(async (e) => {
+      e.preventDefault();
+      if (e.submitter?.value === 'delete') {
+        if (!confirm(`ลบบริการ "${x.name}" ถาวร?\\n(ลบได้เฉพาะบริการที่ยังไม่เคยมีคนสั่ง)`)) return;
+        return send({ type: 'service', op: 'delete', id: x.id }, 'ลบบริการแล้ว');
+      }
+      readFields();
+      const data = { icon: f.icon.value, name: f.name.value, about: f.about.value, get: f.get.value, duration: f.duration.value, kind: f.kind.value, science: f.science.value,
+        state: f.state.value, price: f.price.value === '' ? null : +f.price.value, fields };
+      if (data.state === 'open' && !confirm(`เปิดจอง "${data.name}" ให้ลูกค้าสั่งได้เลย?\\nราคา ${baht(data.price ?? r.service_price)} · ลูกค้าเห็นภายใน 1 นาที`)) return;
+      await send({ type: 'service', op: isNew ? 'create' : 'update', id: x.id, data }, isNew ? 'เพิ่มบริการแล้ว ✓' : 'บันทึกแล้ว ✓');
+    }));
+    scrollEdit(); f.name.focus({ preventScroll: true });
+  }
+
+  function openCustomItem(x) {
+    const isNew = !x;
+    x ||= { icon: '🎁', name: '', desc: '', price: '', digital: false, hidden: false, img: '' };
+    $('cEdit').innerHTML = `<form class="card stack" id="cForm">
+      <h3>${isNew ? 'เพิ่มสินค้าใหม่' : `แก้สินค้า: ${esc(x.name)}`}</h3>
+      <div class="row" style="align-items:center;gap:14px">
+        <span id="ciPrev" class="prof-av big">${x.img ? `<img src="${esc(x.img)}" alt="">` : esc(x.icon)}</span>
+        <div class="stack" style="gap:6px">
+          <label class="btn sm" style="justify-self:start">เลือกรูปสินค้า…<input type="file" name="file" accept="image/jpeg,image/png,image/webp" hidden></label>
+          ${x.img ? '<label class="row small" style="display:flex;gap:6px"><input type="checkbox" name="noimg" style="width:auto"> ลบรูป (แสดงไอคอนแทน)</label>' : ''}
+          <span class="muted small">รูปสี่เหลี่ยมจัตุรัส ระบบย่อให้อัตโนมัติ · ไม่มีรูป = แสดงไอคอนอีโมจิ</span></div>
+      </div>
+      <div class="row">
+        <label>ไอคอน (อีโมจิ)<input name="icon" maxlength="8" value="${esc(x.icon)}" style="width:80px"></label>
+        <label class="grow">ชื่อสินค้า<input name="name" required maxlength="80" value="${esc(x.name)}"></label>
+        <label>ราคา (บาท)<input name="price" type="number" required min="${r.range.min}" max="${r.range.max}" value="${x.price}" style="width:130px"></label>
+      </div>
+      <label>คำอธิบาย<input name="desc" maxlength="200" value="${esc(x.desc)}"></label>
+      <div class="row" style="gap:18px">
+        <label class="row small" style="display:flex;gap:6px"><input type="checkbox" name="digital" ${x.digital ? 'checked' : ''} ${isNew ? '' : 'disabled'} style="width:auto"> ไฟล์ดิจิทัล (ไม่ต้องจัดส่ง)</label>
+        <label class="row small" style="display:flex;gap:6px"><input type="checkbox" name="hidden" ${x.hidden ? 'checked' : ''} style="width:auto"> ซ่อนจากร้าน</label>
+      </div>
+      <div class="row" style="gap:8px;flex-wrap:wrap">
+        <button class="btn primary" name="do" value="save">${isNew ? 'เพิ่มสินค้า' : 'บันทึก'}</button>
+        <button type="button" class="btn ghost" id="cCancel">ยกเลิก</button>
+        ${isNew ? '' : '<button class="btn danger" name="do" value="delete" type="submit">ลบสินค้า</button>'}
+      </div></form>`;
+    const f = $('cForm');
+    let image = null;
+    f.file.addEventListener('change', run(async () => {
+      const file = f.file.files[0];
+      if (!file) return;
+      image = await shrinkImage(file);
+      $('ciPrev').innerHTML = `<img src="${image}" alt="">`;
+      if (f.noimg) f.noimg.checked = false;
+    }));
+    $('cCancel').addEventListener('click', () => { $('cEdit').innerHTML = ''; });
+    f.addEventListener('submit', run(async (e) => {
+      e.preventDefault();
+      if (e.submitter?.value === 'delete') {
+        if (!confirm(`ลบสินค้า "${x.name}" ถาวร?\\n(ลบได้เฉพาะสินค้าที่ยังไม่เคยมีคนสั่ง · รูปจะถูกลบด้วย)`)) return;
+        return send({ type: 'item', op: 'delete', id: x.id }, 'ลบสินค้าแล้ว');
+      }
+      const data = { icon: f.icon.value, name: f.name.value, desc: f.desc.value, price: +f.price.value, digital: f.digital.checked, hidden: f.hidden.checked };
+      if (image) data.image = image; else if (f.noimg?.checked) data.img = '';
+      await send({ type: 'item', op: isNew ? 'create' : 'update', id: x.id, data }, isNew ? 'เพิ่มสินค้าแล้ว ✓' : 'บันทึกแล้ว ✓');
+    }));
+    scrollEdit(); f.name.focus({ preventScroll: true });
+  }
 }
 
 // ---------- ประวัติการทำงานของทีมงาน (ผู้ดูแลเท่านั้น) ----------
 const aq = { action: '', q: '', offset: 0 };
 const AUDIT_CHIP = { refund: 'bad', cancel: 'bad', block: 'bad', role: 'warn', mark_paid: 'warn', ai_days: 'warn', broadcast: 'warn', export: 'warn', seer_profile_delete: 'bad', seer_app_delete: 'bad', login: '' };
-const DETAIL_KEY = { changes: 'รายการ',  from: 'จาก', to: 'เป็น', amount: 'จำนวน', reason: 'เหตุผล', days: 'วัน', until: 'ถึง', price: 'ราคา', status: 'สถานะ', sent: 'ส่งถึง', target: 'กลุ่ม', rows: 'จำนวนแถว', phone: 'เบอร์', text: 'ข้อความ', body: 'ข้อความ', changed: 'แก้', hidden: 'ซ่อน', ip: 'IP', note: 'หมายเหตุ', paid: 'จ่ายแล้ว', provider: 'ช่องทาง', reset: 'คืนค่าเริ่มต้น', reviewed: 'ตรวจแล้ว', version: 'เวอร์ชัน', self: 'หมอดูตั้งเอง', seer_id: 'โปรไฟล์' };
+const DETAIL_KEY = { op: 'ทำอะไร', kind: 'ประเภท', name: 'ชื่อ', state: 'สถานะ', changes: 'รายการ',  from: 'จาก', to: 'เป็น', amount: 'จำนวน', reason: 'เหตุผล', days: 'วัน', until: 'ถึง', price: 'ราคา', status: 'สถานะ', sent: 'ส่งถึง', target: 'กลุ่ม', rows: 'จำนวนแถว', phone: 'เบอร์', text: 'ข้อความ', body: 'ข้อความ', changed: 'แก้', hidden: 'ซ่อน', ip: 'IP', note: 'หมายเหตุ', paid: 'จ่ายแล้ว', provider: 'ช่องทาง', reset: 'คืนค่าเริ่มต้น', reviewed: 'ตรวจแล้ว', version: 'เวอร์ชัน', self: 'หมอดูตั้งเอง', seer_id: 'โปรไฟล์' };
 function auditDetail(a) {
   const fmt = (k, v) => {
     if (a.action === 'stock' && v === null) return 'ไม่จำกัด';
@@ -560,6 +708,9 @@ function auditDetail(a) {
     if (k === 'until' || k === 'version') return dt(v);
     if (k === 'from' || k === 'to') return ROLE[v] || String(v);
     if (k === 'target') return v === 'ai' ? 'สมาชิก AI' : 'ลูกค้าทุกคน';
+    if (k === 'op') return { create: 'สร้าง', update: 'แก้ไข', delete: 'ลบ' }[v] || v;
+    if (k === 'state') return SVC_STATE[v] ? SVC_STATE[v][0] : v;
+    if (k === 'kind' && a.action === 'custom') return { reading: 'หมอดูตอบ', merit: 'บริการมงคล', shop: 'ของจัดส่ง', digital: 'ไฟล์ดิจิทัล' }[v] || v;
     if (k === 'changes') {
       const sv = (x) => (SVC_STATE[x] ? SVC_STATE[x][0] : typeof x === 'boolean' ? (x ? 'ใช่' : 'ไม่') : x ?? '—');
       return v.map((c) => [c.what, c.field].filter(Boolean).join(' ') + (c.from !== undefined ? `: ${sv(c.from)} → ${sv(c.to)}` : c.to !== undefined ? `: ${sv(c.to)}` : '')).join(' · ');

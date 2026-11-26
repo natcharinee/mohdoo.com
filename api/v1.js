@@ -7,7 +7,7 @@ import { HttpError, fail, send, bodyOf, str, int, ipOf } from './_lib/http.js';
 import { rateLimit, cleanRate } from './_lib/ratelimit.js';
 import { aiDay, bkkDay, ALERT_USD, CAP_USD } from './_lib/aiusage.js';
 import { startSession, endSession, sessionUser, needUser, needRole, normPhone, sendOtp, checkOtp, userForPhone, ROLES, STAFF, BACKOFFICE, DEMO_CODE } from './_lib/auth.js';
-import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles, publicSiteCfg, PRICE_RANGE } from './_lib/catalog.js';
+import { priceOf, catalog, addMonth, KIND_NAME, syncSeerProfiles, resetSeerProfiles, publicSiteCfg, PRICE_RANGE, CUSTOM_MAX, CUSTOM_KINDS, FIELD_TYPES } from './_lib/catalog.js';
 import { createPayment, paymentStatus, chargeIdFromEvent, refundPayment } from './_lib/pay.js';
 import { saveFile, readLocalFile, deleteFile } from './_lib/storage.js';
 import { notify, savePush } from './_lib/notify.js';
@@ -39,7 +39,7 @@ export const AUDIT_ACTIONS = {
   ai_days: 'ให้/ปรับสมาชิก AI', seer_link: 'เชื่อมโปรไฟล์หมอดู', user_note: 'บันทึกในบัญชีลูกค้า',
   mark_paid: 'ยืนยันรับเงินเอง', refund: 'คืนเงิน', cancel: 'ยกเลิกคำสั่งซื้อ',
   seer_invite: 'เพิ่มหมอดู', seer_price: 'ตั้งราคาหมอดู', seer_profile: 'แก้โปรไฟล์หมอดู', seer_profile_new: 'เพิ่มโปรไฟล์หมอดู',
-  seer_profile_reset: 'คืนค่าโปรไฟล์หมอดู', seer_profile_delete: 'ลบโปรไฟล์หมอดู', pricing: 'แก้ราคาและบริการ', seer_app: 'ตรวจใบสมัครหมอดู', seer_app_delete: 'ลบใบสมัครหมอดู',
+  seer_profile_reset: 'คืนค่าโปรไฟล์หมอดู', seer_profile_delete: 'ลบโปรไฟล์หมอดู', pricing: 'แก้ราคาและบริการ', custom: 'สร้าง/แก้/ลบ บริการและสินค้าใหม่', seer_app: 'ตรวจใบสมัครหมอดู', seer_app_delete: 'ลบใบสมัครหมอดู',
   pdpa_export: 'ส่งออกข้อมูลลูกค้า (PDPA)', pdpa_erase: 'ลบบัญชีตามคำขอ (PDPA)', pdpa_self_export: 'ลูกค้าดาวน์โหลดข้อมูลตัวเอง', pdpa_self_erase: 'ลูกค้าลบบัญชีเอง',
   broadcast: 'ส่งประกาศ', export: 'ส่งออกข้อมูลคำสั่งซื้อ', stock: 'แก้สต๊อก', kb: 'แก้ตำราดูดวง', kb_restore: 'ย้อนเวอร์ชันตำรา', cron: 'สั่งงานประจำวันเอง',
 };
@@ -480,7 +480,7 @@ on('POST', 'webhooks/omise', async (req) => {
 
 // ---------- ไฟล์ในเครื่อง (โหมดพัฒนา) ----------
 on('GET', 'files/:name', async (req, res, { name }) => {
-  if (name.startsWith('seerimg-')) { // รูปโปรไฟล์หมอดู = ข้อมูลสาธารณะ
+  if (name.startsWith('seerimg-') || name.startsWith('shopimg-')) { // รูปโปรไฟล์หมอดู / รูปสินค้า = ข้อมูลสาธารณะ
     const f = readLocalFile(name);
     send(res, 200, f.buf, { 'Content-Type': f.type, 'Cache-Control': 'public, max-age=86400' });
     return undefined;
@@ -1318,12 +1318,15 @@ on('GET', 'admin/pricing', async (req) => {
   return {
     base: { service_price: c.BASE.service_price, ai_price: c.BASE.ai_price },
     service_price: c.SERVICE_PRICE, ai_price: c.AI_PRICE, range: PRICE_RANGE, updated_at: cfg.updated_at || null, updated_by: cfg.updated_by || null,
-    services: c.SERVICES.map((s, i) => {
+    custom: { max: CUSTOM_MAX, kinds: CUSTOM_KINDS, field_types: FIELD_TYPES, sciences: c.SCIENCES.map((x) => ({ id: x.id, icon: x.icon, name: x.name })),
+      services: (cfg.custom_services || []).map((x) => ({ ...x, price_now: x.price ?? c.SERVICE_PRICE })),
+      items: (cfg.custom_shop || []) },
+    services: c.SERVICES.filter((s) => !s.custom).map((s, i) => {
       const b = c.BASE.services[i]; const o = (cfg.services || {})[s.id] || {};
       return { id: s.id, icon: s.icon, name: s.name, group: s.group || '', app: !!s.app, can_open: !!b.open, state: s.state,
         price: s.prices.find((t) => t.price != null)?.price ?? null, custom_price: o.price ?? null, priced: s.prices.some((t) => t.price != null), edited: !!(o.state || o.price != null) };
     }),
-    shop: c.SHOP_ITEMS.map((p, i) => {
+    shop: c.SHOP_ITEMS.filter((p) => !p.custom).map((p, i) => {
       const b = c.BASE.shop[i]; const o = (cfg.shop || {})[p.id] || {};
       return { id: p.id, icon: p.icon, name: p.name, desc: p.desc, price: p.price, hidden: p.hidden, digital: !!p.digital,
         base: { name: b.name, desc: b.desc, price: b.price }, edited: !!Object.keys(o).length };
@@ -1394,6 +1397,99 @@ on('POST', 'admin/pricing', async (req) => {
     resetSeerProfiles(); await syncSeerProfiles(store);
     await audit(staff, 'pricing', { type: 'pricing', label: changes.map((x) => x.what).join(', ').slice(0, 80) }, { changes });
     return { ok: true };
+  }
+  fail(409, 'conflict');
+});
+// ---------- บริการ/สินค้าที่ผู้ดูแลสร้างเองในหลังบ้าน (เก็บใน sitecfg.custom_services / custom_shop) ----------
+// บริการ: หมอดูตอบเป็นข้อความ (เข้าคิวงานเดิม) หรือ บริการมงคล (ทีมทำพิธี + เงินทำบุญ) · สินค้า: ของจัดส่ง/ไฟล์ดิจิทัล + รูป 1 รูป
+// ข้อความที่ผู้ดูแลกรอกจะถูกตัด < > " ` ออก เพราะหน้าเว็บนำไปแสดงในหน้า (กัน HTML แทรก)
+const safeText = (v, n) => str(v, n).replace(/[<>"`]/g, '').trim();
+const newCustomId = () => `x-${Math.random().toString(36).slice(2, 8)}`;
+const FIELD_NAME = /^f[1-8]$/;
+function cleanCustomFields(list) {
+  const arr = Array.isArray(list) ? list.slice(0, 8) : [];
+  const used = new Set(arr.map((f) => str(f?.name, 4)).filter((n, i, a) => FIELD_NAME.test(n) && a.indexOf(n) === i));
+  const free = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8'].filter((n) => !used.has(n));
+  const seen = new Set();
+  return arr.map((f) => {
+    const label = safeText(f?.label, 60);
+    if (!label) fail(400, 'field_label_required');
+    const type = Object.keys(FIELD_TYPES).includes(f?.type) ? f.type : 'text';
+    let name = str(f?.name, 4);
+    if (!FIELD_NAME.test(name) || seen.has(name)) name = free.shift();
+    seen.add(name);
+    const out = { name, label, type, required: f?.required === true };
+    if (type === 'select') {
+      out.options = [...new Set((Array.isArray(f?.options) ? f.options : String(f?.options || '').split('\n')).map((o) => safeText(o, 40)).filter(Boolean))].slice(0, 12);
+      if (out.options.length < 2) fail(400, 'select_needs_options');
+    }
+    return out;
+  });
+}
+function cleanCustomService(d, prev) {
+  const x = {
+    id: prev?.id || newCustomId(), created_at: prev?.created_at || Date.now(), updated_at: Date.now(),
+    icon: safeText(d.icon, 8) || prev?.icon || '✨',
+    name: safeText(d.name, 60), about: safeText(d.about, 240), get: safeText(d.get, 240), duration: safeText(d.duration, 40),
+    kind: prev?.kind || (d.kind === 'merit' ? 'merit' : 'reading'), // ประเภทเปลี่ยนภายหลังไม่ได้ (คำสั่งซื้อเดิมอ้างถึง)
+    science: (catalog().SCIENCES.some((s) => s.id === d.science) ? d.science : '') || '',
+    state: ['open', 'soon', 'hidden'].includes(d.state) ? d.state : 'soon',
+    price: d.price === null || d.price === '' || d.price === undefined ? null : priceVal(d.price),
+    fields: cleanCustomFields(d.fields),
+  };
+  if (!x.name) fail(400, 'name_required');
+  if (x.state === 'open' && !x.about) fail(400, 'about_required'); // เปิดจองต้องมีคำอธิบายให้ลูกค้าอ่าน
+  return x;
+}
+async function cleanCustomItem(d, prev, staff) {
+  const x = {
+    id: prev?.id || newCustomId(), created_at: prev?.created_at || Date.now(), updated_at: Date.now(),
+    icon: safeText(d.icon, 8) || prev?.icon || '🎁', name: safeText(d.name, 80), desc: safeText(d.desc, 200),
+    digital: prev ? !!prev.digital : d.digital === true, // ชนิดเปลี่ยนภายหลังไม่ได้
+    hidden: d.hidden === true, img: prev?.img || '',
+    price: priceVal(d.price),
+  };
+  if (!x.name) fail(400, 'name_required');
+  if (x.price == null) fail(400, 'bad_price', PRICE_RANGE);
+  if (d.image) x.img = (await saveFile(d.image, { folder: 'shopimg', owner: staff.id })).url;
+  else if (d.img === '') x.img = '';
+  return x;
+}
+on('POST', 'admin/custom', async (req) => {
+  const staff = await needRole(req, ['admin']);
+  const b = bodyOf(req);
+  const type = b.type === 'service' ? 'service' : b.type === 'item' ? 'item' : fail(400, 'bad_type');
+  const op = ['create', 'update', 'delete'].includes(b.op) ? b.op : fail(400, 'bad_op');
+  const key = type === 'service' ? 'custom_services' : 'custom_shop';
+  const store = await db();
+  let result = null; let oldImg = ''; let newImg = '';
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const prevCfg = (await store.get('sitecfg', 'main')) || { id: 'main', created_at: Date.now() };
+    const cfg = JSON.parse(JSON.stringify(prevCfg));
+    const list = (cfg[key] ||= []);
+    const idx = op === 'create' ? -1 : list.findIndex((x) => x.id === str(b.id, 40));
+    if (op !== 'create' && idx < 0) fail(404, 'not_found');
+    if (op === 'delete') {
+      const ref = type === 'service' ? str(b.id, 40) : `shop:${str(b.id, 40)}`;
+      if (await store.count('order', { where: { key: ref } })) fail(400, 'has_orders'); // เคยมีคนสั่งแล้ว → ซ่อนแทนการลบ
+      [result] = list.splice(idx, 1);
+      oldImg = result.img || '';
+    } else {
+      if (op === 'create' && list.length >= CUSTOM_MAX) fail(400, 'too_many', { max: CUSTOM_MAX });
+      const prev = op === 'update' ? list[idx] : null;
+      const def = type === 'service' ? cleanCustomService(b.data || {}, prev) : await cleanCustomItem(b.data || {}, prev, staff);
+      if (type === 'item') { oldImg = prev?.img && prev.img !== def.img ? prev.img : ''; newImg = def.img && def.img !== prev?.img ? def.img : ''; }
+      if (op === 'create') list.push(def); else list[idx] = def;
+      result = def;
+    }
+    const rev = prevCfg.rev || 0;
+    cfg.rev = rev + 1; cfg.updated_at = Date.now(); cfg.updated_by = staff.name || staff.phone;
+    if (!(await store.putIf('sitecfg', cfg, rev))) { if (newImg) await deleteFile(newImg); newImg = ''; continue; }
+    if (oldImg) await deleteFile(oldImg);
+    if (op === 'delete' && type === 'item') await store.del('stock', result.id);
+    resetSeerProfiles(); await syncSeerProfiles(store);
+    await audit(staff, 'custom', { type: type === 'service' ? 'service' : 'item', id: result.id, label: result.name }, { op, kind: type === 'service' ? result.kind : result.digital ? 'digital' : 'shop', name: result.name, ...(op !== 'delete' ? { price: result.price ?? 'ราคากลาง', state: result.state ?? (result.hidden ? 'hidden' : 'open') } : {}) });
+    return { ok: true, id: result.id };
   }
   fail(409, 'conflict');
 });
