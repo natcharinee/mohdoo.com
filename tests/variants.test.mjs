@@ -178,3 +178,21 @@ test('สินค้าเดิม (ในไฟล์): เพิ่มรู
   assert.equal(await urlOk(img), 404);
   assert.equal((await cust('orders', { key: 'shop:cloth' })).order.amount, 250); // กลับเป็นสินค้าไม่มีตัวเลือก
 });
+
+test('รูปใหม่ที่ตั้งเป็นรูปหลัก (image) ไปอยู่หน้าสุด · รูปเดิมตามหลัง · ค่าตัวเลือกผูกกับรูปได้', async () => {
+  const admin = client(); await admin.login('+66812345678', 'แอดมิน');
+  const id = (await admin('admin/custom', { type: 'item', op: 'create', data: { name: 'ลองรูปหลัก', price: 120, new_images: [png(1), png(2)] } })).id;
+  const get = async () => (await admin('admin/pricing')).custom.items.find((x) => x.id === id);
+  let it = await get(); const [a, b] = it.images;
+  await admin('admin/custom', { type: 'item', op: 'update', id, data: { ...it, images: [a, b], image: png(9), new_images: [png(8)] } });
+  it = await get();
+  assert.equal(it.images.length, 4);
+  assert.deepEqual(it.images.slice(2).length, 2);
+  assert.equal(it.images[1], a); assert.equal(it.images[2], b); // รูปเดิมตามหลังรูปหลักใหม่
+  assert.equal(it.img, it.images[0]);
+  assert.notEqual(it.images[0], a);
+  // ผูกค่าตัวเลือกกับรูปที่ 2 → บันทึกแล้วยังผูกอยู่
+  await admin('admin/custom', { type: 'item', op: 'update', id, data: { ...it, options: [{ name: 'สี', values: [{ label: 'แดง', img: it.images[1] }, { label: 'ดำ' }] }] } });
+  assert.equal((await get()).options[0].values[0].img, it.images[1]);
+  assert.equal((await siteCfg()).custom_shop.find((x) => x.id === id).options[0].values[0].img, it.images[1]);
+});

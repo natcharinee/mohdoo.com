@@ -141,6 +141,11 @@ function shopCard(p, day) {
     <div class="mk-buy"><b>${priceRange(p)}</b>${opts ? '' : stockBadge(p)}<button class="btn-ghost" ${detail ? `data-shop-open="${p.id}"` : `data-shop="${p.id}"`} ${allOut ? 'disabled' : ''}>${allOut ? 'สินค้าหมด' : opts ? 'เลือกแบบ' : detail ? 'ดูรูป' : 'สั่งซื้อ'}</button></div>
   </article>`;
 }
+// เลือกแบบที่ผูกรูปไว้ → เลื่อนแกลเลอรีไปที่รูปนั้น (หลังวาดหน้าใหม่)
+function showVariantImage() {
+  const gal = mongkolBody.querySelector('.mk-gal'), w = gal && gal.querySelector('[data-want]');
+  if (gal && w) gal.scrollLeft = gal.clientWidth * +w.dataset.gal;
+}
 function pickedVariant(p) {
   const groups = (p.options || []).filter((g) => g.values && g.values.length);
   if (!groups.length || groups.some((g) => !shopPick[g.id])) return null;
@@ -197,7 +202,7 @@ mongkolBody.addEventListener('click', (e) => {
   const so = e.target.closest('[data-shop-open]');
   if (so) { shopOpen = so.dataset.shopOpen || null; shopPick = {}; renderMongkol(); return; }
   const sp = e.target.closest('[data-shop-pick]');
-  if (sp) { const [g, v] = sp.dataset.shopPick.split('|'); shopPick[g] = shopPick[g] === v ? undefined : v; renderMongkol(); return; }
+  if (sp) { const [g, v] = sp.dataset.shopPick.split('|'); shopPick[g] = shopPick[g] === v ? undefined : v; renderMongkol(); showVariantImage(); return; }
   const si = e.target.closest('[data-shop-img]');
   if (si) { const gal = mongkolBody.querySelector('.mk-gal'); if (gal) gal.scrollTo({ left: gal.clientWidth * +si.dataset.shopImg, behavior: 'smooth' }); return; }
   if (e.target.closest('[data-all]')) openFrame('services.html');

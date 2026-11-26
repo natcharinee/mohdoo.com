@@ -594,10 +594,10 @@ function mediaEditor(host, x, { maxImages = 5, basePrice = 0 } = {}) {
     const cs = combos();
     host.innerHTML = `<fieldset class="mx"><legend>รูปสินค้า (${st.images.length}/${maxImages})</legend>
       <div class="mx-imgs">${st.images.map((im, i) => `<figure class="mx-img ${i === 0 ? 'main' : ''}"><img src="${esc(im.url || im.data)}" alt="รูปที่ ${i + 1}">
-        <figcaption>${i === 0 ? 'รูปหลัก' : im.url ? `<button type="button" class="btn sm ghost" data-me-main="${i}">ตั้งเป็นรูปหลัก</button>` : 'รูปใหม่'}
+        <figcaption>${i === 0 ? 'รูปหลัก' : `<button type="button" class="btn sm ghost" data-me-main="${i}">ตั้งเป็นรูปหลัก</button>`}${im.data ? ' <small>(ใหม่)</small>' : ''}
         <button type="button" class="btn sm ghost" data-me-del="${i}" aria-label="เอารูปที่ ${i + 1} ออก">เอาออก</button></figcaption></figure>`).join('')}</div>
       ${st.images.length < maxImages ? `<label class="btn sm" style="justify-self:start">เพิ่มรูป…<input type="file" data-me-file accept="image/jpeg,image/png,image/webp" multiple hidden></label>` : ''}
-      <span class="muted small">สูงสุด ${maxImages} รูป · ระบบย่อให้อัตโนมัติ · รูปแรกคือรูปหลักที่แสดงบนการ์ดสินค้า · รูปที่เพิ่มใหม่จะต่อท้าย</span></fieldset>
+      <span class="muted small">สูงสุด ${maxImages} รูป · ระบบย่อให้อัตโนมัติ · รูปแรกคือรูปหลักที่แสดงบนการ์ดสินค้า · กด "ตั้งเป็นรูปหลัก" ได้ทั้งรูปเดิมและรูปที่เพิ่งเพิ่ม · รูปใหม่อื่น ๆ จะต่อท้ายตามลำดับ</span></fieldset>
     <fieldset class="mx"><legend>ตัวเลือก (ขนาด / สี ฯลฯ)</legend>
       ${st.options.map((g, gi) => `<div class="mx-grp"><div class="row" style="gap:8px;align-items:end"><label class="grow">ชื่อตัวเลือก<input data-me-gname="${gi}" maxlength="30" value="${esc(g.name)}" placeholder="เช่น สี หรือ ขนาด"></label>
         <button type="button" class="btn sm ghost" data-me-gdel="${gi}">ลบตัวเลือกนี้</button></div>
@@ -649,7 +649,9 @@ function mediaEditor(host, x, { maxImages = 5, basePrice = 0 } = {}) {
   return {
     collect: () => ({
       images: st.images.filter((i) => i.url).map((i) => i.url),
-      new_images: st.images.filter((i) => i.data).map((i) => i.data),
+      // รูปใหม่ที่ถูกตั้งเป็นรูปหลักส่งเป็น image (เซิร์ฟเวอร์วางไว้หน้าสุด) · รูปใหม่อื่นต่อท้าย
+      ...(st.images[0]?.data ? { image: st.images[0].data } : {}),
+      new_images: st.images.filter((i, n) => i.data && !(n === 0)).map((i) => i.data),
       options: st.options.filter((g) => g.name.trim() || g.values.some((v) => v.label.trim())).map((g) => ({ ...(g.id ? { id: g.id } : {}), name: g.name, values: g.values.filter((v) => v.label.trim()).map((v) => ({ ...(v.id ? { id: v.id } : {}), label: v.label, off: !!v.off, img: v.img || '' })) })),
       variants: Object.fromEntries(Object.entries(st.variants).filter(([, o]) => o && (o.price != null || o.off)).map(([k, o]) => [k, { ...(o.price != null ? { price: o.price } : {}), ...(o.off ? { off: true } : {}) }])),
     }),
