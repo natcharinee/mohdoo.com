@@ -18,6 +18,15 @@ const TABS = [
   ['งานที่ต้องทำ', 'submitted,in_progress,paid'], ['รอตอบ', 'submitted'], ['กำลังทำ', 'in_progress'], ['รอกรอกข้อมูล', 'paid'],
   ['ตอบแล้ว/ส่งแล้ว', 'answered,shipped'], ['เสร็จสิ้น', 'done'], ['รอชำระ', 'pending'], ['ยกเลิก/คืนเงิน', 'cancelled,expired,refunded'], ['ทั้งหมด', ''],
 ];
+// วันเกิด/วันที่ในแบบฟอร์ม: เก็บเป็น ค.ศ. (YYYY-MM-DD) แสดงให้ทีมงานเป็น พ.ศ. · ค่าเก่าที่เป็น พ.ศ. อยู่แล้ว (ปี ≥ 2400) ไม่แปลงซ้ำ
+const BIRTH_FORM_KEYS = ['birthdate', 'birth2', 'partnerBirth', 'babybirth'];
+function thBirthDate(v) {
+  const m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(String(v || '').trim());
+  if (!m) return String(v || '');
+  const be = +m[1] >= 2400 ? +m[1] : +m[1] + 543;
+  const months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+  return +m[2] >= 1 && +m[2] <= 12 ? `${+m[3]} ${months[+m[2] - 1]} ${be}` : String(v);
+}
 const CARRIERS = ['ไปรษณีย์ไทย', 'Kerry Express', 'Flash Express', 'J&T Express', 'Best Express', 'Ninja Van', 'ส่งเอง'];
 const pill = (s) => `<span class="pill s-${s}">${STATUS[s] || s}</span>`;
 let me = null;
@@ -271,7 +280,7 @@ async function viewOrder(no) {
   const { order: o, customer: c } = await api(`admin/orders/${encodeURIComponent(no)}`);
   const p = c?.profile || {};
   const label = Object.fromEntries((o.fields || []).map(([k, l]) => [k, l]));
-  const form = o.form ? Object.entries(o.form).filter(([, v]) => v) : [];
+  const form = o.form ? Object.entries(o.form).filter(([, v]) => v).map(([k, v]) => [k, BIRTH_FORM_KEYS.includes(k) ? thBirthDate(v) : v]) : [];
   const paid = ['paid', 'submitted', 'in_progress', 'answered', 'shipped', 'done'].includes(o.status);
   const canAnswer = ['reading', 'photo'].includes(o.kind) && ['submitted', 'in_progress', 'answered'].includes(o.status);
   const ops = can('staff', 'admin');
@@ -324,7 +333,7 @@ async function viewOrder(no) {
         <section class="card"><h3>ลูกค้า</h3>${c ? `<dl class="kv">
           <dt>ชื่อ</dt><dd>${esc([p.first || p.name, p.last].filter(Boolean).join(' ') || c.name || '—')}</dd>
           ${ops ? `<dt>เบอร์</dt><dd>${esc(c.phone)}</dd>` : ''}
-          <dt>วันเกิด</dt><dd>${p.birthdate ? new Date(p.birthdate).toLocaleDateString('th-TH', { dateStyle: 'long' }) : '—'}${p.birthtime ? ` · ${esc(p.birthtime)} น.` : ''}</dd>
+          <dt>วันเกิด</dt><dd>${p.birthdate ? thBirthDate(p.birthdate) : '—'}${p.birthtime ? ` · ${esc(p.birthtime)} น.` : ''}</dd>
           ${p.birthplace ? `<dt>สถานที่เกิด</dt><dd>${esc(p.birthplace)}</dd>` : ''}${p.gender ? `<dt>เพศ</dt><dd>${esc(p.gender)}</dd>` : ''}
         </dl>${ops ? `<a class="btn sm" href="#user/${c.id}" style="margin-top:10px;display:inline-block">ดูข้อมูลลูกค้า ›</a>` : ''}` : '<p class="muted">บัญชีถูกลบแล้ว</p>'}</section>
         ${ops ? `<section class="card stack"><h3>จัดการ</h3>
@@ -1002,7 +1011,7 @@ async function viewUser(id) {
       <div class="stack">
         <section class="card"><h3>ข้อมูลส่วนตัว</h3><dl class="kv">
           <dt>เบอร์</dt><dd>${esc(u.phone)}</dd>
-          <dt>วันเกิด</dt><dd>${p.birthdate ? new Date(p.birthdate).toLocaleDateString('th-TH', { dateStyle: 'long' }) : '—'}${p.birthtime ? ` · ${esc(p.birthtime)} น.` : ''}</dd>
+          <dt>วันเกิด</dt><dd>${p.birthdate ? thBirthDate(p.birthdate) : '—'}${p.birthtime ? ` · ${esc(p.birthtime)} น.` : ''}</dd>
           ${p.birthplace ? `<dt>สถานที่เกิด</dt><dd>${esc(p.birthplace)}</dd>` : ''}${p.gender ? `<dt>เพศ</dt><dd>${esc(p.gender)}</dd>` : ''}
           ${p.interests?.length ? `<dt>สนใจ</dt><dd>${esc(p.interests.join(', '))}</dd>` : ''}
           <dt>คูปอง</dt><dd>${(p.coupons || []).length} ใบ</dd>

@@ -36,6 +36,9 @@ function pubOrder(o) {
 // วันเกิดที่เคยบันทึกเป็น พ.ศ. (ปี ≥ 2400) → ค.ศ. · ระบบคำนวณและส่งให้ AI ใช้ ค.ศ. เสมอ
 export const normBirth = (s) => { const m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(String(s ?? '').trim()); return m && +m[1] >= 2400 ? `${+m[1] - 543}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}` : s; };
 const BIRTH_KEYS = ['birthdate', 'birth2', 'partnerBirth', 'babybirth'];
+const TH_MONTHS = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+// วันเกิดแบบอ่านง่ายสำหรับทีมงาน/หมอดู: 1996-09-08 → "8 กันยายน 2539" (พ.ศ.) · ไม่ใช่รูปแบบวันที่ → คืนค่าเดิม
+const thBirth = (s) => { const m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(String(normBirth(s) ?? '').trim()); return m && +m[2] >= 1 && +m[2] <= 12 ? `${+m[3]} ${TH_MONTHS[+m[2] - 1]} ${+m[1] + 543}` : s; };
 const normProfile = (p) => (p && p.birthdate ? { ...p, birthdate: normBirth(p.birthdate) } : p);
 const pubUser = (u) => ({ id: u.id, phone: u.phone, role: u.role, seer_id: u.seer_id || null, name: u.name, ai_until: u.ai_until || 0, profile: normProfile(u.profile), created_at: u.created_at });
 // ---------- ประวัติการทำงานของทีมงาน (audit log) · ดูได้ที่หลังบ้าน → ประวัติการทำงาน (ผู้ดูแลเท่านั้น) ----------
@@ -638,9 +641,9 @@ async function jobView(u, o) {
   return {
     no: o.no, title: o.title, icon: o.icon, label: o.label, kind: o.kind, status: o.status, status_text: STATUS[o.status],
     paid_at: o.paid_at, created_at: o.created_at, direct: !!o.seer, // ลูกค้าเลือกหมอดูท่านนี้โดยตรง
-    form: Object.entries(o.form || {}).filter(([k, v]) => v && !['tel', 'address', 'receiver'].includes(k)).map(([k, v]) => ({ label: label[k] || k, value: v })),
+    form: Object.entries(o.form || {}).filter(([k, v]) => v && !['tel', 'address', 'receiver'].includes(k)).map(([k, v]) => ({ label: label[k] || k, value: BIRTH_KEYS.includes(k) ? thBirth(v) : v })),
     photos: o.photos || [],
-    customer: { first: p.first || p.name || o.name || '', birthdate: p.birthdate || '', birthtime: p.birthtime || '', birthplace: p.birthplace || '', gender: p.gender || '' },
+    customer: { first: p.first || p.name || o.name || '', birthdate: normBirth(p.birthdate) || '', birthtime: p.birthtime || '', birthplace: p.birthplace || '', gender: p.gender || '' },
     mine: o.assignee === u.id, taken: !!o.assignee && o.assignee !== u.id,
     answer: o.answered_by === u.id || u.role === 'admin' ? o.answer || '' : '', summary: o.answered_by === u.id ? o.summary || '' : '',
     answered_at: o.answered_at || null,
@@ -848,7 +851,7 @@ on('GET', 'admin/orders/:no', async (req, res, { no }) => {
   }
   return { order: adminOrder(o), customer: u ? { ...pubUser(u), profile: u.profile } : null };
 });
-const pickBirth = (p) => (p ? { first: p.first, last: p.last, name: p.name, birthdate: p.birthdate, birthtime: p.birthtime, birthplace: p.birthplace, gender: p.gender } : null);
+const pickBirth = (p) => (p ? { first: p.first, last: p.last, name: p.name, birthdate: normBirth(p.birthdate), birthtime: p.birthtime, birthplace: p.birthplace, gender: p.gender } : null);
 
 on('POST', 'admin/orders/:no', async (req, res, { no }) => {
   const staff = await needRole(req);
