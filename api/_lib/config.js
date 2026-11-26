@@ -13,7 +13,8 @@ export const config = {
   onVercel: !!env.VERCEL,
   db: env.DATABASE_URL || env.POSTGRES_URL ? 'postgres' : 'file',
   databaseUrl: env.DATABASE_URL || env.POSTGRES_URL || '',
-  sessionSecret: env.SESSION_SECRET || '',
+  // Production ใช้ SESSION_SECRET · Preview ใช้ PREVIEW_SESSION_SECRET ได้ (ตั้งแยกคนละค่ากับ Production เพื่อไม่ให้ชื่อชนกับตัวแปรของเว็บจริง)
+  sessionSecret: env.SESSION_SECRET || (prod ? '' : env.PREVIEW_SESSION_SECRET || ''),
   adminPhones: String(env.ADMIN_PHONES || '').split(',').map((p) => p.trim()).filter(Boolean),
   otp: env.TWILIO_ACCOUNT_SID && env.TWILIO_AUTH_TOKEN && env.TWILIO_VERIFY_SID ? 'twilio' : demo(env.OTP_DEMO) ? 'demo' : 'off',
   twilio: { sid: env.TWILIO_ACCOUNT_SID, token: env.TWILIO_AUTH_TOKEN, verify: env.TWILIO_VERIFY_SID },

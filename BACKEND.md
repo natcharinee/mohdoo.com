@@ -24,6 +24,7 @@ ADMIN_PHONES=+66812345678 npm run dev
 |---|---|---|
 | ฐานข้อมูล | `DATABASE_URL` (Postgres: Neon, Supabase หรือ Vercel Postgres) | เก็บเป็นไฟล์ใน `/tmp` ซึ่ง**หายเมื่อ deploy ใหม่** ใช้ทดลองเท่านั้น |
 | เข้าสู่ระบบ | `SESSION_SECRET` (สุ่มยาว 32 ตัวขึ้นไป) | บน production จะเข้าสู่ระบบไม่ได้ |
+| เข้าสู่ระบบบน Preview | `PREVIEW_SESSION_SECRET` (ตั้งเฉพาะ environment Preview · ใช้เมื่อไม่มี `SESSION_SECRET`) | Preview สุ่มกุญแจเป็นไฟล์ชั่วคราวต่อเครื่อง → คำขอถัดไปที่ตกคนละเครื่องปฏิเสธเซสชัน ทำให้ต้องสมัคร/เข้าสู่ระบบใหม่ทุกครั้ง |
 | ผู้ดูแล | `ADMIN_PHONES` เช่น `+66812345678,+66898765432` | ไม่มีใครเข้าหลังบ้านได้ |
 | SMS OTP | `TWILIO_ACCOUNT_SID` `TWILIO_AUTH_TOKEN` `TWILIO_VERIFY_SID` | ปิด (หรือตั้ง `OTP_DEMO=1` เพื่อใช้รหัส 123456) |
 | ชำระเงิน PromptPay | `OMISE_SECRET_KEY` | ปิด (หรือตั้ง `PAY_DEMO=1`) |
