@@ -70,7 +70,9 @@ function fileStore() {
 // ---------- Postgres ----------
 async function pgStore() {
   const { default: postgres } = await import('postgres');
-  const sql = postgres(config.databaseUrl, { max: 3, idle_timeout: 20, ssl: /localhost|127\.0\.0\.1/.test(config.databaseUrl) ? false : 'require' });
+  const sql = postgres(config.databaseUrl, { max: 3, idle_timeout: 20, ssl: /localhost|127\.0\.0\.1/.test(config.databaseUrl) ? false : 'require',
+    // CREATE TABLE/INDEX IF NOT EXISTS ตอนเริ่มทำงานทุกครั้งส่งข้อความ "already exists" (42P07) มาท่วม log → ซ่อนเฉพาะอันนี้ ข้อความอื่นยังแสดง
+    onnotice: (n) => { if (n.code !== '42P07') console.warn('[pg]', n.severity, n.message); } });
   await sql`CREATE TABLE IF NOT EXISTS docs (
     coll text NOT NULL, id text NOT NULL, k text, user_id text, status text,
     created_at bigint NOT NULL, data jsonb NOT NULL, PRIMARY KEY (coll, id))`;
