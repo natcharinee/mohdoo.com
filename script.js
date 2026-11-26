@@ -190,10 +190,11 @@ function accounts() {
 }
 // บันทึกผู้ใช้ปัจจุบัน + เก็บลงบัญชีตามเบอร์ (ออกจากระบบแล้วประวัติ/คูปองไม่หาย)
 function persistUser(u) {
+  // บันทึกขึ้นเซิร์ฟเวอร์ก่อนเสมอ (แยกจากการเขียนในเครื่อง) · ถ้าพื้นที่เบราว์เซอร์เต็มแล้วเขียนในเครื่องไม่ได้ โปรไฟล์ต้องไม่หายจากระบบ
+  try { if (typeof srvSaveProfile === 'function') srvSaveProfile(u); } catch (_) {}
   try {
     localStorage.setItem(USER_KEY, JSON.stringify(u));
     if (u.phone) { const all = accounts(); all[u.phone] = u; localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(all)); }
-    if (typeof srvSaveProfile === 'function') srvSaveProfile(u); // มีระบบหลังบ้าน → บันทึกขึ้นเซิร์ฟเวอร์ด้วย
     return true;
   } catch (_) { return false; } // พื้นที่เบราว์เซอร์เต็ม (มักเกิดจากรูป) → ให้ผู้เรียกจัดการ
 }

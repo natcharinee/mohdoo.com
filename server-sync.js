@@ -69,9 +69,12 @@ function srvSaveProfile(u) {
     const { photos, photoLog, aiUntil, role, seerId, ...profile } = u;
     const json = JSON.stringify(profile);
     if (json === lastSaved) return;
-    srv('me', { method: 'PUT', body: { profile } }).then(() => { lastSaved = json; }).catch((e) => {
-      if (e.status === 401) toast('กรุณาเข้าสู่ระบบอีกครั้ง เพื่อบันทึกข้อมูลขึ้นระบบ');
+    const put = (retry) => srv('me', { method: 'PUT', body: { profile } }).then(() => { lastSaved = json; }).catch((e) => {
+      if (e.status === 401) return toast('กรุณาเข้าสู่ระบบอีกครั้ง เพื่อบันทึกข้อมูลขึ้นระบบ');
+      if (retry) return setTimeout(() => put(false), 3000); // ผิดพลาดชั่วคราว → ลองอีกครั้ง
+      toast('บันทึกข้อมูลขึ้นระบบไม่สำเร็จ ลองโหลดหน้าใหม่แล้วเข้าสู่ระบบอีกครั้งนะคะ');
     });
+    put(true);
   }, 800);
 }
 
